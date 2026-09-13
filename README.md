@@ -31,11 +31,12 @@ derivative work, please **cite the pedagogical text rather than the website**.
 
 ```bibtex
 @article{CunhaJr2026NeuralMath,
-  author  = {Americo Cunha Jr},
+  author  = {A. {Cunha~Jr}},
   title   = {A anatomia matem{\'a}tica de uma rede neural},
   journal = {Professor de Matem{\'a}tica Online},
   year    = {2026},
-  note    = {Manuscript submitted for publication}
+  note    = {Manuscript submitted for publication},
+ url      = {http://neuralmth.org},
 }
 ```
 
