@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuralMath · NeuralMath</title>
+  <meta name="description" content="NeuralMath est une introduction multilingue aux réseaux de neurones centrée sur le code. Le site explique pas à pas une implémentation complète avec NumPy ; les textes pédagogiques plus développés sont proposés séparément au format PDF.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://neuralmath.org/fr/index.html">
+  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/index.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/index.html">
+  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/index.html">
+  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/index.html">
+  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/index.html">
+  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/index.html">
+  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/index.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../fr/index.html"><span class="brand-mark">N</span>NeuralMath</a>
+    <nav class="nav" aria-label="Primary"><a href="../fr/index.html" aria-current="page">Accueil</a><a href="../fr/python.html">Exemple Python</a><a href="../fr/papers.html">Textes PDF</a><a href="../fr/extensions.html">Extensions</a><a href="../fr/about.html">À propos</a></nav>
+    <div class="lang-switch"><select aria-label="Language" data-language-select><option data-path="../en/index.html">English</option><option data-path="../pt/index.html">Português</option><option data-path="../es/index.html">Español</option><option selected data-path="../fr/index.html">Français</option><option data-path="../it/index.html">Italiano</option><option data-path="../de/index.html">Deutsch</option></select></div>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container hero-grid">
+  <div><div class="eyebrow">Réseaux de neurones, des équations au code</div><h1>Lisez le réseau de neurones directement dans le code Python.</h1><p class="lead">NeuralMath est une introduction multilingue aux réseaux de neurones centrée sur le code. Le site explique pas à pas une implémentation complète avec NumPy ; les textes pédagogiques plus développés sont proposés séparément au format PDF.</p>
+  <div class="actions"><a class="btn primary" href="../fr/python.html">Explorer l’exemple Python</a><a class="btn" href="../fr/papers.html">Lire les textes PDF</a></div></div>
+  <figure class="figure-card"><img src="../assets/img/neural_network_output_en.png" alt="NeuralMath decision boundary"><figcaption>Régions de décision apprises par l’exemple NumPy actuel. Le site et le code téléchargeable utilisent la même expérience canonique.</figcaption></figure>
+</div></section>
+<section class="section soft"><div class="container"><div class="section-heading"><h2>Un exemple, étudié en profondeur</h2><p class="lead">Le site est volontairement organisé autour d’un unique programme reproductible. Chaque partie du code est reliée à l’idée mathématique qu’elle met en œuvre, sans transformer les pages web en un second manuel.</p></div><div class="grid-3"><article class="card"><h3>Le code d’abord</h3><p>Commencez par le programme exécutable et parcourez les données, la standardisation, l’architecture, la propagation avant, la rétropropagation, l’entraînement et la visualisation.</p></article><article class="card"><h3>La pédagogie en PDF</h3><p>Les explications mathématiques longues se trouvent dans les PDF afin que le site reste concis et utile comme compagnon computationnel.</p></article><article class="card"><h3>Conçu pour évoluer</h3><p>Les futurs modules pourront réutiliser la même structure pour la classification multiclasse, les réseaux plus profonds, la vérification des gradients, l’optimisation et les démonstrations interactives.</p></article></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>L’exemple actuel en un coup d’œil</h2><p class="lead">Un classifieur binaire pour des mesures synthétiques mais physiquement plausibles de pommes et d’oranges, implémenté à partir de zéro avec NumPy.</p></div><div class="grid-2"><div class="step"><span class="step-number">1</span><div>Construire un jeu de données bidimensionnel étendu</div></div><div class="step"><span class="step-number">2</span><div>Standardiser la masse et le diamètre</div></div><div class="step"><span class="step-number">3</span><div>Créer un réseau 2–12–1</div></div><div class="step"><span class="step-number">4</span><div>Calculer la propagation avant</div></div><div class="step"><span class="step-number">5</span><div>Rétropropager la perte quadratique</div></div><div class="step"><span class="step-number">6</span><div>Entraîner par descente stochastique avec mélange</div></div><div class="step"><span class="step-number">7</span><div>Tracer la frontière de décision apprise</div></div></div>
+<div class="callout" style="margin-top:32px"><strong>Reproductible par conception</strong>L’exemple utilise une graine aléatoire fixe et rend explicites tous les paramètres entraînables. Il peut être exécuté localement, étudié dans Colab ou servir de point de départ à de nouvelles extensions.</div>
+<div class="kpis"><div class="kpi"><div class="value">64</div><div class="label">training points</div></div><div class="kpi"><div class="value">8</div><div class="label">test points</div></div><div class="kpi"><div class="value">12</div><div class="label">ReLU hidden neurons</div></div><div class="kpi"><div class="value">49</div><div class="label">trainable parameters</div></div></div>
+</div></section></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
+    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Python example, step by step · NeuralMath</title>
+  <meta name="description" content="NeuralMath is a multilingual, code-centered introduction to neural networks. The website explains one complete NumPy implementation step by step; longer pedagogical texts are provided separately as PDFs.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://neuralmath.org/en/python.html">
+  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/python.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/python.html">
+  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/python.html">
+  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/python.html">
+  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/python.html">
+  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/python.html">
+  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/python.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../en/index.html"><span class="brand-mark">N</span>NeuralMath</a>
+    <nav class="nav" aria-label="Primary"><a href="../en/index.html">Home</a><a href="../en/python.html" aria-current="page">Python example</a><a href="../en/papers.html">PDF texts</a><a href="../en/extensions.html">Extensions</a><a href="../en/about.html">About</a></nav>
+    <div class="lang-switch"><select aria-label="Language" data-language-select><option selected data-path="../en/python.html">English</option><option data-path="../pt/python.html">Português</option><option data-path="../es/python.html">Español</option><option data-path="../fr/python.html">Français</option><option data-path="../it/python.html">Italiano</option><option data-path="../de/python.html">Deutsch</option></select></div>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container"><div class="eyebrow">Python + NumPy</div><h1>The Python example, step by step</h1><p class="lead">This page is the computational core of NeuralMath. The code is deliberately small enough to read, but complete enough to show how a neural network actually learns.</p>
+<div class="actions"><a class="btn primary" href="../assets/code/neural_network_from_scratch.py">Download Python</a><a class="btn" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Google Colab</a><a class="btn" href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div></div></section>
+<section class="section"><div class="container code-layout"><div><section class="code-section" id="data"><h2>1. Data: a broad but controlled domain</h2><p>The training set contains 64 points and the illustrative test set contains 8. The points are synthetic, but their mass and diameter values are kept within plausible ranges. A smooth reference curve is used only to generate a nontrivial geometry; it is not given to the network.</p><pre><code>def base_boundary(m):
+    return (
+        6.68
+        + 0.74 * np.exp(-((m - 155) / 20) ** 2)
+        + 1.50 / (1 + np.exp(-(m - 202) / 5))
+    )
+
+X_train = np.vstack([a1, a2, l1, l2])
+y_train = np.array([1.0] * 32 + [0.0] * 32)</code></pre></section><section class="code-section" id="standardization"><h2>2. Standardization</h2><p>Mass and diameter live on different numerical scales. The training-set mean and standard deviation are therefore used to transform both training and test inputs. The test data never determine the normalization parameters.</p><pre><code>mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std</code></pre></section><section class="code-section" id="architecture"><h2>3. Architecture: 2–12–1</h2><p>Two inputs feed a hidden layer with twelve ReLU neurons, followed by one sigmoid output. This gives 49 trainable parameters. The hidden layer is large enough to represent a visibly nonlinear boundary while remaining easy to inspect.</p><pre><code>rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0</code></pre></section><section class="code-section" id="forward"><h2>4. Forward propagation</h2><p>For each input, the network computes an affine transformation, applies ReLU, combines the hidden activations, and finally applies the sigmoid. This is the prediction path.</p><pre><code>z1 = W1 @ x + b1
+h = relu(z1)
+z2 = W2 @ h + b2
+y_hat = sigmoid(z2)</code></pre></section><section class="code-section" id="backprop"><h2>5. Backpropagation</h2><p>The code differentiates the quadratic loss through the sigmoid and then through the ReLU layer. No automatic-differentiation framework is used: the chain rule appears explicitly in the program.</p><pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+dW2 = delta2 * h
+db2 = delta2
+
+delta1 = (delta2 * W2) * relu_derivative(z1)
+dW1 = np.outer(delta1, x)
+db1 = delta1</code></pre></section><section class="code-section" id="training"><h2>6. Stochastic gradient descent</h2><p>At every epoch, the examples are shuffled. The parameters are updated after each example, and the mean training loss is recomputed with the parameters fixed at the end of the epoch.</p><pre><code>for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        # forward pass, backpropagation, update
+        W1 -= learning_rate * dW1
+        b1 -= learning_rate * db1
+        W2 -= learning_rate * dW2
+        b2 -= learning_rate * db2</code></pre></section><section class="code-section" id="boundary"><h2>7. The learned decision boundary</h2><p>After training, the code evaluates the network on a dense mass–diameter grid. The level ŷ = 0.5 becomes the decision boundary. Every training point remains visible in the figure.</p><pre><code>masses = np.linspace(116, 214, 500)
+diameters = np.linspace(6.0, 8.85, 500)
+M, D = np.meshgrid(masses, diameters)
+grid = np.column_stack([M.ravel(), D.ravel()])
+P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+ax.contour(M, D, P, levels=[0.5], linewidths=2.2)</code></pre><figure class="figure-card"><img src="../assets/img/neural_network_output_en.png" alt="Decision boundary"><figcaption>Decision regions learned by the current NumPy example. The website and the downloadable code use the same canonical experiment.</figcaption></figure></section><section class="code-section" id="repro"><h2>8. Reproducibility</h2><p>A fixed seed makes the experiment deterministic for the documented NumPy environment. The same script produces the figure distributed with the project.</p><pre><code>rng = np.random.default_rng(42)
+# The same training-set statistics, initialization,
+# example order generator and hyperparameters are reused.</code></pre></section></div><aside class="toc"><strong>Contents</strong><a href="#data">1. Data</a><a href="#standardization">2. Standardization</a><a href="#architecture">3. Architecture</a><a href="#forward">4. Forward pass</a><a href="#backprop">5. Backpropagation</a><a href="#training">6. Training loop</a><a href="#boundary">7. Decision boundary</a><a href="#repro">8. Reproducibility</a></aside></div></section></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
+    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

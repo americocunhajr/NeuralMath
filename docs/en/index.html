@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuralMath · NeuralMath</title>
+  <meta name="description" content="NeuralMath is a multilingual, code-centered introduction to neural networks. The website explains one complete NumPy implementation step by step; longer pedagogical texts are provided separately as PDFs.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://neuralmath.org/en/index.html">
+  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/index.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/index.html">
+  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/index.html">
+  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/index.html">
+  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/index.html">
+  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/index.html">
+  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/index.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../en/index.html"><span class="brand-mark">N</span>NeuralMath</a>
+    <nav class="nav" aria-label="Primary"><a href="../en/index.html" aria-current="page">Home</a><a href="../en/python.html">Python example</a><a href="../en/papers.html">PDF texts</a><a href="../en/extensions.html">Extensions</a><a href="../en/about.html">About</a></nav>
+    <div class="lang-switch"><select aria-label="Language" data-language-select><option selected data-path="../en/index.html">English</option><option data-path="../pt/index.html">Português</option><option data-path="../es/index.html">Español</option><option data-path="../fr/index.html">Français</option><option data-path="../it/index.html">Italiano</option><option data-path="../de/index.html">Deutsch</option></select></div>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container hero-grid">
+  <div><div class="eyebrow">Neural networks, from the equations to the code</div><h1>Read the neural network in the Python code.</h1><p class="lead">NeuralMath is a multilingual, code-centered introduction to neural networks. The website explains one complete NumPy implementation step by step; longer pedagogical texts are provided separately as PDFs.</p>
+  <div class="actions"><a class="btn primary" href="../en/python.html">Explore the Python example</a><a class="btn" href="../en/papers.html">Read the PDF texts</a></div></div>
+  <figure class="figure-card"><img src="../assets/img/neural_network_output_en.png" alt="NeuralMath decision boundary"><figcaption>Decision regions learned by the current NumPy example. The website and the downloadable code use the same canonical experiment.</figcaption></figure>
+</div></section>
+<section class="section soft"><div class="container"><div class="section-heading"><h2>One example, examined deeply</h2><p class="lead">The site is intentionally organized around a single reproducible program. Each part of the program is connected to the mathematical idea it implements, without turning the web pages into a second textbook.</p></div><div class="grid-3"><article class="card"><h3>Code first</h3><p>Start from the executable program and move through data, normalization, architecture, forward propagation, backpropagation, training and visualization.</p></article><article class="card"><h3>PDF pedagogy</h3><p>Long-form mathematical explanations live in downloadable PDFs, so the website remains concise and useful as a computational companion.</p></article><article class="card"><h3>Built to grow</h3><p>Future modules can reuse the same structure for multiclass classification, deeper networks, gradient checking, optimization and interactive demonstrations.</p></article></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>The current example at a glance</h2><p class="lead">A binary classifier for synthetic but physically plausible apple/orange measurements, implemented from scratch with NumPy.</p></div><div class="grid-2"><div class="step"><span class="step-number">1</span><div>Build a broad two-dimensional data set</div></div><div class="step"><span class="step-number">2</span><div>Standardize mass and diameter</div></div><div class="step"><span class="step-number">3</span><div>Create a 2–12–1 network</div></div><div class="step"><span class="step-number">4</span><div>Compute the forward pass</div></div><div class="step"><span class="step-number">5</span><div>Backpropagate the quadratic loss</div></div><div class="step"><span class="step-number">6</span><div>Train with shuffled stochastic gradient descent</div></div><div class="step"><span class="step-number">7</span><div>Plot the learned decision boundary</div></div></div>
+<div class="callout" style="margin-top:32px"><strong>Reproducible by design</strong>The example uses a fixed random seed and exposes every trainable parameter. You can run it locally, inspect it in Colab, or use it as the starting point for your own extension.</div>
+<div class="kpis"><div class="kpi"><div class="value">64</div><div class="label">training points</div></div><div class="kpi"><div class="value">8</div><div class="label">test points</div></div><div class="kpi"><div class="value">12</div><div class="label">ReLU hidden neurons</div></div><div class="kpi"><div class="value">49</div><div class="label">trainable parameters</div></div></div>
+</div></section></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
+    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

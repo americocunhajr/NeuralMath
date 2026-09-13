@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L’exemple Python, étape par étape · NeuralMath</title>
+  <meta name="description" content="NeuralMath est une introduction multilingue aux réseaux de neurones centrée sur le code. Le site explique pas à pas une implémentation complète avec NumPy ; les textes pédagogiques plus développés sont proposés séparément au format PDF.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://neuralmath.org/fr/python.html">
+  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/python.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/python.html">
+  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/python.html">
+  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/python.html">
+  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/python.html">
+  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/python.html">
+  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/python.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../fr/index.html"><span class="brand-mark">N</span>NeuralMath</a>
+    <nav class="nav" aria-label="Primary"><a href="../fr/index.html">Accueil</a><a href="../fr/python.html" aria-current="page">Exemple Python</a><a href="../fr/papers.html">Textes PDF</a><a href="../fr/extensions.html">Extensions</a><a href="../fr/about.html">À propos</a></nav>
+    <div class="lang-switch"><select aria-label="Language" data-language-select><option data-path="../en/python.html">English</option><option data-path="../pt/python.html">Português</option><option data-path="../es/python.html">Español</option><option selected data-path="../fr/python.html">Français</option><option data-path="../it/python.html">Italiano</option><option data-path="../de/python.html">Deutsch</option></select></div>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container"><div class="eyebrow">Python + NumPy</div><h1>L’exemple Python, étape par étape</h1><p class="lead">Cette page est le cœur computationnel de NeuralMath. Le code est assez court pour être lu entièrement, mais assez complet pour montrer comment un réseau de neurones apprend réellement.</p>
+<div class="actions"><a class="btn primary" href="../assets/code/neural_network_from_scratch.py">Download Python</a><a class="btn" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Google Colab</a><a class="btn" href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div></div></section>
+<section class="section"><div class="container code-layout"><div><section class="code-section" id="data"><h2>1. Données : un domaine large mais contrôlé</h2><p>Le jeu d’entraînement contient 64 points et le jeu de test illustratif en contient 8. Les points sont synthétiques, mais les valeurs de masse et de diamètre restent dans des plages plausibles. Une courbe de référence lisse sert uniquement à produire une géométrie non triviale ; elle n’est pas fournie au réseau.</p><pre><code>def base_boundary(m):
+    return (
+        6.68
+        + 0.74 * np.exp(-((m - 155) / 20) ** 2)
+        + 1.50 / (1 + np.exp(-(m - 202) / 5))
+    )
+
+X_train = np.vstack([a1, a2, l1, l2])
+y_train = np.array([1.0] * 32 + [0.0] * 32)</code></pre></section><section class="code-section" id="standardization"><h2>2. Standardisation</h2><p>La masse et le diamètre vivent sur des échelles numériques différentes. La moyenne et l’écart-type du jeu d’entraînement sont donc utilisés pour transformer à la fois les données d’entraînement et de test. Les données de test ne déterminent jamais les paramètres de normalisation.</p><pre><code>mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std</code></pre></section><section class="code-section" id="architecture"><h2>3. Architecture : 2–12–1</h2><p>Deux entrées alimentent une couche cachée de douze neurones ReLU, suivie d’une sortie sigmoïde. On obtient ainsi 49 paramètres entraînables. La couche cachée est assez expressive pour représenter une frontière visiblement non linéaire tout en restant facile à inspecter.</p><pre><code>rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0</code></pre></section><section class="code-section" id="forward"><h2>4. Propagation avant</h2><p>Pour chaque entrée, le réseau calcule une transformation affine, applique ReLU, combine les activations cachées puis applique la sigmoïde. C’est le chemin de la prédiction.</p><pre><code>z1 = W1 @ x + b1
+h = relu(z1)
+z2 = W2 @ h + b2
+y_hat = sigmoid(z2)</code></pre></section><section class="code-section" id="backprop"><h2>5. Rétropropagation</h2><p>Le code dérive la perte quadratique à travers la sigmoïde puis à travers la couche ReLU. Aucun système de différentiation automatique n’est utilisé : la règle de la chaîne apparaît explicitement dans le programme.</p><pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+dW2 = delta2 * h
+db2 = delta2
+
+delta1 = (delta2 * W2) * relu_derivative(z1)
+dW1 = np.outer(delta1, x)
+db1 = delta1</code></pre></section><section class="code-section" id="training"><h2>6. Descente de gradient stochastique</h2><p>À chaque époque, les exemples sont mélangés. Les paramètres sont mis à jour après chaque exemple et la perte moyenne d’entraînement est recalculée, paramètres fixés, à la fin de l’époque.</p><pre><code>for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        # forward pass, backpropagation, update
+        W1 -= learning_rate * dW1
+        b1 -= learning_rate * db1
+        W2 -= learning_rate * dW2
+        b2 -= learning_rate * db2</code></pre></section><section class="code-section" id="boundary"><h2>7. La frontière de décision apprise</h2><p>Après l’entraînement, le code évalue le réseau sur une grille dense du plan masse–diamètre. Le niveau ŷ = 0,5 devient la frontière de décision. Tous les points d’entraînement restent visibles sur la figure.</p><pre><code>masses = np.linspace(116, 214, 500)
+diameters = np.linspace(6.0, 8.85, 500)
+M, D = np.meshgrid(masses, diameters)
+grid = np.column_stack([M.ravel(), D.ravel()])
+P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+ax.contour(M, D, P, levels=[0.5], linewidths=2.2)</code></pre><figure class="figure-card"><img src="../assets/img/neural_network_output_en.png" alt="Decision boundary"><figcaption>Régions de décision apprises par l’exemple NumPy actuel. Le site et le code téléchargeable utilisent la même expérience canonique.</figcaption></figure></section><section class="code-section" id="repro"><h2>8. Reproductibilité</h2><p>Une graine fixe rend l’expérience déterministe dans l’environnement NumPy documenté. Le même script produit la figure distribuée avec le projet.</p><pre><code>rng = np.random.default_rng(42)
+# The same training-set statistics, initialization,
+# example order generator and hyperparameters are reused.</code></pre></section></div><aside class="toc"><strong>Contents</strong><a href="#data">1. Données</a><a href="#standardization">2. Standardisation</a><a href="#architecture">3. Architecture</a><a href="#forward">4. Propagation avant</a><a href="#backprop">5. Rétropropagation</a><a href="#training">6. Boucle d’entraînement</a><a href="#boundary">7. Frontière de décision</a><a href="#repro">8. Reproductibilité</a></aside></div></section></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
+    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

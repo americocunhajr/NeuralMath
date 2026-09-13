@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>L’esempio Python, passo dopo passo · NeuralMath</title>
+  <meta name="description" content="NeuralMath è un’introduzione multilingue alle reti neurali centrata sul codice. Il sito spiega passo dopo passo un’implementazione completa in NumPy; i testi pedagogici più estesi sono disponibili separatamente in PDF.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://neuralmath.org/it/python.html">
+  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/python.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/python.html">
+  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/python.html">
+  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/python.html">
+  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/python.html">
+  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/python.html">
+  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/python.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../it/index.html"><span class="brand-mark">N</span>NeuralMath</a>
+    <nav class="nav" aria-label="Primary"><a href="../it/index.html">Home</a><a href="../it/python.html" aria-current="page">Esempio Python</a><a href="../it/papers.html">Testi PDF</a><a href="../it/extensions.html">Estensioni</a><a href="../it/about.html">Informazioni</a></nav>
+    <div class="lang-switch"><select aria-label="Language" data-language-select><option data-path="../en/python.html">English</option><option data-path="../pt/python.html">Português</option><option data-path="../es/python.html">Español</option><option data-path="../fr/python.html">Français</option><option selected data-path="../it/python.html">Italiano</option><option data-path="../de/python.html">Deutsch</option></select></div>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container"><div class="eyebrow">Python + NumPy</div><h1>L’esempio Python, passo dopo passo</h1><p class="lead">Questa pagina è il cuore computazionale di NeuralMath. Il codice è abbastanza piccolo da poter essere letto integralmente e abbastanza completo da mostrare come una rete neurale apprende davvero.</p>
+<div class="actions"><a class="btn primary" href="../assets/code/neural_network_from_scratch.py">Download Python</a><a class="btn" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Google Colab</a><a class="btn" href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div></div></section>
+<section class="section"><div class="container code-layout"><div><section class="code-section" id="data"><h2>1. Dati: un dominio ampio ma controllato</h2><p>L’insieme di addestramento contiene 64 punti e il test illustrativo ne contiene 8. I punti sono sintetici, ma massa e diametro restano entro intervalli plausibili. Una curva di riferimento liscia serve soltanto a generare una geometria non banale; non viene fornita alla rete.</p><pre><code>def base_boundary(m):
+    return (
+        6.68
+        + 0.74 * np.exp(-((m - 155) / 20) ** 2)
+        + 1.50 / (1 + np.exp(-(m - 202) / 5))
+    )
+
+X_train = np.vstack([a1, a2, l1, l2])
+y_train = np.array([1.0] * 32 + [0.0] * 32)</code></pre></section><section class="code-section" id="standardization"><h2>2. Standardizzazione</h2><p>Massa e diametro hanno scale numeriche diverse. Per questo la media e la deviazione standard calcolate sui dati di addestramento vengono usate per trasformare sia il training sia il test. I dati di test non determinano i parametri di normalizzazione.</p><pre><code>mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std</code></pre></section><section class="code-section" id="architecture"><h2>3. Architettura: 2–12–1</h2><p>Due ingressi alimentano uno strato nascosto con dodici neuroni ReLU, seguito da un’uscita sigmoide. Si ottengono 49 parametri addestrabili. Lo strato nascosto è abbastanza espressivo da rappresentare una frontiera visibilmente non lineare e resta comunque facile da ispezionare.</p><pre><code>rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0</code></pre></section><section class="code-section" id="forward"><h2>4. Propagazione in avanti</h2><p>Per ogni ingresso, la rete calcola una trasformazione affine, applica ReLU, combina le attivazioni nascoste e infine applica la sigmoide. Questo è il percorso della previsione.</p><pre><code>z1 = W1 @ x + b1
+h = relu(z1)
+z2 = W2 @ h + b2
+y_hat = sigmoid(z2)</code></pre></section><section class="code-section" id="backprop"><h2>5. Retropropagazione</h2><p>Il codice deriva la perdita quadratica attraverso la sigmoide e poi attraverso lo strato ReLU. Non viene usata differenziazione automatica: la regola della catena appare esplicitamente nel programma.</p><pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+dW2 = delta2 * h
+db2 = delta2
+
+delta1 = (delta2 * W2) * relu_derivative(z1)
+dW1 = np.outer(delta1, x)
+db1 = delta1</code></pre></section><section class="code-section" id="training"><h2>6. Discesa del gradiente stocastica</h2><p>A ogni epoca gli esempi vengono rimescolati. I parametri sono aggiornati dopo ciascun esempio e la perdita media di addestramento viene ricalcolata con parametri fissi alla fine dell’epoca.</p><pre><code>for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        # forward pass, backpropagation, update
+        W1 -= learning_rate * dW1
+        b1 -= learning_rate * db1
+        W2 -= learning_rate * dW2
+        b2 -= learning_rate * db2</code></pre></section><section class="code-section" id="boundary"><h2>7. La frontiera decisionale appresa</h2><p>Dopo l’addestramento, il codice valuta la rete su una griglia fitta nel piano massa–diametro. Il livello ŷ = 0,5 diventa la frontiera decisionale. Tutti i punti di addestramento rimangono visibili nella figura.</p><pre><code>masses = np.linspace(116, 214, 500)
+diameters = np.linspace(6.0, 8.85, 500)
+M, D = np.meshgrid(masses, diameters)
+grid = np.column_stack([M.ravel(), D.ravel()])
+P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+ax.contour(M, D, P, levels=[0.5], linewidths=2.2)</code></pre><figure class="figure-card"><img src="../assets/img/neural_network_output_en.png" alt="Decision boundary"><figcaption>Regioni decisionali apprese dall’attuale esempio NumPy. Il sito e il codice scaricabile utilizzano lo stesso esperimento canonico.</figcaption></figure></section><section class="code-section" id="repro"><h2>8. Riproducibilità</h2><p>Un seme fisso rende deterministico l’esperimento nell’ambiente NumPy documentato. Lo stesso script produce la figura distribuita con il progetto.</p><pre><code>rng = np.random.default_rng(42)
+# The same training-set statistics, initialization,
+# example order generator and hyperparameters are reused.</code></pre></section></div><aside class="toc"><strong>Contents</strong><a href="#data">1. Dati</a><a href="#standardization">2. Standardizzazione</a><a href="#architecture">3. Architettura</a><a href="#forward">4. Propagazione in avanti</a><a href="#backprop">5. Retropropagazione</a><a href="#training">6. Ciclo di addestramento</a><a href="#boundary">7. Frontiera decisionale</a><a href="#repro">8. Riproducibilità</a></aside></div></section></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
+    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

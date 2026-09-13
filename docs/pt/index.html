@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuralMath · NeuralMath</title>
+  <meta name="description" content="NeuralMath é uma introdução multilíngue e centrada em código às redes neurais. O website explica passo a passo uma implementação completa em NumPy; os textos pedagógicos mais extensos são disponibilizados separadamente em PDF.">
+  <meta name="theme-color" content="#090d12">
+  <link rel="canonical" href="https://neuralmath.org/pt/index.html">
+  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/index.html">
+  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/index.html">
+  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/index.html">
+  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/index.html">
+  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/index.html">
+  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/index.html">
+  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/index.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="../pt/index.html"><span class="brand-mark">N</span>NeuralMath</a>
+    <nav class="nav" aria-label="Primary"><a href="../pt/index.html" aria-current="page">Início</a><a href="../pt/python.html">Exemplo em Python</a><a href="../pt/papers.html">Textos em PDF</a><a href="../pt/extensions.html">Extensões</a><a href="../pt/about.html">Sobre</a></nav>
+    <div class="lang-switch"><select aria-label="Language" data-language-select><option data-path="../en/index.html">English</option><option selected data-path="../pt/index.html">Português</option><option data-path="../es/index.html">Español</option><option data-path="../fr/index.html">Français</option><option data-path="../it/index.html">Italiano</option><option data-path="../de/index.html">Deutsch</option></select></div>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="container hero-grid">
+  <div><div class="eyebrow">Redes neurais, das equações ao código</div><h1>Leia a rede neural diretamente no código Python.</h1><p class="lead">NeuralMath é uma introdução multilíngue e centrada em código às redes neurais. O website explica passo a passo uma implementação completa em NumPy; os textos pedagógicos mais extensos são disponibilizados separadamente em PDF.</p>
+  <div class="actions"><a class="btn primary" href="../pt/python.html">Explorar o exemplo em Python</a><a class="btn" href="../pt/papers.html">Ler os textos em PDF</a></div></div>
+  <figure class="figure-card"><img src="../assets/img/neural_network_output_pt.png" alt="NeuralMath decision boundary"><figcaption>Regiões de decisão aprendidas pelo exemplo atual em NumPy. O website e o código para download usam o mesmo experimento canônico.</figcaption></figure>
+</div></section>
+<section class="section soft"><div class="container"><div class="section-heading"><h2>Um exemplo, examinado em profundidade</h2><p class="lead">O site é deliberadamente organizado em torno de um único programa reproduzível. Cada parte do código é ligada à ideia matemática que implementa, sem transformar as páginas web em um segundo livro-texto.</p></div><div class="grid-3"><article class="card"><h3>Código primeiro</h3><p>Comece pelo programa executável e percorra dados, padronização, arquitetura, propagação direta, retropropagação, treinamento e visualização.</p></article><article class="card"><h3>Pedagogia em PDF</h3><p>As explicações matemáticas longas ficam nos PDFs, mantendo o website conciso e útil como companheiro computacional.</p></article><article class="card"><h3>Preparado para crescer</h3><p>Módulos futuros podem reutilizar a mesma estrutura para classificação multiclasse, redes mais profundas, verificação de gradientes, otimização e demonstrações interativas.</p></article></div></div></section>
+<section class="section"><div class="container"><div class="section-heading"><h2>O exemplo atual em uma visão geral</h2><p class="lead">Um classificador binário para medidas sintéticas, mas fisicamente plausíveis, de maçãs e laranjas, implementado do zero com NumPy.</p></div><div class="grid-2"><div class="step"><span class="step-number">1</span><div>Construir um conjunto bidimensional amplo</div></div><div class="step"><span class="step-number">2</span><div>Padronizar massa e diâmetro</div></div><div class="step"><span class="step-number">3</span><div>Criar uma rede 2–12–1</div></div><div class="step"><span class="step-number">4</span><div>Calcular a propagação direta</div></div><div class="step"><span class="step-number">5</span><div>Retropropagar a perda quadrática</div></div><div class="step"><span class="step-number">6</span><div>Treinar com descida estocástica e embaralhamento</div></div><div class="step"><span class="step-number">7</span><div>Representar a fronteira de decisão aprendida</div></div></div>
+<div class="callout" style="margin-top:32px"><strong>Reprodutível por construção</strong>O exemplo usa semente aleatória fixa e deixa explícitos todos os parâmetros treináveis. Ele pode ser executado localmente, inspecionado no Colab ou usado como ponto de partida para novas extensões.</div>
+<div class="kpis"><div class="kpi"><div class="value">64</div><div class="label">training points</div></div><div class="kpi"><div class="value">8</div><div class="label">test points</div></div><div class="kpi"><div class="value">12</div><div class="label">ReLU hidden neurons</div></div><div class="kpi"><div class="value">49</div><div class="label">trainable parameters</div></div></div>
+</div></section></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
+    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
+  </div>
+</footer>
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>
