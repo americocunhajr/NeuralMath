@@ -1,21 +1,67 @@
-MIT License
-
+NeuralMath
 Copyright (c) 2026 Americo Cunha Jr
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Unless otherwise stated, the original educational content of the NeuralMath
+project is licensed under the Creative Commons Attribution 4.0 International
+License (CC BY 4.0).
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+SPDX-License-Identifier: CC-BY-4.0
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This license applies to the original material created for NeuralMath, including:
+
+- website text and explanatory material;
+- original figures and diagrams;
+- repository documentation;
+- teaching materials;
+- Jupyter notebooks;
+- Python source code distributed as part of the educational project.
+
+You are free to:
+
+- Share — copy and redistribute the material in any medium or format.
+- Adapt — remix, transform, and build upon the material for any purpose,
+  including commercial purposes.
+
+Under the following terms:
+
+- Attribution — You must give appropriate credit to Americo Cunha Jr and
+  NeuralMath, provide a link to the license, and indicate if changes were made.
+  Attribution must not suggest endorsement of the user or of the derived work.
+
+Preferred attribution:
+
+  Americo Cunha Jr, NeuralMath, https://neuralmath.org
+
+For scholarly use, teaching, publications, or derivative educational material,
+please also cite the pedagogical text associated with the project:
+
+  Americo Cunha Jr, "A anatomia matemática de uma rede neural",
+  manuscript submitted to Professor de Matemática Online (PMO), 2026.
+
+The definitive bibliographic reference should be updated once the journal
+version, volume, pages, and DOI become available.
+
+IMPORTANT EXCEPTIONS
+
+1. Journal articles, accepted manuscripts, publisher-formatted PDFs, or other
+   documents included in this repository may be subject to the license and
+   copyright terms stated in those documents or imposed by their publisher.
+   This LICENSE.txt does not relicense such material.
+
+2. Third-party logos, trademarks, badges, fonts, software, images, and other
+   external assets remain subject to their respective licenses and terms.
+
+3. Creative Commons licenses are primarily designed for creative and
+   educational works. In NeuralMath, the Python and notebook source files are
+   intentionally distributed under CC BY 4.0 as part of the educational work,
+   unless a file explicitly states otherwise.
+
+No warranties are given. The material is provided "as is", without warranty of
+any kind. To the extent permitted by law, the licensor is not liable for losses
+arising from its use.
+
+Full legal code:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Human-readable summary:
+https://creativecommons.org/licenses/by/4.0/

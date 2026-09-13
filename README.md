@@ -1,252 +1,343 @@
 # NeuralMath
 
-**NeuralMath** contains the companion Python codes for the manuscript
+**The mathematics behind neural networks — from equations to executable code.**
 
-> **A. Cunha Jr, _A anatomia matemática de uma rede neural_, manuscript prepared for submission to Professor de Matemática Online (PMO), 2026.**
+[![Website](https://img.shields.io/badge/website-neuralmath.org-53d7ff)](https://neuralmath.org)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Python](https://img.shields.io/badge/Python-NumPy-7b8cff)](https://www.python.org/)
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0002--8342--0363-A6CE39)](https://orcid.org/0000-0002-8342-0363)
 
-The repository implements, from scratch and using only NumPy, the small neural network developed mathematically in the article. The example is deliberately educational: two input variables (fruit mass and diameter), one hidden layer with three ReLU neurons, one sigmoid output, quadratic loss, backpropagation, and stochastic gradient descent.
+**NeuralMath** is an independent educational project that develops a transparent,
+mathematically grounded introduction to neural networks. Its central idea is
+simple: a neural network should not be introduced as a black box. The equations,
+the geometry, the learning algorithm, and the Python implementation should be
+read together.
+
+The project combines a concise web narrative, a longer pedagogical text in PDF,
+reproducible Python/NumPy code, notebooks, figures, and multilingual versions of
+the website.
+
+**Website:** https://neuralmath.org  
+**Repository:** https://github.com/americocunhajr/NeuralMath
+
+---
+
+## Citation
+
+If NeuralMath is useful in teaching, research, course material, talks, or
+derivative work, please **cite the pedagogical text rather than the website**.
+
+> **Americo Cunha Jr**, *A anatomia matemática de uma rede neural*, manuscript submitted to **Professor de Matemática Online (PMO)**, 2026.
+
+```bibtex
+@article{CunhaJr2026NeuralMath,
+  author  = {Americo Cunha Jr},
+  title   = {A anatomia matem{\'a}tica de uma rede neural},
+  journal = {Professor de Matem{\'a}tica Online},
+  year    = {2026},
+  note    = {Manuscript submitted for publication}
+}
+```
+
+The bibliographic entry above is provisional. It should be replaced by the
+published PMO reference, including DOI, volume, number, and pages, as soon as
+those data become available.
+
+---
+
+## What this repository contains
+
+NeuralMath is organized around a complete neural-network example implemented
+**from scratch with NumPy**. No automatic differentiation and no high-level
+machine-learning framework are required to understand the training procedure.
+
+The current computational experiment uses:
+
+- two input variables: fruit mass and diameter;
+- 64 synthetic training examples and 8 illustrative test examples;
+- one hidden layer with 12 ReLU neurons;
+- one sigmoid output neuron;
+- 49 trainable parameters;
+- quadratic loss;
+- explicit backpropagation via the chain rule;
+- stochastic gradient descent with shuffled examples;
+- a fixed random seed for reproducibility;
+- a two-dimensional decision-region visualization.
+
+The data are synthetic and pedagogical, but they are distributed over plausible
+mass–diameter ranges. The geometry is intentionally nonlinear so that the hidden
+layer is genuinely useful.
 
 <p align="center">
-<img src="PythonCodes/output/neural_network_output.png" width="80%">
+  <img src="output/neural_network_output_en.png" alt="Decision regions learned by the NeuralMath example" width="82%">
 </p>
 
-<p align="center">
-<a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab.ipynb">
-<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
-</p>
+---
 
-## Table of Contents
+## From geometry to a neural network
 
-- [Overview](#overview)
-- [Features](#features)
-- [Directory organization](#directory-organization)
-- [Quick Start](#quick-start)
-- [Google Colab](#google-colab)
-- [Mathematical model](#mathematical-model)
-- [Reproducibility](#reproducibility)
-- [Output](#output)
-- [Author](#author)
-- [Citation](#citation)
-- [License](#license)
+The pedagogical path begins with a two-dimensional classification problem.
+A fruit is represented by
 
-## Overview
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix},
+\]
 
-The purpose of **NeuralMath** is to make the connection between the equations of a neural network and their computational implementation explicit. No machine-learning framework is used. Every step appearing in the code corresponds directly to an operation developed in the manuscript:
+where \(x_1\) is mass and \(x_2\) is diameter.
 
-1. standardization of the inputs;
-2. affine transformation in the hidden layer;
-3. ReLU activation;
-4. affine transformation in the output layer;
-5. sigmoid activation;
-6. quadratic loss;
-7. derivatives obtained by the chain rule;
-8. backpropagation;
-9. stochastic gradient-descent updates.
+A linear classifier evaluates
 
-The training dataset has an XOR-like geometry and is not linearly separable. This makes the hidden nonlinear layer genuinely necessary for the classification task.
+\[
+s = w_1x_1 + w_2x_2 + b.
+\]
 
-## Features
+This affine expression is the mathematical core of an artificial neuron. A
+nonlinear activation then transforms the score,
 
-- Neural network implemented from scratch with NumPy
-- Two inputs: mass and diameter
-- Three-neuron hidden layer with ReLU activation
-- Sigmoid output for binary classification
-- Explicit backpropagation formulas
-- Stochastic gradient descent with shuffled examples
-- Training/test separation
-- Reproducible random seed
-- Automatic generation of the decision-region figure
-- Ready-to-run Google Colab notebook
-- No TensorFlow, PyTorch, or scikit-learn required
+\[
+\widehat{y} = g(s).
+\]
 
-## Directory organization
+By connecting several neurons, the model becomes a composition of functions.
+For the computational example,
+
+\[
+\mathbf{z}^{(1)} = W^{(1)}\mathbf{x} + \mathbf{b}^{(1)},
+\qquad
+\mathbf{h} = \operatorname{ReLU}(\mathbf{z}^{(1)}),
+\]
+
+followed by
+
+\[
+z^{(2)} = W^{(2)}\mathbf{h} + b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).
+\]
+
+Training adjusts the parameters so as to reduce a loss. For one example,
+
+\[
+E = \frac{1}{2}(y-\widehat{y})^2,
+\]
+
+and the parameters are updated according to
+
+\[
+\theta \leftarrow
+\theta - \eta\frac{\partial E}{\partial\theta}.
+\]
+
+The repository implements these derivatives explicitly so that the code mirrors
+the mathematics.
+
+---
+
+## Repository structure
+
+The canonical project is intended to follow this organization:
 
 ```text
 NeuralMath/
 ├── README.md
+├── LICENSE.txt
 ├── CITATION.cff
-├── LICENSE
 ├── requirements.txt
-├── _config.yml
+│
+├── rede_neural_do_zero.py
 ├── neural_network_from_scratch.py
-├── NeuralMath_Colab.ipynb
-└── output/
-    ├── neural_network_output.png
-    ├── neural_network_output.pdf
-    └── training_results.txt
+├── NeuralMath_Colab_PT_BR.ipynb
+├── NeuralMath_Colab_EN.ipynb
+│
+├── output/
+│   ├── neural_network_output_pt.png
+│   ├── neural_network_output_pt.pdf
+│   ├── neural_network_output_en.png
+│   ├── neural_network_output_en.pdf
+│   ├── training_results_pt.txt
+│   └── training_results_en.txt
+│
+├── paper/
+│   └── [pedagogical PDF / preprint]
+│
+└── docs/
+    ├── index.html
+    ├── pt/
+    ├── es/
+    ├── fr/
+    ├── it/
+    ├── de/
+    ├── assets/
+    └── pdf/
 ```
 
-## Quick Start
+The `docs/` directory is used by GitHub Pages to publish
+**https://neuralmath.org**.
 
-Get a local copy of **NeuralMath**:
+---
+
+## Website and languages
+
+The website is designed as a **single continuous pedagogical page per language**.
+Instead of separating theory and code into independent sections of the site, the
+reader progresses through a compact narrative:
+
+**problem → geometry → neuron → activation → network → loss → gradients →
+backpropagation → Python → learned decision boundary**
+
+Longer derivations and the complete pedagogical treatment remain available as
+PDF documents.
+
+The current website structure supports:
+
+- English;
+- Portuguese;
+- Spanish;
+- French;
+- Italian;
+- German.
+
+The mathematical model and computational experiment are the same in every
+language; only the exposition is translated.
+
+---
+
+## Running the Python example
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/americocunhajr/NeuralMath.git
 cd NeuralMath
 ```
 
-Create a Python environment and install the dependencies:
+Create a virtual environment if desired:
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate        # Linux/macOS
-# .venv\Scripts\activate         # Windows PowerShell
+source .venv/bin/activate
+# Windows PowerShell:
+# .venv\Scripts\Activate.ps1
+```
 
+Install the dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
-Run the complete example:
+Run the English version:
 
 ```bash
 python neural_network_from_scratch.py
 ```
 
-The numerical output is printed to the terminal and the files are written to `output/`.
+or the Portuguese version:
+
+```bash
+python rede_neural_do_zero.py
+```
+
+The scripts train the network, print the numerical results, and regenerate the
+decision-region figure.
+
+---
 
 ## Google Colab
 
-The full example can be executed in the browser without any local installation:
+The notebooks provide the same experiment in a browser-based environment:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab.ipynb)
+- **English:**  
+  https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb
 
-Open the notebook and select **Runtime → Run all**.
+- **Português:**  
+  https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_PT_BR.ipynb
 
-## Mathematical model
-
-For an input vector
-
-\[
-\mathbf{x}
-=
-\begin{bmatrix}
-x_1\\
-x_2
-\end{bmatrix},
-\]
-
-the hidden layer computes
-
-\[
-\mathbf{z}^{(1)}
-=
-W^{(1)}\mathbf{x}
-+
-\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}
-=
-\operatorname{ReLU}
-\left(
-\mathbf{z}^{(1)}
-\right).
-\]
-
-The output neuron computes
-
-\[
-z^{(2)}
-=
-W^{(2)}\mathbf{h}
-+
-b^{(2)},
-\qquad
-\widehat{y}
-=
-\sigma
-\left(
-z^{(2)}
-\right).
-\]
-
-The quadratic loss for one example is
-
-\[
-E
-=
-\frac{1}{2}
-\left(
-y-\widehat{y}
-\right)^2.
-\]
-
-The parameters are updated according to
-
-\[
-\theta
-\leftarrow
-\theta
--
-\eta
-\frac{\partial E}{\partial\theta}.
-\]
-
-All derivatives used by the program are written explicitly in `neural_network_from_scratch.py` and in the Colab notebook.
+---
 
 ## Reproducibility
 
-The code uses
+The reference implementation uses a fixed NumPy random generator,
 
 ```python
 rng = np.random.default_rng(42)
 ```
 
-and therefore reproduces the same initialization, shuffled training sequence, final predictions, and decision regions for a fixed NumPy environment.
+and keeps the complete training procedure explicit. Training-set statistics are
+used for standardization, and the same deterministic setup is used when the
+reference figures are generated.
 
-The mean loss is recomputed with fixed network parameters at the end of every epoch, so the reported quantity corresponds to
+The project is intended to make numerical experiments inspectable and
+reproducible rather than to present the example as a benchmark for statistical
+generalization.
 
-\[
-J
-=
-\frac{1}{N}
-\sum_{i=1}^{N}
-E_i.
-\]
+---
 
-## Output
+## Future extensions
 
-A typical run begins with a mean loss near
+The current binary-classification example is the first module of a broader
+project. Natural extensions include:
 
-```text
-epoca    0  perda_media = 0.125130103
-```
+- visualization of training dynamics;
+- interactive inspection of hidden neurons;
+- gradient checking;
+- alternative activation and loss functions;
+- multiclass classification and softmax;
+- deeper networks;
+- optimization methods beyond basic SGD;
+- browser-based interactive experiments;
+- further pedagogical texts and multilingual editions.
 
-and finishes after 2000 epochs near
+The goal is to preserve the same principle throughout: **the mathematics and the
+code should remain close enough that the reader can trace one directly into the
+other.**
 
-```text
-epoca 1999  perda_media = 0.000275855
-```
-
-All eight training examples and the four illustrative test examples are classified according to their prescribed labels with the fixed seed used in the repository.
-
-The file `output/neural_network_output.png` shows the nonlinear decision regions learned by the network in the original physical variables, mass and diameter.
+---
 
 ## Author
 
-**Americo Cunha Jr**  
-Laboratório Nacional de Computação Científica (LNCC), Petrópolis, Brazil  
-Universidade do Estado do Rio de Janeiro (UERJ), Rio de Janeiro, Brazil  
-<http://americocunha.org>
+**Americo Cunha Jr** is a computational scientist working at the interface of
+nonlinear dynamics, uncertainty, data-driven modeling, and artificial
+intelligence. He completed his doctoral training in Mechanical Engineering at
+**PUC-Rio** and **Université Paris-Est**.
 
-## Citation
+NeuralMath is a **personal and independent educational project**.
 
-If these codes are used in teaching, research, or derivative work, please cite the associated manuscript:
+- Personal page: https://americocunha.org
+- ORCID: https://orcid.org/0000-0002-8342-0363
+- NeuralMath: https://neuralmath.org
 
-> **A. Cunha Jr**, _A anatomia matemática de uma rede neural_, manuscript prepared for submission to Professor de Matemática Online (PMO), 2026.
-
-```bibtex
-@article{CunhaJr2026NeuralMath,
-  author  = {A. {Cunha~Jr}},
-  title   = {A anatomia matem{\'a}tica de uma rede neural},
-  journal = {Professor de Matem{\'a}tica Online},
-  year    = {2026},
-  note    = {Manuscript prepared for submission},
-  url     = {https://github.com/americocunhajr/NeuralMath}
-}
-```
+---
 
 ## License
 
-**NeuralMath** is released under the MIT license. See the `LICENSE` file for details.
+Except where explicitly stated otherwise, the original educational content of
+NeuralMath is released under the
+**Creative Commons Attribution 4.0 International License (CC BY 4.0)**.
 
-Contributions are welcome and are distributed under the same license.
+<a href="https://creativecommons.org/licenses/by/4.0/">
+  <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png"
+       alt="Creative Commons Attribution 4.0 International"
+       width="88">
+</a>
+
+You may share and adapt the material, including for commercial purposes, as long
+as appropriate attribution is provided.
+
+See [`LICENSE.txt`](LICENSE.txt) for the repository-wide licensing notice and
+important exceptions. In particular, journal-formatted PDFs or third-party
+materials may be governed by separate terms.
+
+---
+
+## Acknowledgment
+
+If you use NeuralMath in a course, lecture, workshop, research project, or
+educational resource, citation of the associated pedagogical text is appreciated.
+Feedback, corrections, translations, and mathematically motivated extensions are
+also welcome.
