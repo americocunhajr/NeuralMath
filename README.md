@@ -7,7 +7,7 @@
 The repository implements, from scratch and using only NumPy, the small neural network developed mathematically in the article. The example is deliberately educational: two input variables (fruit mass and diameter), one hidden layer with three ReLU neurons, one sigmoid output, quadratic loss, backpropagation, and stochastic gradient descent.
 
 <p align="center">
-<img src="output/neural_network_output.png" width="80%">
+<img src="PythonCodes/output/neural_network_output.png" width="80%">
 </p>
 
 <p align="center">
