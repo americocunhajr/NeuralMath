@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6ee7f2"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
-<rect x="2" y="2" width="60" height="60" rx="15" fill="#090d12" stroke="#293849" stroke-width="2"/>
-<circle cx="15" cy="17" r="4" fill="#6ee7f2"/><circle cx="15" cy="47" r="4" fill="#6ee7f2"/>
-<circle cx="36" cy="17" r="4" fill="#a78bfa"/><circle cx="36" cy="47" r="4" fill="#a78bfa"/>
-<path d="M15 17v30M15 17l21 30M36 17v30" fill="none" stroke="url(#g)" stroke-width="4.2" stroke-linecap="round"/>
-<text x="43" y="38" font-family="Georgia,serif" font-weight="700" font-size="22" fill="#f4f7fb">Σ</text>
-</svg>
