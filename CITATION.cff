@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use these codes, please cite the associated manuscript."
+title: "NeuralMath: companion codes for A anatomia matemática de uma rede neural"
+type: software
+authors:
+  - family-names: "Cunha Jr"
+    given-names: "Americo"
+version: "1.0.0"
+date-released: "2026-09-13"
+url: "https://github.com/americocunhajr/NeuralMath"
+repository-code: "https://github.com/americocunhajr/NeuralMath"
+preferred-citation:
+  type: article
+  title: "A anatomia matemática de uma rede neural"
+  authors:
+    - family-names: "Cunha Jr"
+      given-names: "Americo"
+  year: 2026
+  notes: "Manuscript prepared for submission to Professor de Matemática Online (PMO)."
