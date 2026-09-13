@@ -31,12 +31,11 @@ derivative work, please **cite the pedagogical text rather than the website**.
 
 ```bibtex
 @article{CunhaJr2026NeuralMath,
-  author  = {A. {Cunha~Jr}},
+  author  = {Americo Cunha Jr},
   title   = {A anatomia matem{\'a}tica de uma rede neural},
   journal = {Professor de Matem{\'a}tica Online},
   year    = {2026},
-  note    = {Manuscript submitted for publication},
- url      = {http://neuralmth.org},
+  note    = {Manuscript submitted for publication}
 }
 ```
 
@@ -75,64 +74,68 @@ layer is genuinely useful.
 
 ---
 
+<!-- GitHub math note: display equations below use fenced ```math blocks. Avoid \\operatorname because GitHub's Markdown math renderer rejects it. -->
+
+<!-- GitHub math note: display equations below use fenced ```math blocks. For named functions, prefer \\mathrm{...} in this README. -->
+
 ## From geometry to a neural network
 
 The pedagogical path begins with a two-dimensional classification problem.
 A fruit is represented by
 
-$$
+```math
 \mathbf{x}
 =
 \begin{bmatrix}
 x_1 \\
 x_2
 \end{bmatrix},
-$$
+```
 
 where $x_1$ is mass and $x_2$ is diameter.
 
 A linear classifier evaluates
 
-$$
+```math
 s = w_1x_1 + w_2x_2 + b.
-$$
+```
 
 This affine expression is the mathematical core of an artificial neuron. A
 nonlinear activation then transforms the score,
 
-$$
+```math
 \widehat{y} = g(s).
-$$
+```
 
 By connecting several neurons, the model becomes a composition of functions.
 For the computational example,
 
-$$
+```math
 \mathbf{z}^{(1)} = W^{(1)}\mathbf{x} + \mathbf{b}^{(1)},
 \qquad
-\mathbf{h} = \operatorname{ReLU}(\mathbf{z}^{(1)}),
-$$
+\mathbf{h} = \mathrm{ReLU}(\mathbf{z}^{(1)}),
+```
 
 followed by
 
-$$
+```math
 z^{(2)} = W^{(2)}\mathbf{h} + b^{(2)},
 \qquad
 \widehat{y}=\sigma(z^{(2)}).
-$$
+```
 
 Training adjusts the parameters so as to reduce a loss. For one example,
 
-$$
+```math
 E = \frac{1}{2}(y-\widehat{y})^2,
-$$
+```
 
 and the parameters are updated according to
 
-$$
+```math
 \theta \leftarrow
 \theta - \eta\frac{\partial E}{\partial\theta}.
-$$
+```
 
 The repository implements these derivatives explicitly so that the code mirrors
 the mathematics.
