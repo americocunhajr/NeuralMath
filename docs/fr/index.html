@@ -1,47 +1,80 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NeuralMath · NeuralMath</title>
-  <meta name="description" content="NeuralMath est une introduction multilingue aux réseaux de neurones centrée sur le code. Le site explique pas à pas une implémentation complète avec NumPy ; les textes pédagogiques plus développés sont proposés séparément au format PDF.">
-  <meta name="theme-color" content="#090d12">
-  <link rel="canonical" href="https://neuralmath.org/fr/index.html">
-  <link rel="alternate" hreflang="en" href="https://neuralmath.org/en/index.html">
-  <link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/index.html">
-  <link rel="alternate" hreflang="es" href="https://neuralmath.org/es/index.html">
-  <link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/index.html">
-  <link rel="alternate" hreflang="it" href="https://neuralmath.org/it/index.html">
-  <link rel="alternate" hreflang="de" href="https://neuralmath.org/de/index.html">
-  <link rel="alternate" hreflang="x-default" href="https://neuralmath.org/en/index.html">
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/css/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuralMath — les mathématiques au cœur d’un réseau de neurones</title><meta name="description" content="Une introduction multilingue, centrée sur le code, aux mathématiques des réseaux de neurones à partir d’un exemple NumPy complet."><meta name="theme-color" content="#090d12">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://neuralmath.org/fr/">
+<link rel="alternate" hreflang="en" href="https://neuralmath.org/"><link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/"><link rel="alternate" hreflang="es" href="https://neuralmath.org/es/"><link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/"><link rel="alternate" hreflang="it" href="https://neuralmath.org/it/"><link rel="alternate" hreflang="de" href="https://neuralmath.org/de/"><link rel="alternate" hreflang="x-default" href="https://neuralmath.org/">
 </head>
-<body>
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="../fr/index.html"><span class="brand-mark">N</span>NeuralMath</a>
-    <nav class="nav" aria-label="Primary"><a href="../fr/index.html" aria-current="page">Accueil</a><a href="../fr/python.html">Exemple Python</a><a href="../fr/papers.html">Textes PDF</a><a href="../fr/extensions.html">Extensions</a><a href="../fr/about.html">À propos</a></nav>
-    <div class="lang-switch"><select aria-label="Language" data-language-select><option data-path="../en/index.html">English</option><option data-path="../pt/index.html">Português</option><option data-path="../es/index.html">Español</option><option selected data-path="../fr/index.html">Français</option><option data-path="../it/index.html">Italiano</option><option data-path="../de/index.html">Deutsch</option></select></div>
-  </div>
-</header>
-<main>
-<section class="hero"><div class="container hero-grid">
-  <div><div class="eyebrow">Réseaux de neurones, des équations au code</div><h1>Lisez le réseau de neurones directement dans le code Python.</h1><p class="lead">NeuralMath est une introduction multilingue aux réseaux de neurones centrée sur le code. Le site explique pas à pas une implémentation complète avec NumPy ; les textes pédagogiques plus développés sont proposés séparément au format PDF.</p>
-  <div class="actions"><a class="btn primary" href="../fr/python.html">Explorer l’exemple Python</a><a class="btn" href="../fr/papers.html">Lire les textes PDF</a></div></div>
-  <figure class="figure-card"><img src="../assets/img/neural_network_output_en.png" alt="NeuralMath decision boundary"><figcaption>Régions de décision apprises par l’exemple NumPy actuel. Le site et le code téléchargeable utilisent la même expérience canonique.</figcaption></figure>
-</div></section>
-<section class="section soft"><div class="container"><div class="section-heading"><h2>Un exemple, étudié en profondeur</h2><p class="lead">Le site est volontairement organisé autour d’un unique programme reproductible. Chaque partie du code est reliée à l’idée mathématique qu’elle met en œuvre, sans transformer les pages web en un second manuel.</p></div><div class="grid-3"><article class="card"><h3>Le code d’abord</h3><p>Commencez par le programme exécutable et parcourez les données, la standardisation, l’architecture, la propagation avant, la rétropropagation, l’entraînement et la visualisation.</p></article><article class="card"><h3>La pédagogie en PDF</h3><p>Les explications mathématiques longues se trouvent dans les PDF afin que le site reste concis et utile comme compagnon computationnel.</p></article><article class="card"><h3>Conçu pour évoluer</h3><p>Les futurs modules pourront réutiliser la même structure pour la classification multiclasse, les réseaux plus profonds, la vérification des gradients, l’optimisation et les démonstrations interactives.</p></article></div></div></section>
-<section class="section"><div class="container"><div class="section-heading"><h2>L’exemple actuel en un coup d’œil</h2><p class="lead">Un classifieur binaire pour des mesures synthétiques mais physiquement plausibles de pommes et d’oranges, implémenté à partir de zéro avec NumPy.</p></div><div class="grid-2"><div class="step"><span class="step-number">1</span><div>Construire un jeu de données bidimensionnel étendu</div></div><div class="step"><span class="step-number">2</span><div>Standardiser la masse et le diamètre</div></div><div class="step"><span class="step-number">3</span><div>Créer un réseau 2–12–1</div></div><div class="step"><span class="step-number">4</span><div>Calculer la propagation avant</div></div><div class="step"><span class="step-number">5</span><div>Rétropropager la perte quadratique</div></div><div class="step"><span class="step-number">6</span><div>Entraîner par descente stochastique avec mélange</div></div><div class="step"><span class="step-number">7</span><div>Tracer la frontière de décision apprise</div></div></div>
-<div class="callout" style="margin-top:32px"><strong>Reproductible par conception</strong>L’exemple utilise une graine aléatoire fixe et rend explicites tous les paramètres entraînables. Il peut être exécuté localement, étudié dans Colab ou servir de point de départ à de nouvelles extensions.</div>
-<div class="kpis"><div class="kpi"><div class="value">64</div><div class="label">training points</div></div><div class="kpi"><div class="value">8</div><div class="label">test points</div></div><div class="kpi"><div class="value">12</div><div class="label">ReLU hidden neurons</div></div><div class="kpi"><div class="value">49</div><div class="label">trainable parameters</div></div></div>
-</div></section></main>
-<footer class="footer">
-  <div class="container footer-grid">
-    <div><strong>NeuralMath</strong><br>Americo Cunha Jr · <a href="https://americocunha.org">americocunha.org</a> · <a href="https://github.com/americocunhajr/NeuralMath">GitHub</a></div>
-    <div>© 2026 · <a href="https://neuralmath.org">neuralmath.org</a></div>
-  </div>
-</footer>
-<script src="../assets/js/site.js" defer></script>
-</body>
-</html>
+<body><header class="topbar"><div class="flags"><a class="flag" href="../index.html" hreflang="en" lang="en" title="English" aria-label="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a class="flag" href="../pt/index.html" hreflang="pt" lang="pt" title="Português" aria-label="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español" aria-label="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a class="flag current" href="../fr/index.html" hreflang="fr" lang="fr" title="Français" aria-label="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano" aria-label="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch" aria-label="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a></div></header>
+<main class="page">
+<div class="hero"><div class="brandline"><img class="mark" src="../assets/favicon.svg" alt=""><span>Mathématiques · réseaux de neurones · Python</span></div><h1><span>NeuralMath</span></h1><p class="subtitle">Une introduction centrée sur le code, conçue pour rendre visible chaque opération mathématique d’un réseau de neurones.</p><p>NeuralMath est un projet pédagogique destiné aux étudiants, enseignants et lecteurs à profil quantitatif qui souhaitent comprendre ce qu’un réseau de neurones calcule réellement. Le site suit un exemple complet en Python/NumPy, depuis les données jusqu’à la frontière de décision apprise. Les développements mathématiques plus longs restent dans le texte pédagogique associé, afin que cette page demeure linéaire, exécutable et facile à consulter.</p><p class="meta-links"><a href="../pdf/pt/A_anatomia_matematica_de_uma_rede_neural.pdf">Lire le texte pédagogique original (PDF, portugais)</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Colab</a></p></div>
+<div class="citation"><h2>Comment citer le texte pédagogique</h2><p>Americo Cunha Jr. « A anatomia matemática de uma rede neural ». Manuscrit soumis à Professor de Matemática Online (PMO), 2026.</p><p class="small">La référence sera mise à jour avec le volume, les pages et le DOI après publication. Pour un travail académique, citez le texte pédagogique plutôt que ce site web.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></div>
+<section id="s1"><span class="section-no">1</span><h2>Fonctions d’activation</h2><p>L’implémentation commence par les deux non-linéarités utilisées par le réseau. ReLU agit dans la couche cachée et la sigmoïde transforme le score final en une valeur comprise entre 0 et 1.</p><pre class=""><code>def relu(s):
+    return np.maximum(0, s)
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))</code></pre></section><section id="s2"><span class="section-no">2</span><h2>Construire un jeu de données synthétique étendu</h2><p>Nous utilisons la masse et le diamètre comme deux caractéristiques physiques. Les données sont synthétiques, mais restent dans des plages plausibles pour l’exemple pédagogique. Une courbe de référence lisse sert uniquement à produire une géométrie non triviale ; elle n’est jamais fournie au réseau.</p><pre class=""><code>def base_boundary(m):
+    return (
+        6.68
+        + 0.74 * np.exp(-((m - 155) / 20) ** 2)
+        + 1.50 / (1 + np.exp(-(m - 202) / 5))
+    )
+
+X_train = np.vstack([apple_1, apple_2, orange_1, orange_2])
+y_train = np.array([1.0] * 32 + [0.0] * 32)</code></pre></section><section id="s3"><span class="section-no">3</span><h2>Standardiser les entrées</h2><p>La masse et le diamètre n’ont pas la même échelle numérique. La moyenne et l’écart-type sont calculés uniquement sur l’ensemble d’entraînement, puis réutilisés de manière cohérente.</p><pre class=""><code>mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std</code></pre></section><section id="s4"><span class="section-no">4</span><h2>Initialiser un réseau 2–12–1</h2><p>Le modèle possède deux entrées, douze neurones ReLU cachés et une sortie sigmoïde. Cela représente 49 paramètres entraînables, tout en gardant un réseau suffisamment petit pour être inspecté ligne par ligne.</p><pre class=""><code>rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0</code></pre></section><section id="s5"><span class="section-no">5</span><h2>Propagation avant</h2><p>Une prédiction est une suite de transformations affines et de fonctions d’activation. Ces quatre lignes constituent le cœur calculatoire de l’inférence.</p><pre class=""><code>z1 = W1 @ x + b1
+h = relu(z1)
+z2 = W2 @ h + b2
+y_hat = sigmoid(z2)</code></pre></section><section id="s6"><span class="section-no">6</span><h2>Rétropropagation</h2><p>Les dérivées sont écrites explicitement. Aucune différentiation automatique n’est utilisée : la règle de la chaîne apparaît directement dans le code, ce qui constitue le point pédagogique central.</p><pre class=""><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+dW2 = delta2 * h
+db2 = delta2
+
+delta1 = (delta2 * W2) * relu_derivative(z1)
+dW1 = np.outer(delta1, x)
+db1 = delta1</code></pre></section><section id="s7"><span class="section-no">7</span><h2>Descente de gradient stochastique</h2><p>À chaque époque, les exemples sont mélangés et les paramètres sont mis à jour après chaque observation. La procédure réutilise les gradients ci-dessus afin de réduire la perte.</p><pre class=""><code>for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        # forward pass and backpropagation
+        W1 -= learning_rate * dW1
+        b1 -= learning_rate * db1
+        W2 -= learning_rate * dW2
+        b2 -= learning_rate * db2</code></pre></section><section id="s8"><span class="section-no">8</span><h2>Résultat de l’entraînement</h2><p>Avec la graine aléatoire et les hyperparamètres fixés ici, le petit réseau classe correctement les 64 exemples d’entraînement et les 8 exemples de test illustratifs selon les étiquettes définies pour l’expérience synthétique.</p><pre class="terminal"><code>Final mean loss: 0.0001785644
+Training accuracy: 1.0000
+Illustrative test accuracy: 1.0000
+
+Test outputs:
+[121.0, 7.20] -&gt; 0.999927 -&gt; apple
+[135.0, 7.45] -&gt; 0.999900 -&gt; apple
+[152.0, 7.75] -&gt; 0.999780 -&gt; apple
+[171.0, 7.32] -&gt; 0.986972 -&gt; apple
+[121.0, 6.28] -&gt; 0.000019 -&gt; orange
+[152.0, 6.86] -&gt; 0.000009 -&gt; orange
+[189.0, 6.48] -&gt; 0.000028 -&gt; orange
+[208.0, 7.55] -&gt; 0.014957 -&gt; orange</code></pre></section><section id="s9"><span class="section-no">9</span><h2>Tracer la frontière de décision apprise</h2><p>Après l’entraînement, le réseau est évalué sur une grille dense. Le niveau y-hat = 0,5 devient la frontière de décision apprise et révèle la géométrie non linéaire construite par la couche cachée.</p><pre class=""><code>masses = np.linspace(116, 214, 500)
+diameters = np.linspace(6.0, 8.85, 500)
+M, D = np.meshgrid(masses, diameters)
+grid = np.column_stack([M.ravel(), D.ravel()])
+P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+ax.contour(M, D, P, levels=[0.5], linewidths=2.2)</code></pre><figure class="figure"><img src="../assets/img/neural_network_output_en.png" alt="NeuralMath decision boundary"><figcaption>Régions de décision apprises par l’exemple NumPy canonique. Tous les points d’entraînement restent visibles ; la courbe mise en évidence correspond au niveau y-hat = 0,5.</figcaption></figure></section>
+<section><span class="section-no">10</span><h2>Ressources complètes</h2><p>Les scripts complets, notebooks et sorties reproductibles sont disponibles ci-dessous. Le code présenté dans toutes les langues conserve les mêmes identifiants canoniques en anglais afin d’éviter toute divergence entre traductions.</p><p class="linksline"><a href="../assets/code/neural_network_from_scratch.py">Python source</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub repository</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Google Colab</a><a href="../assets/img/neural_network_output_en.pdf">Figure (PDF)</a></p></section>
+<section><h2>Extensions futures</h2><p>NeuralMath est conçu pour évoluer comme une suite d’exemples calculatoires. Les extensions prévues comprennent la dynamique de l’entraînement, la contribution des neurones cachés, la vérification des gradients, la classification multiclasse avec softmax, des réseaux plus profonds et de petites expériences interactives dans le navigateur.</p></section>
+<section><h2>À propos de l’auteur</h2><p class="bio">Americo Cunha Jr est scientifique du calcul, chercheur au Laboratório Nacional de Computação Científica (LNCC) et professeur associé à l’Universidade do Estado do Rio de Janeiro (UERJ). Ses recherches se situent à l’interface de la dynamique non linéaire, de la modélisation mathématique et numérique, de la quantification des incertitudes, des problèmes inverses et de l’intelligence artificielle/apprentissage automatique scientifique. Il a reçu le prix ABMEC pour jeunes scientifiques en 2023 et participe à des collaborations scientifiques et éditoriales internationales.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&hl=en">Google Scholar</a></p></section>
+<section><h2>Licence</h2><div class="license-row"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="Creative Commons Attribution 4.0 International"></a><p>Sauf indication contraire, le texte explicatif du site et ses figures originales sont mis à disposition sous licence Creative Commons Attribution 4.0 International (CC BY 4.0). Le PDF pédagogique peut être soumis à la licence de sa version publiée par la revue. Le code source est distribué séparément et devrait utiliser une licence logicielle dédiée.</p></div></section>
+<section class="support" data-support hidden><h2>Soutenir NeuralMath</h2><p>Si ce matériel gratuit vous a été utile, vous pouvez soutenir sa maintenance par une petite contribution de 5 US$. Ce soutien est entièrement facultatif et ne modifie jamais l’accès au contenu.</p><p><a href="#">Soutenir le projet</a></p></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script src="../assets/js/site.js" defer></script></body></html>
