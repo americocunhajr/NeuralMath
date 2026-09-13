@@ -79,59 +79,59 @@ layer is genuinely useful.
 The pedagogical path begins with a two-dimensional classification problem.
 A fruit is represented by
 
-\[
+$$
 \mathbf{x}
 =
 \begin{bmatrix}
 x_1 \\
 x_2
 \end{bmatrix},
-\]
+$$
 
-where \(x_1\) is mass and \(x_2\) is diameter.
+where $x_1$ is mass and $x_2$ is diameter.
 
 A linear classifier evaluates
 
-\[
+$$
 s = w_1x_1 + w_2x_2 + b.
-\]
+$$
 
 This affine expression is the mathematical core of an artificial neuron. A
 nonlinear activation then transforms the score,
 
-\[
+$$
 \widehat{y} = g(s).
-\]
+$$
 
 By connecting several neurons, the model becomes a composition of functions.
 For the computational example,
 
-\[
+$$
 \mathbf{z}^{(1)} = W^{(1)}\mathbf{x} + \mathbf{b}^{(1)},
 \qquad
 \mathbf{h} = \operatorname{ReLU}(\mathbf{z}^{(1)}),
-\]
+$$
 
 followed by
 
-\[
+$$
 z^{(2)} = W^{(2)}\mathbf{h} + b^{(2)},
 \qquad
 \widehat{y}=\sigma(z^{(2)}).
-\]
+$$
 
 Training adjusts the parameters so as to reduce a loss. For one example,
 
-\[
+$$
 E = \frac{1}{2}(y-\widehat{y})^2,
-\]
+$$
 
 and the parameters are updated according to
 
-\[
+$$
 \theta \leftarrow
 \theta - \eta\frac{\partial E}{\partial\theta}.
-\]
+$$
 
 The repository implements these derivatives explicitly so that the code mirrors
 the mathematics.
