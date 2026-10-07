@@ -7,41 +7,33 @@
 [![Python](https://img.shields.io/badge/Python-NumPy-7b8cff)](https://www.python.org/)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--8342--0363-A6CE39)](https://orcid.org/0000-0002-8342-0363)
 
-**NeuralMath** is an independent educational project that develops a transparent,
-mathematically grounded introduction to neural networks. Its central idea is
-simple: a neural network should not be introduced as a black box. The equations,
-the geometry, the learning algorithm, and the Python implementation should be
-read together.
+**NeuralMath** is an open educational project developed by Dr. Americo Cunha Jr. Its goal is to make the mathematical operations inside a small neural network visible, inspectable, and reproducible for a large audience with relatively low mathematical training in calculus and statistics. The equations, geometry, learning algorithm, and Python implementation are designed to be read together.
 
-The project combines a concise web narrative, a longer pedagogical text in PDF,
-reproducible Python/NumPy code, notebooks, figures, and multilingual versions of
-the website.
+The project combines a rich multilingual web narrative, the complete pedagogical
+texts in PDF, reproducible Python/NumPy code, six language-specific executable notebooks, and all
+article figures integrated into the website.
 
-**Website:** https://neuralmath.org  
+**Website:** https://neuralmath.org
 **Repository:** https://github.com/americocunhajr/NeuralMath
 
 ---
 
 ## Citation
 
-If NeuralMath is useful in teaching, research, course material, talks, or
-derivative work, please **cite the pedagogical text rather than the website**.
+Please cite the original pedagogical text in Portuguese rather than the website or a translation.
 
-> **Americo Cunha Jr**, *A anatomia matemática de uma rede neural*, manuscript submitted to **Professor de Matemática Online (PMO)**, 2026.
+> Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.
 
 ```bibtex
-@article{CunhaJr2026NeuralMath,
-  author  = {Americo Cunha Jr},
-  title   = {A anatomia matem{\'a}tica de uma rede neural},
-  journal = {Professor de Matem{\'a}tica Online},
-  year    = {2026},
-  note    = {Manuscript submitted for publication}
+@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
 }
 ```
 
-The bibliographic entry above is provisional. It should be replaced by the
-published PMO reference, including DOI, volume, number, and pages, as soon as
-those data become available.
+The bibliographic entry will be updated with volume, pages and DOI after publication.
 
 ---
 
@@ -69,7 +61,7 @@ mass–diameter ranges. The geometry is intentionally nonlinear so that the hidd
 layer is genuinely useful.
 
 <p align="center">
-  <img src="output/neural_network_output_en.png" alt="Decision regions learned by the NeuralMath example" width="82%">
+  <img src="docs/assets/img/neural_network_output_en.png" alt="Decision regions learned by the NeuralMath example" width="82%">
 </p>
 
 ---
@@ -144,70 +136,57 @@ the mathematics.
 
 ## Repository structure
 
-The canonical project is intended to follow this organization:
-
 ```text
 NeuralMath/
 ├── README.md
-├── LICENSE.txt
-├── CITATION.cff
+├── LICENSE
+├── WEBSITE_UPDATE_PROMPT.md
 ├── requirements.txt
-│
-├── rede_neural_do_zero.py
-├── neural_network_from_scratch.py
-├── NeuralMath_Colab_PT_BR.ipynb
-├── NeuralMath_Colab_EN.ipynb
-│
-├── output/
-│   ├── neural_network_output_pt.png
-│   ├── neural_network_output_pt.pdf
-│   ├── neural_network_output_en.png
-│   ├── neural_network_output_en.pdf
-│   ├── training_results_pt.txt
-│   └── training_results_en.txt
-│
-├── paper/
-│   └── [pedagogical PDF / preprint]
-│
+├── PythonCodes/
+│   ├── rede_neural_do_zero.py
+│   └── neural_network_from_scratch.py
+├── ColabCodes/
+│   ├── NeuralMath_Colab_PT.ipynb
+│   ├── NeuralMath_Colab_EN.ipynb
+│   ├── NeuralMath_Colab_ES.ipynb
+│   ├── NeuralMath_Colab_FR.ipynb
+│   ├── NeuralMath_Colab_IT.ipynb
+│   ├── NeuralMath_Colab_DE.ipynb
+│   └── NeuralMath_Colab.ipynb  # English compatibility alias
 └── docs/
     ├── index.html
-    ├── pt/
-    ├── es/
-    ├── fr/
-    ├── it/
-    ├── de/
+    ├── pt/  es/  fr/  it/  de/
     ├── assets/
-    └── pdf/
+    │   ├── css/
+    │   ├── js/
+    │   ├── code/
+    │   └── img/{en,pt,es,fr,it,de}/
+    └── pdf/{en,pt,es,fr,it,de}/
 ```
 
-The `docs/` directory is used by GitHub Pages to publish
-**https://neuralmath.org**.
+The `docs/` directory is published directly by GitHub Pages at
+**https://neuralmath.org**; no frontend build step is required.
 
 ---
 
 ## Website and languages
 
-The website is designed as a **single continuous pedagogical page per language**.
-Instead of separating theory and code into independent sections of the site, the
-reader progresses through a compact narrative:
+The website is a **rich continuous pedagogical edition in six languages**. Each
+language page follows the complete conceptual path of the article rather than
+showing isolated code excerpts:
 
-**problem → geometry → neuron → activation → network → loss → gradients →
-backpropagation → Python → learned decision boundary**
+**problem → numerical representation → linear classifier → artificial neuron →
+activation functions → multilayer network → loss and gradients →
+backpropagation → NumPy implementation → learned decision boundary**
 
-Longer derivations and the complete pedagogical treatment remain available as
-PDF documents.
+All seven article figures are embedded in the corresponding translated web
+edition. Every language page also provides direct access to its PDF, the GitHub
+repository, and the executable Google Colab notebook.
 
-The current website structure supports:
+Language selector order: **Português · English · Español · Français · Italiano · Deutsch**.
 
-- English;
-- Portuguese;
-- Spanish;
-- French;
-- Italian;
-- German.
-
-The mathematical model and computational experiment are the same in every
-language; only the exposition is translated.
+The mathematical model and computational experiment are shared across languages;
+theory, captions, and exposition follow the corresponding manuscript translation.
 
 ---
 
@@ -238,13 +217,13 @@ pip install -r requirements.txt
 Run the English version:
 
 ```bash
-python neural_network_from_scratch.py
+python PythonCodes/neural_network_from_scratch.py
 ```
 
 or the Portuguese version:
 
 ```bash
-python rede_neural_do_zero.py
+python PythonCodes/rede_neural_do_zero.py
 ```
 
 The scripts train the network, print the numerical results, and regenerate the
@@ -254,13 +233,16 @@ decision-region figure.
 
 ## Google Colab
 
-The notebooks provide the same experiment in a browser-based environment:
+Each language page links to a notebook with instructions in the same language. The Portuguese notebook uses Portuguese identifiers; the other notebooks use English variable and function names while localizing explanations, printed text, and plot labels.
 
-- **English:**  
-  https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb
+- **Português:** `ColabCodes/NeuralMath_Colab_PT.ipynb`
+- **English:** `ColabCodes/NeuralMath_Colab_EN.ipynb`
+- **Español:** `ColabCodes/NeuralMath_Colab_ES.ipynb`
+- **Français:** `ColabCodes/NeuralMath_Colab_FR.ipynb`
+- **Italiano:** `ColabCodes/NeuralMath_Colab_IT.ipynb`
+- **Deutsch:** `ColabCodes/NeuralMath_Colab_DE.ipynb`
 
-- **Português:**  
-  https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_PT_BR.ipynb
+`ColabCodes/NeuralMath_Colab.ipynb` is retained as a backwards-compatible alias of the English notebook.
 
 ---
 
@@ -345,3 +327,37 @@ If you use NeuralMath in a course, lecture, workshop, research project, or
 educational resource, citation of the associated pedagogical text is appreciated.
 Feedback, corrections, translations, and mathematically motivated extensions are
 also welcome.
+
+## Multilingual web edition
+
+NeuralMath.org now provides the full pedagogical exposition, translated article PDF, Figures 1–7, and a language-specific Google Colab notebook in **26 languages**. The Portuguese original remains the bibliographic text cited by every page.
+
+- 🇧🇷 **Português** — `/pt/`
+- 🇬🇧 **English** — `/`
+- 🇪🇸 **Español** — `/es/`
+- 🇫🇷 **Français** — `/fr/`
+- 🇮🇹 **Italiano** — `/it/`
+- 🇩🇪 **Deutsch** — `/de/`
+- 🇸🇦 **العربية** — `/ar/`
+- 🇧🇩 **বাংলা** — `/bn/`
+- 🇨🇿 **Čeština** — `/cs/`
+- 🇬🇷 **Ελληνικά** — `/el/`
+- 🇮🇷 **فارسی** — `/fa/`
+- 🇮🇳 **हिन्दी** — `/hi/`
+- 🇭🇺 **Magyar** — `/hu/`
+- 🇮🇩 **Bahasa Indonesia** — `/id/`
+- 🇯🇵 **日本語** — `/ja/`
+- 🇰🇷 **한국어** — `/ko/`
+- 🇳🇱 **Nederlands** — `/nl/`
+- 🇵🇱 **Polski** — `/pl/`
+- 🇷🇴 **Română** — `/ro/`
+- 🇷🇺 **Русский** — `/ru/`
+- 🇸🇪 **Svenska** — `/sv/`
+- 🇹🇷 **Türkçe** — `/tr/`
+- 🇺🇦 **Українська** — `/uk/`
+- 🇵🇰 **اردو** — `/ur/`
+- 🇻🇳 **Tiếng Việt** — `/vi/`
+- 🇨🇳 **中文** — `/zh/`
+
+For every non-Portuguese notebook, variable and function identifiers remain in English while the explanatory notebook text follows the page language.
+

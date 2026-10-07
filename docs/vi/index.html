@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — Giải phẫu toán học của mạng nơ-ron</title>
+<meta content="Chúng tôi trình bày một nhập môn toán học về mạng nơ-ron nhân tạo thông qua một bài toán phân loại đơn giản. Một bộ phân loại tuyến tính dẫn tự nhiên tới khái niệm nơ-ron nhân tạo; từ đó, chúng tôi thảo luận về trọng số, độ lệch, hàm kích hoạt và cách ghép các nơ-ron thành một mạng nhỏ. Quá trình hu" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/vi/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag current" href="index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">Giải phẫu toán học của mạng nơ-ron</p>
+<p>Chúng tôi trình bày một nhập môn toán học về mạng nơ-ron nhân tạo thông qua một bài toán phân loại đơn giản. Một bộ phân loại tuyến tính dẫn tự nhiên tới khái niệm nơ-ron nhân tạo; từ đó, chúng tôi thảo luận về trọng số, độ lệch, hàm kích hoạt và cách ghép các nơ-ron thành một mạng nhỏ. Quá trình huấn luyện được giới thiệu qua hàm sai số, đạo hàm, hạ gradient và lan truyền ngược. Cuối cùng, mô hình được cài đặt trực tiếp bằng Python để làm rõ mối liên hệ giữa các phương trình và thuật toán. Mục tiêu là cho thấy những ý tưởng quen thuộc từ hình học giải tích, đại số tuyến tính và giải tích vi phân cung cấp một nền tảng dễ tiếp cận để hiểu các cơ chế cơ bản của mạng nơ-ron.</p>
+<div class="resource-bar"><a href="../pdf/vi/Article_PMO2026_NN_VI.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_VI.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>Văn bản sư phạm gốc</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Phiên bản web này và các bản dịch dựa trên bản thảo gốc bằng tiếng Bồ Đào Nha.</p></div>
+<nav aria-label="Mục lục" class="toc"><h2>Mục lục</h2><ol><li><a href="#khi-nào-máy-tính-có-thể-học">Khi nào máy tính có thể học?</a></li><li><a href="#biểu-diễn-bài-toán-bằng-toán-học">Biểu diễn bài toán bằng toán học</a></li><li><a href="#đường-thẳng-như-một-bộ-phân-loại">Đường thẳng như một bộ phân loại</a></li><li><a href="#nơ-ron-nhân-tạo">Nơ-ron nhân tạo</a></li><li><a href="#tại-sao-cần-hàm-kích-hoạt">Tại sao cần hàm kích hoạt?</a></li><li><a href="#xây-dựng-một-mạng-nơ-ron-nhỏ">Xây dựng một mạng nơ-ron nhỏ</a></li><li><a href="#mạng-nơ-ron-học-như-thế-nào">Mạng nơ-ron học như thế nào?</a></li><li><a href="#từ-toán-học-đến-python">Từ toán học đến Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="khi-nào-máy-tính-có-thể-học"><span class="section-no">01</span><h2>Khi nào máy tính có thể học?</h2>
+<p>Trong đời sống hằng ngày, chúng ta đưa ra các quyết định phân loại gần như không nhận ra. Nhìn một quả, ta nhanh chóng nhận biết đó là táo hay cam; khi một tin nhắn đến điện thoại, ta phân biệt cuộc trao đổi hợp lệ với quảng cáo không mong muốn; trong phân tích y khoa, nhiều phép đo có thể được kết hợp để hỗ trợ một quyết định; và tại các tổ chức tài chính, nhiều thông tin được đánh giá trước khi cấp tín dụng. Trong mọi ví dụ này, nhiều đặc trưng được xem xét đồng thời để tạo ra một câu trả lời.</p>
+<p>Trong nhiều chương trình máy tính truyền thống, các quy tắc tạo ra câu trả lời được lập trình viên viết một cách tường minh. Cách tiếp cận này hoạt động tốt khi các quy tắc đã biết và có thể diễn đạt rõ ràng. Nó trở nên kém hiệu quả hơn khi dữ liệu biến thiên mạnh hoặc khi khó xác định trước mọi điều kiện cần thiết để đưa ra một quyết định tốt. Từ đây nảy sinh một câu hỏi tự nhiên:</p>
+<div class="center">
+<p><em>Liệu ta có thể xây dựng một chương trình học quy tắc ra quyết định từ các ví dụ, thay vì phải được cung cấp sẵn các quy tắc đó hay không?</em></p>
+</div>
+<p>Đây là một trong những ý tưởng trung tâm của <em>học máy</em>, một lĩnh vực của trí tuệ nhân tạo nghiên cứu các phương pháp điều chỉnh mô hình dựa trên dữ liệu . Trong bài toán học có giám sát, thuật toán nhận các ví dụ kèm theo đáp án đúng, và ta tìm một mô hình cũng có khả năng đưa ra các dự đoán hữu ích cho những trường hợp không được dùng trong quá trình huấn luyện. Trong số nhiều mô hình được phát triển cho mục đích này, <em>mạng nơ-ron nhân tạo</em> trở nên quan trọng trong các ứng dụng như nhận dạng ảnh, xử lý ngôn ngữ, phân tích tín hiệu và dự báo chuỗi thời gian .</p>
+<p>Việc sử dụng mạng nơ-ron như một cầu nối giữa toán học, tính toán và giáo dục phổ thông đã được Batista và Martins  thảo luận trên <em>Professor de Matemática Online</em>, với các hoạt động liên quan đến đào tạo giáo viên, Python và nhận dạng chữ số. Bài báo này đi theo một hướng bổ sung. Mục tiêu chính của chúng tôi là làm rõ toán học bên trong một mạng nơ-ron nhỏ, bắt đầu từ hình học giải tích và tiến từng bước đến việc tính gradient và cài đặt lan truyền ngược bằng tay.</p>
+<p>Mặc dù các ứng dụng hiện đại có vẻ rất tinh vi, cốt lõi toán học của mạng nơ-ron có thể được giới thiệu bằng những ý tưởng tương đối quen thuộc. Ở mức cơ bản, một mạng nơ-ron là hợp của các hàm có tham số được điều chỉnh từ dữ liệu. Ta bắt đầu với một bài toán hình học đơn giản, diễn giải lại một đường phân cách như một nơ-ron nhân tạo, nối nhiều nơ-ron với nhau, nghiên cứu vai trò của hàm kích hoạt và chỉ ra cách dùng đạo hàm để tự động điều chỉnh các tham số của mạng. Sau đó, ta cài đặt một ví dụ nhỏ hoàn chỉnh bằng Python, duy trì mối liên hệ trực tiếp giữa các phương trình và mã lệnh.</p>
+</section><section class="article-section" id="biểu-diễn-bài-toán-bằng-toán-học"><span class="section-no">02</span><h2>Biểu diễn bài toán bằng toán học</h2>
+<p>Để hiểu mạng nơ-ron hoạt động như thế nào, ta bắt đầu với một bài toán cố ý được đơn giản hóa: phân biệt táo với cam. Một quả có nhiều đặc trưng có thể hữu ích cho nhiệm vụ này, chẳng hạn màu sắc, khối lượng, đường kính, kết cấu và mùi. Tuy nhiên, mô hình toán học ban đầu không cần chứa toàn bộ sự phức tạp đó. Ta chỉ sử dụng hai đại lượng dễ đo: khối lượng, tính bằng gam, và đường kính, tính bằng xentimét.</p>
+<p>Mỗi quả sẽ được biểu diễn bởi cặp có thứ tự <span class="math display">\[(x_1,x_2),\]</span> với <span class="math display">\[x_1=\text{khối lượng}
+\qquad\text{và}\qquad
+x_2=\text{đường kính}.\]</span></p>
+<p>Vì vậy, cặp <span class="math inline">\((155,\;7.2)\)</span> biểu diễn một quả có khối lượng <span class="math inline">\(155\)</span> g và đường kính <span class="math inline">\(7.2\)</span> cm. Khi thay một vật thể vật lý bằng hai phép đo số, ta gắn mỗi quả với một điểm trên mặt phẳng Descartes: tọa độ thứ nhất biểu diễn khối lượng và tọa độ thứ hai biểu diễn đường kính. Hình <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> minh họa cách biểu diễn này cho một tập giả định gồm táo và cam.</p>
+<figure id="fig:fruits">
+<img alt="Từ quan sát vật lý đến mô hình hóa toán học. Mỗi quả trước hết được mô tả bằng hai đại lượng đo được — khối lượng và đường kính — rồi được biểu diễn bởi cặp có thứ tự \((x_1,x_2)\) . Trên mặt phẳng khối lượng–đường kính, mỗi quan sát trở thành một điểm; vì thế việc phân biệt táo " decoding="async" loading="lazy" src="../assets/img/vi/Fig01.png">
+<figcaption>Từ quan sát vật lý đến mô hình hóa toán học. Mỗi quả trước hết được mô tả bằng hai đại lượng đo được — khối lượng và đường kính — rồi được biểu diễn bởi cặp có thứ tự <span class="math inline">\((x_1,x_2)\)</span>. Trên mặt phẳng khối lượng–đường kính, mỗi quan sát trở thành một điểm; vì thế việc phân biệt táo và cam có thể được diễn giải lại như một bài toán hình học nhằm tách hai lớp.</figcaption>
+</img></figure>
+<p>Phép biến đổi này thay đổi cách ta nhìn bài toán. Thay vì hỏi trực tiếp làm thế nào để nhận biết táo hay cam, ta có thể đặt một câu hỏi hình học: làm thế nào để tách các điểm thuộc hai lớp trên mặt phẳng? Sự thay đổi góc nhìn này là nền tảng trong học máy. Ảnh, văn bản, âm thanh và tín hiệu thí nghiệm đều phải được chuyển thành biểu diễn số trước khi thuật toán có thể xử lý. Trong ví dụ của ta, mỗi đối tượng chỉ có hai tọa độ; trong các ứng dụng thực tế, một biểu diễn có thể chứa hàng trăm, hàng nghìn, thậm chí hàng triệu thành phần. Nguyên lý vẫn như nhau: mỗi ví dụ được gắn với một tập số, và mô hình tìm một quy tắc ánh xạ biểu diễn đó tới câu trả lời mong muốn.</p>
+<p>Ta bắt đầu với quy tắc hình học đơn giản nhất và hỏi liệu một đường thẳng duy nhất có thể tách các điểm táo khỏi các điểm cam đủ tốt hay không.</p>
+</section><section class="article-section" id="đường-thẳng-như-một-bộ-phân-loại"><span class="section-no">03</span><h2>Đường thẳng như một bộ phân loại</h2>
+<p>Sau khi mỗi quả được biểu diễn thành một điểm trên mặt phẳng Descartes, phân loại trở thành một bài toán hình học: liệu một đường thẳng có thể tách táo khỏi cam hay không? Câu hỏi này chứa đựng ý tưởng cơ bản của một họ phương pháp học máy quan trọng, gọi là <em>bộ phân loại tuyến tính</em>.</p>
+<p>Xét một đường thẳng đi qua tập dữ liệu như trong Hình <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>. Đường này chia mặt phẳng thành hai nửa mặt phẳng. Nếu phần lớn các điểm táo nằm ở một phía và phần lớn các điểm cam nằm ở phía kia, vị trí của một quả mới đối với đường thẳng có thể được dùng làm quy tắc phân loại. Sau khi đo khối lượng và đường kính, ta biểu diễn quả đó thành một điểm và xác định điểm nằm ở phía nào của đường thẳng.</p>
+<figure id="fig:linear_classifier">
+<img alt="Ví dụ về một bộ phân loại tuyến tính trên mặt phẳng khối lượng–đường kính. Đường thẳng đóng vai trò là ranh giới quyết định: các điểm trong một nửa mặt phẳng nhận một lớp, còn các điểm trong nửa mặt phẳng đối diện nhận lớp kia. Vì thế, quyết định chỉ phụ thuộc vào điểm nằm ở phía" decoding="async" loading="lazy" src="../assets/img/vi/Fig02.png"/>
+<figcaption>Ví dụ về một bộ phân loại tuyến tính trên mặt phẳng khối lượng–đường kính. Đường thẳng đóng vai trò là ranh giới quyết định: các điểm trong một nửa mặt phẳng nhận một lớp, còn các điểm trong nửa mặt phẳng đối diện nhận lớp kia. Vì thế, quyết định chỉ phụ thuộc vào điểm nằm ở phía nào của đường thẳng.</figcaption>
+</figure>
+<p>Trên mặt phẳng Descartes <span class="math inline">\((x_1,x_2)\)</span>, một đường thẳng có thể được mô tả bởi <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>Vectơ <span class="math inline">\((w_1,w_2)\)</span> vuông góc với đường thẳng và do đó xác định hướng của nó, trong khi tham số <span class="math inline">\(b\)</span> góp phần xác định vị trí. Biểu diễn này có một mức dư thừa nhỏ: nhân đồng thời <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> và <span class="math inline">\(b\)</span> với cùng một hằng số khác không tạo ra chính xác cùng một đường thẳng. Do đó, các tham số mô tả ranh giới không phải là duy nhất. Cách diễn giải số của chúng cũng phụ thuộc vào thang đo của các biến. Vì khối lượng được đo bằng gam và đường kính bằng xentimét, không nên so sánh trực tiếp độ lớn số của <span class="math inline">\(w_1\)</span> và <span class="math inline">\(w_2\)</span> mà không xét đến sự khác biệt về đơn vị.</p>
+<p>Bản thân phương trình đường thẳng cung cấp một cách đơn giản để xác định một điểm nằm ở phía nào của ranh giới. Định nghĩa điểm số <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Nếu <span class="math inline">\(s(x_1,x_2)=0\)</span>, điểm nằm đúng trên đường thẳng. Nếu <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>, điểm nằm trong một nửa mặt phẳng; nếu <span class="math inline">\(s(x_1,x_2)&lt;0\)</span>, điểm nằm trong nửa mặt phẳng kia. Nếu ta quy ước điểm số dương tương ứng với táo và điểm số âm tương ứng với cam, quy tắc trở thành <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{táo},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{cam}.
+\end{cases}\]</span></p>
+<p>Ví dụ, xét ranh giới được xác định bởi <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> Với một quả có khối lượng <span class="math inline">\(160\)</span> g và đường kính <span class="math inline">\(7.8\)</span> cm, <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> Vì điểm số dương, điểm nằm trong nửa mặt phẳng mà ta gắn với táo. Vì vậy bộ phân loại này sẽ gán nhãn quả đó là táo.</p>
+<p>Không phải mọi lựa chọn của <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> và <span class="math inline">\(b\)</span> đều cho một phép phân loại tốt. Một số đường tách hai nhóm kém, trong khi những đường khác tạo ra ít sai sót hơn. Bài toán học chính là sử dụng các ví dụ đã gán nhãn để xác định các giá trị tham số làm giảm một thước đo sai số của mô hình. Thay vì lập trình trực tiếp vị trí của đường, ta muốn thuật toán điều chỉnh các hệ số dựa trên dữ liệu.</p>
+<p>Một đường duy nhất có thể hoạt động tốt khi các lớp gần như phân tách tuyến tính. Những tập dữ liệu phức tạp hơn có thể đòi hỏi ranh giới phi tuyến. Trước khi bàn về giới hạn đó, ta diễn giải lại bộ phân loại vừa xây dựng như một đơn vị tính toán cơ bản: một nơ-ron nhân tạo.</p>
+</section><section class="article-section" id="nơ-ron-nhân-tạo"><span class="section-no">04</span><h2>Nơ-ron nhân tạo</h2>
+<p>Trong phần trước, biểu thức <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> được dùng để xác định một quả nằm ở phía nào của đường thẳng. Cùng biểu thức đó có thể được xem như bước đầu tiên của phép tính do một <em>nơ-ron nhân tạo</em> thực hiện. Một nơ-ron nhận các đầu vào số, kết hợp chúng bằng trọng số và độ lệch, rồi áp dụng một hàm toán học để thu được đầu ra.</p>
+<p>Trong ví dụ của ta, các đầu vào là khối lượng <span class="math inline">\(x_1\)</span> và đường kính <span class="math inline">\(x_2\)</span>. Mỗi đầu vào được nhân với một tham số gọi là <em>trọng số</em>; các tích được cộng với số hạng hằng <span class="math inline">\(b\)</span>, gọi là <em>độ lệch</em> (bias). Hình <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> minh họa sơ đồ phép tính này.</p>
+<figure id="fig:artificial_neuron">
+<img alt="Sơ đồ hoạt động của một nơ-ron nhân tạo. Mỗi đầu vào \(x_i\) được nhân với trọng số \(w_i\) ; các tích được cộng với độ lệch \(b\) để tạo ra điểm số \(s\) . Hàm kích hoạt \(g\) sau đó biến đổi điểm số này thành đầu ra \(\widehat{y}=g(s)\) , có thể được dùng như một đại lượng trun" decoding="async" loading="lazy" src="../assets/img/vi/Fig03.png"/>
+<figcaption>Sơ đồ hoạt động của một nơ-ron nhân tạo. Mỗi đầu vào <span class="math inline">\(x_i\)</span> được nhân với trọng số <span class="math inline">\(w_i\)</span>; các tích được cộng với độ lệch <span class="math inline">\(b\)</span> để tạo ra điểm số <span class="math inline">\(s\)</span>. Hàm kích hoạt <span class="math inline">\(g\)</span> sau đó biến đổi điểm số này thành đầu ra <span class="math inline">\(\widehat{y}=g(s)\)</span>, có thể được dùng như một đại lượng trung gian hoặc như dự đoán cuối cùng.</figcaption>
+</figure>
+<p>Các trọng số xác định cách những thay đổi ở đầu vào ảnh hưởng đến điểm số. Nếu giữ <span class="math inline">\(x_2\)</span> và mọi đại lượng khác cố định, thay đổi <span class="math inline">\(\Delta x_1\)</span> làm <span class="math inline">\(s\)</span> thay đổi một lượng <span class="math inline">\(w_1\Delta x_1\)</span>. Tương tự, thay đổi <span class="math inline">\(\Delta x_2\)</span> làm điểm số thay đổi <span class="math inline">\(w_2\Delta x_2\)</span>. Dấu của trọng số cũng quan trọng: trọng số dương khiến đầu vào tăng thì điểm số tăng, còn trọng số âm tạo hiệu ứng ngược lại. Cách diễn giải này cần thận trọng khi các biến có đơn vị và thang đo khác nhau. Vì lý do đó, các cài đặt thực tế thường chuẩn hóa hoặc tiêu chuẩn hóa dữ liệu đầu vào trước khi huấn luyện.</p>
+<p>Độ lệch <span class="math inline">\(b\)</span> là số hạng hằng trong phép biến đổi affine. Về hình học, độ lệch cho phép ranh giới quyết định dịch chuyển. Nếu <span class="math inline">\(b=0\)</span>, phương trình <span class="math display">\[w_1x_1+w_2x_2=0\]</span> buộc đường thẳng đi qua gốc tọa độ. Khi có độ lệch, ranh giới có thể chuyển sang vị trí khác. Tương đương, khi <span class="math inline">\(x_1=x_2=0\)</span>, điểm số đơn giản là <span class="math inline">\(s=b\)</span>.</p>
+<p>Điểm số không nhất thiết phải là đầu ra cuối cùng của nơ-ron. Nói chung, một <em>hàm kích hoạt</em> <span class="math inline">\(g\)</span> được áp dụng lên điểm số: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> Do đó, phép tính có hai bước, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>Với các giá trị tham số ở phần trước, ta thu được <span class="math inline">\(s=1.6\)</span>. Nếu chọn hàm bậc thang <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> thì <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. Theo quy ước của ta, quả đó được phân loại là táo. Với hàm kích hoạt này, quyết định thay đổi khi <span class="math inline">\(s\)</span> đi qua 0, nên ranh giới lớp chính xác được cho bởi <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>Vì vậy, một nơ-ron đơn lẻ là một đối tượng toán học đơn giản có các tham số có thể điều chỉnh. Ý nghĩa thực sự xuất hiện khi nhiều đơn vị như vậy được nối với nhau. Tuy nhiên, trước khi xây dựng mạng, ta cần hiểu vì sao hàm kích hoạt lại quan trọng đến vậy.</p>
+</section><section class="article-section" id="tại-sao-cần-hàm-kích-hoạt"><span class="section-no">05</span><h2>Tại sao cần hàm kích hoạt?</h2>
+<p>Một nơ-ron trước hết tính một điểm số thông qua phép biến đổi affine, rồi áp dụng hàm kích hoạt. Bước thứ hai này rất quan trọng để mạng nơ-ron có thể biểu diễn các quan hệ phức tạp. Để thấy lý do, hãy tưởng tượng một mạng không có hàm kích hoạt. Mỗi đơn vị sẽ có dạng <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Để minh họa trong một chiều, giả sử đơn vị thứ nhất cho <span class="math display">\[h=ax+b\]</span> và đơn vị thứ hai tính <span class="math display">\[y=ch+d.\]</span> Thay vào ta được <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> vẫn là một hàm affine của <span class="math inline">\(x\)</span>. Điều tương tự đúng trong nhiều chiều: hợp của các phép biến đổi affine vẫn là một phép biến đổi affine. Vì thế, thêm nhiều lớp nhưng không có phép toán phi tuyến không làm mạng trở nên biểu đạt hơn về bản chất; toàn bộ phép hợp có thể được thay bằng một phép biến đổi affine duy nhất.</p>
+<p>Hàm kích hoạt phá vỡ giới hạn này. Sau khi tính điểm số <span class="math inline">\(s\)</span>, nơ-ron áp dụng một ánh xạ thường là phi tuyến <span class="math display">\[h=g(s).\]</span> Khi nhiều đơn vị như vậy được nối với nhau, phép hợp thu được không còn có thể rút gọn thành một phép biến đổi affine duy nhất. Điều này cho phép mạng xây dựng những ranh giới quyết định phức tạp hơn.</p>
+<p>Hàm kích hoạt đơn giản nhất là hàm bậc thang, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> Hàm này tạo ra quyết định nhị phân và rất hữu ích để hiểu phân loại. Tuy nhiên, đạo hàm của nó bằng 0 khi <span class="math inline">\(s\neq0\)</span> và không xác định tại <span class="math inline">\(s=0\)</span>. Vì huấn luyện dựa trên gradient dùng đạo hàm để xác định các tham số cần thay đổi như thế nào, hàm bậc thang không phù hợp với cơ chế huấn luyện đó.</p>
+<p>Một lựa chọn thay thế là hàm sigmoid, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> Hàm này ánh xạ mọi số thực vào một giá trị nằm nghiêm ngặt giữa <span class="math inline">\(0\)</span> và <span class="math inline">\(1\)</span>. Với <span class="math inline">\(s\)</span> rất âm, đầu ra tiến gần <span class="math inline">\(0\)</span>; với <span class="math inline">\(s\)</span> rất dương, đầu ra tiến gần <span class="math inline">\(1\)</span>; giữa hai trạng thái này, chuyển tiếp diễn ra trơn tru. Sigmoid khả vi tại mọi điểm, với <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> Vì đầu ra nằm giữa <span class="math inline">\(0\)</span> và <span class="math inline">\(1\)</span>, sigmoid thường được dùng ở lớp đầu ra của bộ phân loại nhị phân. Trong một mô hình xác suất với hàm mất mát phù hợp, đầu ra có thể được diễn giải như một ước lượng xác suất của lớp được biểu diễn bởi <span class="math inline">\(1\)</span>. Tuy nhiên, ở các lớp ẩn, sigmoid có thể gây khó khăn: với đầu vào có độ lớn lớn, đạo hàm trở nên rất nhỏ, góp phần gây ra hiện tượng <em>gradient biến mất</em> trong các mạng sâu.</p>
+<p>Một hàm kích hoạt thường dùng ở lớp ẩn là ReLU (<em>Rectified Linear Unit</em>), <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> Mặc dù được ghép từ hai đoạn tuyến tính, ReLU không tuyến tính trên toàn miền. Đạo hàm bằng <span class="math inline">\(0\)</span> khi <span class="math inline">\(s&lt;0\)</span> và bằng <span class="math inline">\(1\)</span> khi <span class="math inline">\(s&gt;0\)</span>. Tại <span class="math inline">\(s=0\)</span>, đạo hàm thông thường không tồn tại và các cài đặt phần mềm dùng một quy ước cho gradient. Với đầu vào dương, đạo hàm không co nhỏ khi <span class="math inline">\(s\)</span> tăng, nhờ đó tránh được một trong các cơ chế bão hòa của sigmoid.</p>
+<p>Hình <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> so sánh trực quan ba hàm kích hoạt này: bước nhảy đột ngột của hàm bậc thang, chuyển tiếp trơn của sigmoid và sự thay đổi độ dốc của ReLU.</p>
+<figure id="fig:activation_functions">
+<img alt="So sánh ba hàm kích hoạt thường gặp trong các phần giới thiệu về mạng nơ-ron. Hàm bậc thang đưa ra quyết định đột ngột; sigmoid tạo chuyển tiếp trơn giữa \(0\) và \(1\) ; còn ReLU triệt các đầu vào âm nhưng giữ lại các đầu vào dương. Các hàm kích hoạt phi tuyến ngăn một chồng nhi" decoding="async" loading="lazy" src="../assets/img/vi/Fig04.png"/>
+<figcaption>So sánh ba hàm kích hoạt thường gặp trong các phần giới thiệu về mạng nơ-ron. Hàm bậc thang đưa ra quyết định đột ngột; sigmoid tạo chuyển tiếp trơn giữa <span class="math inline">\(0\)</span> và <span class="math inline">\(1\)</span>; còn ReLU triệt các đầu vào âm nhưng giữ lại các đầu vào dương. Các hàm kích hoạt phi tuyến ngăn một chồng nhiều lớp bị rút gọn thành một phép biến đổi affine duy nhất.</figcaption>
+</figure>
+<p>Các tính chất chính được tóm tắt dưới đây.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Hàm</th>
+<th style="text-align: center;">Đầu ra</th>
+<th style="text-align: left;">Đạo hàm</th>
+<th style="text-align: left;">Cách dùng phổ biến</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bậc thang</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">Bằng 0 với <span class="math inline">\(s\neq0\)</span>; không xác định tại <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">Các mô hình lịch sử và ví dụ sư phạm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigmoid</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Tồn tại với mọi <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">Lớp đầu ra trong phân loại nhị phân</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> khi <span class="math inline">\(s&lt;0\)</span> và <span class="math inline">\(1\)</span> khi <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">Các lớp ẩn</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Chi tiết của ba hàm là khác nhau, nhưng chúng có cùng một vai trò khái niệm: đưa tính phi tuyến vào mô hình. Chính tính phi tuyến này cho phép mạng nhỏ ở phần tiếp theo biểu diễn các quan hệ mà một đường thẳng duy nhất không thể nắm bắt.</p>
+<p>Đối với độc giả muốn đi xa hơn, Haykin  trình bày một thảo luận kinh điển về mạng nơ-ron, trong khi Goodfellow, Bengio và Courville  bàn về các hàm kích hoạt và việc huấn luyện mạng sâu trong một bối cảnh rộng hơn. Văn bản truy cập tự do của Nielsen  đặc biệt dễ tiếp cận để phát triển trực giác về nơ-ron, hàm kích hoạt và quá trình học.</p>
+</section><section class="article-section" id="xây-dựng-một-mạng-nơ-ron-nhỏ"><span class="section-no">06</span><h2>Xây dựng một mạng nơ-ron nhỏ</h2>
+<p>Bây giờ ta xét một mạng có hai đầu vào, một lớp ẩn gồm ba nơ-ron và một nơ-ron đầu ra. Các đầu vào vẫn là <span class="math display">\[x_1=\text{khối lượng},
+\qquad
+x_2=\text{đường kính},\]</span> và cả hai được đưa vào mỗi nơ-ron ẩn, như minh họa trong Hình <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p>
+<figure id="fig:small_network">
+<img alt="Kiến trúc sư phạm \(2\) – \(3\) – \(1\) dùng để giới thiệu phép tính của mạng nơ-ron. Hai đầu vào — khối lượng và đường kính — được đưa vào ba nơ-ron trong lớp ẩn. Các kích hoạt \(h_1,h_2,h_3\) sau đó được nơ-ron đầu ra kết hợp để tạo ra dự đoán \(\widehat{y}\) . Mỗi kết nối có m" decoding="async" loading="lazy" src="../assets/img/vi/Fig05.png"/>
+<figcaption>Kiến trúc sư phạm <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> dùng để giới thiệu phép tính của mạng nơ-ron. Hai đầu vào — khối lượng và đường kính — được đưa vào ba nơ-ron trong lớp ẩn. Các kích hoạt <span class="math inline">\(h_1,h_2,h_3\)</span> sau đó được nơ-ron đầu ra kết hợp để tạo ra dự đoán <span class="math inline">\(\widehat{y}\)</span>. Mỗi kết nối có một trọng số có thể điều chỉnh và mỗi nơ-ron có một độ lệch.</figcaption>
+</figure>
+<p>Giả sử các đầu ra của lớp ẩn là <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> và <span class="math inline">\(h_3\)</span>. Mỗi nơ-ron nhận cùng hai đầu vào nhưng có các trọng số và độ lệch riêng: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>Mặc dù ba nơ-ron nhận cùng khối lượng và đường kính, chúng có thể tạo ra các phản hồi khác nhau vì các tham số khác nhau. Trong quá trình huấn luyện, các tham số này được điều chỉnh để các kích hoạt trung gian trở nên hữu ích cho việc phân loại.</p>
+<p>Ba đại lượng <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> và <span class="math inline">\(h_3\)</span> sau đó được truyền tới nơ-ron đầu ra, nơ-ron này tính <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> và tạo ra <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> Đối với bài toán nhị phân của ta, đầu ra sigmoid được dùng: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>Với quy ước <span class="math inline">\(y=1\)</span> cho táo và <span class="math inline">\(y=0\)</span> cho cam, ngưỡng <span class="math inline">\(0.5\)</span> cho quyết định lớp <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{táo},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{cam}.\]</span> Do đó, các giá trị gần <span class="math inline">\(1\)</span> gắn mạnh với táo, còn các giá trị gần <span class="math inline">\(0\)</span> gắn với cam. Như đã lưu ý, diễn giải <span class="math inline">\(\widehat{y}\)</span> theo nghĩa số như một xác suất đòi hỏi thêm các giả thiết về mô hình và quá trình huấn luyện. Với quy tắc phân loại dùng ở đây, chỉ cần xem <span class="math inline">\(\widehat{y}\)</span> là đầu ra liên tục của mạng.</p>
+<p>Đặc điểm chính của kiến trúc này là biểu diễn trung gian <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> Mạng nhận hai đặc trưng và xây dựng ba đại lượng mới trước khi tạo ra câu trả lời cuối cùng. Các kích hoạt này không được chọn thủ công: giá trị của chúng phụ thuộc vào trọng số và độ lệch, vì thế thay đổi khi các tham số được huấn luyện.</p>
+<p>Dù nhỏ, mạng này đã có mười ba tham số có thể điều chỉnh. Ba nơ-ron ẩn chứa <span class="math display">\[3(2+1)=9\]</span> tham số, và nơ-ron đầu ra thêm <span class="math display">\[3+1=4.\]</span> Do đó, <span class="math display">\[9+4=13.\]</span></p>
+<p>Phép đếm tương tự trở nên rõ hơn trong ký hiệu ma trận. Định nghĩa <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> Khi đó lớp ẩn có thể được viết gọn là <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> trong đó <span class="math inline">\(g\)</span> tác động theo từng thành phần. Với đầu ra, <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> với <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>Ký hiệu này báo trước cấu trúc sẽ xuất hiện trong chương trình Python. Khi một quả được đưa vào đầu vào và ta tính lần lượt các kích hoạt cho đến khi thu được <span class="math inline">\(\widehat{y}\)</span>, ta thực hiện <em>lan truyền tiến</em> hay <em>forward pass</em>. Câu hỏi chính vẫn như cũ: làm thế nào để tự động xác định mười ba tham số sao cho các dự đoán phù hợp với dữ liệu?</p>
+</section><section class="article-section" id="mạng-nơ-ron-học-như-thế-nào"><span class="section-no">07</span><h2>Mạng nơ-ron học như thế nào?</h2>
+<p>Các trọng số và độ lệch không được biết trước. Chúng phải được điều chỉnh bằng các ví dụ có đáp án đúng. Quá trình này được gọi là <em>huấn luyện</em> và có thể được tóm tắt bằng chu trình <span class="math display">\[\boxed{\text{đưa ra dự đoán}}
+\longrightarrow
+\boxed{\text{đo sai số}}
+\longrightarrow
+\boxed{\text{điều chỉnh tham số}}
+\longrightarrow
+\boxed{\text{lặp lại}}.\]</span></p>
+<p>Xét một quả có khối lượng <span class="math inline">\(140\)</span> g và đường kính <span class="math inline">\(7.0\)</span> cm, lớp đúng là cam, nên <span class="math inline">\(y=0\)</span>. Giả sử tại một giai đoạn huấn luyện nào đó mạng tạo ra <span class="math inline">\(\widehat{y}=0.80\)</span>. Một thước đo đơn giản cho độ không khớp giữa dự đoán và mục tiêu là sai số bình phương <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Với ví dụ này, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>Biểu thức này là một <em>hàm sai số</em> cho một ví dụ. Vì là bình phương nên <span class="math inline">\(E\geq0\)</span>, và các dự đoán xa mục tiêu hơn bị phạt nhiều hơn. Hệ số <span class="math inline">\(1/2\)</span> không làm thay đổi vị trí cực tiểu nhưng đơn giản hóa đạo hàm. Phân loại nhị phân thường dùng các hàm mất mát khác, đặc biệt là entropy chéo. Ở đây ta dùng sai số bình phương vì đại số của nó minh bạch và đủ để giới thiệu tối ưu hóa và lan truyền ngược .</p>
+<p>Nếu tập huấn luyện chứa <span class="math inline">\(N\)</span> ví dụ, một thước đo toàn cục là sai số trung bình <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Mỗi dự đoán phụ thuộc vào các trọng số và độ lệch của mạng, nên <span class="math inline">\(J\)</span> cũng phụ thuộc vào tất cả các tham số này. Huấn luyện nghĩa là tìm các giá trị tham số làm cho <span class="math inline">\(J\)</span> nhỏ.</p>
+<p>Để hiểu cơ chế điều chỉnh, trước hết hãy tưởng tượng tất cả các tham số trừ một trọng số <span class="math inline">\(w\)</span> được giữ cố định. Ta có thể xem sai số là một hàm <span class="math inline">\(J=J(w)\)</span>. Hình <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> tóm tắt các bước cơ bản của quá trình huấn luyện mà ta sẽ thảo luận.</p>
+<figure id="fig:training_cycle">
+<img alt="Chu trình cơ bản của quá trình huấn luyện mạng nơ-ron. Lan truyền tiến biến đầu vào thành dự đoán; hàm sai số đo độ không khớp giữa dự đoán và mục tiêu; lan truyền ngược tính gradient bằng quy tắc dây chuyền; và hạ gradient dùng các gradient đó để cập nhật trọng số và độ lệch. Lặ" decoding="async" loading="lazy" src="../assets/img/vi/Fig06.png"/>
+<figcaption>Chu trình cơ bản của quá trình huấn luyện mạng nơ-ron. Lan truyền tiến biến đầu vào thành dự đoán; hàm sai số đo độ không khớp giữa dự đoán và mục tiêu; lan truyền ngược tính gradient bằng quy tắc dây chuyền; và hạ gradient dùng các gradient đó để cập nhật trọng số và độ lệch. Lặp lại chu trình này qua nhiều epoch chính là quá trình mà ta gọi là học.</figcaption>
+</figure>
+<p>Với độc giả chưa học nhiều giải tích, ở đây đạo hàm có thể được hiểu như một thước đo <em>độ nhạy cục bộ</em>: đạo hàm cho biết một thay đổi nhỏ của một tham số có xu hướng làm sai số thay đổi như thế nào. Dấu của nó chỉ hướng làm hàm tăng hoặc giảm cục bộ, còn độ lớn đo cường độ của sự thay đổi cục bộ đó.</p>
+<p>Đạo hàm <span class="math display">\[\frac{\partial J}{\partial w}\]</span> cho biết độ dốc cục bộ. Nếu giá trị dương, tăng nhỏ <span class="math inline">\(w\)</span> có xu hướng làm <span class="math inline">\(J\)</span> tăng, nên trọng số phải dịch theo hướng ngược lại. Nếu giá trị âm, tăng <span class="math inline">\(w\)</span> có xu hướng làm <span class="math inline">\(J\)</span> giảm cục bộ. Cả hai trường hợp được biểu diễn bởi <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> là ý tưởng cơ bản của <em>hạ gradient</em>. Số dương <span class="math inline">\(\eta\)</span> là <em>tốc độ học</em>; nó điều khiển kích thước bước. Một giá trị quá nhỏ có thể làm huấn luyện chậm, còn một giá trị quá lớn có thể gây dao động hoặc mất ổn định.</p>
+<p>Với một mạng có nhiều tham số, hãy để <span class="math inline">\(\theta\)</span> biểu diễn một trọng số hoặc độ lệch bất kỳ. Cập nhật trở thành <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> Tập hợp tất cả các đạo hàm riêng tạo thành <em>gradient</em> của sai số. Về hình học, gradient chỉ hướng tăng cục bộ nhanh nhất, nên gradient âm cung cấp một hướng cục bộ để giảm.</p>
+<p>Ta vẫn cần tính các đạo hàm này khi mạng là hợp của nhiều hàm. Trong lan truyền tiến, thông tin di chuyển như <span class="math display">\[\text{đầu vào}
+\longrightarrow
+\text{lớp ẩn}
+\longrightarrow
+\text{đầu ra}.\]</span> Để xác định một tham số ở lớp đầu ảnh hưởng đến sai số như thế nào, về mặt toán học ta đi theo chuỗi phụ thuộc theo hướng ngược lại. Thủ tục này được gọi là <em>lan truyền ngược</em>. Về bản chất, lan truyền ngược là việc áp dụng quy tắc dây chuyền một cách có hệ thống và hiệu quả. Rumelhart, Hinton và Williams  là tài liệu kinh điển về việc phổ biến thủ tục này cho các mạng có lớp ẩn; Nielsen  đưa ra một phép suy dẫn chi tiết và rất sư phạm.</p>
+<p>Với một chuỗi phụ thuộc đơn giản trong đó <span class="math inline">\(E\)</span> phụ thuộc vào <span class="math inline">\(\widehat{y}\)</span>, <span class="math inline">\(\widehat{y}\)</span> phụ thuộc vào kích hoạt <span class="math inline">\(h\)</span>, và <span class="math inline">\(h\)</span> lại phụ thuộc vào trọng số <span class="math inline">\(w\)</span>, quy tắc dây chuyền cho <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> Mỗi thừa số mô tả một bước trong ảnh hưởng của <span class="math inline">\(w\)</span> lên sai số cuối cùng. Mạng lớn hơn có nhiều chuỗi như vậy, và lan truyền ngược tổ chức phép tính sao cho các đạo hàm trung gian có thể được tái sử dụng thay vì tính lại riêng cho từng tham số.</p>
+<p>Trong thực hành, huấn luyện sử dụng nhiều ví dụ. Một lượt đầy đủ qua tập huấn luyện được gọi là một <em>epoch</em>. Các tham số có thể được cập nhật sau mỗi ví dụ, như trong chương trình sư phạm dùng ở phần sau của bài báo, hoặc sau các nhóm nhỏ ví dụ gọi là <em>mini-batch</em>, thường dùng trong các mạng lớn hơn. Trong cả hai trường hợp, chu trình dự đoán, sai số, gradient và cập nhật được lặp lại qua nhiều epoch.</p>
+<p>Một cách cụ thể để hình dung sự tiến triển này là theo dõi dự đoán cho một ví dụ cố định tại các giai đoạn khác nhau của quá trình huấn luyện. Xét lại quả có khối lượng <span class="math inline">\(140\)</span> g và đường kính <span class="math inline">\(7.0\)</span> cm, lớp đúng là cam. Bảng <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> cho thấy một diễn tiến giả định. Các giá trị này không đến từ một lần chạy cụ thể; chúng chỉ minh họa cơ chế.</p>
+<div id="tab:learning">
+<table>
+<caption>Diễn tiến giả định của dự đoán mạng cho cùng một quả trong quá trình huấn luyện. Các cập nhật tham số lặp đi lặp lại có thể đưa một đầu ra ban đầu sai dần đến một phân loại phù hợp với nhãn mục tiêu.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Epoch</th>
+<th style="text-align: center;">Dự đoán <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">Sai số <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">Phân loại</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">Táo</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">Táo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">Táo</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">Cam</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">Cam</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Ban đầu, đầu ra gần <span class="math inline">\(1\)</span> và quả bị phân loại sai là táo. Khi các tham số được điều chỉnh, dự đoán giảm và cuối cùng đi qua ngưỡng <span class="math inline">\(0.5\)</span>, từ đó cho ra lớp đúng. Điều thay đổi trong quá trình này là các giá trị số của trọng số và độ lệch; kiến trúc mạng vẫn giữ nguyên.</p>
+<p>Giảm sai số trên dữ liệu huấn luyện không phải là mục tiêu cuối cùng. Một mạng hữu ích cũng phải đưa ra dự đoán tốt cho các ví dụ không được dùng để điều chỉnh tham số. Khả năng này được gọi là <em>khái quát hóa</em>. Khi mô hình khớp quá sát với những đặc thù của tập huấn luyện và hoạt động kém hơn trên dữ liệu mới, xảy ra <em>quá khớp</em> (overfitting). Trong đánh giá cẩn thận hơn, dữ liệu thường được chia thành các tập huấn luyện, kiểm định và kiểm tra: tập thứ nhất dùng để điều chỉnh tham số, tập thứ hai hỗ trợ các lựa chọn trong quá trình phát triển mô hình, và tập thứ ba được giữ lại cho đánh giá cuối cùng. Có thể xem thảo luận rộng hơn về khái quát hóa và đánh giá mô hình trong Faceli et al.  và Goodfellow, Bengio, Courville .</p>
+<p>Như vậy ta đã đạt tới ý nghĩa toán học của việc học trong mạng nơ-ron. Trong ngữ cảnh này, học nghĩa là điều chỉnh các tham số của một hàm hợp để giảm một thước đo sai số trên dữ liệu và, lý tưởng nhất, khái quát hóa sang các ví dụ mới. Mạng tạo dự đoán, tính sai số, dùng đạo hàm để xác định các tham số ảnh hưởng tới sai số như thế nào, rồi thực hiện một chuỗi các hiệu chỉnh nhỏ.</p>
+</section><section class="article-section" id="từ-toán-học-đến-python"><span class="section-no">08</span><h2>Từ toán học đến Python</h2>
+<p>Bây giờ ta chuyển từ các phương trình sang một chương trình có thể chạy được. Mục tiêu không phải sử dụng một thư viện mạng nơ-ron chuyên dụng, mà là cài đặt trực tiếp bằng <code>NumPy</code> các phép toán toán học đã phát triển xuyên suốt bài báo . Nhờ đó, ta có thể thấy từng dòng một cách các tổ hợp tuyến tính, hàm kích hoạt, phép tính sai số, lan truyền ngược và hạ gradient xuất hiện trong mã.</p>
+<p>Để ví dụ cuối cùng thuyết phục hơn, ta dùng một tập dữ liệu tổng hợp được phân bố trên miền khối lượng–đường kính rộng hơn. Ta vẫn chỉ dùng hai đặc trưng vật lý — khối lượng tính bằng gam và đường kính tính bằng xentimét — nhưng giờ phân bố <span class="math inline">\(64\)</span> ví dụ huấn luyện trên một vùng rộng của mặt phẳng và dành riêng tám ví dụ bổ sung để kiểm tra minh họa. Dữ liệu vẫn là tổng hợp và nằm trong các khoảng hợp lý đối với táo và cam. Dữ liệu được xây dựng để tạo một ranh giới quyết định phi tuyến mà không tập trung tất cả các điểm vào một vài cụm quá nhân tạo.</p>
+<p>Ý tưởng hình học rất đơn giản. Ta định nghĩa một đường cong tham chiếu trên mặt phẳng khối lượng–đường kính, đặt táo trong hai dải phía trên đường cong đó và đặt cam trong hai dải phía dưới. Các nhiễu xác định nhỏ được thêm vào khối lượng và đường kính để các quan sát chiếm một vùng rộng hơn. Ví dụ thu được phong phú hơn minh họa trước: có nhiều điểm hơn, dữ liệu trải rộng trên miền và ranh giới quyết định thích hợp rõ ràng cong hơn một đường thẳng.</p>
+<p>Trong thí nghiệm tính toán cuối cùng này, ta mở rộng lớp ẩn lên mười hai nơ-ron ReLU. Điều này không thay đổi cấu trúc khái niệm đã học ở phần trước; nó chỉ tăng khả năng của mạng trong việc biểu diễn ranh giới phức tạp hơn. Thay vì <span class="math inline">\(13\)</span> tham số trong mạng sư phạm ba nơ-ron, giờ có <span class="math inline">\(49\)</span> tham số có thể điều chỉnh: <span class="math inline">\(24\)</span> trọng số và <span class="math inline">\(12\)</span> độ lệch ở lớp thứ nhất, tiếp theo là <span class="math inline">\(12\)</span> trọng số và một độ lệch ở lớp đầu ra. Các phương trình giữ nguyên chính xác cùng dạng; chỉ các vectơ và ma trận lớn hơn.</p>
+<p>Chương trình đầy đủ được trình bày dưới đây.</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="T\u00e1o - hu\u1ea5n luy\u1ec7n")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Cam - hu\u1ea5n luy\u1ec7n")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="T\u00e1o - ki\u1ec3m tra")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Cam - ki\u1ec3m tra")
+
+    ax.set_xlabel("Kh\u1ed1i l\u01b0\u1ee3ng (g)")
+    ax.set_ylabel("\u0110\u01b0\u1eddng k\u00ednh (cm)")
+    ax.set_title("\u0110\u1ea7u ra c\u1ee7a m\u1ea1ng n\u01a1-ron sau khi hu\u1ea5n luy\u1ec7n")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='T\u00e1o - hu\u1ea5n luy\u1ec7n'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Cam - hu\u1ea5n luy\u1ec7n'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='T\u00e1o - ki\u1ec3m tra'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Cam - ki\u1ec3m tra'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Ranh gi\u1edbi quy\u1ebft \u0111\u1ecbnh c\u1ee7a m\u1ea1ng n\u01a1-ron')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>Mặc dù đoạn mã dài hơn các phương trình đầu tiên được nghiên cứu trong bài báo, cấu trúc của nó vẫn minh bạch. Hàm <code>build_data()</code> tự động tạo <span class="math inline">\(64\)</span> ví dụ huấn luyện và tám ví dụ kiểm tra minh họa. Tiếp theo, ta tiêu chuẩn hóa hai biến theo <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> với <span class="math inline">\(\mu_j\)</span> và <span class="math inline">\(\sigma_j\)</span> chỉ được tính từ tập huấn luyện. Điều này ngăn tập kiểm tra ảnh hưởng đến việc điều chỉnh tham số, đồng thời đặt khối lượng và đường kính trên các thang số có thể so sánh.</p>
+<p>Lan truyền tiến về cơ bản không thay đổi. Khác biệt duy nhất là lớp thứ nhất giờ tạo ra một vectơ gồm mười hai kích hoạt ẩn. Trong ký hiệu ma trận, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> Bốn dòng này vẫn chứa cốt lõi toán học của thuật toán. Việc huấn luyện cũng giữ nguyên logic đã giới thiệu trước đó: tính dự đoán, đo sai số, truyền thông tin độ nhạy ngược về sau bằng đạo hàm, rồi cập nhật các tham số bằng những bước hạ gradient nhỏ.</p>
+<p>Trong mã, lan truyền ngược ở lớp đầu ra xuất hiện tại</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>và sự lan truyền tới lớp ẩn xuất hiện tại</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>sau đó là các cập nhật cho mọi trọng số và độ lệch. Vì các ví dụ được xáo trộn ở mỗi epoch và các tham số được cập nhật sau mỗi quan sát, cài đặt này là một dạng cơ bản của <em>hạ gradient ngẫu nhiên</em> (stochastic gradient descent).</p>
+<p>Với hạt giống ngẫu nhiên và các siêu tham số dùng ở đây, sai số trung bình cuối cùng nằm vào bậc <span class="math inline">\(10^{-5}\)</span> đến <span class="math inline">\(10^{-4}\)</span>, và cả <span class="math inline">\(64\)</span> ví dụ huấn luyện cùng tám ví dụ kiểm tra minh họa đều nhận phân loại như mong đợi. Điều này không nên được hiểu là một đánh giá nghiêm ngặt về hiệu năng thống kê: dữ liệu là tổng hợp và được xây dựng cho mục đích sư phạm. Vai trò của nó là chỉ ra, trong một tình huống không quá tầm thường, cách một mạng nơ-ron nhỏ có thể học một ranh giới quyết định rõ ràng phi tuyến.</p>
+<p>Hình <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> cho thấy đầu ra cuối cùng của chương trình trên mặt phẳng khối lượng–đường kính. Tất cả các điểm huấn luyện đều được hiển thị. Đường cong nổi bật là mức <span class="math inline">\(\widehat{y}=0.5\)</span> và biểu diễn ranh giới quyết định mà mạng đã học; các vùng tô màu cho thấy hai lớp dự đoán. Các hình tròn biểu diễn táo huấn luyện, hình vuông biểu diễn cam huấn luyện, tam giác biểu diễn táo kiểm tra và dấu chéo biểu diễn cam kiểm tra. Chú giải được đặt ngoài vùng chính của đồ thị để không che bất kỳ điểm dữ liệu nào.</p>
+<figure id="fig:python_output">
+<img alt="Đầu ra Python sau khi huấn luyện mạng nơ-ron. Tập dữ liệu tổng hợp chứa \(64\) ví dụ huấn luyện phân bố trên một vùng rộng của mặt phẳng khối lượng–đường kính và tám ví dụ bổ sung được dành riêng để kiểm tra minh họa. Đường cong nổi bật là mức \(\widehat{y}=0.5\) và biểu diễn ran" decoding="async" loading="lazy" src="../assets/img/vi/Fig07.png"/>
+<figcaption>Đầu ra Python sau khi huấn luyện mạng nơ-ron. Tập dữ liệu tổng hợp chứa <span class="math inline">\(64\)</span> ví dụ huấn luyện phân bố trên một vùng rộng của mặt phẳng khối lượng–đường kính và tám ví dụ bổ sung được dành riêng để kiểm tra minh họa. Đường cong nổi bật là mức <span class="math inline">\(\widehat{y}=0.5\)</span> và biểu diễn ranh giới quyết định đã học; các vùng tô màu cho biết các lớp do mạng dự đoán. Hình tròn biểu diễn táo huấn luyện, hình vuông biểu diễn cam huấn luyện, tam giác biểu diễn táo kiểm tra và dấu chéo biểu diễn cam kiểm tra.</figcaption>
+</figure>
+<p>Ta bắt đầu bằng một đường thẳng tách hai nhóm điểm đơn giản và kết thúc bằng một ví dụ tính toán phong phú hơn, trong đó một ranh giới cong xuất hiện từ việc tự động điều chỉnh các tham số của mạng. Không có điều bí ẩn nào được thêm vào toán học: cài đặt chỉ tổ chức và lặp lại, ở quy mô lớn hơn và tốc độ cao, các tổ hợp affine, hàm kích hoạt, đạo hàm, phép nhân ma trận và các cập nhật hạ gradient .</p>
+<p>Toàn bộ tài liệu tính toán liên quan đến bài báo này — bao gồm mã và notebook Google Colab có thể chạy được — có tại <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>, cung cấp một điểm truy cập duy nhất cho độc giả muốn khám phá, tái tạo hoặc điều chỉnh các ví dụ.</p>
+<h4 id="tuyên-bố-về-việc-sử-dụng-ai.">Tuyên bố về việc sử dụng AI.</h4>
+<p>Tác giả đã sử dụng ChatGPT, do OpenAI phát triển, như một công cụ hỗ trợ soạn thảo, hiệu đính ngôn ngữ, tổ chức phần trình bày và tạo các hình minh họa sư phạm. Tác giả hoàn toàn chịu trách nhiệm về nội dung cuối cùng của công trình này, bao gồm việc hình thành và phát triển nội dung toán học, mã và các tài liệu tham khảo được sử dụng.</p>
+</section></div>
+<section class="article-section references"><span class="section-no">Tài liệu tham khảo</span><h2>Tài liệu tham khảo</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Có tại: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Bản dịch của Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Có tại: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Tài nguyên</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/vi/Article_PMO2026_NN_VI.pdf"><strong>PDF</strong><span>Giải phẫu toán học của mạng nơ-ron</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_VI.ipynb"><strong>Google Colab</strong><span>Notebook · Tiếng Việt</span></a>
+</div></section>
+<section><h2>Giới thiệu NeuralMath</h2><p class="bio">NeuralMath là một dự án giáo dục mở do Dr. Americo Cunha Jr. phát triển. Mục tiêu là làm cho các phép toán bên trong một mạng nơ-ron nhỏ trở nên trực quan, có thể kiểm tra và tái lập đối với đông đảo người học có nền tảng toán tương đối cơ bản về giải tích và thống kê.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Cách trích dẫn văn bản sư phạm</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>Thông tin thư mục sẽ được cập nhật với tập, số trang và DOI sau khi công bố. Vui lòng trích dẫn văn bản sư phạm, không trích dẫn trang web này.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>Giấy phép</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Phần văn bản giải thích và nội dung gốc của trang web được cung cấp theo CC BY 4.0 nếu không có ghi chú khác. PDF của bài báo có thể chịu giấy phép của nơi xuất bản.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

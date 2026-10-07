@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — کالبدشناسی ریاضی یک شبکه عصبی</title>
+<meta content="در این مقاله، شبکه‌های عصبی مصنوعی را از دیدگاهی ریاضی و با استفاده از یک مسئله ساده طبقه‌بندی معرفی می‌کنیم. یک طبقه‌بند خطی به‌طور طبیعی ما را به مفهوم نورون مصنوعی می‌رساند؛ سپس وزن‌ها، بایاس‌ها، توابع فعال‌سازی و نحوه ترکیب نورون‌ها در یک شبکه کوچک بررسی می‌شوند. فرایند آموزش با استفاده از تابع " name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/fa/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag current" href="index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">کالبدشناسی ریاضی یک شبکه عصبی</p>
+<p>در این مقاله، شبکه‌های عصبی مصنوعی را از دیدگاهی ریاضی و با استفاده از یک مسئله ساده طبقه‌بندی معرفی می‌کنیم. یک طبقه‌بند خطی به‌طور طبیعی ما را به مفهوم نورون مصنوعی می‌رساند؛ سپس وزن‌ها، بایاس‌ها، توابع فعال‌سازی و نحوه ترکیب نورون‌ها در یک شبکه کوچک بررسی می‌شوند. فرایند آموزش با استفاده از تابع زیان، مشتق‌ها، نزول گرادیان و پس‌انتشار معرفی می‌شود. در پایان، مدل مستقیماً با زبان Python پیاده‌سازی می‌شود تا ارتباط میان معادلات و الگوریتم به‌روشنی دیده شود. هدف نشان دادن این نکته است که مفاهیم آشنای هندسه تحلیلی، جبر خطی و حساب دیفرانسیل می‌توانند پایه‌ای دسترس‌پذیر برای درک سازوکارهای بنیادی شبکه‌های عصبی فراهم کنند.</p>
+<div class="resource-bar"><a href="../pdf/fa/Article_PMO2026_NN_FA.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_FA.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>متن آموزشی اصلی</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">این نسخه وب و ترجمه‌های آن بر پایه دست‌نوشته اصلی به زبان پرتغالی تهیه شده‌اند.</p></div>
+<nav aria-label="فهرست مطالب" class="toc"><h2>فهرست مطالب</h2><ol><li><a href="#یک-رایانه-چه-زمانی-میتواند-یاد-بگیرد">یک رایانه چه زمانی می‌تواند یاد بگیرد؟</a></li><li><a href="#نمایش-ریاضی-مسئله">نمایش ریاضی مسئله</a></li><li><a href="#یک-خط-راست-بهعنوان-طبقهبند">یک خط راست به‌عنوان طبقه‌بند</a></li><li><a href="#نورون-مصنوعی">نورون مصنوعی</a></li><li><a href="#چرا-به-تابع-فعالسازی-نیاز-داریم">چرا به تابع فعال‌سازی نیاز داریم؟</a></li><li><a href="#ساخت-یک-شبکه-عصبی-کوچک">ساخت یک شبکه عصبی کوچک</a></li><li><a href="#شبکه-عصبی-چگونه-یاد-میگیرد">شبکه عصبی چگونه یاد می‌گیرد؟</a></li><li><a href="#از-ریاضیات-تا-python">از ریاضیات تا Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="یک-رایانه-چه-زمانی-میتواند-یاد-بگیرد"><span class="section-no">01</span><h2>یک رایانه چه زمانی می‌تواند یاد بگیرد؟</h2>
+<p>در زندگی روزمره تقریباً بدون آنکه متوجه باشیم تصمیم‌های طبقه‌بندی می‌گیریم. با نگاه کردن به یک میوه، خیلی سریع تشخیص می‌دهیم که سیب است یا پرتقال؛ وقتی پیامی به تلفن همراه می‌رسد، گفت‌وگویی واقعی را از تبلیغ ناخواسته جدا می‌کنیم؛ در تحلیل‌های پزشکی چند اندازه‌گیری ممکن است برای پشتیبانی از یک تصمیم با هم ترکیب شوند؛ و در مؤسسات مالی پیش از اعطای اعتبار، اطلاعات گوناگونی ارزیابی می‌شود. در همه این نمونه‌ها چند ویژگی به‌طور هم‌زمان در نظر گرفته می‌شوند تا یک پاسخ تولید شود.</p>
+<p>در بسیاری از برنامه‌های رایانه‌ای سنتی، قواعدی که این پاسخ را تولید می‌کنند به‌صراحت توسط برنامه‌نویس نوشته می‌شوند. این روش هنگامی مناسب است که قواعد شناخته‌شده باشند و بتوان آن‌ها را روشن بیان کرد. اما وقتی داده‌ها بسیار متغیرند یا بیان همه شرایط لازم برای یک تصمیم خوب از پیش دشوار است، این رویکرد کارایی کمتری دارد. در اینجا پرسشی طبیعی مطرح می‌شود:</p>
+<div class="center">
+<p><em>آیا می‌توان برنامه‌ای ساخت که به‌جای دریافت قاعده تصمیم‌گیری از پیش، آن را از مثال‌ها یاد بگیرد؟</em></p>
+</div>
+<p>این یکی از ایده‌های مرکزی <em>یادگیری ماشین</em> است؛ شاخه‌ای از هوش مصنوعی که به روش‌های برازش مدل‌ها بر پایه داده می‌پردازد . در یک مسئله یادگیری نظارت‌شده، الگوریتم مثال‌هایی را همراه با پاسخ صحیح آن‌ها دریافت می‌کند و در پی مدلی هستیم که بتواند برای حالت‌هایی که در آموزش استفاده نشده‌اند نیز پیش‌بینی‌های مفیدی انجام دهد. در میان مدل‌های فراوانی که برای این منظور توسعه یافته‌اند، <em>شبکه‌های عصبی مصنوعی</em> در کاربردهایی مانند تشخیص تصویر، پردازش زبان، تحلیل سیگنال و پیش‌بینی سری‌های زمانی اهمیت زیادی پیدا کرده‌اند .</p>
+<p>استفاده از شبکه‌های عصبی به‌عنوان پلی میان ریاضیات، محاسبات و آموزش مدرسه پیش‌تر توسط Batista و Martins در <em>Professor de Matemática Online</em> بررسی شده است . آنان فعالیتی را ارائه کردند که آموزش معلمان، Python و تشخیص ارقام را با یکدیگر پیوند می‌دهد. مقاله حاضر مسیر مکملی را دنبال می‌کند. هدف اصلی ما آشکار کردن ریاضیات درونی یک شبکه عصبی کوچک است: از هندسه تحلیلی آغاز می‌کنیم و گام‌به‌گام به محاسبه گرادیان و پیاده‌سازی دستی پس‌انتشار می‌رسیم.</p>
+<p>با وجود پیچیدگی کاربردهای امروزی، هسته ریاضی یک شبکه عصبی را می‌توان با مفاهیمی نسبتاً آشنا معرفی کرد. در سطح پایه، شبکه عصبی ترکیبی از توابع است که پارامترهایشان بر اساس داده تنظیم می‌شوند. از یک مسئله هندسی ساده آغاز می‌کنیم، یک خط جداکننده را به‌صورت یک نورون مصنوعی بازتفسیر می‌کنیم، چند نورون را به هم متصل می‌سازیم، نقش توابع فعال‌سازی را بررسی می‌کنیم و نشان می‌دهیم مشتق‌ها چگونه می‌توانند برای تنظیم خودکار پارامترهای شبکه استفاده شوند. سپس یک مثال کوچک اما کامل را در Python پیاده‌سازی می‌کنیم و ارتباط مستقیم میان معادلات و کد را حفظ می‌کنیم.</p>
+</section><section class="article-section" id="نمایش-ریاضی-مسئله"><span class="section-no">02</span><h2>نمایش ریاضی مسئله</h2>
+<p>برای فهم نحوه کار یک شبکه عصبی، عمداً با مسئله‌ای ساده آغاز می‌کنیم: تمایز میان سیب و پرتقال. یک میوه ویژگی‌های بسیاری دارد که می‌توانند برای این کار مفید باشند، مانند رنگ، جرم، قطر، بافت و بو. با این حال یک مدل ریاضی اولیه لازم نیست همه این پیچیدگی را در بر گیرد. تنها دو کمیت را که اندازه‌گیری آن‌ها آسان است به کار می‌بریم: جرم بر حسب گرم و قطر بر حسب سانتی‌متر.</p>
+<p>بنابراین هر میوه با یک زوج مرتب نمایش داده می‌شود <span class="math display">\[(x_1,x_2),\]</span> که در آن <span class="math display">\[x_1=\text{جرم}
+\qquad\text{و}\qquad
+x_2=\text{قطر}.\]</span></p>
+<p>برای نمونه، زوج <span class="math inline">\((155,\;7.2)\)</span> میوه‌ای با جرم <span class="math inline">\(155\)</span> g و قطر <span class="math inline">\(7.2\)</span> cm را نمایش می‌دهد. با جایگزین کردن شیء فیزیکی با دو اندازه‌گیری عددی، هر میوه را به نقطه‌ای در صفحه دکارتی نسبت می‌دهیم: مؤلفه نخست جرم و مؤلفه دوم قطر را مشخص می‌کند. شکل <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> این نمایش را برای مجموعه‌ای فرضی از سیب‌ها و پرتقال‌ها نشان می‌دهد.</p>
+<figure id="fig:fruits">
+<img alt="از مشاهده فیزیکی تا مدل‌سازی ریاضی. هر میوه ابتدا با دو کمیت قابل اندازه‌گیری — جرم و قطر — توصیف می‌شود و سپس با زوج مرتب \((x_1,x_2)\) نمایش داده می‌شود. در صفحه جرم–قطر، هر مشاهده به یک نقطه تبدیل می‌شود؛ بنابراین تمایز میان سیب و پرتقال را می‌توان به‌صورت یک مسئله هندسی برای " decoding="async" loading="lazy" src="../assets/img/fa/Fig01.png">
+<figcaption>از مشاهده فیزیکی تا مدل‌سازی ریاضی. هر میوه ابتدا با دو کمیت قابل اندازه‌گیری — جرم و قطر — توصیف می‌شود و سپس با زوج مرتب <span class="math inline">\((x_1,x_2)\)</span> نمایش داده می‌شود. در صفحه جرم–قطر، هر مشاهده به یک نقطه تبدیل می‌شود؛ بنابراین تمایز میان سیب و پرتقال را می‌توان به‌صورت یک مسئله هندسی برای جدا کردن دو کلاس بازتفسیر کرد.</figcaption>
+</img></figure>
+<p>این تبدیل ظاهر مسئله را تغییر می‌دهد. به‌جای اینکه مستقیماً بپرسیم چگونه یک سیب یا پرتقال را تشخیص دهیم، می‌توانیم پرسشی هندسی مطرح کنیم: نقاط متعلق به دو کلاس چگونه در صفحه از یکدیگر جدا می‌شوند؟ این تغییر دیدگاه در یادگیری ماشین بنیادی است. تصویر، متن، صدا و سیگنال‌های آزمایشگاهی همگی پیش از آنکه الگوریتمی بتواند آن‌ها را پردازش کند باید به نمایش‌های عددی تبدیل شوند. در مثال ما هر شیء فقط دو مؤلفه دارد؛ در کاربردهای واقعی یک نمایش ممکن است صدها، هزاران یا حتی میلیون‌ها مؤلفه داشته باشد. اصل یکسان است: هر مثال با مجموعه‌ای از اعداد نمایش داده می‌شود و مدل در پی قاعده‌ای است که این نمایش را به پاسخ مورد نظر نگاشت کند.</p>
+<p>از ساده‌ترین قاعده هندسی ممکن آغاز می‌کنیم و می‌پرسیم آیا یک خط راست می‌تواند نقاط سیب و پرتقال را به‌طور مناسب از یکدیگر جدا کند.</p>
+</section><section class="article-section" id="یک-خط-راست-بهعنوان-طبقهبند"><span class="section-no">03</span><h2>یک خط راست به‌عنوان طبقه‌بند</h2>
+<p>پس از آنکه هر میوه به نقطه‌ای در صفحه دکارتی تبدیل شد، طبقه‌بندی به یک مسئله هندسی بدل می‌شود: آیا یک خط راست می‌تواند سیب‌ها را از پرتقال‌ها جدا کند؟ این پرسش ایده پایه خانواده مهمی از روش‌های یادگیری ماشین را در خود دارد که <em>طبقه‌بندهای خطی</em> نامیده می‌شوند.</p>
+<p>خطی را در نظر بگیرید که از میان ابر داده عبور می‌کند، همان‌گونه که در شکل <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a> دیده می‌شود. خط، صفحه را به دو نیم‌صفحه تقسیم می‌کند. اگر بیشتر نقاط سیب در یک سو و بیشتر نقاط پرتقال در سوی دیگر قرار گیرند، موقعیت یک میوه جدید نسبت به خط می‌تواند به‌عنوان قاعده طبقه‌بندی به کار رود. پس از اندازه‌گیری جرم و قطر، میوه را با یک نقطه نمایش می‌دهیم و تعیین می‌کنیم آن نقطه در کدام سوی خط قرار گرفته است.</p>
+<figure id="fig:linear_classifier">
+<img alt="نمونه‌ای از یک طبقه‌بند خطی در صفحه جرم–قطر. خط راست نقش مرز تصمیم را دارد: نقاط یک نیم‌صفحه یک کلاس و نقاط نیم‌صفحه مقابل کلاس دیگر را دریافت می‌کنند. بنابراین تصمیم تنها به این بستگی دارد که نقطه در کدام سوی خط قرار گرفته باشد." decoding="async" loading="lazy" src="../assets/img/fa/Fig02.png"/>
+<figcaption>نمونه‌ای از یک طبقه‌بند خطی در صفحه جرم–قطر. خط راست نقش مرز تصمیم را دارد: نقاط یک نیم‌صفحه یک کلاس و نقاط نیم‌صفحه مقابل کلاس دیگر را دریافت می‌کنند. بنابراین تصمیم تنها به این بستگی دارد که نقطه در کدام سوی خط قرار گرفته باشد.</figcaption>
+</figure>
+<p>در صفحه دکارتی <span class="math inline">\((x_1,x_2)\)</span>، یک خط را می‌توان به‌صورت <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0)\]</span> نوشت.</p>
+<p>بردار <span class="math inline">\((w_1,w_2)\)</span> بر خط عمود است و در نتیجه جهت آن را تعیین می‌کند، در حالی که پارامتر <span class="math inline">\(b\)</span> در تعیین مکان خط نقش دارد. این نمایش اندکی افزونگی دارد: ضرب <span class="math inline">\(w_1\)</span>، <span class="math inline">\(w_2\)</span> و <span class="math inline">\(b\)</span> در یک ثابت ناصفر دقیقاً همان خط را تولید می‌کند. پس پارامترهای توصیف‌کننده مرز یکتا نیستند. تفسیر عددی آن‌ها نیز به مقیاس متغیرها بستگی دارد. از آنجا که جرم بر حسب گرم و قطر بر حسب سانتی‌متر اندازه‌گیری می‌شود، اندازه عددی <span class="math inline">\(w_1\)</span> و <span class="math inline">\(w_2\)</span> را نباید بدون توجه به تفاوت واحدها مستقیماً با یکدیگر مقایسه کرد.</p>
+<p>خود معادله خط راه ساده‌ای برای تعیین سوی قرارگیری یک نقطه نسبت به مرز فراهم می‌کند. امتیاز زیر را تعریف می‌کنیم: <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>اگر <span class="math inline">\(s(x_1,x_2)=0\)</span> باشد، نقطه روی خط قرار دارد. اگر <span class="math inline">\(s(x_1,x_2)&gt;0\)</span> باشد، نقطه در یک نیم‌صفحه و اگر <span class="math inline">\(s(x_1,x_2)&lt;0\)</span> باشد، در نیم‌صفحه دیگر است. اگر تصمیم بگیریم امتیازهای مثبت متناظر با سیب و امتیازهای منفی متناظر با پرتقال باشند، قاعده به شکل زیر درمی‌آید: <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{سیب},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{پرتقال}.
+\end{cases}\]</span></p>
+<p>برای نمونه، مرزی با پارامترهای <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30\]</span> را در نظر بگیرید. برای میوه‌ای با جرم <span class="math inline">\(160\)</span> g و قطر <span class="math inline">\(7.8\)</span> cm داریم <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> چون امتیاز مثبت است، نقطه در نیم‌صفحه‌ای قرار دارد که آن را به سیب اختصاص داده‌ایم. بنابراین این طبقه‌بند میوه را سیب تشخیص می‌دهد.</p>
+<p>هر انتخابی از <span class="math inline">\(w_1\)</span>، <span class="math inline">\(w_2\)</span> و <span class="math inline">\(b\)</span> طبقه‌بندی خوبی ایجاد نمی‌کند. برخی خطوط دو گروه را ضعیف جدا می‌کنند و برخی دیگر خطای کمتری دارند. مسئله یادگیری دقیقاً این است که با استفاده از مثال‌های از پیش برچسب‌گذاری‌شده، مقادیر پارامترها را طوری تعیین کنیم که یک معیار خطای مدل کاهش یابد. به‌جای آنکه مکان خط را مستقیماً برنامه‌ریزی کنیم، می‌خواهیم الگوریتم ضرایب آن را از داده‌ها تنظیم کند.</p>
+<p>یک خط واحد زمانی می‌تواند خوب عمل کند که کلاس‌ها تقریباً به‌صورت خطی جداشدنی باشند. مجموعه‌داده‌های پیچیده‌تر ممکن است به مرزی غیرخطی نیاز داشته باشند. پیش از پرداختن به این محدودیت، طبقه‌بندی را که ساخته‌ایم به‌صورت یک واحد محاسباتی بنیادی بازتفسیر می‌کنیم: یک نورون مصنوعی.</p>
+</section><section class="article-section" id="نورون-مصنوعی"><span class="section-no">04</span><h2>نورون مصنوعی</h2>
+<p>در بخش پیش، عبارت <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> برای تعیین سوی قرارگیری یک میوه نسبت به یک خط استفاده شد. همین عبارت را می‌توان نخستین مرحله محاسبه یک <em>نورون مصنوعی</em> دانست. نورون ورودی‌های عددی را دریافت می‌کند، آن‌ها را با وزن‌ها و یک بایاس ترکیب می‌کند و سپس برای تولید خروجی، یک تابع ریاضی را اعمال می‌کند.</p>
+<p>در مثال ما ورودی‌ها جرم <span class="math inline">\(x_1\)</span> و قطر <span class="math inline">\(x_2\)</span> هستند. هر ورودی در پارامتری به نام <em>وزن</em> ضرب می‌شود؛ حاصل‌ضرب‌ها با جمله ثابت <span class="math inline">\(b\)</span>، که <em>بایاس</em> نام دارد، جمع می‌شوند. شکل <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> این محاسبه را به‌صورت شماتیک نشان می‌دهد.</p>
+<figure id="fig:artificial_neuron">
+<img alt="عملکرد شماتیک یک نورون مصنوعی. هر ورودی \(x_i\) در وزن \(w_i\) ضرب می‌شود؛ حاصل‌ضرب‌ها با بایاس \(b\) جمع می‌شوند تا امتیاز \(s\) به دست آید. سپس تابع فعال‌سازی \(g\) این امتیاز را به خروجی \(\widehat{y}=g(s)\) تبدیل می‌کند؛ این خروجی می‌تواند یک کمیت میانی یا پیش‌بینی نهایی باشد" decoding="async" loading="lazy" src="../assets/img/fa/Fig03.png"/>
+<figcaption>عملکرد شماتیک یک نورون مصنوعی. هر ورودی <span class="math inline">\(x_i\)</span> در وزن <span class="math inline">\(w_i\)</span> ضرب می‌شود؛ حاصل‌ضرب‌ها با بایاس <span class="math inline">\(b\)</span> جمع می‌شوند تا امتیاز <span class="math inline">\(s\)</span> به دست آید. سپس تابع فعال‌سازی <span class="math inline">\(g\)</span> این امتیاز را به خروجی <span class="math inline">\(\widehat{y}=g(s)\)</span> تبدیل می‌کند؛ این خروجی می‌تواند یک کمیت میانی یا پیش‌بینی نهایی باشد.</figcaption>
+</figure>
+<p>وزن‌ها تعیین می‌کنند تغییر در ورودی‌ها چگونه امتیاز را تغییر می‌دهد. اگر <span class="math inline">\(x_2\)</span> و همه کمیت‌های دیگر ثابت نگه داشته شوند، تغییر <span class="math inline">\(\Delta x_1\)</span> باعث تغییر <span class="math inline">\(w_1\Delta x_1\)</span> در <span class="math inline">\(s\)</span> می‌شود. به همین ترتیب، تغییر <span class="math inline">\(\Delta x_2\)</span> امتیاز را به اندازه <span class="math inline">\(w_2\Delta x_2\)</span> تغییر می‌دهد. علامت وزن نیز مهم است: وزن مثبت باعث می‌شود افزایش ورودی امتیاز را افزایش دهد، در حالی که وزن منفی اثر معکوس دارد. وقتی متغیرها واحدها و مقیاس‌های متفاوت دارند باید در استفاده از این تفسیر دقت کرد. به همین دلیل در پیاده‌سازی‌های عملی، داده‌های ورودی معمولاً پیش از آموزش نرمال‌سازی یا استانداردسازی می‌شوند.</p>
+<p>بایاس <span class="math inline">\(b\)</span> جمله ثابت تبدیل آفین است. از دید هندسی، این پارامتر اجازه می‌دهد مرز تصمیم جابه‌جا شود. اگر <span class="math inline">\(b=0\)</span> باشد، معادله <span class="math display">\[w_1x_1+w_2x_2=0\]</span> خط را وادار می‌کند از مبدأ عبور کند. با وجود بایاس، مرز می‌تواند به مکان‌های دیگر منتقل شود. به‌طور معادل، وقتی <span class="math inline">\(x_1=x_2=0\)</span> باشد، امتیاز برابر <span class="math inline">\(s=b\)</span> است.</p>
+<p>امتیاز لازم نیست خروجی نهایی نورون باشد. به‌طور کلی یک <em>تابع فعال‌سازی</em> <span class="math inline">\(g\)</span> روی آن اعمال می‌شود: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> بنابراین محاسبه دو مرحله دارد: <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>با استفاده از مقادیر پارامترهای بخش قبل، <span class="math inline">\(s=1.6\)</span> به دست می‌آید. اگر تابع پله‌ای را انتخاب کنیم <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> آنگاه <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span> است. بر اساس قرارداد ما، میوه به‌عنوان سیب طبقه‌بندی می‌شود. با این فعال‌سازی، تصمیم هنگامی تغییر می‌کند که <span class="math inline">\(s\)</span> از صفر عبور کند؛ بنابراین مرز کلاس دقیقاً <span class="math display">\[w_1x_1+w_2x_2+b=0\]</span> است.</p>
+<p>پس یک نورون منفرد شیء ریاضی ساده‌ای با پارامترهای قابل تنظیم است. اهمیت واقعی آن زمانی آشکار می‌شود که تعداد زیادی از این واحدها به یکدیگر متصل شوند. اما پیش از ساخت شبکه باید بفهمیم چرا تابع فعال‌سازی ضروری است.</p>
+</section><section class="article-section" id="چرا-به-تابع-فعالسازی-نیاز-داریم"><span class="section-no">05</span><h2>چرا به تابع فعال‌سازی نیاز داریم؟</h2>
+<p>یک نورون ابتدا با یک تبدیل آفین امتیازی را محاسبه می‌کند و سپس تابع فعال‌سازی را روی آن اعمال می‌کند. اگر شبکه عصبی قرار باشد روابط پیچیده را نمایش دهد، این مرحله دوم ضروری است. برای دیدن دلیل آن، شبکه‌ای را تصور کنید که در آن هیچ تابع فعال‌سازی‌ای به کار نرفته باشد. در این صورت هر واحد شکلی مانند <span class="math display">\[y=w_1x_1+w_2x_2+b\]</span> خواهد داشت.</p>
+<p>برای یک مثال یک‌بعدی، فرض کنید واحد اول <span class="math display">\[h=ax+b\]</span> را تولید کند و واحد دوم <span class="math display">\[y=ch+d\]</span> را محاسبه کند. با جایگذاری داریم <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> که همچنان یک تابع آفین از <span class="math inline">\(x\)</span> است. همین نتیجه در چند بعد نیز برقرار است: ترکیب چند تبدیل آفین باز هم آفین است. بنابراین افزودن لایه‌های متعدد بدون یک عمل غیرخطی، شبکه را از نظر بنیادی بیانگرتر نمی‌کند؛ کل ترکیب را می‌توان با یک تبدیل آفین منفرد جایگزین کرد.</p>
+<p>تابع فعال‌سازی این محدودیت را از میان برمی‌دارد. پس از محاسبه امتیاز <span class="math inline">\(s\)</span>، نورون معمولاً یک نگاشت غیرخطی را اعمال می‌کند: <span class="math display">\[h=g(s).\]</span> وقتی چند واحد از این نوع به هم متصل شوند، ترکیب حاصل دیگر به یک تبدیل آفین واحد فروکاستنی نیست. به این ترتیب شبکه می‌تواند مرزهای تصمیم پیچیده‌تری بسازد.</p>
+<p>ساده‌ترین تابع فعال‌سازی، تابع پله‌ای است: <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> این تابع یک تصمیم دودویی تولید می‌کند و برای فهم طبقه‌بندی بسیار مفید است. با این حال مشتق آن برای <span class="math inline">\(s\neq0\)</span> صفر و در <span class="math inline">\(s=0\)</span> تعریف‌نشده است. از آنجا که آموزش مبتنی بر گرادیان از مشتق‌ها برای تعیین نحوه تغییر پارامترها استفاده می‌کند، تابع پله‌ای برای این سازوکار آموزشی مناسب نیست.</p>
+<p>یک جایگزین، تابع سیگموید است: <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> این تابع هر عدد حقیقی را به مقداری کاملاً بین <span class="math inline">\(0\)</span> و <span class="math inline">\(1\)</span> نگاشت می‌کند. برای <span class="math inline">\(s\)</span>های بسیار منفی، خروجی به <span class="math inline">\(0\)</span> نزدیک می‌شود؛ برای <span class="math inline">\(s\)</span>های بسیار مثبت به <span class="math inline">\(1\)</span> نزدیک می‌شود؛ و میان این دو حالت، گذار نرم است. سیگموید در همه جا مشتق‌پذیر است و <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> از آنجا که خروجی آن بین <span class="math inline">\(0\)</span> و <span class="math inline">\(1\)</span> قرار دارد، اغلب در لایه خروجی طبقه‌بندهای دودویی استفاده می‌شود. در یک صورت‌بندی احتمالاتی همراه با تابع زیان مناسب، خروجی را می‌توان به‌عنوان برآورد احتمال کلاس متناظر با <span class="math inline">\(1\)</span> تعبیر کرد. با این حال، در لایه‌های پنهان سیگموید می‌تواند مشکلی ایجاد کند: برای ورودی‌های با قدر مطلق بزرگ، مشتق آن بسیار کوچک می‌شود و به مسئله <em>محو شدن گرادیان</em> در شبکه‌های عمیق کمک می‌کند.</p>
+<p>یکی از توابع فعال‌سازی پرکاربرد در لایه‌های پنهان، ReLU یا <em>واحد خطی یکسوشده</em> است: <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> اگرچه ReLU از دو قطعه خطی ساخته شده است، در کل یک تابع خطی نیست. مشتق آن برای <span class="math inline">\(s&lt;0\)</span> برابر <span class="math inline">\(0\)</span> و برای <span class="math inline">\(s&gt;0\)</span> برابر <span class="math inline">\(1\)</span> است. در <span class="math inline">\(s=0\)</span> مشتق معمول وجود ندارد و پیاده‌سازی‌های نرم‌افزاری یک قرارداد برای گرادیان در نظر می‌گیرند. برای ورودی‌های مثبت، مشتق با افزایش <span class="math inline">\(s\)</span> کوچک نمی‌شود و یکی از سازوکارهای اشباع سیگموید را ندارد.</p>
+<p>شکل <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> این سه تابع فعال‌سازی را به‌صورت بصری مقایسه می‌کند: جهش ناگهانی تابع پله‌ای، گذار نرم سیگموید و تغییر شیب ReLU.</p>
+<figure id="fig:activation_functions">
+<img alt="مقایسه سه تابع فعال‌سازی که معمولاً در معرفی مقدماتی شبکه‌های عصبی استفاده می‌شوند. تابع پله‌ای تصمیمی ناگهانی می‌گیرد؛ سیگموید گذار نرمی میان \(0\) و \(1\) ایجاد می‌کند؛ و ReLU ورودی‌های منفی را حذف و ورودی‌های مثبت را حفظ می‌کند. فعال‌سازی‌های غیرخطی مانع از آن می‌شوند که چندین" decoding="async" loading="lazy" src="../assets/img/fa/Fig04.png"/>
+<figcaption>مقایسه سه تابع فعال‌سازی که معمولاً در معرفی مقدماتی شبکه‌های عصبی استفاده می‌شوند. تابع پله‌ای تصمیمی ناگهانی می‌گیرد؛ سیگموید گذار نرمی میان <span class="math inline">\(0\)</span> و <span class="math inline">\(1\)</span> ایجاد می‌کند؛ و ReLU ورودی‌های منفی را حذف و ورودی‌های مثبت را حفظ می‌کند. فعال‌سازی‌های غیرخطی مانع از آن می‌شوند که چندین لایه به یک تبدیل آفین منفرد فروبکاهند.</figcaption>
+</figure>
+<p>ویژگی‌های اصلی این توابع در جدول زیر خلاصه شده‌اند.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">تابع</th>
+<th style="text-align: center;">خروجی</th>
+<th style="text-align: left;">مشتق</th>
+<th style="text-align: left;">کاربرد معمول</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">پله‌ای</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">برای <span class="math inline">\(s\neq0\)</span> صفر؛ در <span class="math inline">\(s=0\)</span> تعریف‌نشده</td>
+<td style="text-align: left;">مدل‌های تاریخی و مثال‌های آموزشی</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">سیگموید</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">برای همه <span class="math inline">\(s\)</span> وجود دارد</td>
+<td style="text-align: left;">لایه خروجی در طبقه‌بندی دودویی</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;">برای <span class="math inline">\(s&lt;0\)</span> برابر <span class="math inline">\(0\)</span> و برای <span class="math inline">\(s&gt;0\)</span> برابر <span class="math inline">\(1\)</span></td>
+<td style="text-align: left;">لایه‌های پنهان</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>جزئیات این توابع متفاوت است، اما نقش مفهومی مشترک آن‌ها وارد کردن غیرخطی بودن است. همین غیرخطی بودن به شبکه کوچک بخش بعد اجازه می‌دهد روابطی را نمایش دهد که یک خط راست واحد قادر به نمایش آن‌ها نیست.</p>
+<p>برای مطالعه بیشتر، Haykin  شرح کلاسیکی از شبکه‌های عصبی ارائه می‌کند، در حالی که Goodfellow، Bengio و Courville  توابع فعال‌سازی و آموزش شبکه‌های عمیق را در چارچوبی گسترده‌تر بررسی می‌کنند. متن آزاد Nielsen  نیز برای شکل‌گیری شهود درباره نورون‌ها، فعال‌سازی‌ها و یادگیری بسیار مناسب است.</p>
+</section><section class="article-section" id="ساخت-یک-شبکه-عصبی-کوچک"><span class="section-no">06</span><h2>ساخت یک شبکه عصبی کوچک</h2>
+<p>اکنون شبکه‌ای با دو ورودی، یک لایه پنهان شامل سه نورون و یک نورون خروجی را در نظر می‌گیریم. ورودی‌ها همچنان <span class="math display">\[x_1=\text{جرم},
+\qquad
+x_2=\text{قطر}\]</span> هستند و هر دو به هر نورون پنهان داده می‌شوند، همان‌گونه که در شکل <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a> نشان داده شده است.</p>
+<figure id="fig:small_network">
+<img alt="معماری آموزشی \(2\) – \(3\) – \(1\) برای معرفی محاسبات شبکه عصبی. دو ورودی — جرم و قطر — به سه نورون لایه پنهان وارد می‌شوند. فعال‌سازی‌های \(h_1,h_2,h_3\) سپس توسط نورون خروجی ترکیب می‌شوند تا پیش‌بینی \(\widehat{y}\) تولید شود. هر اتصال وزن قابل تنظیم و هر نورون یک بایاس دارد." decoding="async" loading="lazy" src="../assets/img/fa/Fig05.png"/>
+<figcaption>معماری آموزشی <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> برای معرفی محاسبات شبکه عصبی. دو ورودی — جرم و قطر — به سه نورون لایه پنهان وارد می‌شوند. فعال‌سازی‌های <span class="math inline">\(h_1,h_2,h_3\)</span> سپس توسط نورون خروجی ترکیب می‌شوند تا پیش‌بینی <span class="math inline">\(\widehat{y}\)</span> تولید شود. هر اتصال وزن قابل تنظیم و هر نورون یک بایاس دارد.</figcaption>
+</figure>
+<p>خروجی‌های لایه پنهان را <span class="math inline">\(h_1\)</span>، <span class="math inline">\(h_2\)</span> و <span class="math inline">\(h_3\)</span> می‌نامیم. هر نورون همان دو ورودی را دریافت می‌کند، اما وزن‌ها و بایاس مخصوص خود را دارد: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>با اینکه هر سه نورون همان جرم و قطر را دریافت می‌کنند، به دلیل تفاوت پارامترهایشان می‌توانند پاسخ‌های متفاوتی تولید کنند. در فرایند آموزش، این پارامترها تنظیم می‌شوند تا فعال‌سازی‌های میانی برای طبقه‌بندی مفید شوند.</p>
+<p>سپس سه کمیت <span class="math inline">\(h_1\)</span>، <span class="math inline">\(h_2\)</span> و <span class="math inline">\(h_3\)</span> به نورون خروجی داده می‌شوند. این نورون ابتدا <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> را محاسبه می‌کند و بعد <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right)\]</span> را تولید می‌کند. برای مسئله دودویی ما از خروجی سیگمویدی استفاده می‌کنیم: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>اگر <span class="math inline">\(y=1\)</span> را برای سیب و <span class="math inline">\(y=0\)</span> را برای پرتقال در نظر بگیریم، آستانه <span class="math inline">\(0.5\)</span> تصمیم کلاسی زیر را می‌دهد: <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{سیب},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{پرتقال}.\]</span> بنابراین مقادیر نزدیک به <span class="math inline">\(1\)</span> به‌طور قوی با سیب و مقادیر نزدیک به <span class="math inline">\(0\)</span> با پرتقال مرتبط‌اند. همان‌طور که پیش‌تر اشاره شد، تفسیر عددی <span class="math inline">\(\widehat{y}\)</span> به‌عنوان احتمال نیازمند فرض‌های اضافی درباره مدل و آموزش آن است. برای قاعده طبقه‌بندی مورد استفاده در اینجا، کافی است <span class="math inline">\(\widehat{y}\)</span> را یک خروجی پیوسته شبکه بدانیم.</p>
+<p>ویژگی مرکزی این معماری، نمایش میانی <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}\]</span> است. شبکه دو ویژگی را دریافت می‌کند و پیش از تولید پاسخ نهایی، سه کمیت جدید می‌سازد. این فعال‌سازی‌ها به‌صورت دستی انتخاب نمی‌شوند؛ آن‌ها به وزن‌ها و بایاس‌ها وابسته‌اند و بنابراین با آموزش پارامترها تغییر می‌کنند.</p>
+<p>با وجود اندازه کوچک، این شبکه در مجموع سیزده پارامتر قابل تنظیم دارد. سه نورون پنهان شامل <span class="math display">\[3(2+1)=9\]</span> پارامترند و نورون خروجی <span class="math display">\[3+1=4\]</span> پارامتر دیگر دارد. در نتیجه <span class="math display">\[9+4=13.\]</span></p>
+<p>همین شمارش در نمادگذاری ماتریسی شفاف‌تر می‌شود. تعریف می‌کنیم <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> آنگاه لایه پنهان را می‌توان فشرده به‌صورت <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right)\]</span> نوشت، که در آن <span class="math inline">\(g\)</span> مؤلفه‌به‌مؤلفه عمل می‌کند. برای خروجی نیز داریم <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> که در آن <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>این نمادگذاری ساختاری را پیشاپیش نشان می‌دهد که در برنامه Python خواهیم دید. وقتی یک میوه در ورودی قرار می‌گیرد و فعال‌سازی‌های پیاپی را تا رسیدن به <span class="math inline">\(\widehat{y}\)</span> محاسبه می‌کنیم، <em>انتشار رو به جلو</em> یا یک <em>گذر رو به جلو</em> انجام می‌دهیم. پرسش اصلی همچنان باقی است: سیزده پارامتر چگونه می‌توانند به‌طور خودکار تعیین شوند تا پیش‌بینی‌ها با داده‌ها سازگار شوند؟</p>
+</section><section class="article-section" id="شبکه-عصبی-چگونه-یاد-میگیرد"><span class="section-no">07</span><h2>شبکه عصبی چگونه یاد می‌گیرد؟</h2>
+<p>وزن‌ها و بایاس‌ها از پیش معلوم نیستند. باید آن‌ها را با استفاده از مثال‌هایی که پاسخ صحیحشان مشخص است تنظیم کرد. این فرایند <em>آموزش</em> نام دارد و می‌توان آن را با چرخه زیر خلاصه کرد: <span class="math display">\[\boxed{\text{پیش‌بینی}}
+\longrightarrow
+\boxed{\text{اندازه‌گیری خطا}}
+\longrightarrow
+\boxed{\text{تنظیم پارامترها}}
+\longrightarrow
+\boxed{\text{تکرار}}.\]</span></p>
+<p>میوه‌ای با جرم <span class="math inline">\(140\)</span> g و قطر <span class="math inline">\(7.0\)</span> cm را در نظر بگیرید که کلاس صحیح آن پرتقال است، بنابراین <span class="math inline">\(y=0\)</span>. فرض کنید در مرحله‌ای از آموزش، شبکه مقدار <span class="math inline">\(\widehat{y}=0.80\)</span> را تولید کند. یک معیار ساده برای اختلاف میان پیش‌بینی و هدف، خطای مربعی است: <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> برای این مثال <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>این عبارت برای یک مثال یک <em>تابع زیان</em> است. چون مربع است، <span class="math inline">\(E\geq0\)</span> و پیش‌بینی‌های دورتر از هدف جریمه بیشتری می‌گیرند. ضریب <span class="math inline">\(1/2\)</span> محل کمینه را تغییر نمی‌دهد، اما مشتق‌گیری را ساده می‌کند. در طبقه‌بندی دودویی اغلب از زیان‌های دیگری، به‌ویژه آنتروپی متقاطع، استفاده می‌شود. ما در اینجا خطای مربعی را به کار می‌بریم زیرا جبر آن شفاف است و برای معرفی بهینه‌سازی و پس‌انتشار کفایت می‌کند .</p>
+<p>اگر مجموعه آموزش شامل <span class="math inline">\(N\)</span> مثال باشد، یک معیار کلی، میانگین زیان است: <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> هر پیش‌بینی به وزن‌ها و بایاس‌های شبکه وابسته است، پس <span class="math inline">\(J\)</span> نیز به همه این پارامترها وابسته است. آموزش یعنی جست‌وجوی مقادیر پارامترهایی که <span class="math inline">\(J\)</span> را کوچک کنند.</p>
+<p>برای فهم سازوکار تنظیم، ابتدا تصور کنید همه پارامترها جز یک وزن <span class="math inline">\(w\)</span> ثابت نگه داشته شوند. در این صورت می‌توان زیان را تابعی به صورت <span class="math inline">\(J=J(w)\)</span> در نظر گرفت. شکل <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> مراحل اصلی آموزش را که اکنون بررسی می‌کنیم خلاصه می‌کند.</p>
+<figure id="fig:training_cycle">
+<img alt="چرخه پایه آموزش یک شبکه عصبی. گذر رو به جلو ورودی‌ها را به پیش‌بینی تبدیل می‌کند؛ تابع زیان اختلاف میان پیش‌بینی و هدف را اندازه می‌گیرد؛ پس‌انتشار با استفاده از قاعده زنجیره‌ای گرادیان‌ها را محاسبه می‌کند؛ و نزول گرادیان از این گرادیان‌ها برای به‌روزرسانی وزن‌ها و بایاس‌ها استفا" decoding="async" loading="lazy" src="../assets/img/fa/Fig06.png"/>
+<figcaption>چرخه پایه آموزش یک شبکه عصبی. گذر رو به جلو ورودی‌ها را به پیش‌بینی تبدیل می‌کند؛ تابع زیان اختلاف میان پیش‌بینی و هدف را اندازه می‌گیرد؛ پس‌انتشار با استفاده از قاعده زنجیره‌ای گرادیان‌ها را محاسبه می‌کند؛ و نزول گرادیان از این گرادیان‌ها برای به‌روزرسانی وزن‌ها و بایاس‌ها استفاده می‌کند. تکرار این چرخه در دوره‌های متعدد همان چیزی است که یادگیری می‌نامیم.</figcaption>
+</figure>
+<p>برای خوانندگانی که با حساب دیفرانسیل آشنایی کمی دارند، مشتق را می‌توان در اینجا معیاری از <em>حساسیت موضعی</em> دانست: مشتق نشان می‌دهد یک تغییر کوچک در یک پارامتر چگونه تمایل دارد مقدار زیان را تغییر دهد. علامت مشتق جهت افزایش یا کاهش موضعی تابع را نشان می‌دهد و قدر مطلق آن شدت این تغییر موضعی را بیان می‌کند.</p>
+<p>مشتق <span class="math display">\[\frac{\partial J}{\partial w}\]</span> شیب موضعی را می‌دهد. اگر مثبت باشد، افزایش کوچک <span class="math inline">\(w\)</span> معمولاً <span class="math inline">\(J\)</span> را افزایش می‌دهد و بنابراین وزن باید در جهت مخالف حرکت کند. اگر منفی باشد، افزایش <span class="math inline">\(w\)</span> به‌طور موضعی <span class="math inline">\(J\)</span> را کاهش می‌دهد. هر دو حالت با رابطه <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w}\]</span> توصیف می‌شوند که ایده پایه <em>نزول گرادیان</em> است. عدد مثبت <span class="math inline">\(\eta\)</span> <em>نرخ یادگیری</em> نام دارد و اندازه گام را کنترل می‌کند. مقدار بسیار کوچک ممکن است آموزش را کند کند و مقدار بیش از اندازه بزرگ می‌تواند باعث نوسان یا ناپایداری شود.</p>
+<p>برای شبکه‌ای با پارامترهای بسیار، <span class="math inline">\(\theta\)</span> را هر وزن یا بایاس در نظر می‌گیریم. قاعده به‌روزرسانی به شکل <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}\]</span> درمی‌آید. مجموعه همه مشتق‌های جزئی، <em>گرادیان</em> زیان را تشکیل می‌دهد. از نظر هندسی، گرادیان در جهت سریع‌ترین افزایش موضعی اشاره می‌کند؛ بنابراین منفی گرادیان یک جهت موضعی کاهش را فراهم می‌کند.</p>
+<p>اکنون باید این مشتق‌ها را زمانی محاسبه کنیم که شبکه ترکیبی از چند تابع است. در گذر رو به جلو، اطلاعات در مسیر <span class="math display">\[\text{ورودی‌ها}
+\longrightarrow
+\text{لایه پنهان}
+\longrightarrow
+\text{خروجی}\]</span> حرکت می‌کند. برای تعیین اینکه یک پارامتر در لایه‌ای ابتدایی چگونه بر زیان اثر می‌گذارد، زنجیره وابستگی‌ها را از نظر ریاضی در جهت معکوس دنبال می‌کنیم. این روش <em>پس‌انتشار</em> نام دارد و در اصل کاربردی نظام‌مند و کارآمد از قاعده زنجیره‌ای است. Rumelhart، Hinton و Williams  مرجع کلاسیکی برای رواج این روش در شبکه‌های دارای لایه پنهان فراهم کرده‌اند و Nielsen  استنتاجی جزئی و بسیار آموزشی ارائه می‌کند.</p>
+<p>برای یک زنجیره ساده وابستگی که در آن <span class="math inline">\(E\)</span> به <span class="math inline">\(\widehat{y}\)</span>، <span class="math inline">\(\widehat{y}\)</span> به فعال‌سازی <span class="math inline">\(h\)</span> و <span class="math inline">\(h\)</span> به وزن <span class="math inline">\(w\)</span> وابسته است، قاعده زنجیره‌ای می‌دهد: <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> هر عامل یکی از مراحل تأثیر <span class="math inline">\(w\)</span> بر زیان نهایی را توصیف می‌کند. شبکه‌های بزرگ‌تر شامل تعداد زیادی از این زنجیره‌ها هستند و پس‌انتشار محاسبه را طوری سازمان می‌دهد که مشتق‌های میانی دوباره استفاده شوند و لازم نباشد برای هر پارامتر از ابتدا محاسبه شوند.</p>
+<p>در عمل، آموزش از مثال‌های فراوان استفاده می‌کند. یک عبور کامل از مجموعه آموزش یک <em>دوره</em> یا <em>epoch</em> نامیده می‌شود. پارامترها می‌توانند پس از هر مثال، همانند برنامه آموزشی بخش بعد، یا پس از گروه‌های کوچکی از مثال‌ها که <em>mini-batch</em> نامیده می‌شوند به‌روزرسانی شوند. حالت دوم در شبکه‌های بزرگ‌تر رایج است. در هر دو صورت، چرخه پیش‌بینی، زیان، گرادیان و به‌روزرسانی در دوره‌های متعدد تکرار می‌شود.</p>
+<p>راه ملموسی برای دیدن این تحول، دنبال کردن پیش‌بینی یک مثال ثابت در مراحل مختلف آموزش است. دوباره میوه‌ای با جرم <span class="math inline">\(140\)</span> g و قطر <span class="math inline">\(7.0\)</span> cm را در نظر بگیرید که کلاس صحیح آن پرتقال است. جدول <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> یک روند فرضی را نشان می‌دهد. این مقادیر مربوط به اجرای خاصی نیستند و فقط برای نمایش سازوکار ارائه شده‌اند.</p>
+<div id="tab:learning">
+<table>
+<caption>روند فرضی پیش‌بینی شبکه برای همان میوه در طول آموزش. به‌روزرسانی‌های پیاپی پارامترها می‌توانند خروجی اولیه نادرست را به طبقه‌بندی سازگار با برچسب هدف نزدیک کنند.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">دوره</th>
+<th style="text-align: center;">پیش‌بینی <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">زیان <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">طبقه‌بندی</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">سیب</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">سیب</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">سیب</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">پرتقال</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">پرتقال</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>در آغاز، خروجی به <span class="math inline">\(1\)</span> نزدیک است و میوه به‌اشتباه سیب طبقه‌بندی می‌شود. با تنظیم پارامترها، پیش‌بینی کاهش می‌یابد و سرانجام از آستانه <span class="math inline">\(0.5\)</span> عبور می‌کند و کلاس درست را تولید می‌کند. آنچه در این فرایند تغییر می‌کند مقادیر عددی وزن‌ها و بایاس‌هاست؛ معماری شبکه ثابت می‌ماند.</p>
+<p>کاهش زیان روی داده‌های آموزش هدف نهایی نیست. یک شبکه مفید باید برای مثال‌هایی که در برازش پارامترها استفاده نشده‌اند نیز پیش‌بینی‌های خوبی انجام دهد. این توانایی <em>تعمیم</em> نامیده می‌شود. اگر مدل بیش از حد با ویژگی‌های خاص مجموعه آموزش سازگار شود و روی داده‌های جدید بدتر عمل کند، با <em>بیش‌برازش</em> روبه‌رو هستیم. در ارزیابی‌های دقیق‌تر، داده‌ها معمولاً به مجموعه‌های آموزش، اعتبارسنجی و آزمون تقسیم می‌شوند: اولی پارامترها را برازش می‌کند، دومی برای انتخاب‌های انجام‌شده هنگام توسعه مدل به کار می‌رود و سومی برای ارزیابی نهایی کنار گذاشته می‌شود. بحث گسترده‌تر درباره تعمیم و ارزیابی مدل را می‌توان در Faceli et al.  و Goodfellow، Bengio و Courville  یافت.</p>
+<p>بنابراین به معنای ریاضی یادگیری در یک شبکه عصبی رسیده‌ایم. در این چارچوب، یادگیری یعنی تنظیم پارامترهای یک تابع مرکب به‌منظور کاهش یک معیار خطا روی داده‌ها و، در حالت ایده‌آل، تعمیم به مثال‌های جدید. شبکه پیش‌بینی می‌کند، زیان را محاسبه می‌کند، با مشتق‌ها تعیین می‌کند پارامترها چگونه بر آن زیان اثر دارند و سپس دنباله‌ای از اصلاح‌های کوچک انجام می‌دهد.</p>
+</section><section class="article-section" id="از-ریاضیات-تا-python"><span class="section-no">08</span><h2>از ریاضیات تا Python</h2>
+<p>اکنون از معادلات به یک برنامه اجرایی می‌رویم. هدف استفاده از کتابخانه تخصصی شبکه عصبی نیست، بلکه می‌خواهیم با <code>NumPy</code> همان عملیات ریاضی را که در مقاله توسعه داده‌ایم مستقیماً پیاده‌سازی کنیم . به این ترتیب می‌توان خط‌به‌خط دید که ترکیب‌های خطی، توابع فعال‌سازی، محاسبه زیان، پس‌انتشار و نزول گرادیان چگونه در کد ظاهر می‌شوند.</p>
+<p>برای یک مثال نهایی قانع‌کننده‌تر، از مجموعه‌داده مصنوعی‌ای استفاده می‌کنیم که در ناحیه گسترده‌تری از صفحه جرم–قطر پخش شده است. همچنان فقط دو ویژگی فیزیکی داریم — جرم بر حسب گرم و قطر بر حسب سانتی‌متر — اما اکنون <span class="math inline">\(64\)</span> مثال آموزشی را در بخش بزرگی از صفحه توزیع می‌کنیم و هشت مثال دیگر را برای یک آزمون نمایشی کنار می‌گذاریم. داده‌ها همچنان مصنوعی‌اند و در بازه‌های معقول برای سیب و پرتقال قرار دارند. آن‌ها طوری ساخته شده‌اند که مرز تصمیم غیرخطی ایجاد کنند، بدون آنکه همه نقاط در چند خوشه بیش از حد مصنوعی متمرکز شوند.</p>
+<p>ایده هندسی ساده است. یک منحنی مرجع در صفحه جرم–قطر تعریف می‌کنیم، سیب‌ها را در دو نوار بالای آن و پرتقال‌ها را در دو نوار پایین آن قرار می‌دهیم. آشفتگی‌های کوچک و قطعی به جرم و قطر افزوده می‌شوند تا مشاهدات ناحیه وسیع‌تری را اشغال کنند. مثال حاصل از شکل‌های قبلی غنی‌تر است: نقاط بیشتری دارد، داده‌ها در سراسر دامنه پخش شده‌اند و مرز تصمیم مناسب به‌وضوح خمیده‌تر از یک خط راست است.</p>
+<p>برای این آزمایش محاسباتی نهایی، لایه پنهان را به دوازده نورون ReLU افزایش می‌دهیم. این تغییر ساختار مفهومی بخش‌های قبلی را عوض نمی‌کند؛ تنها ظرفیت شبکه برای نمایش مرزی پیچیده‌تر را افزایش می‌دهد. به‌جای <span class="math inline">\(13\)</span> پارامتر شبکه آموزشی سه‌نورونی، اکنون <span class="math inline">\(49\)</span> پارامتر قابل تنظیم داریم: <span class="math inline">\(24\)</span> وزن و <span class="math inline">\(12\)</span> بایاس در لایه نخست، سپس <span class="math inline">\(12\)</span> وزن و یک بایاس در لایه خروجی. معادلات دقیقاً همان شکل را دارند؛ فقط بردارها و ماتریس‌ها بزرگ‌تر می‌شوند.</p>
+<p>برنامه کامل در ادامه آمده است.</p>
+<div lang="en">
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Apple - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Orange - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Apple - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Orange - test")
+
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Neural-network output after training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Apple - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Orange - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Neural-network decision boundary')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+</div>
+<p>اگرچه کد از نخستین معادلات بررسی‌شده در مقاله طولانی‌تر است، ساختار آن همچنان روشن باقی می‌ماند. تابع <code>build_data()</code> به‌طور خودکار <span class="math inline">\(64\)</span> مثال آموزشی و هشت مثال آزمون نمایشی را می‌سازد. سپس هر دو متغیر را بر اساس رابطه <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> استاندارد می‌کنیم، که در آن <span class="math inline">\(\mu_j\)</span> و <span class="math inline">\(\sigma_j\)</span> فقط از مجموعه آموزش محاسبه می‌شوند. این کار مانع از آن می‌شود که مجموعه آزمون بر برازش پارامترها اثر بگذارد و همچنین جرم و قطر را از نظر مقیاس عددی قابل مقایسه می‌کند.</p>
+<p>گذر رو به جلو از نظر بنیادی تغییر نمی‌کند. تنها تفاوت این است که لایه نخست اکنون برداری از دوازده فعال‌سازی پنهان تولید می‌کند. در نمادگذاری ماتریسی <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> این چهار خط همچنان هسته ریاضی الگوریتم را در خود دارند. آموزش نیز همان منطق معرفی‌شده در بخش‌های قبل را حفظ می‌کند: پیش‌بینی را محاسبه کن، خطای آن را اندازه بگیر، اطلاعات حساسیت را با استفاده از مشتق‌ها به عقب منتشر کن و پارامترها را با گام‌های کوچک نزول گرادیان به‌روزرسانی کن.</p>
+<p>در کد، پس‌انتشار در لایه خروجی در عبارت زیر ظاهر می‌شود:</p>
+<div lang="en">
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+</div>
+<p>و انتشار به لایه پنهان در عبارت</p>
+<div lang="en">
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+</div>
+<p>دیده می‌شود و پس از آن همه وزن‌ها و بایاس‌ها به‌روزرسانی می‌شوند. چون مثال‌ها در هر دوره به‌صورت تصادفی مرتب می‌شوند و پارامترها پس از هر مشاهده به‌روزرسانی می‌شوند، این پیاده‌سازی شکلی ابتدایی از <em>نزول گرادیان تصادفی</em> است.</p>
+<p>با بذر تصادفی و ابرپارامترهای استفاده‌شده در اینجا، میانگین زیان نهایی در مرتبه <span class="math inline">\(10^{-5}\)</span> تا <span class="math inline">\(10^{-4}\)</span> قرار می‌گیرد و هر <span class="math inline">\(64\)</span> مثال آموزشی همراه با هشت مثال آزمون نمایشی، طبقه‌بندی مورد انتظار را دریافت می‌کنند. این نتیجه نباید به‌عنوان ارزیابی آماری دقیق عملکرد تعبیر شود: داده‌ها مصنوعی‌اند و با هدف آموزشی ساخته شده‌اند. نقش آن‌ها نشان دادن این است که چگونه یک شبکه عصبی کوچک می‌تواند در محیطی کمتر بدیهی، یک مرز تصمیم به‌وضوح غیرخطی را یاد بگیرد.</p>
+<p>شکل <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> خروجی نهایی برنامه را در صفحه جرم–قطر نشان می‌دهد. همه نقاط آموزش نمایش داده شده‌اند. منحنی برجسته تراز <span class="math inline">\(\widehat{y}=0.5\)</span> و مرز تصمیم آموخته‌شده توسط شبکه است؛ نواحی سایه‌دار دو کلاس پیش‌بینی‌شده را نشان می‌دهند. دایره‌ها سیب‌های آموزش، مربع‌ها پرتقال‌های آموزش، مثلث‌ها سیب‌های آزمون و ضربدرها پرتقال‌های آزمون را نشان می‌دهند. راهنما خارج از ناحیه اصلی نمودار قرار گرفته است تا هیچ نقطه‌ای پنهان نشود.</p>
+<figure id="fig:python_output">
+<img alt="خروجی Python پس از آموزش شبکه عصبی. مجموعه‌داده مصنوعی شامل \(64\) مثال آموزشی است که در ناحیه گسترده‌ای از صفحه جرم–قطر پخش شده‌اند و هشت مثال دیگر برای آزمونی نمایشی کنار گذاشته شده‌اند. منحنی برجسته تراز \(\widehat{y}=0.5\) و مرز تصمیم آموخته‌شده را نشان می‌دهد؛ نواحی سایه‌دار" decoding="async" loading="lazy" src="../assets/img/fa/Fig07.png"/>
+<figcaption>خروجی Python پس از آموزش شبکه عصبی. مجموعه‌داده مصنوعی شامل <span class="math inline">\(64\)</span> مثال آموزشی است که در ناحیه گسترده‌ای از صفحه جرم–قطر پخش شده‌اند و هشت مثال دیگر برای آزمونی نمایشی کنار گذاشته شده‌اند. منحنی برجسته تراز <span class="math inline">\(\widehat{y}=0.5\)</span> و مرز تصمیم آموخته‌شده را نشان می‌دهد؛ نواحی سایه‌دار کلاس‌های پیش‌بینی‌شده توسط شبکه را مشخص می‌کنند. دایره‌ها سیب‌های آموزش، مربع‌ها پرتقال‌های آموزش، مثلث‌ها سیب‌های آزمون و ضربدرها پرتقال‌های آزمون را نمایش می‌دهند.</figcaption>
+</figure>
+<p>کار را با یک خط راست برای جدا کردن دو گروه ساده از نقاط آغاز کردیم و به مثالی محاسباتی غنی‌تر رسیدیم که در آن یک مرز خمیده از تنظیم خودکار پارامترهای شبکه پدید می‌آید. هیچ عنصر رازآلودی به ریاضیات افزوده نشده است: پیاده‌سازی تنها ترکیب‌های آفین، توابع فعال‌سازی، مشتق‌ها، ضرب‌های ماتریسی و به‌روزرسانی‌های نزول گرادیان را در مقیاسی بزرگ‌تر و با سرعت بالا سازمان‌دهی و تکرار می‌کند .</p>
+<p>تمام مواد محاسباتی مرتبط با این مقاله — شامل کد و یک دفترچه اجرایی Google Colab — در <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> در دسترس است و نقطه دسترسی واحدی برای خوانندگانی فراهم می‌کند که می‌خواهند مثال‌ها را بررسی، بازتولید یا سازگار کنند.</p>
+<p>نویسنده از ChatGPT، توسعه‌یافته توسط OpenAI، به‌عنوان ابزاری کمکی برای نگارش اولیه، بازبینی زبانی، سازمان‌دهی توضیحات و تولید شکل‌های آموزشی استفاده کرده است. مسئولیت کامل محتوای نهایی اثر، از جمله طراحی و توسعه مطالب ریاضی، کد و منابع مورد استفاده، بر عهده نویسنده است.</p>
+<div lang="en">
+</div>
+</section></div>
+<section class="article-section references"><span class="section-no">منابع</span><h2>منابع</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>منابع و ابزارها</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/fa/Article_PMO2026_NN_FA.pdf"><strong>PDF</strong><span>کالبدشناسی ریاضی یک شبکه عصبی</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_FA.ipynb"><strong>Google Colab</strong><span>Notebook · فارسی</span></a>
+</div></section>
+<section><h2>درباره NeuralMath</h2><p class="bio">NeuralMath یک پروژه آموزشی باز است که توسط Dr. Americo Cunha Jr. توسعه یافته است. هدف آن این است که عملیات ریاضی درون یک شبکه عصبی کوچک را برای مخاطبانی گسترده با آموزش نسبتاً مقدماتی در حساب دیفرانسیل و انتگرال و آمار، قابل مشاهده، بررسی و بازتولید کند.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>نحوه استناد به متن آموزشی</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>پس از انتشار، اطلاعات کتابشناختی با جلد، صفحات و DOI به‌روزرسانی خواهد شد. لطفاً به متن آموزشی استناد کنید، نه به این وب‌سایت.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>مجوز</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>متن توضیحی وب‌سایت و محتوای اصلی آن، مگر آنکه خلافش ذکر شود، تحت مجوز CC BY 4.0 در دسترس است. فایل PDF مقاله ممکن است تابع مجوز محل انتشار باشد.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

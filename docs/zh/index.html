@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — 神经网络的数学剖析</title>
+<meta content="本文通过一个简单的分类问题，对人工神经网络作数学层面的入门介绍。线性分类器自然地引出人工神经元的概念；随后我们讨论权重、偏置、激活函数，以及如何把多个神经元组合成一个小型网络。训练过程通过损失函数、导数、梯度下降和反向传播来说明。最后，我们直接用 Python 实现该模型，使方程与算法之间的对应关系清晰可见。本文的目标是说明：解析几何、线性代数和微积分中的熟悉概念，可以为理解神经网络的基本机制提供一个易于进入的数学基础。" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/zh/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag current" href="index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">神经网络的数学剖析</p>
+<p>本文通过一个简单的分类问题，对人工神经网络作数学层面的入门介绍。线性分类器自然地引出人工神经元的概念；随后我们讨论权重、偏置、激活函数，以及如何把多个神经元组合成一个小型网络。训练过程通过损失函数、导数、梯度下降和反向传播来说明。最后，我们直接用 Python 实现该模型，使方程与算法之间的对应关系清晰可见。本文的目标是说明：解析几何、线性代数和微积分中的熟悉概念，可以为理解神经网络的基本机制提供一个易于进入的数学基础。</p>
+<div class="resource-bar"><a href="../pdf/zh/Article_PMO2026_NN_ZH.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ZH.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>原始教学文本</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">本网页版本及其翻译均基于葡萄牙语原始手稿。</p></div>
+<nav aria-label="目录" class="toc"><h2>目录</h2><ol><li><a href="#计算机何时能够学习">计算机何时能够学习？</a></li><li><a href="#问题的数学表示">问题的数学表示</a></li><li><a href="#用一条直线进行分类">用一条直线进行分类</a></li><li><a href="#人工神经元">人工神经元</a></li><li><a href="#为什么需要激活函数">为什么需要激活函数？</a></li><li><a href="#构建一个小型神经网络">构建一个小型神经网络</a></li><li><a href="#神经网络如何学习">神经网络如何学习？</a></li><li><a href="#从数学到-python">从数学到 Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="计算机何时能够学习"><span class="section-no">01</span><h2>计算机何时能够学习？</h2>
+<p>在日常生活中，我们几乎在不知不觉中不断作出分类判断。看到一个水果时，我们很快就能判断它是苹果还是橙子；手机收到一条消息时，我们会区分正常对话和不受欢迎的广告；在医学分析中，可以把多项测量结果结合起来辅助决策；在金融机构中，发放信贷之前也会综合评估多种信息。在这些例子里，都是把若干特征放在一起考虑，以得到一个回答。</p>
+<p>在许多传统计算机程序中，产生这个回答的规则由程序员明确写出。当规则已知并且能够清楚表述时，这种方法非常有效。然而，当数据变化很大，或者难以事先列出作出良好决策所需的每一个条件时，这种方法就会变得不那么有效。于是自然产生一个问题：</p>
+<div class="center">
+<p><em>我们能否构造一个程序，使它从样本中学习决策规则，<br/>
+而不是事先把规则直接交给它？</em></p>
+</div>
+<p>这正是<em>机器学习</em>的核心思想之一。机器学习是人工智能的一个领域，研究如何利用数据拟合模型 。在监督学习问题中，算法得到一组样本以及每个样本的正确答案，我们希望得到一个模型，使它对训练过程中没有见过的样本也能作出有用的预测。在为这一目的发展出的众多模型中，<em>人工神经网络</em>已经在图像识别、语言处理、信号分析和时间序列预测等应用中占据重要位置 。</p>
+<p>Batista 和 Martins 已经在 <em>Professor de Matemática Online</em> 中讨论过神经网络如何成为数学、计算与学校教育之间的桥梁 。他们介绍了一项结合教师教育、Python 和数字识别的活动。本文采取一条互补的路径。我们的主要目标是揭示一个小型神经网络内部的数学结构，从解析几何出发，逐步推进到梯度计算以及反向传播的手工实现。</p>
+<p>尽管现代应用可能非常复杂，神经网络的数学核心却可以用相对熟悉的概念来引入。在最基本的层面上，神经网络就是若干函数的复合，而这些函数中的参数根据数据进行调整。我们先从一个简单的几何问题开始，把一条分隔直线重新解释为人工神经元，再连接多个神经元，研究激活函数的作用，并说明如何利用导数自动调整网络参数。随后，我们用 Python 实现一个完整的小型示例，并始终保持方程与代码之间的直接对应关系。</p>
+</section><section class="article-section" id="问题的数学表示"><span class="section-no">02</span><h2>问题的数学表示</h2>
+<p>为了理解神经网络如何工作，我们从一个有意简化的问题开始：区分苹果和橙子。水果具有许多可用于这项任务的特征，例如颜色、质量、直径、纹理和气味。不过，一个初始数学模型并不需要立即包含全部复杂性。我们只使用两个容易测量的量：以克为单位的质量，以及以厘米为单位的直径。</p>
+<p>因此，每个水果用一个有序对表示， <span class="math display">\[(x_1,x_2),\]</span> 其中 <span class="math display">\[x_1=\text{质量}
+\qquad\text{且}\qquad
+x_2=\text{直径}.\]</span></p>
+<p>于是，有序对 <span class="math inline">\((155,\;7.2)\)</span> 表示一个质量为 <span class="math inline">\(155\)</span> g、直径为 <span class="math inline">\(7.2\)</span> cm 的水果。把真实物体替换为两个数值测量后，我们就把每个水果对应到笛卡尔平面中的一个点：第一坐标表示质量，第二坐标表示直径。图 <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> 用一组假想的苹果和橙子说明了这种表示。</p>
+<figure id="fig:fruits">
+<img alt="从物理观察到数学建模。首先用两个可测量的量—质量和直径—描述每个水果，然后用有序对 \((x_1,x_2)\) 表示它。在质量–直径平面中，每个观测都变成一个点，因此区分苹果和橙子可以重新表述为一个将两类点分开的几何问题。" decoding="async" loading="lazy" src="../assets/img/zh/Fig01.png">
+<figcaption>从物理观察到数学建模。首先用两个可测量的量—质量和直径—描述每个水果，然后用有序对 <span class="math inline">\((x_1,x_2)\)</span> 表示它。在质量–直径平面中，每个观测都变成一个点，因此区分苹果和橙子可以重新表述为一个将两类点分开的几何问题。</figcaption>
+</img></figure>
+<p>这种转换改变了问题表面上的性质。我们不再直接问“如何识别苹果或橙子”，而是可以提出一个几何问题：如何在平面中把属于两类的点分开？这种视角转换是机器学习中的基本思想。图像、文本、声音和实验信号都必须先转换成数值表示，算法才能处理它们。在我们的例子中，每个对象只有两个坐标；而在真实应用中，一种表示可能包含数百、数千甚至数百万个分量。原理并没有改变：每个样本都对应一组数，模型的任务是寻找一个规则，把这种表示映射到期望的答案。</p>
+<p>我们从最简单的几何规则开始，考察是否只用一条直线就能把苹果点和橙子点充分分开。</p>
+</section><section class="article-section" id="用一条直线进行分类"><span class="section-no">03</span><h2>用一条直线进行分类</h2>
+<p>当每个水果都已经表示成笛卡尔平面中的一个点之后，分类就变成了一个几何问题：一条直线能否把苹果和橙子分开？这个问题体现了机器学习中一类重要方法的基本思想，这类方法称为<em>线性分类器</em>。</p>
+<p>考虑一条穿过数据点云的直线，如图 <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a> 所示。这条直线把平面分成两个半平面。如果大多数苹果点位于一侧，而大多数橙子点位于另一侧，那么一个新水果相对于这条直线的位置就可以用作分类规则。测量其质量和直径后，我们把水果表示成一个点，然后判断该点位于直线的哪一侧。</p>
+<figure id="fig:linear_classifier">
+<img alt="质量–直径平面中的线性分类器示例。直线充当决策边界：一个半平面中的点被赋予一类，而另一个半平面中的点被赋予另一类。因此，分类决定只取决于点位于直线的哪一侧。" decoding="async" loading="lazy" src="../assets/img/zh/Fig02.png"/>
+<figcaption>质量–直径平面中的线性分类器示例。直线充当决策边界：一个半平面中的点被赋予一类，而另一个半平面中的点被赋予另一类。因此，分类决定只取决于点位于直线的哪一侧。</figcaption>
+</figure>
+<p>在笛卡尔平面 <span class="math inline">\((x_1,x_2)\)</span> 中，一条直线可以写成 <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>向量 <span class="math inline">\((w_1,w_2)\)</span> 与直线垂直，因此决定直线的方向；参数 <span class="math inline">\(b\)</span> 则参与决定直线的位置。这种表示存在一个小的冗余：如果同时把 <span class="math inline">\(w_1\)</span>、<span class="math inline">\(w_2\)</span> 和 <span class="math inline">\(b\)</span> 乘以同一个非零常数，得到的仍然是完全相同的直线。因此，描述边界的参数并不唯一。参数的数值解释还依赖变量的尺度。由于质量用克测量、直径用厘米测量，在不考虑单位差异的情况下，不应直接比较 <span class="math inline">\(w_1\)</span> 和 <span class="math inline">\(w_2\)</span> 的数值大小。</p>
+<p>直线方程本身就提供了一个简单办法，用来判断一个点位于边界的哪一侧。定义得分 <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>如果 <span class="math inline">\(s(x_1,x_2)=0\)</span>，点在直线上；如果 <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>，点在一个半平面中；如果 <span class="math inline">\(s(x_1,x_2)&lt;0\)</span>，点在另一个半平面中。若规定正得分对应苹果、负得分对应橙子，则规则为 <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{苹果},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{橙子}.
+\end{cases}\]</span></p>
+<p>例如，考虑由下列参数定义的边界： <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> 对于一个质量为 <span class="math inline">\(160\)</span> g、直径为 <span class="math inline">\(7.8\)</span> cm 的水果， <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> 因为得分为正，所以该点位于我们指定为苹果的半平面中。因此，这个分类器会把该水果标记为苹果。</p>
+<p>并非所有 <span class="math inline">\(w_1\)</span>、<span class="math inline">\(w_2\)</span> 和 <span class="math inline">\(b\)</span> 的取值都能产生良好的分类。有些直线不能很好地分开两组数据，而另一些直线会产生更少的错误。学习问题的核心正是：利用已经带标签的样本，确定能够减小某种模型误差度量的参数值。换句话说，我们不直接编程指定直线的位置，而是希望算法根据数据自动调整其系数。</p>
+<p>当两类数据近似线性可分时，一条直线可能已经足够有效。更复杂的数据集则可能需要非线性边界。在讨论这一限制之前，我们先把刚才构造的分类器重新解释为一个基本计算单元：人工神经元。</p>
+</section><section class="article-section" id="人工神经元"><span class="section-no">04</span><h2>人工神经元</h2>
+<p>上一节中，我们使用表达式 <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> 来判断一个水果位于直线的哪一侧。同一个表达式也可以看作<em>人工神经元</em>计算过程的第一阶段。神经元接收数值输入，利用权重和偏置把它们组合起来，然后应用一个数学函数得到输出。</p>
+<p>在我们的例子中，输入是质量 <span class="math inline">\(x_1\)</span> 和直径 <span class="math inline">\(x_2\)</span>。每个输入都乘以一个称为<em>权重</em>的参数；这些乘积再与常数项 <span class="math inline">\(b\)</span> 相加。这个常数项称为<em>偏置</em>。图 <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> 示意了这一计算过程。</p>
+<figure id="fig:artificial_neuron">
+<img alt="人工神经元的示意计算。每个输入 \(x_i\) 乘以一个权重 \(w_i\) ；所有乘积与偏置 \(b\) 相加，得到得分 \(s\) 。随后激活函数 \(g\) 把该得分变换成输出 \(\widehat{y}=g(s)\) 。这个输出既可以作为网络中的中间量，也可以作为最终预测。" decoding="async" loading="lazy" src="../assets/img/zh/Fig03.png"/>
+<figcaption>人工神经元的示意计算。每个输入 <span class="math inline">\(x_i\)</span> 乘以一个权重 <span class="math inline">\(w_i\)</span>；所有乘积与偏置 <span class="math inline">\(b\)</span> 相加，得到得分 <span class="math inline">\(s\)</span>。随后激活函数 <span class="math inline">\(g\)</span> 把该得分变换成输出 <span class="math inline">\(\widehat{y}=g(s)\)</span>。这个输出既可以作为网络中的中间量，也可以作为最终预测。</figcaption>
+</figure>
+<p>权重决定输入的变化如何影响得分。如果固定 <span class="math inline">\(x_2\)</span> 和所有其他量，那么 <span class="math inline">\(x_1\)</span> 的变化 <span class="math inline">\(\Delta x_1\)</span> 会使 <span class="math inline">\(s\)</span> 改变 <span class="math inline">\(w_1\Delta x_1\)</span>。类似地，<span class="math inline">\(x_2\)</span> 的变化 <span class="math inline">\(\Delta x_2\)</span> 会使得分改变 <span class="math inline">\(w_2\Delta x_2\)</span>。权重的符号也很重要：正权重意味着输入增大时得分也增大，而负权重会产生相反效果。当不同变量具有不同单位和尺度时，这种解释需要谨慎使用。因此，在实际实现中，训练前通常会对输入数据进行归一化或标准化。</p>
+<p>偏置 <span class="math inline">\(b\)</span> 是仿射变换中的常数项。从几何上看，它允许决策边界发生平移。如果 <span class="math inline">\(b=0\)</span>，方程 <span class="math display">\[w_1x_1+w_2x_2=0\]</span> 迫使直线经过原点。加入偏置后，边界可以移动到其他位置。等价地，当 <span class="math inline">\(x_1=x_2=0\)</span> 时，得分就是 <span class="math inline">\(s=b\)</span>。</p>
+<p>得分本身不一定是神经元的最终输出。一般情况下，要对它应用一个<em>激活函数</em> <span class="math inline">\(g\)</span>： <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> 因此，计算可以分成两个阶段： <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>沿用上一节的参数值可得 <span class="math inline">\(s=1.6\)</span>。如果选择阶跃函数 <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> 那么 <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>。按照我们的约定，这个水果被分类为苹果。采用这种激活函数时，当 <span class="math inline">\(s\)</span> 穿过零时分类结果发生改变，因此类别边界恰好是 <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>因此，单个神经元是一个带有可调参数的简单数学对象。它真正的重要性来自把许多这样的单元连接起来。不过，在构建网络之前，我们需要先理解为什么激活函数是必不可少的。</p>
+</section><section class="article-section" id="为什么需要激活函数"><span class="section-no">05</span><h2>为什么需要激活函数？</h2>
+<p>神经元首先通过仿射变换计算一个得分，然后再应用激活函数。如果神经网络要表示复杂关系，这第二个阶段是不可缺少的。为了看清原因，可以设想一个完全不使用激活函数的网络。此时每个单元都具有形式 <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>先看一个一维例子。假设第一个单元产生 <span class="math display">\[h=ax+b\]</span> 第二个单元计算 <span class="math display">\[y=ch+d.\]</span> 代入可得 <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> 它仍然只是 <span class="math inline">\(x\)</span> 的一个仿射函数。在多维情况下也完全一样：仿射变换的复合仍然是仿射变换。因此，如果没有非线性操作，即使增加许多层，也不会从根本上提高网络的表达能力；整个复合实际上可以被一个单独的仿射变换替代。</p>
+<p>激活函数打破了这一限制。计算出得分 <span class="math inline">\(s\)</span> 后，神经元再应用一个通常为非线性的映射 <span class="math display">\[h=g(s).\]</span> 当多个这样的单元连接起来时，所得复合一般不能再化简为一个仿射变换。由此，网络就能够构造更复杂的决策边界。</p>
+<p>最简单的激活函数是阶跃函数， <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> 它产生一个二元决策，非常适合用来理解分类的基本思想。然而，它在 <span class="math inline">\(s\neq0\)</span> 时导数为零，在 <span class="math inline">\(s=0\)</span> 时又不可导。由于基于梯度的训练需要通过导数判断参数应该如何改变，阶跃函数并不适合这种训练机制。</p>
+<p>一种替代方案是 sigmoid 函数， <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> 它把任意实数映射到严格位于 <span class="math inline">\(0\)</span> 与 <span class="math inline">\(1\)</span> 之间的值。当 <span class="math inline">\(s\)</span> 很负时，输出趋近于 <span class="math inline">\(0\)</span>；当 <span class="math inline">\(s\)</span> 很正时，输出趋近于 <span class="math inline">\(1\)</span>；在两端之间，变化是平滑的。Sigmoid 在每一点都可导，并且 <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> 由于输出位于 <span class="math inline">\(0\)</span> 与 <span class="math inline">\(1\)</span> 之间，它常用于二分类器的输出层。在采用适当损失函数的概率建模框架下，输出可以解释为类别 <span class="math inline">\(1\)</span> 的概率估计。不过，在隐藏层中，sigmoid 可能带来一个困难：当输入绝对值很大时，它的导数会非常小，从而促成深层网络中的<em>梯度消失</em>问题。</p>
+<p>隐藏层中一种广泛使用的激活函数是 ReLU（<em>Rectified Linear Unit，修正线性单元</em>）， <span class="math display">\[\mathrm{ReLU}(s)=\mathrm{max}(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> 虽然它由两个线性片段构成，但 ReLU 并不是全局线性的。其导数在 <span class="math inline">\(s&lt;0\)</span> 时为 <span class="math inline">\(0\)</span>，在 <span class="math inline">\(s&gt;0\)</span> 时为 <span class="math inline">\(1\)</span>。在 <span class="math inline">\(s=0\)</span> 处通常意义下的导数不存在，软件实现会为梯度采用某种约定。对于正输入，导数不会随着 <span class="math inline">\(s\)</span> 增大而缩小，因此可以避免 sigmoid 的一种饱和机制。</p>
+<p>图 <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> 直观比较了这三种激活函数：阶跃函数的突然跳变、sigmoid 的平滑过渡，以及 ReLU 在零点处斜率的变化。</p>
+<figure id="fig:activation_functions">
+<img alt="神经网络入门讨论中常见的三种激活函数。阶跃函数作出突变式决策；sigmoid 在 \(0\) 与 \(1\) 之间提供平滑过渡；ReLU 抑制负输入并保留正输入。非线性激活函数可以防止多层网络退化为单个仿射变换。" decoding="async" loading="lazy" src="../assets/img/zh/Fig04.png"/>
+<figcaption>神经网络入门讨论中常见的三种激活函数。阶跃函数作出突变式决策；sigmoid 在 <span class="math inline">\(0\)</span> 与 <span class="math inline">\(1\)</span> 之间提供平滑过渡；ReLU 抑制负输入并保留正输入。非线性激活函数可以防止多层网络退化为单个仿射变换。</figcaption>
+</figure>
+<p>它们的主要性质总结如下。</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">函数</th>
+<th style="text-align: center;">输出</th>
+<th style="text-align: left;">导数</th>
+<th style="text-align: left;">典型用途</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">阶跃函数</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(s\neq0\)</span> 时为零；<span class="math inline">\(s=0\)</span> 时不存在</td>
+<td style="text-align: left;">历史模型和教学示例</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigmoid</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">对每个 <span class="math inline">\(s\)</span> 都存在</td>
+<td style="text-align: left;">二分类的输出层</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(s&lt;0\)</span> 时为 <span class="math inline">\(0\)</span>，<span class="math inline">\(s&gt;0\)</span> 时为 <span class="math inline">\(1\)</span></td>
+<td style="text-align: left;">隐藏层</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这些函数在细节上不同，但它们共同的概念作用都是引入非线性。正是这种非线性，使下一节中的小型网络能够表示一条直线无法描述的关系。</p>
+<p>希望进一步学习的读者可以参考 Haykin  对神经网络的经典论述，以及 Goodfellow、Bengio 和 Courville  对激活函数和深层网络训练的更广泛讨论。Nielsen 免费公开的教材  特别适合用来建立对神经元、激活函数和学习过程的直觉。</p>
+</section><section class="article-section" id="构建一个小型神经网络"><span class="section-no">06</span><h2>构建一个小型神经网络</h2>
+<p>现在考虑一个具有两个输入、一个包含三个神经元的隐藏层以及一个输出神经元的网络。输入仍然是 <span class="math display">\[x_1=\text{质量},
+\qquad
+x_2=\text{直径},\]</span> 并且这两个输入都连接到每一个隐藏层神经元，如图 <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a> 所示。</p>
+<figure id="fig:small_network">
+<img alt="用于介绍神经网络计算的教学型 \(2\) – \(3\) – \(1\) 结构。两个输入—质量和直径—连接到隐藏层中的三个神经元。三个激活值 \(h_1,h_2,h_3\) 随后由输出神经元组合，得到预测 \(\widehat{y}\) 。每条连接都具有可调权重，每个神经元都具有偏置。" decoding="async" loading="lazy" src="../assets/img/zh/Fig05.png"/>
+<figcaption>用于介绍神经网络计算的教学型 <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> 结构。两个输入—质量和直径—连接到隐藏层中的三个神经元。三个激活值 <span class="math inline">\(h_1,h_2,h_3\)</span> 随后由输出神经元组合，得到预测 <span class="math inline">\(\widehat{y}\)</span>。每条连接都具有可调权重，每个神经元都具有偏置。</figcaption>
+</figure>
+<p>记隐藏层的输出为 <span class="math inline">\(h_1\)</span>、<span class="math inline">\(h_2\)</span> 和 <span class="math inline">\(h_3\)</span>。每个神经元都接收相同的两个输入，但具有各自的权重和偏置： <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>尽管三个神经元都接收相同的质量和直径，它们仍然可以产生不同的响应，因为参数不同。在训练过程中，这些参数会被调整，使中间激活值逐渐成为对分类有用的量。</p>
+<p>三个量 <span class="math inline">\(h_1\)</span>、<span class="math inline">\(h_2\)</span> 和 <span class="math inline">\(h_3\)</span> 接着传递给输出神经元。输出神经元计算 <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> 并产生 <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> 对于我们的二分类问题，在输出层采用 sigmoid： <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>令苹果对应 <span class="math inline">\(y=1\)</span>、橙子对应 <span class="math inline">\(y=0\)</span>，使用阈值 <span class="math inline">\(0.5\)</span> 时，类别决策为 <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{苹果},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{橙子}.\]</span> 因此，接近 <span class="math inline">\(1\)</span> 的值与苹果强相关，而接近 <span class="math inline">\(0\)</span> 的值与橙子相关。正如前面所指出的，要把 <span class="math inline">\(\widehat{y}\)</span> 的数值严格解释为概率，还需要关于模型及其训练过程的其他假设。对于这里采用的分类规则，只需把 <span class="math inline">\(\widehat{y}\)</span> 看成网络的连续输出即可。</p>
+<p>这个结构的核心特征是中间表示 <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> 网络接收两个特征，在给出最终答案之前先构造三个新的量。这些激活值不是人工预先指定的；它们取决于权重和偏置，因此会随着参数训练而改变。</p>
+<p>尽管网络很小，它已经有十三个可调参数。三个隐藏神经元包含 <span class="math display">\[3(2+1)=9\]</span> 个参数，输出神经元再贡献 <span class="math display">\[3+1=4.\]</span> 因此， <span class="math display">\[9+4=13.\]</span></p>
+<p>用矩阵记号可以更清楚地看到同样的参数计数。定义 <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> 于是隐藏层可以紧凑地写成 <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> 其中 <span class="math inline">\(g\)</span> 对每个分量分别作用。对于输出层， <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> 其中 <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>这种记号已经预示了后面 Python 程序中会出现的结构。当一个水果被送到输入端，我们依次计算各层激活值直到得到 <span class="math inline">\(\widehat{y}\)</span> 时，这个过程称为<em>前向传播</em>，也称为一次<em>前向计算（forward pass）</em>。现在剩下的核心问题是：如何自动确定这十三个参数，使预测与数据相匹配？</p>
+</section><section class="article-section" id="神经网络如何学习"><span class="section-no">07</span><h2>神经网络如何学习？</h2>
+<p>权重和偏置并不是预先知道的。它们必须利用那些已经知道正确答案的样本来调整。这个过程称为<em>训练</em>，可以概括为以下循环： <span class="math display">\[\boxed{\text{预测}}
+\longrightarrow
+\boxed{\text{测量误差}}
+\longrightarrow
+\boxed{\text{调整参数}}
+\longrightarrow
+\boxed{\text{重复}}.\]</span></p>
+<p>考虑一个质量为 <span class="math inline">\(140\)</span> g、直径为 <span class="math inline">\(7.0\)</span> cm 的水果，其正确类别是橙子，因此 <span class="math inline">\(y=0\)</span>。假设在训练的某个阶段，网络输出 <span class="math inline">\(\widehat{y}=0.80\)</span>。衡量预测与目标之间差异的一种简单方法是平方误差 <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> 对于这个例子， <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>这个表达式就是单个样本的一个<em>损失函数</em>。由于是平方，<span class="math inline">\(E\geq0\)</span>，而离目标越远的预测受到越大的惩罚。因子 <span class="math inline">\(1/2\)</span> 不会改变最小值的位置，但会使导数更简洁。二分类中经常使用其他损失函数，尤其是交叉熵。这里采用平方误差，是因为其代数形式透明，并且足以用于介绍优化和反向传播 。</p>
+<p>如果训练集包含 <span class="math inline">\(N\)</span> 个样本，一个整体误差度量可以取为平均损失 <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> 每个预测都依赖于网络的权重和偏置，因此 <span class="math inline">\(J\)</span> 也依赖于所有这些参数。训练的含义就是寻找使 <span class="math inline">\(J\)</span> 尽可能小的参数值。</p>
+<p>为了理解参数调整机制，先设想除一个权重 <span class="math inline">\(w\)</span> 之外的所有参数都固定。于是可以把损失看作函数 <span class="math inline">\(J=J(w)\)</span>。图 <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> 总结了训练的基本阶段，下面逐一解释。</p>
+<figure id="fig:training_cycle">
+<img alt="神经网络训练的基本循环。前向传播把输入变换成预测；损失函数衡量预测与目标之间的差异；反向传播利用链式法则计算梯度；梯度下降再利用这些梯度更新权重和偏置。经过许多个训练轮次反复执行这个循环，就是所谓的学习。" decoding="async" loading="lazy" src="../assets/img/zh/Fig06.png"/>
+<figcaption>神经网络训练的基本循环。前向传播把输入变换成预测；损失函数衡量预测与目标之间的差异；反向传播利用链式法则计算梯度；梯度下降再利用这些梯度更新权重和偏置。经过许多个训练轮次反复执行这个循环，就是所谓的学习。</figcaption>
+</figure>
+<p>对于微积分基础较少的读者，可以把这里的导数理解为一种<em>局部敏感性</em>：它告诉我们，当某个参数发生一个很小的变化时，损失倾向于如何变化。导数的符号指出函数在局部增大或减小的方向，导数的绝对值则反映这种局部变化的强弱。</p>
+<p>导数 <span class="math display">\[\frac{\partial J}{\partial w}\]</span> 给出局部斜率。如果它为正，那么稍微增大 <span class="math inline">\(w\)</span> 会使 <span class="math inline">\(J\)</span> 倾向于增大，因此权重应朝相反方向移动；如果它为负，那么增大 <span class="math inline">\(w\)</span> 会在局部使 <span class="math inline">\(J\)</span> 减小。两种情况统一写成 <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> 这就是<em>梯度下降</em>的基本思想。正数 <span class="math inline">\(\eta\)</span> 称为<em>学习率</em>，控制每一步调整的大小。学习率太小可能使训练非常缓慢，而过大则可能造成振荡甚至不稳定。</p>
+<p>对于含有许多参数的网络，用 <span class="math inline">\(\theta\)</span> 表示任意一个权重或偏置，则更新公式为 <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> 所有偏导数的集合构成损失的<em>梯度</em>。从几何上看，梯度指向函数局部增长最快的方向，因此负梯度给出一个局部下降方向。</p>
+<p>接下来还需要解决一个问题：当网络是多个函数的复合时，如何计算这些导数？在前向传播中，信息按如下方向流动： <span class="math display">\[\text{输入}
+\longrightarrow
+\text{隐藏层}
+\longrightarrow
+\text{输出}.\]</span> 为了确定较早层中的参数如何影响损失，我们在数学上沿依赖关系的反方向进行计算。这一过程称为<em>反向传播</em>。它本质上是对链式法则的一种系统而高效的应用。Rumelhart、Hinton 和 Williams  是带隐藏层网络中这一方法广泛传播的经典参考；Nielsen  则给出了尤其适合教学的详细推导。</p>
+<p>对于一个简单的依赖链，如果 <span class="math inline">\(E\)</span> 依赖 <span class="math inline">\(\widehat{y}\)</span>，<span class="math inline">\(\widehat{y}\)</span> 又依赖激活值 <span class="math inline">\(h\)</span>，而 <span class="math inline">\(h\)</span> 再依赖权重 <span class="math inline">\(w\)</span>，链式法则给出 <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> 每个因子描述 <span class="math inline">\(w\)</span> 对最终损失影响过程中的一个阶段。更大的网络中包含许多这样的依赖链，反向传播把计算组织起来，使中间导数可以重复利用，而不必为每一个参数分别从头计算。</p>
+<p>在实际训练中，我们会使用很多样本。完整地遍历一次训练集称为一个<em>训练轮次（epoch）</em>。参数可以像本文后面的教学程序那样在处理每个样本后更新，也可以在处理一小组样本后更新；这种小组称为<em>小批量（mini-batch）</em>，在更大规模网络中十分常见。无论哪种情况，都需要在多个训练轮次中反复执行预测、计算损失、求梯度和更新参数的循环。</p>
+<p>一种具体的可视化方式，是跟踪同一个固定样本在训练不同阶段的预测。再次考虑质量为 <span class="math inline">\(140\)</span> g、直径为 <span class="math inline">\(7.0\)</span> cm、正确类别为橙子的水果。表 <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> 给出一个假想的变化过程。这些数值并不对应某一次特定程序运行，只用于说明机制。</p>
+<div id="tab:learning">
+<table>
+<caption>同一个水果在训练过程中的假想预测变化。反复更新参数，可以使最初错误的输出逐渐移动到与目标标签一致的分类。</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">训练轮次</th>
+<th style="text-align: center;">预测 <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">损失 <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">分类</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">苹果</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">苹果</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">苹果</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">橙子</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">橙子</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>开始时，输出接近 <span class="math inline">\(1\)</span>，水果被错误地分类为苹果。随着参数不断调整，预测值逐渐下降，并最终越过阈值 <span class="math inline">\(0.5\)</span>，得到正确类别。在这一过程中改变的是权重和偏置的数值；网络结构本身保持不变。</p>
+<p>降低训练数据上的损失并不是最终目的。一个真正有用的网络还必须能够对没有用于拟合参数的新样本作出良好预测。这种能力称为<em>泛化</em>。如果模型过度适应训练集的特殊细节，以至于在新数据上的表现变差，就出现了<em>过拟合</em>。在更严谨的评估中，通常把数据分成训练集、验证集和测试集：训练集用于拟合参数，验证集用于支持模型开发过程中的各种选择，测试集则保留到最后用于最终评估。关于泛化和模型评估的更广泛讨论可参见 Faceli 等  以及 Goodfellow、Bengio 和 Courville 。</p>
+<p>至此，我们已经得到神经网络“学习”的数学含义。在这里，学习意味着调整一个复合函数的参数，使它在数据上的误差度量减小，并且理想情况下能够泛化到新样本。网络先作出预测，计算损失，利用导数确定各参数如何影响这个损失，然后进行一系列小幅修正。</p>
+</section><section class="article-section" id="从数学到-python"><span class="section-no">08</span><h2>从数学到 Python</h2>
+<p>现在，我们从方程转向一个可以实际运行的程序。目的不是使用专门的神经网络库，而是直接利用 <code>NumPy</code> 实现本文前面建立的数学运算 。这样，我们可以逐行看到线性组合、激活函数、损失计算、反向传播和梯度下降如何出现在代码中。</p>
+<p>为了使最后的例子更有说服力，我们使用一个在更大质量–直径范围内分布的合成数据集。仍然只使用两个物理特征—以克为单位的质量和以厘米为单位的直径—但现在把 <span class="math inline">\(64\)</span> 个训练样本分布在平面的较大区域，并另外保留八个样本用于示意性的测试。数据仍然是合成的，并保持在苹果和橙子的合理取值范围内。数据的构造使决策边界呈现明显的非线性，同时避免所有点集中在少数几个过于人为的簇中。</p>
+<p>几何思想很简单。我们在质量–直径平面中定义一条参考曲线，把苹果放置在该曲线上方的两条带状区域中，把橙子放置在曲线下方的两条带状区域中。然后对质量和直径加入小的确定性扰动，使观测点占据更宽的区域。由此得到的例子比前面的示意图更丰富：点的数量更多，数据分布更广，而且合适的决策边界显然比一条直线更弯曲。</p>
+<p>在最后这个计算实验中，我们把隐藏层扩展到十二个 ReLU 神经元。这并不改变前面各节研究的概念结构，只是提高了网络表示较复杂边界的能力。与三个神经元的教学网络中的 <span class="math inline">\(13\)</span> 个参数相比，现在共有 <span class="math inline">\(49\)</span> 个可调参数：第一层含 <span class="math inline">\(24\)</span> 个权重和 <span class="math inline">\(12\)</span> 个偏置，输出层再含 <span class="math inline">\(12\)</span> 个权重和一个偏置。方程的形式完全不变，只是向量和矩阵变得更大。</p>
+<p>完整程序如下。</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="苹果 - 训练")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="橙子 - 训练")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="苹果 - 测试")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="橙子 - 测试")
+
+    ax.set_xlabel("质量 (g)")
+    ax.set_ylabel("直径 (cm)")
+    ax.set_title("神经网络训练后的输出")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='苹果 - 训练'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='橙子 - 训练'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='苹果 - 测试'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='橙子 - 测试'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='神经网络决策边界')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>尽管代码比本文最初讨论的几个方程长得多，它的结构仍然非常清楚。函数 <code>build_data()</code> 自动生成 <span class="math inline">\(64\)</span> 个训练样本以及八个示意性测试样本。随后我们按照 <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> 对两个变量进行标准化，其中 <span class="math inline">\(\mu_j\)</span> 和 <span class="math inline">\(\sigma_j\)</span> 只由训练集计算得到。这样既防止测试集影响参数拟合，也使质量和直径处于可比较的数值尺度上。</p>
+<p>前向传播在本质上没有改变。唯一的区别是第一层现在产生一个包含十二个隐藏激活值的向量。用矩阵记号表示， <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\mathrm{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> 这四行仍然包含算法的数学核心。训练也保持了前面介绍的逻辑：计算预测，衡量误差，利用导数把敏感性信息反向传播，再用小的梯度下降步长更新参数。</p>
+<p>在代码中，输出层的反向传播出现在</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>而向隐藏层的传播出现在</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>随后更新所有权重和偏置。由于每个训练轮次都重新打乱样本顺序，并且在处理每个观测后立即更新参数，这个实现属于一种基本的<em>随机梯度下降</em>。</p>
+<p>采用这里给定的随机种子和超参数时，最终平均损失通常在 <span class="math inline">\(10^{-5}\)</span> 到 <span class="math inline">\(10^{-4}\)</span> 的数量级，全部 <span class="math inline">\(64\)</span> 个训练样本以及八个示意性测试样本都会得到预期分类。这个结果不应被解释为严格的统计性能评估：数据是为教学目的构造的合成数据。它的作用是在一个不那么平凡的情形中说明，小型神经网络如何学习一条明显非线性的决策边界。</p>
+<p>图 <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> 显示了程序训练结束后在质量–直径平面中的输出。所有训练点都被画出。加粗曲线是等值线 <span class="math inline">\(\widehat{y}=0.5\)</span>，表示网络学得的决策边界；阴影区域表示网络预测的两类。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。图例放在主绘图区之外，以免遮挡任何数据点。</p>
+<figure id="fig:python_output">
+<img alt="神经网络训练后的 Python 输出。合成数据集包含 \(64\) 个训练样本，它们分布在质量–直径平面的较大区域中，另外还有八个样本保留用于示意性测试。加粗曲线是等值线 \(\widehat{y}=0.5\) ，表示学得的决策边界；阴影区域表示网络预测的类别。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。" decoding="async" loading="lazy" src="../assets/img/zh/Fig07.png"/>
+<figcaption>神经网络训练后的 Python 输出。合成数据集包含 <span class="math inline">\(64\)</span> 个训练样本，它们分布在质量–直径平面的较大区域中，另外还有八个样本保留用于示意性测试。加粗曲线是等值线 <span class="math inline">\(\widehat{y}=0.5\)</span>，表示学得的决策边界；阴影区域表示网络预测的类别。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。</figcaption>
+</figure>
+<p>我们从一条分隔两组简单点集的直线出发，最后得到一个更丰富的计算例子：通过自动调整网络参数，一条弯曲的边界从数据中形成。数学中并没有加入任何神秘的成分；实现只是把仿射组合、激活函数、导数、矩阵乘法和梯度下降更新这些基本运算，以更大的规模和更高的速度组织起来并反复执行 。</p>
+<p>与本文相关的全部计算材料—包括代码以及可直接运行的 Google Colab 笔记本—均可在 <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> 获取。该网站为希望探索、复现实例或在此基础上改编材料的读者提供统一入口。</p>
+<h4 id="关于人工智能使用的说明">关于人工智能使用的说明。</h4>
+<p>作者使用 OpenAI 开发的 ChatGPT，辅助进行文本起草、语言修订、讲解结构组织以及教学图形生成。作者对作品的最终内容承担全部责任，包括数学材料的构思与发展、代码以及所使用的参考文献。</p>
+</section></div>
+<section class="article-section references"><span class="section-no">参考文献</span><h2>参考文献</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>资源</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/zh/Article_PMO2026_NN_ZH.pdf"><strong>PDF</strong><span>神经网络的数学剖析</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ZH.ipynb"><strong>Google Colab</strong><span>Notebook · 中文</span></a>
+</div></section>
+<section><h2>关于 NeuralMath</h2><p class="bio">NeuralMath 是由 Dr. Americo Cunha Jr. 开发的开放教育项目。其目标是让一个小型神经网络内部的数学运算对具有较基础微积分和统计知识的广大读者可见、可检查并可复现。</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>如何引用教学文本</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>正式发表后，书目信息将补充卷号、页码和 DOI。请引用教学文本，而不是本网站。</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>许可</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>除非另有说明，本网站的说明文字和原创网站材料采用 CC BY 4.0 许可。文章 PDF 可能受出版机构许可约束。</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

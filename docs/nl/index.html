@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — De wiskundige anatomie van een neuraal netwerk</title>
+<meta content="We geven een wiskundige inleiding tot kunstmatige neurale netwerken aan de hand van een eenvoudig classificatieprobleem. Een lineaire classifier leidt op natuurlijke wijze tot het begrip kunstmatig neuron; vervolgens bespreken we gewichten, biases, activatiefuncties en de samenstelling van neuronen " name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/nl/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag current" href="index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">De wiskundige anatomie van een neuraal netwerk</p>
+<p>We geven een wiskundige inleiding tot kunstmatige neurale netwerken aan de hand van een eenvoudig classificatieprobleem. Een lineaire classifier leidt op natuurlijke wijze tot het begrip kunstmatig neuron; vervolgens bespreken we gewichten, biases, activatiefuncties en de samenstelling van neuronen tot een klein netwerk. Training wordt ingevoerd via verliesfuncties, afgeleiden, gradiëntafdaling en terugpropagatie. Ten slotte implementeren we het model rechtstreeks in Python, zodat de overeenkomst tussen vergelijkingen en algoritme expliciet zichtbaar wordt. Het doel is te laten zien hoe vertrouwde ideeën uit de analytische meetkunde, lineaire algebra en analyse een toegankelijke basis vormen voor het begrijpen van de fundamentele mechanismen van neurale netwerken.</p>
+<div class="resource-bar"><a href="../pdf/nl/Article_PMO2026_NN_NL.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_NL.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>Oorspronkelijke pedagogische tekst</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Deze webeditie en de vertalingen zijn gebaseerd op het oorspronkelijke Portugese manuscript.</p></div>
+<nav aria-label="Inhoud" class="toc"><h2>Inhoud</h2><ol><li><a href="#wanneer-kan-een-computer-leren">Wanneer kan een computer leren?</a></li><li><a href="#het-probleem-wiskundig-representeren">Het probleem wiskundig representeren</a></li><li><a href="#een-rechte-lijn-als-classifier">Een rechte lijn als classifier</a></li><li><a href="#het-kunstmatige-neuron">Het kunstmatige neuron</a></li><li><a href="#waarom-hebben-we-een-activatiefunctie-nodig">Waarom hebben we een activatiefunctie nodig?</a></li><li><a href="#een-klein-neuraal-netwerk-bouwen">Een klein neuraal netwerk bouwen</a></li><li><a href="#hoe-leert-een-neuraal-netwerk">Hoe leert een neuraal netwerk?</a></li><li><a href="#van-wiskunde-naar-python">Van wiskunde naar Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="wanneer-kan-een-computer-leren"><span class="section-no">01</span><h2>Wanneer kan een computer leren?</h2>
+<p>In het dagelijks leven nemen we bijna ongemerkt classificatiebeslissingen. Door naar een vrucht te kijken, herkennen we snel of het een appel of een sinaasappel is; wanneer er een bericht op een telefoon binnenkomt, onderscheiden we een legitiem gesprek van ongewenste reclame; bij medische analyses kunnen verschillende metingen worden gecombineerd om een beslissing te ondersteunen; en in financiële instellingen worden meerdere gegevens beoordeeld voordat krediet wordt verleend. In al deze voorbeelden worden verschillende kenmerken gezamenlijk beschouwd om tot een antwoord te komen.</p>
+<p>In veel traditionele computerprogramma’s worden de regels die dit antwoord opleveren expliciet door de programmeur geschreven. Deze aanpak werkt goed wanneer de regels bekend zijn en duidelijk kunnen worden geformuleerd. Ze wordt minder doeltreffend wanneer de gegevens sterk variëren of wanneer het moeilijk is vooraf alle voorwaarden voor een goede beslissing te formuleren. Dit leidt tot een natuurlijke vraag:</p>
+<div class="center">
+<p><em>Kunnen we een programma bouwen dat een beslissingsregel uit voorbeelden leert, in plaats van de regel vooraf te ontvangen?</em></p>
+</div>
+<p>Dit is een van de centrale ideeën van <em>machine learning</em>, een gebied van de kunstmatige intelligentie dat methoden bestudeert waarmee modellen uit gegevens worden aangepast . Bij begeleid leren ontvangt het algoritme voorbeelden samen met de juiste antwoorden en zoeken we een model dat ook bruikbare voorspellingen kan doen voor gevallen die niet tijdens de training zijn gebruikt. Van de vele modellen die voor dit doel zijn ontwikkeld, zijn <em>kunstmatige neurale netwerken</em> belangrijk geworden in toepassingen zoals beeldherkenning, taalverwerking, signaalanalyse en voorspelling van tijdreeksen .</p>
+<p>Het gebruik van neurale netwerken als brug tussen wiskunde, computationele methoden en onderwijs is al besproken in <em>Professor de Matemática Online</em> door Batista en Martins , die een activiteit presenteren rond lerarenopleiding, Python en cijferherkenning. Dit artikel volgt een aanvullende route. Ons voornaamste doel is de interne wiskunde van een klein neuraal netwerk zichtbaar te maken, te beginnen met analytische meetkunde en stap voor stap verder te gaan naar de berekening van gradiënten en een handmatige implementatie van terugpropagatie.</p>
+<p>Ondanks de verfijning van moderne toepassingen kan de wiskundige kern van een neuraal netwerk worden ingevoerd met betrekkelijk vertrouwde ideeën. Op basaal niveau is een neuraal netwerk een compositie van functies waarvan de parameters uit gegevens worden aangepast. We beginnen met een eenvoudig meetkundig probleem, interpreteren een scheidende rechte opnieuw als een kunstmatig neuron, verbinden meerdere neuronen, bestuderen de rol van activatiefuncties en laten zien hoe afgeleiden kunnen worden gebruikt om de netwerkparameters automatisch aan te passen. Daarna implementeren we een volledig klein voorbeeld in Python, met een directe overeenkomst tussen de vergelijkingen en de code.</p>
+</section><section class="article-section" id="het-probleem-wiskundig-representeren"><span class="section-no">02</span><h2>Het probleem wiskundig representeren</h2>
+<p>Om te begrijpen hoe een neuraal netwerk werkt, beginnen we met een bewust eenvoudig probleem: appels van sinaasappels onderscheiden. Een vrucht heeft veel kenmerken die hierbij nuttig kunnen zijn, zoals kleur, massa, diameter, textuur en aroma. Een eerste wiskundig model hoeft echter niet al deze complexiteit te bevatten. We gebruiken slechts twee eenvoudig meetbare grootheden: massa, in gram, en diameter, in centimeter.</p>
+<p>Elke vrucht wordt daarom voorgesteld door een geordend paar <span class="math display">\[(x_1,x_2),\]</span> waarbij <span class="math display">\[x_1=\text{massa}
+\qquad\text{en}\qquad
+x_2=\text{diameter}.\]</span></p>
+<p>Het paar <span class="math inline">\((155,\;7.2)\)</span> stelt dus een vrucht voor met een massa van <span class="math inline">\(155\)</span> g en een diameter van <span class="math inline">\(7.2\)</span> cm. Door het fysieke object te vervangen door twee numerieke metingen koppelen we elke vrucht aan een punt in het cartesische vlak: de eerste coördinaat geeft de massa en de tweede de diameter. Figuur <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> illustreert deze representatie voor een hypothetische verzameling appels en sinaasappels.</p>
+<figure id="fig:fruits">
+<img alt="Van fysieke waarneming naar wiskundige modellering. Elke vrucht wordt eerst beschreven door twee meetbare grootheden — massa en diameter — en vervolgens voorgesteld door het geordende paar \((x_1,x_2)\) . In het massa–diametervlak wordt elke waarneming een punt, zodat het ondersc" decoding="async" loading="lazy" src="../assets/img/nl/Fig01.png">
+<figcaption>Van fysieke waarneming naar wiskundige modellering. Elke vrucht wordt eerst beschreven door twee meetbare grootheden — massa en diameter — en vervolgens voorgesteld door het geordende paar <span class="math inline">\((x_1,x_2)\)</span>. In het massa–diametervlak wordt elke waarneming een punt, zodat het onderscheiden van appels en sinaasappels kan worden geherinterpreteerd als een meetkundig probleem van het scheiden van twee klassen.</figcaption>
+</img></figure>
+<p>Deze transformatie verandert de schijnbare aard van het probleem. In plaats van rechtstreeks te vragen hoe een appel of een sinaasappel kan worden herkend, kunnen we een meetkundige vraag stellen: hoe kunnen de punten die tot de twee klassen behoren in het vlak worden gescheiden? Deze verandering van gezichtspunt is fundamenteel in machine learning. Beelden, teksten, geluiden en experimentele signalen moeten allemaal worden omgezet in numerieke representaties voordat een algoritme ze kan verwerken. In ons voorbeeld heeft elk object slechts twee coördinaten; in reële toepassingen kan een representatie honderden, duizenden of zelfs miljoenen componenten bevatten. Het principe blijft hetzelfde: elk voorbeeld wordt gekoppeld aan een verzameling getallen en het model zoekt een regel die deze representatie naar het gewenste antwoord afbeeldt.</p>
+<p>We beginnen met de eenvoudigste beschikbare meetkundige regel en vragen of één rechte lijn de appelpunten voldoende van de sinaasappelpunten kan scheiden.</p>
+</section><section class="article-section" id="een-rechte-lijn-als-classifier"><span class="section-no">03</span><h2>Een rechte lijn als classifier</h2>
+<p>Zodra elke vrucht als een punt in het cartesische vlak is voorgesteld, wordt classificatie een meetkundig probleem: kan een rechte lijn de appels van de sinaasappels scheiden? Deze vraag vat het basisidee samen van een belangrijke familie van machine-learningmethoden die bekendstaan als <em>lineaire classifiers</em>.</p>
+<p>Beschouw een rechte die door de gegevenswolk loopt, zoals weergegeven in Figuur <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>. De rechte verdeelt het vlak in twee halfvlakken. Als de meeste appelpunten aan de ene kant liggen en de meeste sinaasappelpunten aan de andere, kan de positie van een nieuwe vrucht ten opzichte van de rechte als classificatieregel worden gebruikt. Nadat massa en diameter zijn gemeten, stellen we de vrucht voor door een punt en bepalen we aan welke kant van de rechte dat punt ligt.</p>
+<figure id="fig:linear_classifier">
+<img alt="Voorbeeld van een lineaire classifier in het massa–diametervlak. De rechte lijn fungeert als beslissingsgrens: punten in het ene halfvlak krijgen de ene klasse, terwijl punten in het tegenoverliggende halfvlak de andere klasse krijgen. De beslissing hangt dus uitsluitend af van d" decoding="async" loading="lazy" src="../assets/img/nl/Fig02.png"/>
+<figcaption>Voorbeeld van een lineaire classifier in het massa–diametervlak. De rechte lijn fungeert als beslissingsgrens: punten in het ene halfvlak krijgen de ene klasse, terwijl punten in het tegenoverliggende halfvlak de andere klasse krijgen. De beslissing hangt dus uitsluitend af van de kant van de rechte waarop het punt ligt.</figcaption>
+</figure>
+<p>In het cartesische vlak <span class="math inline">\((x_1,x_2)\)</span> kan een rechte worden beschreven door <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>De vector <span class="math inline">\((w_1,w_2)\)</span> staat loodrecht op de rechte en bepaalt daardoor haar oriëntatie, terwijl de parameter <span class="math inline">\(b\)</span> bijdraagt aan haar positie. Deze representatie bevat een kleine redundantie: vermenigvuldiging van <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> en <span class="math inline">\(b\)</span> met dezelfde niet-nulle constante levert precies dezelfde rechte op. De parameters die de grens beschrijven zijn dus niet uniek. Hun numerieke interpretatie hangt bovendien af van de schaal van de variabelen. Omdat massa in gram en diameter in centimeter wordt gemeten, mogen de numerieke grootten van <span class="math inline">\(w_1\)</span> en <span class="math inline">\(w_2\)</span> niet worden vergeleken zonder rekening te houden met de verschillende eenheden.</p>
+<p>De vergelijking van de rechte zelf geeft een eenvoudige manier om te bepalen aan welke kant van de grens een punt ligt. Definieer de score <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Als <span class="math inline">\(s(x_1,x_2)=0\)</span>, ligt het punt op de rechte. Als <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>, ligt het in het ene halfvlak; als <span class="math inline">\(s(x_1,x_2)&lt;0\)</span>, ligt het in het andere. Als we afspreken dat positieve scores overeenkomen met appels en negatieve scores met sinaasappels, wordt de regel <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{appel},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{sinaasappel}.
+\end{cases}\]</span></p>
+<p>Beschouw bijvoorbeeld de grens gedefinieerd door <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> Voor een vrucht met massa <span class="math inline">\(160\)</span> g en diameter <span class="math inline">\(7.8\)</span> cm, <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> Omdat de score positief is, ligt het punt in het halfvlak dat we met appels hebben geassocieerd. Deze classifier zou de vrucht dus als appel classificeren.</p>
+<p>Niet elke keuze van <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> en <span class="math inline">\(b\)</span> levert een goede classificatie op. Sommige rechten scheiden de twee groepen slecht, terwijl andere minder fouten maken. Het leerprobleem bestaat er precies in eerder gelabelde voorbeelden te gebruiken om parameterwaarden te bepalen die een maat voor de modelfout verkleinen. In plaats van de positie van de rechte rechtstreeks te programmeren, willen we dat het algoritme zijn coëfficiënten op basis van de gegevens aanpast.</p>
+<p>Eén rechte kan goed werken wanneer de klassen ongeveer lineair scheidbaar zijn. Complexere gegevensverzamelingen kunnen een niet-lineaire grens vereisen. Voordat we die beperking behandelen, interpreteren we de zojuist geconstrueerde classifier opnieuw als een elementaire rekeneenheid: een kunstmatig neuron.</p>
+</section><section class="article-section" id="het-kunstmatige-neuron"><span class="section-no">04</span><h2>Het kunstmatige neuron</h2>
+<p>In de vorige sectie werd de uitdrukking <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> gebruikt om te bepalen aan welke kant van een rechte een vrucht ligt. Dezelfde uitdrukking kan worden gezien als de eerste stap van de berekening die door een <em>kunstmatig neuron</em> wordt uitgevoerd. Een neuron ontvangt numerieke ingangen, combineert die met gewichten en een bias en past vervolgens een wiskundige functie toe om zijn uitvoer te verkrijgen.</p>
+<p>In ons voorbeeld zijn de ingangen de massa <span class="math inline">\(x_1\)</span> en de diameter <span class="math inline">\(x_2\)</span>. Elke ingang wordt vermenigvuldigd met een parameter die een <em>gewicht</em> wordt genoemd; de producten worden opgeteld samen met een constante term <span class="math inline">\(b\)</span>, de <em>bias</em>. Figuur <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> toont deze berekening schematisch.</p>
+<figure id="fig:artificial_neuron">
+<img alt="Schematische werking van een kunstmatig neuron. Elke ingang \(x_i\) wordt vermenigvuldigd met een gewicht \(w_i\) ; de producten worden samen met bias \(b\) opgeteld om score \(s\) te produceren. De activatiefunctie \(g\) zet deze score vervolgens om in de uitvoer \(\widehat{y}=g" decoding="async" loading="lazy" src="../assets/img/nl/Fig03.png"/>
+<figcaption>Schematische werking van een kunstmatig neuron. Elke ingang <span class="math inline">\(x_i\)</span> wordt vermenigvuldigd met een gewicht <span class="math inline">\(w_i\)</span>; de producten worden samen met bias <span class="math inline">\(b\)</span> opgeteld om score <span class="math inline">\(s\)</span> te produceren. De activatiefunctie <span class="math inline">\(g\)</span> zet deze score vervolgens om in de uitvoer <span class="math inline">\(\widehat{y}=g(s)\)</span>, die als tussengrootheid of als uiteindelijke voorspelling kan worden gebruikt.</figcaption>
+</figure>
+<p>De gewichten bepalen hoe veranderingen in de ingangen de score beïnvloeden. Als <span class="math inline">\(x_2\)</span> en alle andere grootheden constant worden gehouden, verandert een variatie <span class="math inline">\(\Delta x_1\)</span> de score <span class="math inline">\(s\)</span> met <span class="math inline">\(w_1\Delta x_1\)</span>. Op dezelfde manier verandert een variatie <span class="math inline">\(\Delta x_2\)</span> de score met <span class="math inline">\(w_2\Delta x_2\)</span>. Ook het teken is van belang: een positief gewicht zorgt ervoor dat een toename van de ingang de score verhoogt, terwijl een negatief gewicht het tegenovergestelde effect heeft. Deze interpretatie moet voorzichtig worden gebruikt wanneer verschillende variabelen verschillende eenheden en schalen hebben. Daarom worden invoergegevens in praktische implementaties vaak vóór de training genormaliseerd of gestandaardiseerd.</p>
+<p>De bias <span class="math inline">\(b\)</span> is de constante term in de affiene transformatie. Meetkundig maakt hij het mogelijk de beslissingsgrens te verschuiven. Als <span class="math inline">\(b=0\)</span>, dwingt de vergelijking <span class="math display">\[w_1x_1+w_2x_2=0\]</span> de rechte door de oorsprong te gaan. Met een bias kan de grens naar andere posities verschuiven. Equivalent geldt dat, wanneer <span class="math inline">\(x_1=x_2=0\)</span>, de score eenvoudig <span class="math inline">\(s=b\)</span> is.</p>
+<p>De score hoeft niet de uiteindelijke uitvoer van het neuron te zijn. In het algemeen wordt er een <em>activatiefunctie</em> <span class="math inline">\(g\)</span> op toegepast: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> De berekening bestaat dus uit twee stappen, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>Met de parameterwaarden uit de vorige sectie krijgen we <span class="math inline">\(s=1.6\)</span>. Als we de stapfunctie kiezen <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> dan is <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. Volgens onze conventie wordt de vrucht als appel geclassificeerd. Met deze activatie verandert de beslissing wanneer <span class="math inline">\(s\)</span> nul passeert, zodat de klassengrens precies <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>Een enkel neuron is dus een eenvoudig wiskundig object met aanpasbare parameters. De werkelijke betekenis ervan ontstaat wanneer veel van zulke eenheden met elkaar worden verbonden. Voordat we een netwerk bouwen, moeten we echter begrijpen waarom de activatiefunctie essentieel is.</p>
+</section><section class="article-section" id="waarom-hebben-we-een-activatiefunctie-nodig"><span class="section-no">05</span><h2>Waarom hebben we een activatiefunctie nodig?</h2>
+<p>Een neuron berekent eerst een score met een affiene transformatie en past pas daarna een activatiefunctie toe. Deze tweede stap is essentieel als een neuraal netwerk complexe relaties moet kunnen representeren. Stel om dit te zien een netwerk voor waarin geen activatiefuncties worden gebruikt. Elke eenheid zou dan de vorm hebben <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Voor een eendimensionaal voorbeeld nemen we aan dat een eerste eenheid produceert <span class="math display">\[h=ax+b\]</span> en dat een tweede berekent <span class="math display">\[y=ch+d.\]</span> Invullen geeft <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> wat nog steeds een affiene functie van <span class="math inline">\(x\)</span> is. Hetzelfde geldt in meerdere dimensies: een compositie van affiene transformaties blijft affien. Het toevoegen van veel lagen zonder een niet-lineaire bewerking maakt het netwerk daarom niet fundamenteel expressiever; de volledige compositie zou door één affiene transformatie kunnen worden vervangen.</p>
+<p>Een activatiefunctie doorbreekt deze beperking. Nadat de score <span class="math inline">\(s\)</span> is berekend, past het neuron een doorgaans niet-lineaire afbeelding toe <span class="math display">\[h=g(s).\]</span> Wanneer meerdere van zulke eenheden worden verbonden, kan de resulterende compositie niet langer tot één affiene transformatie worden gereduceerd. Daardoor kan het netwerk complexere beslissingsgrenzen construeren.</p>
+<p>De eenvoudigste activatie is de stapfunctie, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> Ze levert een binaire beslissing en is zeer nuttig om classificatie te begrijpen. Haar afgeleide is echter nul voor <span class="math inline">\(s\neq0\)</span> en niet gedefinieerd bij <span class="math inline">\(s=0\)</span>. Omdat training op basis van gradiënten afgeleiden gebruikt om te bepalen hoe de parameters moeten veranderen, is de stapfunctie niet geschikt voor dat trainingsmechanisme.</p>
+<p>Een alternatief is de sigmoïdefunctie, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> Ze beeldt elk reëel getal af op een waarde strikt tussen <span class="math inline">\(0\)</span> en <span class="math inline">\(1\)</span>. Voor zeer negatieve <span class="math inline">\(s\)</span> nadert de uitvoer <span class="math inline">\(0\)</span>; voor zeer positieve <span class="math inline">\(s\)</span> nadert hij <span class="math inline">\(1\)</span>; tussen deze uitersten verloopt de overgang glad. De sigmoïde is overal differentieerbaar, met <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> Omdat de uitvoer tussen <span class="math inline">\(0\)</span> en <span class="math inline">\(1\)</span> ligt, wordt de sigmoïde vaak gebruikt in de uitvoerlaag van een binaire classifier. Binnen een probabilistische formulering met een geschikte verliesfunctie kan de uitvoer worden geïnterpreteerd als een schatting van de kans op de klasse die door <span class="math inline">\(1\)</span> wordt voorgesteld. In verborgen lagen kan de sigmoïde echter een probleem veroorzaken: voor ingangen met grote absolute waarde wordt haar afgeleide zeer klein, wat bijdraagt aan het <em>vanishing-gradient</em>-probleem in diepe netwerken.</p>
+<p>Een veelgebruikte activatie in verborgen lagen is de ReLU (<em>Rectified Linear Unit</em>), <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> Hoewel ReLU uit twee lineaire stukken bestaat, is de functie niet globaal lineair. De afgeleide is <span class="math inline">\(0\)</span> voor <span class="math inline">\(s&lt;0\)</span> en <span class="math inline">\(1\)</span> voor <span class="math inline">\(s&gt;0\)</span>. Bij <span class="math inline">\(s=0\)</span> bestaat de gewone afgeleide niet en gebruiken software-implementaties een conventie voor de gradiënt. Voor positieve ingangen wordt de afgeleide niet kleiner wanneer <span class="math inline">\(s\)</span> groeit, waardoor een van de verzadigingsmechanismen van de sigmoïde wordt vermeden.</p>
+<p>Figuur <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> vergelijkt deze drie activaties visueel: de abrupte sprong van de stapfunctie, de gladde overgang van de sigmoïde en de verandering van helling van ReLU.</p>
+<figure id="fig:activation_functions">
+<img alt="Vergelijking van drie activatiefuncties die vaak worden gebruikt in inleidende besprekingen van neurale netwerken. De stapfunctie neemt een abrupte beslissing; de sigmoïde geeft een gladde overgang tussen \(0\) en \(1\) ; en ReLU onderdrukt negatieve ingangen terwijl positieve be" decoding="async" loading="lazy" src="../assets/img/nl/Fig04.png"/>
+<figcaption>Vergelijking van drie activatiefuncties die vaak worden gebruikt in inleidende besprekingen van neurale netwerken. De stapfunctie neemt een abrupte beslissing; de sigmoïde geeft een gladde overgang tussen <span class="math inline">\(0\)</span> en <span class="math inline">\(1\)</span>; en ReLU onderdrukt negatieve ingangen terwijl positieve behouden blijven. Niet-lineaire activaties voorkomen dat een stapeling van lagen instort tot één affiene transformatie.</figcaption>
+</figure>
+<p>Hun belangrijkste eigenschappen zijn hieronder samengevat.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Functie</th>
+<th style="text-align: center;">Uitvoer</th>
+<th style="text-align: left;">Afgeleide</th>
+<th style="text-align: left;">Typisch gebruik</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Stapfunctie</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">Nul voor <span class="math inline">\(s\neq0\)</span>; niet gedefinieerd bij <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">Historische modellen en didactische voorbeelden</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigmoïde</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Bestaat voor elke <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">Uitvoerlaag bij binaire classificatie</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> for <span class="math inline">\(s&lt;0\)</span> and <span class="math inline">\(1\)</span> for <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">Verborgen lagen</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>De details van deze functies verschillen, maar hun gemeenschappelijke conceptuele rol is het introduceren van niet-lineariteit. Juist die niet-lineariteit stelt het kleine netwerk in de volgende sectie in staat relaties te representeren die niet door één rechte lijn kunnen worden beschreven.</p>
+<p>Voor lezers die verder willen gaan, biedt Haykin  een klassieke behandeling van neurale netwerken, terwijl Goodfellow, Bengio en Courville  activatiefuncties en de training van diepe netwerken in een bredere context bespreken. De vrij beschikbare tekst van Nielsen  is bijzonder toegankelijk om intuïtie te ontwikkelen over neuronen, activaties en leren.</p>
+</section><section class="article-section" id="een-klein-neuraal-netwerk-bouwen"><span class="section-no">06</span><h2>Een klein neuraal netwerk bouwen</h2>
+<p>We beschouwen nu een netwerk met twee ingangen, één verborgen laag met drie neuronen en één uitvoerneuron. De ingangen blijven <span class="math display">\[x_1=\text{massa},
+\qquad
+x_2=\text{diameter},\]</span> en beide worden aan elk verborgen neuron aangeboden, zoals weergegeven in Figuur <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p>
+<figure id="fig:small_network">
+<img alt="Didactische \(2\) – \(3\) – \(1\) -architectuur om de berekening in een neuraal netwerk te introduceren. De twee ingangen — massa en diameter — voeden drie neuronen in de verborgen laag. Hun activaties \(h_1,h_2,h_3\) worden vervolgens door het uitvoerneuron gecombineerd om de vo" decoding="async" loading="lazy" src="../assets/img/nl/Fig05.png"/>
+<figcaption>Didactische <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span>-architectuur om de berekening in een neuraal netwerk te introduceren. De twee ingangen — massa en diameter — voeden drie neuronen in de verborgen laag. Hun activaties <span class="math inline">\(h_1,h_2,h_3\)</span> worden vervolgens door het uitvoerneuron gecombineerd om de voorspelling <span class="math inline">\(\widehat{y}\)</span> te produceren. Elke verbinding heeft een aanpasbaar gewicht en elk neuron heeft een bias.</figcaption>
+</figure>
+<p>Noem de uitgangen van de verborgen laag <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> en <span class="math inline">\(h_3\)</span>. Elk neuron ontvangt dezelfde twee ingangen, maar heeft zijn eigen gewichten en bias: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>Hoewel alle drie de neuronen dezelfde massa en diameter ontvangen, kunnen zij verschillende antwoorden produceren omdat hun parameters verschillen. Tijdens de training worden deze parameters zo aangepast dat de tussenliggende activaties nuttig worden voor classificatie.</p>
+<p>De drie grootheden <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> en <span class="math inline">\(h_3\)</span> worden vervolgens doorgegeven aan het uitvoerneuron, dat berekent <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> en produceert <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> Voor ons binaire probleem gebruiken we een sigmoïde uitvoer: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>Met <span class="math inline">\(y=1\)</span> voor appel en <span class="math inline">\(y=0\)</span> voor sinaasappel geeft een drempel van <span class="math inline">\(0.5\)</span> de klassebeslissing <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{appel},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{sinaasappel}.\]</span> Waarden dicht bij <span class="math inline">\(1\)</span> worden dus sterk met appels geassocieerd, terwijl waarden dicht bij <span class="math inline">\(0\)</span> met sinaasappels worden geassocieerd. Zoals eerder opgemerkt vereist de numerieke interpretatie van <span class="math inline">\(\widehat{y}\)</span> als kans aanvullende aannames over het model en de training. Voor de hier gebruikte classificatieregel volstaat het <span class="math inline">\(\widehat{y}\)</span> te beschouwen als een continue netwerkuitvoer.</p>
+<p>Het centrale kenmerk van deze architectuur is de tussenrepresentatie <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> Het netwerk ontvangt twee kenmerken en construeert drie nieuwe grootheden voordat het uiteindelijke antwoord wordt geproduceerd. Deze activaties worden niet handmatig gekozen: ze hangen af van de gewichten en biases en veranderen dus wanneer de parameters worden getraind.</p>
+<p>Ondanks zijn geringe omvang heeft het netwerk al dertien aanpasbare parameters. De drie verborgen neuronen bevatten <span class="math display">\[3(2+1)=9\]</span> parameters, en het uitvoerneuron draagt bij met <span class="math display">\[3+1=4.\]</span> Daarom, <span class="math display">\[9+4=13.\]</span></p>
+<p>Dezelfde telling wordt transparant in matrixnotatie. Definieer <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> Dan kan de verborgen laag compact worden geschreven als <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> waarbij <span class="math inline">\(g\)</span> component voor component werkt. Voor de uitvoer, <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> met <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>Deze notatie loopt vooruit op de structuur die in het Python-programma zal verschijnen. Wanneer een vrucht aan de ingang wordt aangeboden en we de opeenvolgende activaties berekenen totdat <span class="math inline">\(\widehat{y}\)</span> is verkregen, voeren we <em>voorwaartse propagatie</em> of een <em>forward pass</em> uit. De centrale vraag blijft: hoe kunnen de dertien parameters automatisch worden bepaald zodat de voorspellingen bij de gegevens passen?</p>
+</section><section class="article-section" id="hoe-leert-een-neuraal-netwerk"><span class="section-no">07</span><h2>Hoe leert een neuraal netwerk?</h2>
+<p>De gewichten en biases zijn niet vooraf bekend. Ze moeten worden aangepast met voorbeelden waarvoor het juiste antwoord beschikbaar is. Dit proces heet <em>training</em> en kan worden samengevat door de cyclus <span class="math display">\[\boxed{\text{voorspel}}
+\longrightarrow
+\boxed{\text{meet de fout}}
+\longrightarrow
+\boxed{\text{pas de parameters aan}}
+\longrightarrow
+\boxed{\text{herhaal}}.\]</span></p>
+<p>Beschouw een vrucht met massa <span class="math inline">\(140\)</span> g en diameter <span class="math inline">\(7.0\)</span> cm waarvan de juiste klasse sinaasappel is, dus <span class="math inline">\(y=0\)</span>. Stel dat het netwerk op een bepaald moment tijdens de training <span class="math inline">\(\widehat{y}=0.80\)</span> uitvoert. Een eenvoudige maat voor het verschil tussen voorspelling en doelwaarde is de kwadratische fout <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Voor dit voorbeeld, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>Deze uitdrukking is een <em>verliesfunctie</em> voor één voorbeeld. Omdat het een kwadraat is, geldt <span class="math inline">\(E\geq0\)</span>, en voorspellingen die verder van de doelwaarde liggen krijgen een grotere straf. De factor <span class="math inline">\(1/2\)</span> verandert de plaats van het minimum niet, maar vereenvoudigt de afgeleiden. Bij binaire classificatie worden vaak andere verliesfuncties gebruikt, vooral kruisentropie. We gebruiken hier de kwadratische fout omdat de algebra transparant is en voldoende is om optimalisatie en terugpropagatie te introduceren .</p>
+<p>Als de trainingsset <span class="math inline">\(N\)</span> voorbeelden bevat, is een globale maat het gemiddelde verlies <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Elke voorspelling hangt af van de gewichten en biases van het netwerk, zodat ook <span class="math inline">\(J\)</span> van al deze parameters afhangt. Trainen betekent zoeken naar parameterwaarden die <span class="math inline">\(J\)</span> klein maken.</p>
+<p>Om het aanpassingsmechanisme te begrijpen, stellen we ons eerst voor dat alle parameters behalve één gewicht <span class="math inline">\(w\)</span> vast worden gehouden. We kunnen het verlies dan beschouwen als een functie <span class="math inline">\(J=J(w)\)</span>. Figuur <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> vat de basisstappen van de training samen die we nu bekijken.</p>
+<figure id="fig:training_cycle">
+<img alt="Basistrainingscyclus van een neuraal netwerk. De forward pass zet de ingangen om in een voorspelling; de verliesfunctie meet het verschil tussen voorspelling en doelwaarde; terugpropagatie berekent gradiënten met de kettingregel; en gradiëntafdaling gebruikt die gradiënten om gew" decoding="async" loading="lazy" src="../assets/img/nl/Fig06.png"/>
+<figcaption>Basistrainingscyclus van een neuraal netwerk. De forward pass zet de ingangen om in een voorspelling; de verliesfunctie meet het verschil tussen voorspelling en doelwaarde; terugpropagatie berekent gradiënten met de kettingregel; en gradiëntafdaling gebruikt die gradiënten om gewichten en biases bij te werken. Het herhalen van deze cyclus gedurende veel epochs noemen we leren.</figcaption>
+</figure>
+<p>Voor lezers met weinig achtergrond in analyse kan een afgeleide hier worden geïnterpreteerd als een maat voor <em>lokale gevoeligheid</em>: zij geeft aan hoe een kleine verandering in één parameter het verlies doorgaans verandert. Het teken geeft aan in welke richting de functie lokaal toeneemt of afneemt, terwijl de grootte de sterkte van die lokale verandering meet.</p>
+<p>De afgeleide <span class="math display">\[\frac{\partial J}{\partial w}\]</span> geeft de lokale helling. Als deze positief is, zal een kleine toename van <span class="math inline">\(w\)</span> doorgaans <span class="math inline">\(J\)</span> vergroten, zodat het gewicht in de tegenovergestelde richting moet bewegen. Als de afgeleide negatief is, zal een toename van <span class="math inline">\(w\)</span> lokaal juist <span class="math inline">\(J\)</span> verkleinen. Beide gevallen worden beschreven door <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> wat het basisidee is van <em>gradiëntafdaling</em>. Het positieve getal <span class="math inline">\(\eta\)</span> is de <em>leersnelheid</em>; het bepaalt de stapgrootte. Een zeer kleine waarde kan de training traag maken, terwijl een te grote waarde oscillaties of instabiliteit kan veroorzaken.</p>
+<p>Voor een netwerk met veel parameters laat <span class="math inline">\(\theta\)</span> een willekeurig gewicht of een willekeurige bias aanduiden. De update wordt <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> De verzameling van alle partiële afgeleiden vormt de <em>gradiënt</em> van het verlies. Meetkundig wijst de gradiënt in de richting van de snelste lokale toename, zodat de negatieve gradiënt een lokale richting van afname geeft.</p>
+<p>We moeten deze afgeleiden nog berekenen wanneer het netwerk een compositie van meerdere functies is. Tijdens de forward pass stroomt de informatie als <span class="math display">\[\text{ingangen}
+\longrightarrow
+\text{verborgen laag}
+\longrightarrow
+\text{uitvoer}.\]</span> Om te bepalen hoe een parameter in een vroege laag het verlies beïnvloedt, volgen we wiskundig de keten van afhankelijkheden in omgekeerde richting. Deze procedure heet <em>terugpropagatie</em> of <em>backpropagation</em>. In essentie is het een systematische en efficiënte toepassing van de kettingregel. Rumelhart, Hinton en Williams  vormen een klassieke referentie voor de popularisering van deze procedure in netwerken met verborgen lagen; Nielsen  geeft een gedetailleerde en bijzonder didactische afleiding.</p>
+<p>Voor een eenvoudige afhankelijkheidsketen waarin <span class="math inline">\(E\)</span> afhangt van <span class="math inline">\(\widehat{y}\)</span>, dat afhangt van een activatie <span class="math inline">\(h\)</span>, die op haar beurt afhangt van een gewicht <span class="math inline">\(w\)</span>, geeft de kettingregel <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> Elke factor beschrijft één stap in de invloed van <span class="math inline">\(w\)</span> op het uiteindelijke verlies. Grotere netwerken bevatten veel van zulke ketens en terugpropagatie organiseert de berekening zo dat tussenliggende afgeleiden opnieuw kunnen worden gebruikt in plaats van voor elke parameter afzonderlijk opnieuw te worden berekend.</p>
+<p>In de praktijk gebruikt training veel voorbeelden. Eén volledige doorgang door de trainingsset heet een <em>epoch</em>. Parameters kunnen na elk voorbeeld worden bijgewerkt, zoals in het didactische programma verderop in dit artikel, of na kleine groepen voorbeelden die <em>mini-batches</em> worden genoemd, wat gebruikelijk is in grotere netwerken. In beide gevallen wordt de cyclus van voorspellingen, verliezen, gradiënten en updates gedurende veel epochs herhaald.</p>
+<p>Een concrete manier om deze evolutie te visualiseren is de voorspelling voor één vast voorbeeld in verschillende trainingsfasen te volgen. Beschouw opnieuw de vrucht met massa <span class="math inline">\(140\)</span> g en diameter <span class="math inline">\(7.0\)</span> cm, waarvan de juiste klasse sinaasappel is. Tabel <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> toont een hypothetisch verloop. Deze waarden horen niet bij een specifieke uitvoering; ze illustreren alleen het mechanisme.</p>
+<div id="tab:learning">
+<table>
+<caption>Hypothetische evolutie van de netwerkvoorspelling voor dezelfde vrucht tijdens de training. Herhaalde parameterupdates kunnen een aanvankelijk onjuiste uitvoer verschuiven naar een classificatie die overeenkomt met het doellabel.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Epoch</th>
+<th style="text-align: center;">Voorspelling <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">Verlies <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">Classificatie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">Appel</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">Appel</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">Appel</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">Sinaasappel</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">Sinaasappel</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Aan het begin ligt de uitvoer dicht bij <span class="math inline">\(1\)</span> en wordt de vrucht ten onrechte als appel geclassificeerd. Naarmate de parameters worden aangepast, daalt de voorspelling en passeert zij uiteindelijk de drempel <span class="math inline">\(0.5\)</span>, waardoor de juiste klasse wordt verkregen. Wat tijdens dit proces verandert, zijn de numerieke waarden van de gewichten en biases; de netwerkarchitectuur blijft vast.</p>
+<p>Het verkleinen van het verlies op de trainingsgegevens is niet het uiteindelijke doel. Een bruikbaar netwerk moet ook goede voorspellingen doen voor voorbeelden die niet zijn gebruikt om de parameters aan te passen. Dit vermogen heet <em>generalisatie</em>. Wanneer een model zich te sterk aanpast aan bijzonderheden van de trainingsset en slechter presteert op nieuwe gegevens, spreken we van <em>overfitting</em>. Bij zorgvuldiger evaluaties worden gegevens doorgaans verdeeld in trainings-, validatie- en testsets: de eerste wordt gebruikt om de parameters aan te passen, de tweede ondersteunt keuzes tijdens de ontwikkeling van het model en de derde wordt gereserveerd voor de uiteindelijke evaluatie. Uitgebreidere besprekingen van generalisatie en modelevaluatie zijn te vinden bij Faceli et al.  en Goodfellow, Bengio en Courville .</p>
+<p>We hebben daarmee de wiskundige betekenis van leren in een neuraal netwerk bereikt. In deze context betekent leren dat de parameters van een samengestelde functie zo worden aangepast dat een foutmaat op de gegevens afneemt en het model idealiter generaliseert naar nieuwe voorbeelden. Het netwerk voorspelt, berekent een verlies, gebruikt afgeleiden om te bepalen hoe zijn parameters dat verlies beïnvloeden en voert vervolgens een reeks kleine correcties uit.</p>
+</section><section class="article-section" id="van-wiskunde-naar-python"><span class="section-no">08</span><h2>Van wiskunde naar Python</h2>
+<p>We gaan nu van vergelijkingen naar een uitvoerbaar programma. Het doel is niet om een gespecialiseerde bibliotheek voor neurale netwerken te gebruiken, maar om met <code>NumPy</code> rechtstreeks de wiskundige bewerkingen te implementeren die in dit artikel zijn ontwikkeld . Daardoor is regel voor regel zichtbaar hoe lineaire combinaties, activatiefuncties, verliesberekening, terugpropagatie en gradiëntafdaling in code verschijnen.</p>
+<p>Voor een overtuigender slotvoorbeeld gebruiken we een synthetische gegevensverzameling die over een groter massa–diameterdomein is verspreid. We blijven met slechts twee fysieke kenmerken werken — massa in gram en diameter in centimeter — maar verdelen nu <span class="math inline">\(64\)</span> trainingsvoorbeelden over een groot gebied van het vlak en reserveren acht extra voorbeelden voor een illustratieve test. De gegevens blijven synthetisch en liggen binnen plausibele bereiken voor appels en sinaasappels. Ze zijn zo geconstrueerd dat een niet-lineaire beslissingsgrens ontstaat zonder alle punten in enkele overdreven kunstmatige clusters te concentreren.</p>
+<p>Het meetkundige idee is eenvoudig. We definiëren een referentiecurve in het massa–diametervlak, plaatsen appels in twee banden boven die curve en sinaasappels in twee banden eronder. Aan zowel massa als diameter worden kleine deterministische verstoringen toegevoegd, zodat de waarnemingen een groter gebied beslaan. Het resulterende voorbeeld is rijker dan de eerdere illustraties: het bevat meer punten, de gegevens zijn over het domein verspreid en de passende beslissingsgrens is duidelijk sterker gekromd dan een rechte lijn.</p>
+<p>Voor dit laatste computationele experiment vergroten we de verborgen laag tot twaalf ReLU-neuronen. Dit verandert de conceptuele structuur uit de vorige secties niet; het vergroot alleen het vermogen van het netwerk om een complexere grens te representeren. In plaats van de <span class="math inline">\(13\)</span> parameters van het didactische netwerk met drie neuronen hebben we nu <span class="math inline">\(49\)</span> aanpasbare parameters: <span class="math inline">\(24\)</span> gewichten en <span class="math inline">\(12\)</span> biases in de eerste laag, gevolgd door <span class="math inline">\(12\)</span> gewichten en één bias in de uitvoerlaag. De vergelijkingen behouden exact dezelfde vorm; alleen de vectoren en matrices worden groter.</p>
+<p>Het volledige programma staat hieronder.</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Appel - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Sinaasappel - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Appel - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Sinaasappel - test")
+
+    ax.set_xlabel("Massa (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Uitvoer van het neurale netwerk na training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Appel - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Sinaasappel - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Appel - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Sinaasappel - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Beslissingsgrens van het neurale netwerk')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>Hoewel de code langer is dan de eerste vergelijkingen die in het artikel zijn bestudeerd, blijft de structuur transparant. De functie <code>build_data()</code> genereert automatisch de <span class="math inline">\(64\)</span> trainingsvoorbeelden en de acht illustratieve testvoorbeelden. Vervolgens standaardiseren we beide variabelen volgens <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> waarbij <span class="math inline">\(\mu_j\)</span> en <span class="math inline">\(\sigma_j\)</span> uitsluitend uit de trainingsset worden berekend. Dit voorkomt dat de testset de parameterfit beïnvloedt en brengt massa en diameter bovendien op vergelijkbare numerieke schalen.</p>
+<p>De forward pass verandert in wezen niet. Het enige verschil is dat de eerste laag nu een vector van twaalf verborgen activaties produceert. In matrixnotatie, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> Deze vier regels bevatten nog steeds de wiskundige kern van het algoritme. Ook de training behoudt de eerder ingevoerde logica: bereken een voorspelling, meet de fout, propageer gevoeligheidsinformatie met behulp van afgeleiden terug en werk de parameters bij met kleine stappen van gradiëntafdaling.</p>
+<p>In de code verschijnt terugpropagatie in de uitvoerlaag als</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>en propagatie naar de verborgen laag als</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>gevolgd door updates van alle gewichten en biases. Omdat de voorbeelden in elke epoch worden geschud en de parameters na elke waarneming worden bijgewerkt, is deze implementatie een elementaire vorm van <em>stochastische gradiëntafdaling</em>.</p>
+<p>Met de hier gebruikte random seed en hyperparameters ligt het uiteindelijke gemiddelde verlies in de orde van <span class="math inline">\(10^{-5}\)</span> tot <span class="math inline">\(10^{-4}\)</span>, en alle <span class="math inline">\(64\)</span> trainingsvoorbeelden samen met de acht illustratieve testvoorbeelden krijgen de verwachte classificatie. Dit moet niet worden opgevat als een rigoureuze statistische prestatiebeoordeling: de gegevens zijn synthetisch en voor didactische doeleinden geconstrueerd. Hun rol is te laten zien hoe een klein neuraal netwerk, in een minder triviale setting, een duidelijk niet-lineaire beslissingsgrens kan leren.</p>
+<p>Figuur <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> toont de uiteindelijke uitvoer van het programma in het massa–diametervlak. Alle trainingspunten worden weergegeven. De gemarkeerde kromme is het niveau <span class="math inline">\(\widehat{y}=0.5\)</span> en stelt de door het netwerk geleerde beslissingsgrens voor; de gearceerde gebieden geven de twee voorspelde klassen aan. Cirkels stellen trainingsappels voor, vierkanten trainingssinaasappels, driehoeken testappels en kruisen testsinaasappels. De legenda staat buiten het hoofdplotgebied zodat geen datapunt wordt afgedekt.</p>
+<figure id="fig:python_output">
+<img alt="Python-uitvoer na training van het neurale netwerk. De synthetische gegevensverzameling bevat \(64\) trainingsvoorbeelden verspreid over een groot gebied van het massa–diametervlak en acht extra voorbeelden die zijn gereserveerd voor een illustratieve test. De gemarkeerde kromme " decoding="async" loading="lazy" src="../assets/img/nl/Fig07.png"/>
+<figcaption>Python-uitvoer na training van het neurale netwerk. De synthetische gegevensverzameling bevat <span class="math inline">\(64\)</span> trainingsvoorbeelden verspreid over een groot gebied van het massa–diametervlak en acht extra voorbeelden die zijn gereserveerd voor een illustratieve test. De gemarkeerde kromme is het niveau <span class="math inline">\(\widehat{y}=0.5\)</span> en stelt de geleerde beslissingsgrens voor; de gearceerde gebieden geven de door het netwerk voorspelde klassen aan. Cirkels stellen trainingsappels voor, vierkanten trainingssinaasappels, driehoeken testappels en kruisen testsinaasappels.</figcaption>
+</figure>
+<p>We begonnen met een rechte lijn die twee eenvoudige groepen punten scheidde en eindigden met een rijker computationeel voorbeeld waarin een gekromde grens ontstaat door de automatische aanpassing van netwerkparameters. Aan de wiskunde is niets mysterieus toegevoegd: de implementatie organiseert en herhaalt eenvoudigweg, op grotere schaal en met hoge snelheid, affiene combinaties, activatiefuncties, afgeleiden, matrixproducten en updates via gradiëntafdaling .</p>
+<p>Al het computationele materiaal bij dit artikel — inclusief de code en een uitvoerbaar Google Colab-notebook — is beschikbaar via <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>, als één toegangspunt voor lezers die de voorbeelden willen verkennen, reproduceren of aanpassen.</p>
+<h4 id="verklaring-over-het-gebruik-van-ai.">Verklaring over het gebruik van AI.</h4>
+<p>De auteur gebruikte ChatGPT, ontwikkeld door OpenAI, als ondersteunend hulpmiddel voor het opstellen van tekst, taalrevisie, didactische organisatie en het genereren van didactische figuren. De auteur draagt de volledige verantwoordelijkheid voor de uiteindelijke inhoud van het werk, waaronder de opzet en ontwikkeling van het wiskundige materiaal, de code en de gebruikte referenties.</p>
+</section></div>
+<section class="article-section references"><span class="section-no">Referenties</span><h2>Referenties</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Bronnen</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/nl/Article_PMO2026_NN_NL.pdf"><strong>PDF</strong><span>De wiskundige anatomie van een neuraal netwerk</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_NL.ipynb"><strong>Google Colab</strong><span>Notebook · Nederlands</span></a>
+</div></section>
+<section><h2>Over NeuralMath</h2><p class="bio">NeuralMath is een open onderwijsproject ontwikkeld door Dr. Americo Cunha Jr. Het doel is de wiskundige bewerkingen binnen een klein neuraal netwerk zichtbaar, inspecteerbaar en reproduceerbaar te maken voor een breed publiek met relatief beperkte wiskundige voorkennis in analyse en statistiek.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Hoe de pedagogische tekst te citeren</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>Na publicatie wordt de bibliografische vermelding bijgewerkt met volume, pagina’s en DOI. Citeer de pedagogische tekst, niet deze website.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>Licentie</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>De toelichtende webtekst en het oorspronkelijke websitemateriaal zijn beschikbaar onder CC BY 4.0, tenzij anders vermeld. Voor de artikel-PDF kan de licentie van de uitgever gelden.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

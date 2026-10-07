@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — التشريح الرياضي لشبكة عصبية</title>
+<meta content="نقدم مدخلًا رياضيًا إلى الشبكات العصبية الاصطناعية من خلال مسألة تصنيف بسيطة. يقود المُصنِّف الخطي بصورة طبيعية إلى مفهوم العصبون الاصطناعي؛ ثم نناقش الأوزان والانحيازات ودوال التنشيط وكيفية تركيب العصبونات في شبكة صغيرة. ونقدم التدريب من خلال دوال الخسارة والمشتقات والانحدار المتدرج والانتشار العكس" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/ar/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag current" href="index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">التشريح الرياضي لشبكة عصبية</p>
+<p>نقدم مدخلًا رياضيًا إلى الشبكات العصبية الاصطناعية من خلال مسألة تصنيف بسيطة. يقود المُصنِّف الخطي بصورة طبيعية إلى مفهوم العصبون الاصطناعي؛ ثم نناقش الأوزان والانحيازات ودوال التنشيط وكيفية تركيب العصبونات في شبكة صغيرة. ونقدم التدريب من خلال دوال الخسارة والمشتقات والانحدار المتدرج والانتشار العكسي. وأخيرًا ننفذ النموذج مباشرة بلغة بايثون، بحيث تصبح المطابقة بين المعادلات والخوارزمية واضحة. والهدف هو إظهار كيف توفر مفاهيم مألوفة من الهندسة التحليلية والجبر الخطي وحساب التفاضل أساسًا ميسرًا لفهم الآليات الأساسية للشبكات العصبية.</p>
+<div class="resource-bar"><a href="../pdf/ar/Article_PMO2026_NN_AR.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_AR.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>النص التعليمي الأصلي</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">تعتمد هذه النسخة على الويب وترجماتها على المخطوط الأصلي باللغة البرتغالية.</p></div>
+<nav aria-label="المحتويات" class="toc"><h2>المحتويات</h2><ol><li><a href="#متى-يستطيع-الحاسوب-أن-يتعلم">متى يستطيع الحاسوب أن يتعلم؟</a></li><li><a href="#تمثيل-المشكلة-رياضيا">تمثيل المشكلة رياضيًا</a></li><li><a href="#خط-مستقيم-كمصنف">خط مستقيم كمُصنِّف</a></li><li><a href="#العصبون-الاصطناعي">العصبون الاصطناعي</a></li><li><a href="#لماذا-نحتاج-إلى-دالة-تنشيط">لماذا نحتاج إلى دالة تنشيط؟</a></li><li><a href="#بناء-شبكة-عصبية-صغيرة">بناء شبكة عصبية صغيرة</a></li><li><a href="#كيف-تتعلم-الشبكة-العصبية">كيف تتعلم الشبكة العصبية؟</a></li><li><a href="#من-الرياضيات-إلى-بايثون">من الرياضيات إلى بايثون</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="متى-يستطيع-الحاسوب-أن-يتعلم"><span class="section-no">01</span><h2>متى يستطيع الحاسوب أن يتعلم؟</h2>
+<p>في حياتنا اليومية نتخذ قرارات تصنيفية من دون أن نشعر بذلك تقريبًا. فعندما ننظر إلى ثمرة نتعرف سريعًا إلى كونها تفاحة أو برتقالة؛ وعندما تصل رسالة إلى الهاتف نميز بين محادثة حقيقية وإعلان غير مرغوب فيه؛ وفي التحليل الطبي يمكن دمج عدة قياسات لدعم قرار؛ وفي المؤسسات المالية تُقيَّم معلومات متعددة قبل منح الائتمان. وفي جميع هذه الأمثلة تُؤخذ عدة خصائص معًا لإنتاج إجابة.</p>
+<p>في كثير من برامج الحاسوب التقليدية يكتب المبرمج صراحةً القواعد التي تنتج هذه الإجابة. وينجح هذا الأسلوب عندما تكون القواعد معروفة ويمكن التعبير عنها بوضوح، لكنه يصبح أقل فاعلية عندما تكون البيانات شديدة التباين أو عندما يصعب صياغة كل الشروط اللازمة لاتخاذ قرار جيد مسبقًا. وهذا يقود إلى سؤال طبيعي:</p>
+<div class="center">
+<p><em>هل يمكننا بناء برنامج يتعلم قاعدة اتخاذ القرار من الأمثلة بدلًا من أن يتلقى القاعدة مسبقًا؟</em></p>
+</div>
+<p>هذه إحدى الأفكار المركزية في <em>تعلم الآلة</em>، وهو مجال من مجالات الذكاء الاصطناعي يهتم بالطرائق التي تلائم النماذج انطلاقًا من البيانات . في مسألة التعلم الخاضع للإشراف تتلقى الخوارزمية أمثلة مع إجاباتها الصحيحة، ونبحث عن نموذج يستطيع أيضًا تقديم تنبؤات مفيدة لحالات لم تُستخدم أثناء التدريب. ومن بين النماذج الكثيرة المطورة لهذا الغرض أصبحت <em>الشبكات العصبية الاصطناعية</em> مهمة في تطبيقات مثل التعرف على الصور ومعالجة اللغة وتحليل الإشارات والتنبؤ بالسلاسل الزمنية .</p>
+<p>سبق أن ناقش باتيستا ومارتينز في مجلة <em>Professor de Matemática Online</em> استخدام الشبكات العصبية بوصفها جسرًا بين الرياضيات والحوسبة والتعليم المدرسي ، وقدما نشاطًا يجمع بين إعداد المعلمين وبايثون والتعرف على الأرقام. يسلك هذا المقال مسارًا مكملًا. وهدفنا الرئيس هو كشف البنية الرياضية الداخلية لشبكة عصبية صغيرة، بدءًا من الهندسة التحليلية والتقدم خطوةً خطوة نحو حساب التدرج والتنفيذ اليدوي للانتشار العكسي.</p>
+<p>على الرغم من تعقيد التطبيقات الحديثة، يمكن تقديم الجوهر الرياضي للشبكة العصبية باستخدام أفكار مألوفة نسبيًا. ففي المستوى الأساسي، الشبكة العصبية تركيب لدوال تُضبط معلماتها استنادًا إلى البيانات. نبدأ بمسألة هندسية بسيطة، ثم نعيد تفسير خط فاصل على أنه عصبون اصطناعي، ونصل عدة عصبونات، وندرس دور دوال التنشيط، ونبين كيف يمكن استخدام المشتقات لضبط معلمات الشبكة آليًا. ثم ننفذ مثالًا صغيرًا كاملًا بلغة بايثون مع الحفاظ على مطابقة مباشرة بين المعادلات والشيفرة.</p>
+</section><section class="article-section" id="تمثيل-المشكلة-رياضيا"><span class="section-no">02</span><h2>تمثيل المشكلة رياضيًا</h2>
+<p>لفهم كيفية عمل شبكة عصبية، نبدأ بمسألة بسيطة عمدًا: التمييز بين التفاح والبرتقال. للثمرة خصائص كثيرة يمكن أن تكون مفيدة لهذه المهمة، مثل اللون والكتلة والقطر والملمس والرائحة. ومع ذلك لا يحتاج نموذج رياضي أولي إلى إدخال كل هذا التعقيد. سنستخدم مقدارين فقط يسهل قياسهما: الكتلة بالغرام والقطر بالسنتيمتر.</p>
+<p>لذلك ستمثل كل ثمرة بزوج مرتب <span class="math display">\[(x_1,x_2),\]</span> حيث <span class="math display">\[x_1=\text{الكتلة}
+\qquad\text{و}\qquad
+x_2=\text{القطر}.\]</span></p>
+<p>وهكذا يمثل الزوج <span class="math inline">\((155,\;7.2)\)</span> ثمرة كتلتها <span class="math inline">\(155\)</span> غ وقطرها <span class="math inline">\(7.2\)</span> سم. وعندما نستبدل الجسم الفيزيائي بقياسين عدديين، نربط كل ثمرة بنقطة في المستوى الديكارتي: الإحداثي الأول يعطي كتلتها والثاني قطرها. يوضح الشكل <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> هذا التمثيل لمجموعة افتراضية من التفاح والبرتقال.</p>
+<figure id="fig:fruits">
+<img alt="من الملاحظة الفيزيائية إلى النمذجة الرياضية. توصف كل ثمرة أولًا بمقدارين قابلين للقياس — الكتلة والقطر — ثم تمثل بالزوج المرتب \((x_1,x_2)\) . وفي مستوى الكتلة–القطر تصبح كل مشاهدة نقطة، وبذلك يمكن إعادة تفسير التمييز بين التفاح والبرتقال بوصفه مسألة هندسية لفصل فئتين." decoding="async" loading="lazy" src="../assets/img/ar/Fig01.png">
+<figcaption>من الملاحظة الفيزيائية إلى النمذجة الرياضية. توصف كل ثمرة أولًا بمقدارين قابلين للقياس — الكتلة والقطر — ثم تمثل بالزوج المرتب <span class="math inline">\((x_1,x_2)\)</span>. وفي مستوى الكتلة–القطر تصبح كل مشاهدة نقطة، وبذلك يمكن إعادة تفسير التمييز بين التفاح والبرتقال بوصفه مسألة هندسية لفصل فئتين.</figcaption>
+</img></figure>
+<p>يغير هذا التحويل الطبيعة الظاهرية للمشكلة. فبدلًا من أن نسأل مباشرة كيف نتعرف إلى تفاحة أو برتقالة، يمكننا طرح سؤال هندسي: كيف نفصل نقاط الفئتين في المستوى؟ هذا التغير في وجهة النظر أساسي في تعلم الآلة. فالصور والنصوص والأصوات والإشارات التجريبية يجب جميعًا تحويلها إلى تمثيلات عددية قبل أن تتمكن خوارزمية من معالجتها. في مثالنا لكل جسم إحداثيان فقط؛ أما في التطبيقات الحقيقية فقد يحتوي التمثيل على مئات أو آلاف أو حتى ملايين المركبات. والمبدأ واحد: يرتبط كل مثال بمجموعة من الأعداد، ويبحث النموذج عن قاعدة تحول هذا التمثيل إلى الإجابة المطلوبة.</p>
+<p>نبدأ بأبسط قاعدة هندسية متاحة ونسأل ما إذا كان خط مستقيم واحد يستطيع فصل نقاط التفاح عن نقاط البرتقال بصورة مناسبة.</p>
+</section><section class="article-section" id="خط-مستقيم-كمصنف"><span class="section-no">03</span><h2>خط مستقيم كمُصنِّف</h2>
+<p>بعد تمثيل كل ثمرة بنقطة في المستوى الديكارتي يصبح التصنيف مسألة هندسية: هل يمكن لخط مستقيم أن يفصل التفاح عن البرتقال؟ يجسد هذا السؤال الفكرة الأساسية لعائلة مهمة من طرائق تعلم الآلة تسمى <em>المُصنِّفات الخطية</em>.</p>
+<p>لنعتبر خطًا يمر عبر سحابة البيانات كما في الشكل <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>. يقسم الخط المستوى إلى نصفي مستوى. فإذا وقعت معظم نقاط التفاح في جانب ومعظم نقاط البرتقال في الجانب الآخر، أمكن استخدام موضع ثمرة جديدة بالنسبة إلى الخط قاعدةً للتصنيف. وبعد قياس كتلتها وقطرها نمثلها بنقطة ونحدد الجانب الذي يحتوي هذه النقطة.</p>
+<figure id="fig:linear_classifier">
+<img alt="مثال على مُصنِّف خطي في مستوى الكتلة–القطر. يعمل الخط المستقيم حدًا للقرار: تحصل النقاط في أحد نصفي المستوى على فئة، وتحصل النقاط في النصف المقابل على الفئة الأخرى. ومن ثم يعتمد القرار فقط على الجانب الذي يحتوي النقطة." decoding="async" loading="lazy" src="../assets/img/ar/Fig02.png"/>
+<figcaption>مثال على مُصنِّف خطي في مستوى الكتلة–القطر. يعمل الخط المستقيم حدًا للقرار: تحصل النقاط في أحد نصفي المستوى على فئة، وتحصل النقاط في النصف المقابل على الفئة الأخرى. ومن ثم يعتمد القرار فقط على الجانب الذي يحتوي النقطة.</figcaption>
+</figure>
+<p>في المستوى الديكارتي <span class="math inline">\((x_1,x_2)\)</span> يمكن وصف خط بالمعادلة <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>المتجه <span class="math inline">\((w_1,w_2)\)</span> عمودي على الخط، ولذلك يحدد اتجاهه، في حين تسهم المعلمة <span class="math inline">\(b\)</span> في تحديد موضعه. يتضمن هذا التمثيل قدرًا صغيرًا من التكرار: فضرب <span class="math inline">\(w_1\)</span> و<span class="math inline">\(w_2\)</span> و<span class="math inline">\(b\)</span> في الثابت غير الصفري نفسه ينتج الخط ذاته تمامًا. ومن ثم فالمعلمات التي تصف الحد ليست فريدة. كما يعتمد تفسيرها العددي على مقياس المتغيرات. وبما أن الكتلة تقاس بالغرام والقطر بالسنتيمتر، فلا ينبغي مقارنة القيم العددية لـ <span class="math inline">\(w_1\)</span> و<span class="math inline">\(w_2\)</span> من دون مراعاة اختلاف الوحدات.</p>
+<p>توفر معادلة الخط نفسها طريقة بسيطة لتحديد الجانب الذي تقع فيه نقطة ما. نعرف القيمة <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>إذا كان <span class="math inline">\(s(x_1,x_2)=0\)</span> فإن النقطة تقع على الخط. وإذا كان <span class="math inline">\(s(x_1,x_2)&gt;0\)</span> فهي في أحد نصفي المستوى، وإذا كان <span class="math inline">\(s(x_1,x_2)&lt;0\)</span> فهي في النصف الآخر. وإذا قررنا أن القيم الموجبة تقابل التفاح والسالبة تقابل البرتقال، تصبح القاعدة <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{تفاحة},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{برتقالة}.
+\end{cases}\]</span></p>
+<p>على سبيل المثال، لنأخذ الحد المحدد بـ <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> ولثمرة كتلتها <span class="math inline">\(160\)</span> غ وقطرها <span class="math inline">\(7.8\)</span> سم، <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> وبما أن القيمة موجبة، تقع النقطة في نصف المستوى الذي ربطناه بالتفاح. لذلك يصنف هذا المُصنِّف الثمرة على أنها تفاحة.</p>
+<p>ليس كل اختيار لـ <span class="math inline">\(w_1\)</span> و<span class="math inline">\(w_2\)</span> و<span class="math inline">\(b\)</span> يؤدي إلى تصنيف جيد. فبعض الخطوط تفصل المجموعتين بصورة سيئة، في حين ترتكب خطوط أخرى أخطاء أقل. ومسألة التعلم هي تحديد قيم المعلمات التي تقلل مقياسًا لخطأ النموذج باستخدام أمثلة سبق وسمت فئاتها. فبدلًا من برمجة موضع الخط مباشرة، نريد من الخوارزمية أن تضبط معاملاته انطلاقًا من البيانات.</p>
+<p>يمكن لخط واحد أن يعمل جيدًا عندما تكون الفئات قابلة للفصل الخطي تقريبًا. أما مجموعات البيانات الأكثر تعقيدًا فقد تتطلب حدًا غير خطي. وقبل معالجة هذا القيد، نعيد تفسير المُصنِّف الذي بنيناه بوصفه وحدة حسابية أولية: عصبونًا اصطناعيًا.</p>
+</section><section class="article-section" id="العصبون-الاصطناعي"><span class="section-no">04</span><h2>العصبون الاصطناعي</h2>
+<p>في القسم السابق استخدمنا التعبير <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> لتحديد الجانب الذي تقع فيه الثمرة بالنسبة إلى خط. ويمكن النظر إلى التعبير نفسه بوصفه المرحلة الأولى من الحساب الذي ينفذه <em>عصبون اصطناعي</em>. يستقبل العصبون مدخلات عددية، ويجمعها باستخدام أوزان وانحياز، ثم يطبق دالة رياضية للحصول على خرجه.</p>
+<p>في مثالنا المدخلان هما الكتلة <span class="math inline">\(x_1\)</span> والقطر <span class="math inline">\(x_2\)</span>. يُضرب كل مدخل في معلمة تسمى <em>وزنًا</em>، ثم تجمع النواتج مع حد ثابت <span class="math inline">\(b\)</span> يسمى <em>الانحياز</em>. يوضح الشكل <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> هذا الحساب تخطيطيًا.</p>
+<figure id="fig:artificial_neuron">
+<img alt="العمل التخطيطي لعصبون اصطناعي. يُضرب كل مدخل \(x_i\) في وزن \(w_i\) ؛ ثم تجمع النواتج مع الانحياز \(b\) لإنتاج القيمة \(s\) . بعد ذلك تحول دالة التنشيط \(g\) هذه القيمة إلى الخرج \(\widehat{y}=g(s)\) ، الذي يمكن استخدامه كميةً وسيطة أو تنبؤًا نهائيًا." decoding="async" loading="lazy" src="../assets/img/ar/Fig03.png"/>
+<figcaption>العمل التخطيطي لعصبون اصطناعي. يُضرب كل مدخل <span class="math inline">\(x_i\)</span> في وزن <span class="math inline">\(w_i\)</span>؛ ثم تجمع النواتج مع الانحياز <span class="math inline">\(b\)</span> لإنتاج القيمة <span class="math inline">\(s\)</span>. بعد ذلك تحول دالة التنشيط <span class="math inline">\(g\)</span> هذه القيمة إلى الخرج <span class="math inline">\(\widehat{y}=g(s)\)</span>، الذي يمكن استخدامه كميةً وسيطة أو تنبؤًا نهائيًا.</figcaption>
+</figure>
+<p>تحدد الأوزان كيف تؤثر التغيرات في المدخلات في القيمة <span class="math inline">\(s\)</span>. فإذا أبقينا <span class="math inline">\(x_2\)</span> وكل الكميات الأخرى ثابتة، فإن تغيرًا <span class="math inline">\(\Delta x_1\)</span> يغير <span class="math inline">\(s\)</span> بمقدار <span class="math inline">\(w_1\Delta x_1\)</span>. وبالمثل فإن تغيرًا <span class="math inline">\(\Delta x_2\)</span> يغير القيمة بمقدار <span class="math inline">\(w_2\Delta x_2\)</span>. وللإشارة أهميتها أيضًا: فالوزن الموجب يجعل زيادة المدخل تزيد القيمة، بينما ينتج الوزن السالب الأثر المعاكس. ويجب استخدام هذا التفسير بحذر عندما تكون للمتغيرات وحدات ومقاييس مختلفة. ولهذا السبب تقوم التطبيقات العملية غالبًا بتطبيع بيانات الإدخال أو توحيدها قبل التدريب.</p>
+<p>الانحياز <span class="math inline">\(b\)</span> هو الحد الثابت في التحويل التآلفي. هندسيًا يسمح بتحريك حد القرار. فإذا كان <span class="math inline">\(b=0\)</span> فإن المعادلة <span class="math display">\[w_1x_1+w_2x_2=0\]</span> تجبر الخط على المرور بنقطة الأصل. أما بوجود الانحياز فيمكن أن ينتقل الحد إلى مواضع أخرى. وبصورة مكافئة، عندما يكون <span class="math inline">\(x_1=x_2=0\)</span> تصبح القيمة ببساطة <span class="math inline">\(s=b\)</span>.</p>
+<p>لا يلزم أن تكون القيمة <span class="math inline">\(s\)</span> هي خرج العصبون النهائي. عمومًا تطبق عليها <em>دالة تنشيط</em> <span class="math inline">\(g\)</span>: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> ومن ثم يتكون الحساب من مرحلتين، <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>باستخدام قيم المعلمات في القسم السابق نحصل على <span class="math inline">\(s=1.6\)</span>. وإذا اخترنا دالة الخطوة <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> فإن <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. وفق اصطلاحنا تصنف الثمرة على أنها تفاحة. ومع هذا التنشيط يتغير القرار عندما تعبر <span class="math inline">\(s\)</span> الصفر، ولذلك يكون حد الفئة بالضبط <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>إذن العصبون الواحد كائن رياضي بسيط ذو معلمات قابلة للضبط. وتظهر أهميته الحقيقية عند وصل عدد كبير من هذه الوحدات. لكن قبل بناء شبكة نحتاج إلى فهم سبب كون دالة التنشيط ضرورية.</p>
+</section><section class="article-section" id="لماذا-نحتاج-إلى-دالة-تنشيط"><span class="section-no">05</span><h2>لماذا نحتاج إلى دالة تنشيط؟</h2>
+<p>يحسب العصبون أولًا قيمة باستخدام تحويل تآلفي، ثم يطبق دالة تنشيط. وهذه المرحلة الثانية ضرورية إذا أردنا للشبكة العصبية أن تمثل علاقات معقدة. ولرؤية السبب، تخيل شبكة لا تستخدم أي دوال تنشيط. عندها ستكون كل وحدة من الشكل <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>في مثال أحادي البعد، افترض أن وحدة أولى تنتج <span class="math display">\[h=ax+b\]</span> وأن الثانية تحسب <span class="math display">\[y=ch+d.\]</span> بالتعويض نحصل على <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> وهو ما يزال دالة تآلفية في <span class="math inline">\(x\)</span>. وينطبق الأمر نفسه في أبعاد متعددة: تركيب التحويلات التآلفية يبقى تآلفيًا. ولذلك فإن إضافة طبقات كثيرة من دون عملية غير خطية لا تجعل الشبكة أكثر قدرة تعبيرية بصورة جوهرية؛ إذ يمكن استبدال التركيب كله بتحويل تآلفي واحد.</p>
+<p>تكسر دالة التنشيط هذا القيد. فبعد حساب القيمة <span class="math inline">\(s\)</span> يطبق العصبون تحويلًا يكون عادة غير خطي، <span class="math display">\[h=g(s).\]</span> وعند وصل عدة وحدات من هذا النوع لا يعود بالإمكان اختزال التركيب الناتج إلى تحويل تآلفي واحد. وهذا يسمح للشبكة ببناء حدود قرار أكثر تعقيدًا.</p>
+<p>أبسط دالة تنشيط هي دالة الخطوة، <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> وهي تنتج قرارًا ثنائيًا ومفيدة جدًا لفهم التصنيف. غير أن مشتقتها تساوي صفرًا عندما <span class="math inline">\(s\neq0\)</span> وغير معرفة عند <span class="math inline">\(s=0\)</span>. وبما أن التدريب القائم على التدرج يستخدم المشتقات لتحديد كيفية تغير المعلمات، فإن دالة الخطوة غير مناسبة لهذه الآلية التدريبية.</p>
+<p>أحد البدائل هو دالة سيغمويد، <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> فهي تحول كل عدد حقيقي إلى قيمة محصورة حصرًا بين <span class="math inline">\(0\)</span> و<span class="math inline">\(1\)</span>. عندما تكون <span class="math inline">\(s\)</span> سالبة جدًا يقترب الخرج من <span class="math inline">\(0\)</span>، وعندما تكون موجبة جدًا يقترب من <span class="math inline">\(1\)</span>، وبين الطرفين يكون الانتقال سلسًا. دالة سيغمويد قابلة للاشتقاق في كل مكان، ومشتقتها <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> ولأن مخرجاتها تقع بين <span class="math inline">\(0\)</span> و<span class="math inline">\(1\)</span>، فهي تستخدم كثيرًا في طبقة الإخراج لمُصنِّف ثنائي. وفي صياغة احتمالية مع دالة خسارة مناسبة، يمكن تفسير الخرج على أنه تقدير لاحتمال الفئة الممثلة بالقيمة <span class="math inline">\(1\)</span>. لكن في الطبقات المخفية قد تسبب سيغمويد صعوبة: فعندما تكون المدخلات كبيرة المقدار تصبح مشتقتها صغيرة جدًا، مما يسهم في مشكلة <em>تلاشي التدرج</em> في الشبكات العميقة.</p>
+<p>ومن دوال التنشيط واسعة الاستخدام في الطبقات المخفية دالة ReLU (<em>Rectified Linear Unit</em>)، <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> وعلى الرغم من أنها تتكون من قطعتين خطيتين، فإن ReLU ليست خطية عالميًا. مشتقتها <span class="math inline">\(0\)</span> عندما <span class="math inline">\(s&lt;0\)</span> و<span class="math inline">\(1\)</span> عندما <span class="math inline">\(s&gt;0\)</span>. وعند <span class="math inline">\(s=0\)</span> لا توجد المشتقة المعتادة، وتتبنى التطبيقات البرمجية اصطلاحًا للتدرج. وبالنسبة إلى المدخلات الموجبة لا تتناقص المشتقة مع ازدياد <span class="math inline">\(s\)</span>، وبذلك تتجنب إحدى آليات التشبع المرتبطة بسيغمويد.</p>
+<p>يقارن الشكل <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> هذه الدوال الثلاث بصريًا: القفزة المفاجئة لدالة الخطوة، والانتقال السلس لسيغمويد، وتغير الميل في ReLU.</p>
+<figure id="fig:activation_functions">
+<img alt="مقارنة بين ثلاث دوال تنشيط شائعة في العروض التمهيدية للشبكات العصبية. تتخذ دالة الخطوة قرارًا مفاجئًا؛ وتوفر سيغمويد انتقالًا سلسًا بين \(0\) و \(1\) ؛ بينما تلغي ReLU المدخلات السالبة وتحافظ على الموجبة. وتمنع دوال التنشيط غير الخطية تكديس الطبقات من الانهيار إلى تحويل تآلفي واح" decoding="async" loading="lazy" src="../assets/img/ar/Fig04.png"/>
+<figcaption>مقارنة بين ثلاث دوال تنشيط شائعة في العروض التمهيدية للشبكات العصبية. تتخذ دالة الخطوة قرارًا مفاجئًا؛ وتوفر سيغمويد انتقالًا سلسًا بين <span class="math inline">\(0\)</span> و<span class="math inline">\(1\)</span>؛ بينما تلغي ReLU المدخلات السالبة وتحافظ على الموجبة. وتمنع دوال التنشيط غير الخطية تكديس الطبقات من الانهيار إلى تحويل تآلفي واحد.</figcaption>
+</figure>
+<p>تلخص خصائصها الأساسية أدناه.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">الدالة</th>
+<th style="text-align: center;">الخرج</th>
+<th style="text-align: left;">المشتقة</th>
+<th style="text-align: left;">الاستخدام المعتاد</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">الخطوة</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">صفر عندما <span class="math inline">\(s\neq0\)</span>؛ وغير معرفة عند <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">النماذج التاريخية والأمثلة التعليمية</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">سيغمويد</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">موجودة لكل <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">طبقة الإخراج في التصنيف الثنائي</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> عندما <span class="math inline">\(s&lt;0\)</span> و<span class="math inline">\(1\)</span> عندما <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">الطبقات المخفية</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>تختلف تفاصيل هذه الدوال، لكن دورها المفاهيمي المشترك هو إدخال اللاخطية. وهذه اللاخطية هي التي تسمح للشبكة الصغيرة في القسم التالي بتمثيل علاقات لا يستطيع خط مستقيم واحد تمثيلها.</p>
+<p>لمن يرغب في التوسع، يقدم هايكين  معالجة كلاسيكية للشبكات العصبية، بينما يناقش غودفيلو وبنغيو وكورفيل  دوال التنشيط وتدريب الشبكات العميقة في سياق أوسع. ويعد كتاب نيلسن المتاح مجانًا  مناسبًا خصوصًا لبناء الحدس حول العصبونات ودوال التنشيط والتعلم.</p>
+</section><section class="article-section" id="بناء-شبكة-عصبية-صغيرة"><span class="section-no">06</span><h2>بناء شبكة عصبية صغيرة</h2>
+<p>ننظر الآن إلى شبكة لها مدخلان، وطبقة مخفية تحتوي ثلاثة عصبونات، وعصبون إخراج واحد. تبقى المدخلات <span class="math display">\[x_1=\text{الكتلة},
+\qquad
+x_2=\text{القطر},\]</span> ويُمرر كلاهما إلى كل عصبون مخفي، كما في الشكل <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p>
+<figure id="fig:small_network">
+<img alt="بنية تعليمية \(2\) – \(3\) – \(1\) لعرض حسابات الشبكة العصبية. يغذي المدخلان — الكتلة والقطر — ثلاثة عصبونات في الطبقة المخفية. ثم يجمع عصبون الإخراج تنشيطاتها \(h_1,h_2,h_3\) لإنتاج التنبؤ \(\widehat{y}\) . لكل وصلة وزن قابل للضبط، ولكل عصبون انحياز." decoding="async" loading="lazy" src="../assets/img/ar/Fig05.png"/>
+<figcaption>بنية تعليمية <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> لعرض حسابات الشبكة العصبية. يغذي المدخلان — الكتلة والقطر — ثلاثة عصبونات في الطبقة المخفية. ثم يجمع عصبون الإخراج تنشيطاتها <span class="math inline">\(h_1,h_2,h_3\)</span> لإنتاج التنبؤ <span class="math inline">\(\widehat{y}\)</span>. لكل وصلة وزن قابل للضبط، ولكل عصبون انحياز.</figcaption>
+</figure>
+<p>لتكن مخرجات الطبقة المخفية <span class="math inline">\(h_1\)</span> و<span class="math inline">\(h_2\)</span> و<span class="math inline">\(h_3\)</span>. يستقبل كل عصبون المدخلين نفسيهما، لكنه يملك أوزانه وانحيازه الخاصين: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>على الرغم من أن العصبونات الثلاثة تستقبل الكتلة والقطر نفسيهما، فإنها قد تنتج استجابات مختلفة لأن معلماتها مختلفة. وأثناء التدريب تُضبط هذه المعلمات بحيث تصبح التنشيطات الوسيطة مفيدة للتصنيف.</p>
+<p>ثم تمرر الكميات الثلاث <span class="math inline">\(h_1\)</span> و<span class="math inline">\(h_2\)</span> و<span class="math inline">\(h_3\)</span> إلى عصبون الإخراج الذي يحسب <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> وينتج <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> وفي مسألتنا الثنائية نستخدم سيغمويد في الإخراج: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>باستخدام <span class="math inline">\(y=1\)</span> للتفاح و<span class="math inline">\(y=0\)</span> للبرتقال، يعطي الحد <span class="math inline">\(0.5\)</span> قرار الفئة <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{تفاحة},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{برتقالة}.\]</span> ومن ثم ترتبط القيم القريبة من <span class="math inline">\(1\)</span> بقوة بالتفاح، بينما ترتبط القيم القريبة من <span class="math inline">\(0\)</span> بالبرتقال. وكما أشرنا سابقًا، فإن تفسير <span class="math inline">\(\widehat{y}\)</span> عدديًا على أنه احتمال يتطلب افتراضات إضافية بشأن النموذج وتدريبه. وللقاعدة التصنيفية المستخدمة هنا يكفي النظر إلى <span class="math inline">\(\widehat{y}\)</span> بوصفه خرجًا مستمرًا للشبكة.</p>
+<p>السمة المركزية لهذه البنية هي التمثيل الوسيط <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> تستقبل الشبكة خاصيتين وتبني ثلاث كميات جديدة قبل إنتاج الإجابة النهائية. ولا تُختار هذه التنشيطات يدويًا، بل تعتمد على الأوزان والانحيازات، ولذلك تتغير مع تدريب المعلمات.</p>
+<p>على الرغم من صغر الشبكة، فإنها تحتوي بالفعل على ثلاث عشرة معلمة قابلة للضبط. فالعصبونات المخفية الثلاثة تحتوي <span class="math display">\[3(2+1)=9\]</span> معلمات، ويضيف عصبون الإخراج <span class="math display">\[3+1=4.\]</span> وبالتالي <span class="math display">\[9+4=13.\]</span></p>
+<p>ويصبح العد نفسه واضحًا في تدوين المصفوفات. نعرف <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> وعندها يمكن كتابة الطبقة المخفية بصورة مدمجة <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> حيث تعمل <span class="math inline">\(g\)</span> على كل مركبة على حدة. أما الإخراج فهو <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> مع <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>يمهد هذا التدوين للبنية التي ستظهر في برنامج بايثون. فعندما تقدم ثمرة إلى المدخل ونحسب التنشيطات المتعاقبة حتى نصل إلى <span class="math inline">\(\widehat{y}\)</span>، فإننا ننفذ <em>انتشارًا أماميًا</em> أو <em>مرورًا أماميًا</em>. ويبقى السؤال المركزي: كيف يمكن تحديد المعلمات الثلاث عشرة آليًا بحيث تلائم التنبؤات البيانات؟</p>
+</section><section class="article-section" id="كيف-تتعلم-الشبكة-العصبية"><span class="section-no">07</span><h2>كيف تتعلم الشبكة العصبية؟</h2>
+<p>لا نعرف الأوزان والانحيازات مسبقًا. بل يجب ضبطها باستخدام أمثلة تتوفر لها الإجابة الصحيحة. تسمى هذه العملية <em>التدريب</em>، ويمكن تلخيصها بالدورة <span class="math display">\[\boxed{\text{تنبؤ}}
+\longrightarrow
+\boxed{\text{قياس الخطأ}}
+\longrightarrow
+\boxed{\text{ضبط المعلمات}}
+\longrightarrow
+\boxed{\text{تكرار}}.\]</span></p>
+<p>لنأخذ ثمرة كتلتها <span class="math inline">\(140\)</span> غ وقطرها <span class="math inline">\(7.0\)</span> سم وفئتها الصحيحة برتقالة، أي <span class="math inline">\(y=0\)</span>. ولنفترض أن الشبكة، عند مرحلة ما من التدريب، تعطي <span class="math inline">\(\widehat{y}=0.80\)</span>. أحد المقاييس البسيطة للاختلاف بين التنبؤ والهدف هو الخطأ التربيعي <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> وفي هذا المثال <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>يمثل هذا التعبير <em>دالة خسارة</em> لمثال واحد. ولأنه مربع، فإن <span class="math inline">\(E\geq0\)</span>، وتحصل التنبؤات الأبعد عن الهدف على عقوبات أكبر. ولا يغير العامل <span class="math inline">\(1/2\)</span> موضع القيمة الصغرى، لكنه يبسط المشتقات. يستخدم التصنيف الثنائي غالبًا دوال خسارة أخرى، ولا سيما الإنتروبيا المتقاطعة. نستخدم هنا الخطأ التربيعي لأن جبره شفاف وكافٍ لتقديم التحسين والانتشار العكسي .</p>
+<p>إذا احتوت مجموعة التدريب على <span class="math inline">\(N\)</span> أمثلة، فإن أحد المقاييس الكلية هو متوسط الخسارة <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> كل تنبؤ يعتمد على أوزان الشبكة وانحيازاتها، ولذلك تعتمد <span class="math inline">\(J\)</span> أيضًا على هذه المعلمات جميعًا. ويعني التدريب البحث عن قيم تجعل <span class="math inline">\(J\)</span> صغيرة.</p>
+<p>لفهم آلية الضبط، تخيل أولًا أننا نثبت جميع المعلمات باستثناء وزن واحد <span class="math inline">\(w\)</span>. عندها يمكن النظر إلى الخسارة على أنها دالة <span class="math inline">\(J=J(w)\)</span>. يلخص الشكل <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> المراحل الأساسية للتدريب التي ندرسها الآن.</p>
+<figure id="fig:training_cycle">
+<img alt="الدورة الأساسية لتدريب شبكة عصبية. يحول المرور الأمامي المدخلات إلى تنبؤ؛ وتقيس دالة الخسارة الفرق بين التنبؤ والهدف؛ ويحسب الانتشار العكسي التدرجات باستخدام قاعدة السلسلة؛ ثم يستخدم الانحدار المتدرج هذه التدرجات لتحديث الأوزان والانحيازات. وتكرار هذه الدورة عبر حقب كثيرة هو ما ن" decoding="async" loading="lazy" src="../assets/img/ar/Fig06.png"/>
+<figcaption>الدورة الأساسية لتدريب شبكة عصبية. يحول المرور الأمامي المدخلات إلى تنبؤ؛ وتقيس دالة الخسارة الفرق بين التنبؤ والهدف؛ ويحسب الانتشار العكسي التدرجات باستخدام قاعدة السلسلة؛ ثم يستخدم الانحدار المتدرج هذه التدرجات لتحديث الأوزان والانحيازات. وتكرار هذه الدورة عبر حقب كثيرة هو ما نسميه التعلم.</figcaption>
+</figure>
+<p>للقارئ الذي لا يملك خلفية واسعة في حساب التفاضل، يمكن تفسير المشتقة هنا على أنها مقياس لـ <em>الحساسية المحلية</em>: فهي تبين كيف يميل تغير صغير في معلمة واحدة إلى تغيير الخسارة. وتشير إشارتها إلى الاتجاه الذي يزيد الدالة أو ينقصها محليًا، بينما يقيس مقدارها قوة ذلك التغير المحلي.</p>
+<p>المشتقة <span class="math display">\[\frac{\partial J}{\partial w}\]</span> تعطي الميل المحلي. فإذا كانت موجبة فإن زيادة صغيرة في <span class="math inline">\(w\)</span> تميل إلى زيادة <span class="math inline">\(J\)</span>، ولذلك ينبغي تحريك الوزن في الاتجاه المعاكس. وإذا كانت سالبة فإن زيادة <span class="math inline">\(w\)</span> تميل محليًا إلى خفض <span class="math inline">\(J\)</span>. وتوصف الحالتان بالمعادلة <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> وهي الفكرة الأساسية لـ <em>الانحدار المتدرج</em>. العدد الموجب <span class="math inline">\(\eta\)</span> هو <em>معدل التعلم</em>؛ وهو يتحكم في حجم الخطوة. قد تجعل قيمة صغيرة جدًا التدريب بطيئًا، بينما قد تسبب قيمة كبيرة جدًا تذبذبًا أو عدم استقرار.</p>
+<p>لشبكة تحتوي معلمات كثيرة، لتمثل <span class="math inline">\(\theta\)</span> أي وزن أو انحياز. يصبح التحديث <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> ومجموعة جميع المشتقات الجزئية تشكل <em>تدرج</em> الخسارة. هندسيًا يشير التدرج إلى اتجاه أسرع زيادة محلية، ولذلك يعطي التدرج السالب اتجاهًا محليًا للانخفاض.</p>
+<p>ما زلنا بحاجة إلى حساب هذه المشتقات عندما تكون الشبكة تركيبًا لعدة دوال. أثناء المرور الأمامي تنتقل المعلومات على النحو <span class="math display">\[\text{المدخلات}
+\longrightarrow
+\text{الطبقة المخفية}
+\longrightarrow
+\text{الإخراج}.\]</span> ولتحديد كيف تؤثر معلمة في طبقة مبكرة في الخسارة، نتبع رياضيًا سلسلة الاعتماد في الاتجاه المعاكس. تسمى هذه العملية <em>الانتشار العكسي</em>. وهي في جوهرها تطبيق منهجي وفعال لقاعدة السلسلة. يقدم روملهارت وهينتون وويليامز  مرجعًا كلاسيكيًا لانتشار هذه الطريقة في الشبكات ذات الطبقات المخفية، بينما يقدم نيلسن  اشتقاقًا مفصلًا وتعليميًا بوجه خاص.</p>
+<p>لسلسلة اعتماد بسيطة تعتمد فيها <span class="math inline">\(E\)</span> على <span class="math inline">\(\widehat{y}\)</span>، وتعتمد <span class="math inline">\(\widehat{y}\)</span> على تنشيط <span class="math inline">\(h\)</span>، ويعتمد <span class="math inline">\(h\)</span> بدوره على وزن <span class="math inline">\(w\)</span>، تعطينا قاعدة السلسلة <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> يصف كل عامل مرحلة من مراحل تأثير <span class="math inline">\(w\)</span> في الخسارة النهائية. وتحتوي الشبكات الأكبر على كثير من هذه السلاسل، وينظم الانتشار العكسي الحساب بحيث يعاد استخدام المشتقات الوسيطة بدلًا من إعادة حسابها منفصلة لكل معلمة.</p>
+<p>في التطبيق العملي يستخدم التدريب أمثلة كثيرة. يسمى المرور الكامل مرة واحدة على مجموعة التدريب <em>حقبة</em> (epoch). ويمكن تحديث المعلمات بعد كل مثال، كما في البرنامج التعليمي المستخدم لاحقًا في هذا المقال، أو بعد مجموعات صغيرة من الأمثلة تسمى <em>دفعات مصغرة</em> (mini-batches)، وهو أمر شائع في الشبكات الأكبر. وفي الحالتين تتكرر دورة التنبؤات والخسائر والتدرجات والتحديثات عبر حقب كثيرة.</p>
+<p>طريقة ملموسة لتصور هذا التطور هي متابعة التنبؤ لمثال ثابت في مراحل مختلفة من التدريب. لنعد إلى الثمرة التي كتلتها <span class="math inline">\(140\)</span> غ وقطرها <span class="math inline">\(7.0\)</span> سم وفئتها الصحيحة برتقالة. يبين الجدول <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> تطورًا افتراضيًا. وهذه القيم لا تخص تنفيذًا بعينه؛ إنما توضح الآلية فقط.</p>
+<div id="tab:learning">
+<table>
+<caption>تطور افتراضي لتنبؤ الشبكة للثمرة نفسها أثناء التدريب. يمكن لتحديثات المعلمات المتكررة أن تنقل خرجًا أوليًا غير صحيح نحو تصنيف متوافق مع الوسم الهدف.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">الحقبة</th>
+<th style="text-align: center;">التنبؤ <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">الخسارة <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">التصنيف</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">تفاحة</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">تفاحة</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">تفاحة</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">برتقالة</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">برتقالة</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>في البداية يكون الخرج قريبًا من <span class="math inline">\(1\)</span> وتُصنف الثمرة خطأ على أنها تفاحة. ومع ضبط المعلمات ينخفض التنبؤ ويعبر في النهاية الحد <span class="math inline">\(0.5\)</span>، فينتج الفئة الصحيحة. وما يتغير خلال هذه العملية هو القيم العددية للأوزان والانحيازات؛ أما بنية الشبكة فتبقى ثابتة.</p>
+<p>خفض الخسارة على بيانات التدريب ليس الهدف النهائي. يجب على الشبكة المفيدة أيضًا أن تقدم تنبؤات جيدة لأمثلة لم تُستخدم في ملاءمة المعلمات. تسمى هذه القدرة <em>التعميم</em>. وعندما يتكيف النموذج أكثر من اللازم مع خصوصيات مجموعة التدريب ويؤدي أداء أسوأ على بيانات جديدة، يكون لدينا <em>فرط تكيّف</em>. وفي التقييمات الأكثر عناية تقسم البيانات عادة إلى مجموعات تدريب وتحقق واختبار: تستخدم الأولى لملاءمة المعلمات، وتدعم الثانية الاختيارات التي تُتخذ أثناء تطوير النموذج، وتحجز الثالثة للتقييم النهائي. ويمكن العثور على مناقشات أوسع للتعميم وتقييم النماذج لدى فاسيلي وآخرين  وغودفيلو وبنغيو وكورفيل .</p>
+<p>وهكذا نصل إلى المعنى الرياضي للتعلم في الشبكة العصبية. فالتعلم هنا يعني ضبط معلمات دالة مركبة بحيث تقلل مقياسًا للخطأ على البيانات، وأن تعمم، من الناحية المثالية، على أمثلة جديدة. تتنبأ الشبكة، وتحسب خسارة، وتستخدم المشتقات لتحديد كيفية تأثير معلماتها في تلك الخسارة، ثم تنفذ سلسلة من التصحيحات الصغيرة.</p>
+</section><section class="article-section" id="من-الرياضيات-إلى-بايثون"><span class="section-no">08</span><h2>من الرياضيات إلى بايثون</h2>
+<p>ننتقل الآن من المعادلات إلى برنامج قابل للتنفيذ. والهدف ليس استخدام مكتبة متخصصة للشبكات العصبية، بل تنفيذ العمليات الرياضية التي طُورت في المقال مباشرة باستخدام <code>NumPy</code> . يتيح ذلك رؤية كيف تظهر، سطرًا بسطر، التركيبات الخطية ودوال التنشيط وحساب الخسارة والانتشار العكسي والانحدار المتدرج في الشيفرة.</p>
+<p>وللحصول على مثال نهائي أكثر إقناعًا، نستخدم مجموعة بيانات اصطناعية منتشرة في نطاق أوسع من الكتلة والقطر. ما زلنا نعمل بخاصيتين فيزيائيتين فقط — الكتلة بالغرام والقطر بالسنتيمتر — لكننا نوزع الآن <span class="math inline">\(64\)</span> مثال تدريب في منطقة واسعة من المستوى، ونحجز ثمانية أمثلة إضافية لاختبار توضيحي. تظل البيانات اصطناعية وتقع ضمن مجالات معقولة للتفاح والبرتقال. وقد بُنيت بحيث تنتج حد قرار غير خطي من دون تركيز النقاط كلها في عدد قليل من العناقيد المصطنعة بصورة مبالغ فيها.</p>
+<p>الفكرة الهندسية بسيطة. نحدد منحنى مرجعيًا في مستوى الكتلة–القطر، ونضع التفاح في شريطين فوق هذا المنحنى، والبرتقال في شريطين تحته. وتضاف اضطرابات حتمية صغيرة إلى الكتلة والقطر معًا كي تشغل المشاهدات منطقة أوسع. المثال الناتج أغنى من الرسوم السابقة: فهو يحتوي نقاطًا أكثر، والبيانات موزعة في النطاق، وحد القرار المناسب أكثر انحناءً بوضوح من خط مستقيم.</p>
+<p>في هذه التجربة الحسابية النهائية نوسع الطبقة المخفية إلى اثني عشر عصبون ReLU. لا يغير ذلك البنية المفاهيمية التي درسناها في الأقسام السابقة؛ بل يزيد فقط قدرة الشبكة على تمثيل حد أكثر تعقيدًا. وبدلًا من <span class="math inline">\(13\)</span> معلمة في شبكة العصبونات الثلاثة التعليمية، أصبح لدينا <span class="math inline">\(49\)</span> معلمة قابلة للضبط: <span class="math inline">\(24\)</span> وزنًا و<span class="math inline">\(12\)</span> انحيازًا في الطبقة الأولى، ثم <span class="math inline">\(12\)</span> وزنًا وانحياز واحد في طبقة الإخراج. وتحتفظ المعادلات بالشكل نفسه تمامًا؛ ولا تكبر سوى المتجهات والمصفوفات.</p>
+<p>البرنامج الكامل معروض أدناه.</p>
+<div lang="en">
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Apple - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Orange - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Apple - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Orange - test")
+
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Neural-network output after training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Apple - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Orange - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Neural-network decision boundary')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+</div>
+<p>على الرغم من أن الشيفرة أطول من المعادلات الأولى التي درسناها في المقال، فإن بنيتها تظل شفافة. تولد الدالة <code>build_data()</code> تلقائيًا أمثلة التدريب الـ <span class="math inline">\(64\)</span> وأمثلة الاختبار التوضيحية الثمانية. ثم نوحد المتغيرين وفقًا للعلاقة <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> حيث تُحسب <span class="math inline">\(\mu_j\)</span> و<span class="math inline">\(\sigma_j\)</span> من مجموعة التدريب فقط. يمنع هذا مجموعة الاختبار من التأثير في ملاءمة المعلمات، كما يضع الكتلة والقطر على مقاييس عددية قابلة للمقارنة.</p>
+<p>لا يتغير المرور الأمامي في جوهره. والفرق الوحيد هو أن الطبقة الأولى تنتج الآن متجهًا من اثني عشر تنشيطًا مخفيًا. بتدوين المصفوفات، <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> ما تزال هذه الأسطر الأربعة تحتوي الجوهر الرياضي للخوارزمية. ويحافظ التدريب أيضًا على المنطق الذي قدمناه سابقًا: نحسب تنبؤًا، ونقيس خطأه، وننقل معلومات الحساسية إلى الخلف باستخدام المشتقات، ثم نحدث المعلمات بخطوات صغيرة من الانحدار المتدرج.</p>
+<p>في الشيفرة يظهر الانتشار العكسي عند طبقة الإخراج في</p>
+<div lang="en">
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+</div>
+<p>ويظهر الانتقال إلى الطبقة المخفية في</p>
+<div lang="en">
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+</div>
+<p>ثم تتبع ذلك تحديثات جميع الأوزان والانحيازات. وبما أن الأمثلة يعاد خلطها في كل حقبة وتحدث المعلمات بعد كل مشاهدة، فإن هذا التنفيذ يمثل صورة أولية من <em>الانحدار المتدرج العشوائي</em>.</p>
+<p>مع البذرة العشوائية والمعلمات الفائقة المستخدمة هنا، تكون الخسارة المتوسطة النهائية من رتبة <span class="math inline">\(10^{-5}\)</span> إلى <span class="math inline">\(10^{-4}\)</span>، وتحصل أمثلة التدريب الـ <span class="math inline">\(64\)</span> وأمثلة الاختبار التوضيحية الثمانية كلها على التصنيف المتوقع. ولا ينبغي تفسير ذلك بوصفه تقييمًا إحصائيًا صارمًا للأداء: فالبيانات اصطناعية وقد بُنيت لأغراض تعليمية. ودورها هو إظهار، في سياق أقل بساطة، كيف تستطيع شبكة عصبية صغيرة تعلم حد قرار غير خطي بوضوح.</p>
+<p>يبين الشكل <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> الخرج النهائي للبرنامج في مستوى الكتلة–القطر. تظهر جميع نقاط التدريب. والمنحنى البارز هو المستوى <span class="math inline">\(\widehat{y}=0.5\)</span> ويمثل حد القرار الذي تعلمته الشبكة؛ أما المناطق المظللة فتدل على الفئتين اللتين تتنبأ بهما الشبكة. تمثل الدوائر تفاح التدريب، والمربعات برتقال التدريب، والمثلثات تفاح الاختبار، والعلامات المتقاطعة برتقال الاختبار. وُضع المفتاح خارج منطقة الرسم الرئيسية حتى لا تُحجب أي نقطة بيانات.</p>
+<figure id="fig:python_output">
+<img alt="خرج بايثون بعد تدريب الشبكة العصبية. تحتوي مجموعة البيانات الاصطناعية على \(64\) مثال تدريب موزعة على منطقة واسعة من مستوى الكتلة–القطر، وثمانية أمثلة إضافية محجوزة لاختبار توضيحي. المنحنى البارز هو المستوى \(\widehat{y}=0.5\) ويمثل حد القرار المتعلم؛ وتشير المناطق المظللة إلى ال" decoding="async" loading="lazy" src="../assets/img/ar/Fig07.png"/>
+<figcaption>خرج بايثون بعد تدريب الشبكة العصبية. تحتوي مجموعة البيانات الاصطناعية على <span class="math inline">\(64\)</span> مثال تدريب موزعة على منطقة واسعة من مستوى الكتلة–القطر، وثمانية أمثلة إضافية محجوزة لاختبار توضيحي. المنحنى البارز هو المستوى <span class="math inline">\(\widehat{y}=0.5\)</span> ويمثل حد القرار المتعلم؛ وتشير المناطق المظللة إلى الفئات التي تتنبأ بها الشبكة. تمثل الدوائر تفاح التدريب، والمربعات برتقال التدريب، والمثلثات تفاح الاختبار، والعلامات المتقاطعة برتقال الاختبار.</figcaption>
+</figure>
+<p>بدأنا بخط مستقيم يفصل مجموعتين بسيطتين من النقاط، وانتهينا بمثال حسابي أغنى يظهر فيه حد منحني نتيجة الضبط الآلي لمعلمات الشبكة. لم يُضف شيء غامض إلى الرياضيات: فالتنفيذ ينظم ويكرر، على نطاق أكبر وبسرعة عالية، التركيبات التآلفية ودوال التنشيط والمشتقات وضرب المصفوفات وتحديثات الانحدار المتدرج .</p>
+<p>جميع المواد الحاسوبية المرتبطة بهذا المقال — بما في ذلك الشيفرة ودفتر Google Colab قابل للتنفيذ — متاحة على <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>، لتوفير نقطة وصول واحدة للقراء الذين يرغبون في استكشاف الأمثلة أو إعادة إنتاجها أو تعديلها.</p>
+<h4 id="بيان-استخدام-الذكاء-الاصطناعي.">بيان استخدام الذكاء الاصطناعي.</h4>
+<p>استخدم المؤلف ChatGPT، الذي طورته OpenAI، أداةً مساعدة في الصياغة والمراجعة اللغوية وتنظيم العرض وتوليد الأشكال التعليمية. ويتحمل المؤلف المسؤولية الكاملة عن المحتوى النهائي للعمل، بما في ذلك تصور المادة الرياضية وتطويرها، والشيفرة، والمراجع المستخدمة.</p>
+<div lang="en">
+</div>
+</section></div>
+<section class="article-section references"><span class="section-no">المراجع</span><h2>المراجع</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>الموارد</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/ar/Article_PMO2026_NN_AR.pdf"><strong>PDF</strong><span>التشريح الرياضي لشبكة عصبية</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_AR.ipynb"><strong>Google Colab</strong><span>Notebook · العربية</span></a>
+</div></section>
+<section><h2>حول NeuralMath</h2><p class="bio">NeuralMath مشروع تعليمي مفتوح طوّره Dr. Americo Cunha Jr. ويهدف إلى جعل العمليات الرياضية داخل شبكة عصبية صغيرة مرئية وقابلة للفحص وإعادة الإنتاج لجمهور واسع ذي خلفية رياضية محدودة نسبيًا في حساب التفاضل والتكامل والإحصاء.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>كيفية الاستشهاد بالنص التعليمي</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>سيُحدَّث المرجع الببليوغرافي بالمجلد والصفحات ومعرّف DOI بعد النشر. يُرجى الاستشهاد بالنص التعليمي، لا بهذا الموقع.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>الترخيص</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>النصوص التوضيحية والمادة الأصلية للموقع متاحة بترخيص CC BY 4.0 ما لم يُذكر خلاف ذلك. وقد يخضع ملف PDF للمقال لترخيص جهة النشر.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

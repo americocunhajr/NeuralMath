@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="el">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — Η μαθηματική ανατομία ενός νευρωνικού δικτύου</title>
+<meta content="Παρουσιάζουμε μια μαθηματική εισαγωγή στα τεχνητά νευρωνικά δίκτυα μέσα από ένα απλό πρόβλημα ταξινόμησης. Ένας γραμμικός ταξινομητής οδηγεί φυσικά στην έννοια του τεχνητού νευρώνα· στη συνέχεια συζητούμε τα βάρη, τους όρους πόλωσης, τις συναρτήσεις ενεργοποίησης και τη σύνθεση νευρώνων σε ένα μικρό" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/el/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag current" href="index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">Η μαθηματική ανατομία ενός νευρωνικού δικτύου</p>
+<p>Παρουσιάζουμε μια μαθηματική εισαγωγή στα τεχνητά νευρωνικά δίκτυα μέσα από ένα απλό πρόβλημα ταξινόμησης. Ένας γραμμικός ταξινομητής οδηγεί φυσικά στην έννοια του τεχνητού νευρώνα· στη συνέχεια συζητούμε τα βάρη, τους όρους πόλωσης, τις συναρτήσεις ενεργοποίησης και τη σύνθεση νευρώνων σε ένα μικρό δίκτυο. Η εκπαίδευση εισάγεται μέσω συναρτήσεων απώλειας, παραγώγων, καθόδου κλίσης και οπισθοδιάδοσης. Τέλος, υλοποιούμε το μοντέλο απευθείας σε Python, ώστε η αντιστοιχία ανάμεσα στις εξισώσεις και τον αλγόριθμο να είναι ρητά ορατή. Στόχος είναι να δείξουμε πώς οικείες ιδέες από την αναλυτική γεωμετρία, τη γραμμική άλγεβρα και τον διαφορικό λογισμό παρέχουν μια προσιτή βάση για την κατανόηση των θεμελιωδών μηχανισμών των νευρωνικών δικτύων.</p>
+<div class="resource-bar"><a href="../pdf/el/Article_PMO2026_NN_EL.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_EL.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>Πρωτότυπο παιδαγωγικό κείμενο</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Η παρούσα διαδικτυακή έκδοση και οι μεταφράσεις της βασίζονται στο πρωτότυπο πορτογαλικό χειρόγραφο.</p></div>
+<nav aria-label="Περιεχόμενα" class="toc"><h2>Περιεχόμενα</h2><ol><li><a href="#πότε-μπορεί-να-μάθει-ένας-υπολογιστής">Πότε μπορεί να μάθει ένας υπολογιστής;</a></li><li><a href="#μαθηματική-αναπαράσταση-του-προβλήματος">Μαθηματική αναπαράσταση του προβλήματος</a></li><li><a href="#μια-ευθεία-ως-ταξινομητής">Μια ευθεία ως ταξινομητής</a></li><li><a href="#ο-τεχνητός-νευρώνας">Ο τεχνητός νευρώνας</a></li><li><a href="#γιατί-χρειαζόμαστε-μια-συνάρτηση-ενεργοποίησης">Γιατί χρειαζόμαστε μια συνάρτηση ενεργοποίησης;</a></li><li><a href="#κατασκευή-ενός-μικρού-νευρωνικού-δικτύου">Κατασκευή ενός μικρού νευρωνικού δικτύου</a></li><li><a href="#πώς-μαθαίνει-ένα-νευρωνικό-δίκτυο">Πώς μαθαίνει ένα νευρωνικό δίκτυο;</a></li><li><a href="#από-τα-μαθηματικά-στην-python">Από τα μαθηματικά στην Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="πότε-μπορεί-να-μάθει-ένας-υπολογιστής"><span class="section-no">01</span><h2>Πότε μπορεί να μάθει ένας υπολογιστής;</h2>
+<p>Στην καθημερινή ζωή παίρνουμε αποφάσεις ταξινόμησης σχεδόν χωρίς να το αντιλαμβανόμαστε. Κοιτάζοντας ένα φρούτο, αναγνωρίζουμε γρήγορα αν είναι μήλο ή πορτοκάλι· όταν φτάνει ένα μήνυμα στο τηλέφωνο, διακρίνουμε μια κανονική συνομιλία από ανεπιθύμητη διαφήμιση· στις ιατρικές αναλύσεις, διαφορετικές μετρήσεις μπορούν να συνδυαστούν για να υποστηρίξουν μια απόφαση· και στα χρηματοπιστωτικά ιδρύματα αξιολογούνται πολλά δεδομένα πριν από τη χορήγηση πίστωσης. Σε όλα αυτά τα παραδείγματα, πολλά χαρακτηριστικά εξετάζονται από κοινού ώστε να παραχθεί μια απάντηση.</p>
+<p>Σε πολλά παραδοσιακά προγράμματα υπολογιστών, οι κανόνες που παράγουν αυτή την απάντηση γράφονται ρητά από τον προγραμματιστή. Η προσέγγιση αυτή λειτουργεί καλά όταν οι κανόνες είναι γνωστοί και μπορούν να διατυπωθούν καθαρά. Γίνεται λιγότερο αποτελεσματική όταν τα δεδομένα παρουσιάζουν μεγάλη μεταβλητότητα ή όταν είναι δύσκολο να διατυπωθούν εκ των προτέρων όλες οι συνθήκες που απαιτούνται για μια καλή απόφαση. Αυτό οδηγεί σε ένα φυσικό ερώτημα:</p>
+<div class="center">
+<p><em>Μπορούμε να κατασκευάσουμε ένα πρόγραμμα που να μαθαίνει έναν κανόνα απόφασης από παραδείγματα, αντί να λαμβάνει τον κανόνα εκ των προτέρων;</em></p>
+</div>
+<p>Αυτή είναι μία από τις κεντρικές ιδέες της <em>μηχανικής μάθησης</em>, ενός πεδίου της τεχνητής νοημοσύνης που μελετά μεθόδους με τις οποίες τα μοντέλα προσαρμόζονται από δεδομένα . Στην επιβλεπόμενη μάθηση, ο αλγόριθμος λαμβάνει παραδείγματα μαζί με τις σωστές απαντήσεις και αναζητούμε ένα μοντέλο που να μπορεί να κάνει χρήσιμες προβλέψεις και για περιπτώσεις που δεν χρησιμοποιήθηκαν κατά την εκπαίδευση. Ανάμεσα στα πολλά μοντέλα που αναπτύχθηκαν για αυτόν τον σκοπό, τα <em>τεχνητά νευρωνικά δίκτυα</em> έχουν αποκτήσει ιδιαίτερη σημασία σε εφαρμογές όπως η αναγνώριση εικόνων, η επεξεργασία γλώσσας, η ανάλυση σημάτων και η πρόβλεψη χρονοσειρών .</p>
+<p>Η χρήση των νευρωνικών δικτύων ως γέφυρας ανάμεσα στα μαθηματικά, τις υπολογιστικές μεθόδους και την εκπαίδευση έχει ήδη συζητηθεί στο <em>Professor de Matemática Online</em> από τους Batista και Martins , οι οποίοι παρουσιάζουν μια δραστηριότητα που συνδυάζει επιμόρφωση εκπαιδευτικών, Python και αναγνώριση ψηφίων. Το παρόν άρθρο ακολουθεί μια συμπληρωματική διαδρομή. Κύριος στόχος μας είναι να καταστήσουμε ορατή την εσωτερική μαθηματική δομή ενός μικρού νευρωνικού δικτύου, ξεκινώντας από την αναλυτική γεωμετρία και προχωρώντας βήμα προς βήμα στον υπολογισμό κλίσεων και σε μια χειροποίητη υλοποίηση της οπισθοδιάδοσης.</p>
+<p>Παρά την πολυπλοκότητα των σύγχρονων εφαρμογών, ο μαθηματικός πυρήνας ενός νευρωνικού δικτύου μπορεί να εισαχθεί με σχετικά οικείες ιδέες. Σε βασικό επίπεδο, ένα νευρωνικό δίκτυο είναι μια σύνθεση συναρτήσεων των οποίων οι παράμετροι προσαρμόζονται από δεδομένα. Ξεκινάμε με ένα απλό γεωμετρικό πρόβλημα, επανερμηνεύουμε μια διαχωριστική ευθεία ως τεχνητό νευρώνα, συνδέουμε πολλούς νευρώνες, μελετούμε τον ρόλο των συναρτήσεων ενεργοποίησης και δείχνουμε πώς οι παράγωγοι μπορούν να χρησιμοποιηθούν για την αυτόματη προσαρμογή των παραμέτρων του δικτύου. Στη συνέχεια υλοποιούμε ένα πλήρες μικρό παράδειγμα σε Python, με άμεση αντιστοιχία ανάμεσα στις εξισώσεις και τον κώδικα.</p>
+</section><section class="article-section" id="μαθηματική-αναπαράσταση-του-προβλήματος"><span class="section-no">02</span><h2>Μαθηματική αναπαράσταση του προβλήματος</h2>
+<p>Για να κατανοήσουμε πώς λειτουργεί ένα νευρωνικό δίκτυο, ξεκινάμε με ένα σκόπιμα απλό πρόβλημα: να διακρίνουμε μήλα από πορτοκάλια. Ένα φρούτο διαθέτει πολλά χαρακτηριστικά που θα μπορούσαν να είναι χρήσιμα για αυτόν τον σκοπό, όπως χρώμα, μάζα, διάμετρος, υφή και άρωμα. Ωστόσο, ένα πρώτο μαθηματικό μοντέλο δεν χρειάζεται να περιλαμβάνει όλη αυτή την πολυπλοκότητα. Θα χρησιμοποιήσουμε μόνο δύο εύκολα μετρήσιμες ποσότητες: τη μάζα, σε γραμμάρια, και τη διάμετρο, σε εκατοστά.</p>
+<p>Κάθε φρούτο παριστάνεται επομένως από ένα διατεταγμένο ζεύγος <span class="math display">\[(x_1,x_2),\]</span> όπου <span class="math display">\[x_1=\text{μάζα}
+\qquad\text{και}\qquad
+x_2=\text{διάμετρος}.\]</span></p>
+<p>Το ζεύγος <span class="math inline">\((155,\;7.2)\)</span> παριστάνει λοιπόν ένα φρούτο με μάζα <span class="math inline">\(155\)</span> g και διάμετρο <span class="math inline">\(7.2\)</span> cm. Αντικαθιστώντας το φυσικό αντικείμενο με δύο αριθμητικές μετρήσεις, αντιστοιχίζουμε κάθε φρούτο σε ένα σημείο του καρτεσιανού επιπέδου: η πρώτη συντεταγμένη δίνει τη μάζα και η δεύτερη τη διάμετρο. Το Σχήμα <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> απεικονίζει αυτή την αναπαράσταση για ένα υποθετικό σύνολο μήλων και πορτοκαλιών.</p>
+<figure id="fig:fruits">
+<img alt="Από τη φυσική παρατήρηση στη μαθηματική μοντελοποίηση. Κάθε φρούτο περιγράφεται πρώτα από δύο μετρήσιμες ποσότητες — μάζα και διάμετρο — και στη συνέχεια παριστάνεται από το διατεταγμένο ζεύγος \((x_1,x_2)\) . Στο επίπεδο μάζας–διαμέτρου, κάθε παρατήρηση γίνεται σημείο, ώστε η δι" decoding="async" loading="lazy" src="../assets/img/el/Fig01.png">
+<figcaption>Από τη φυσική παρατήρηση στη μαθηματική μοντελοποίηση. Κάθε φρούτο περιγράφεται πρώτα από δύο μετρήσιμες ποσότητες — μάζα και διάμετρο — και στη συνέχεια παριστάνεται από το διατεταγμένο ζεύγος <span class="math inline">\((x_1,x_2)\)</span>. Στο επίπεδο μάζας–διαμέτρου, κάθε παρατήρηση γίνεται σημείο, ώστε η διάκριση μήλων και πορτοκαλιών να μπορεί να επανερμηνευθεί ως γεωμετρικό πρόβλημα διαχωρισμού δύο κλάσεων.</figcaption>
+</img></figure>
+<p>Αυτός ο μετασχηματισμός αλλάζει τη φαινομενική φύση του προβλήματος. Αντί να ρωτάμε άμεσα πώς μπορούμε να αναγνωρίσουμε ένα μήλο ή ένα πορτοκάλι, μπορούμε να θέσουμε ένα γεωμετρικό ερώτημα: πώς μπορούν να διαχωριστούν στο επίπεδο τα σημεία που ανήκουν στις δύο κλάσεις; Αυτή η αλλαγή οπτικής είναι θεμελιώδης στη μηχανική μάθηση. Εικόνες, κείμενα, ήχοι και πειραματικά σήματα πρέπει όλα να μετατρέπονται σε αριθμητικές αναπαραστάσεις πριν μπορέσει ένας αλγόριθμος να τα επεξεργαστεί. Στο παράδειγμά μας κάθε αντικείμενο έχει μόνο δύο συντεταγμένες· σε πραγματικές εφαρμογές μια αναπαράσταση μπορεί να περιλαμβάνει εκατοντάδες, χιλιάδες ή ακόμη και εκατομμύρια συνιστώσες. Η αρχή παραμένει η ίδια: κάθε παράδειγμα αντιστοιχίζεται σε ένα σύνολο αριθμών και το μοντέλο αναζητά έναν κανόνα που απεικονίζει αυτή την αναπαράσταση στην επιθυμητή απάντηση.</p>
+<p>Ξεκινάμε με τον απλούστερο διαθέσιμο γεωμετρικό κανόνα και ρωτάμε αν μία μόνο ευθεία μπορεί να διαχωρίσει ικανοποιητικά τα σημεία των μήλων από τα σημεία των πορτοκαλιών.</p>
+</section><section class="article-section" id="μια-ευθεία-ως-ταξινομητής"><span class="section-no">03</span><h2>Μια ευθεία ως ταξινομητής</h2>
+<p>Από τη στιγμή που κάθε φρούτο παριστάνεται ως σημείο στο καρτεσιανό επίπεδο, η ταξινόμηση γίνεται γεωμετρικό πρόβλημα: μπορεί μια ευθεία να διαχωρίσει τα μήλα από τα πορτοκάλια; Το ερώτημα αυτό συνοψίζει τη βασική ιδέα μιας σημαντικής οικογένειας μεθόδων μηχανικής μάθησης, γνωστών ως <em>γραμμικοί ταξινομητές</em>.</p>
+<p>Θεωρήστε μια ευθεία που διέρχεται από το νέφος των δεδομένων, όπως φαίνεται στο Σχήμα <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>. Η ευθεία χωρίζει το επίπεδο σε δύο ημιεπίπεδα. Αν τα περισσότερα σημεία που αντιστοιχούν σε μήλα βρίσκονται στη μία πλευρά και τα περισσότερα σημεία που αντιστοιχούν σε πορτοκάλια στην άλλη, η θέση ενός νέου φρούτου ως προς την ευθεία μπορεί να χρησιμοποιηθεί ως κανόνας ταξινόμησης. Αφού μετρήσουμε τη μάζα και τη διάμετρο, παριστάνουμε το φρούτο με ένα σημείο και προσδιορίζουμε σε ποια πλευρά της ευθείας βρίσκεται.</p>
+<figure id="fig:linear_classifier">
+<img alt="Παράδειγμα γραμμικού ταξινομητή στο επίπεδο μάζας–διαμέτρου. Η ευθεία λειτουργεί ως όριο απόφασης: τα σημεία στο ένα ημιεπίπεδο αντιστοιχίζονται στη μία κλάση, ενώ τα σημεία στο αντίθετο ημιεπίπεδο στην άλλη. Η απόφαση εξαρτάται επομένως αποκλειστικά από την πλευρά της ευθείας στ" decoding="async" loading="lazy" src="../assets/img/el/Fig02.png"/>
+<figcaption>Παράδειγμα γραμμικού ταξινομητή στο επίπεδο μάζας–διαμέτρου. Η ευθεία λειτουργεί ως όριο απόφασης: τα σημεία στο ένα ημιεπίπεδο αντιστοιχίζονται στη μία κλάση, ενώ τα σημεία στο αντίθετο ημιεπίπεδο στην άλλη. Η απόφαση εξαρτάται επομένως αποκλειστικά από την πλευρά της ευθείας στην οποία βρίσκεται το σημείο.</figcaption>
+</figure>
+<p>Στο καρτεσιανό επίπεδο <span class="math inline">\((x_1,x_2)\)</span>, μια ευθεία μπορεί να περιγραφεί από <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>Το διάνυσμα <span class="math inline">\((w_1,w_2)\)</span> είναι κάθετο στην ευθεία και επομένως καθορίζει τον προσανατολισμό της, ενώ η παράμετρος <span class="math inline">\(b\)</span> συμβάλλει στη θέση της. Η αναπαράσταση αυτή περιέχει μια μικρή πλεονάζουσα πληροφορία: ο πολλαπλασιασμός των <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> και <span class="math inline">\(b\)</span> με την ίδια μη μηδενική σταθερά παράγει ακριβώς την ίδια ευθεία. Επομένως, οι παράμετροι που περιγράφουν το όριο δεν είναι μοναδικές. Επιπλέον, η αριθμητική ερμηνεία τους εξαρτάται από την κλίμακα των μεταβλητών. Επειδή η μάζα μετριέται σε γραμμάρια και η διάμετρος σε εκατοστά, τα αριθμητικά μεγέθη των <span class="math inline">\(w_1\)</span> και <span class="math inline">\(w_2\)</span> δεν πρέπει να συγκρίνονται χωρίς να λαμβάνονται υπόψη οι διαφορετικές μονάδες.</p>
+<p>Η ίδια η εξίσωση της ευθείας παρέχει έναν απλό τρόπο για να προσδιορίσουμε σε ποια πλευρά του ορίου βρίσκεται ένα σημείο. Ορίζουμε τη βαθμολογία <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Αν <span class="math inline">\(s(x_1,x_2)=0\)</span>, το σημείο βρίσκεται πάνω στην ευθεία. Αν <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>, βρίσκεται στο ένα ημιεπίπεδο· αν <span class="math inline">\(s(x_1,x_2)&lt;0\)</span>, βρίσκεται στο άλλο. Αν συμφωνήσουμε ότι οι θετικές βαθμολογίες αντιστοιχούν σε μήλα και οι αρνητικές σε πορτοκάλια, ο κανόνας γίνεται <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{μήλο},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{πορτοκάλι}.
+\end{cases}\]</span></p>
+<p>Για παράδειγμα, θεωρήστε το όριο που ορίζεται από <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> Για ένα φρούτο με μάζα <span class="math inline">\(160\)</span> g και διάμετρο <span class="math inline">\(7.8\)</span> cm, <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> Επειδή η βαθμολογία είναι θετική, το σημείο βρίσκεται στο ημιεπίπεδο που έχουμε συσχετίσει με τα μήλα. Αυτός ο ταξινομητής θα κατέτασσε επομένως το φρούτο ως μήλο.</p>
+<p>Δεν δίνει κάθε επιλογή των <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> και <span class="math inline">\(b\)</span> καλή ταξινόμηση. Ορισμένες ευθείες διαχωρίζουν τις δύο ομάδες ανεπαρκώς, ενώ άλλες κάνουν λιγότερα σφάλματα. Το πρόβλημα της μάθησης συνίσταται ακριβώς στη χρήση ήδη επισημασμένων παραδειγμάτων ώστε να προσδιοριστούν τιμές παραμέτρων που μειώνουν κάποιο μέτρο του σφάλματος του μοντέλου. Αντί να προγραμματίζουμε απευθείας τη θέση της ευθείας, θέλουμε ο αλγόριθμος να προσαρμόζει τους συντελεστές της με βάση τα δεδομένα.</p>
+<p>Μία μόνο ευθεία μπορεί να λειτουργεί καλά όταν οι κλάσεις είναι περίπου γραμμικά διαχωρίσιμες. Πιο σύνθετα σύνολα δεδομένων μπορεί να απαιτούν ένα μη γραμμικό όριο. Πριν εξετάσουμε αυτόν τον περιορισμό, επανερμηνεύουμε τον ταξινομητή που μόλις κατασκευάσαμε ως μια στοιχειώδη υπολογιστική μονάδα: έναν τεχνητό νευρώνα.</p>
+</section><section class="article-section" id="ο-τεχνητός-νευρώνας"><span class="section-no">04</span><h2>Ο τεχνητός νευρώνας</h2>
+<p>Στην προηγούμενη ενότητα, η έκφραση <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> χρησιμοποιήθηκε για να προσδιοριστεί σε ποια πλευρά μιας ευθείας βρίσκεται ένα φρούτο. Η ίδια έκφραση μπορεί να θεωρηθεί ως το πρώτο βήμα του υπολογισμού που εκτελεί ένας <em>τεχνητός νευρώνας</em>. Ένας νευρώνας λαμβάνει αριθμητικές εισόδους, τις συνδυάζει με βάρη και έναν όρο πόλωσης και στη συνέχεια εφαρμόζει μια μαθηματική συνάρτηση για να πάρει την έξοδό του.</p>
+<p>Στο παράδειγμά μας, οι είσοδοι είναι η μάζα <span class="math inline">\(x_1\)</span> και η διάμετρος <span class="math inline">\(x_2\)</span>. Κάθε είσοδος πολλαπλασιάζεται με μια παράμετρο που ονομάζεται <em>βάρος</em>· τα γινόμενα αθροίζονται μαζί με έναν σταθερό όρο <span class="math inline">\(b\)</span>, τον <em>όρο πόλωσης</em> (bias). Το Σχήμα <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> παρουσιάζει σχηματικά αυτόν τον υπολογισμό.</p>
+<figure id="fig:artificial_neuron">
+<img alt="Σχηματική λειτουργία ενός τεχνητού νευρώνα. Κάθε είσοδος \(x_i\) πολλαπλασιάζεται με ένα βάρος \(w_i\) · τα γινόμενα αθροίζονται μαζί με τον όρο πόλωσης \(b\) για να παραχθεί η βαθμολογία \(s\) . Στη συνέχεια, η συνάρτηση ενεργοποίησης \(g\) μετασχηματίζει αυτή τη βαθμολογία στην" decoding="async" loading="lazy" src="../assets/img/el/Fig03.png"/>
+<figcaption>Σχηματική λειτουργία ενός τεχνητού νευρώνα. Κάθε είσοδος <span class="math inline">\(x_i\)</span> πολλαπλασιάζεται με ένα βάρος <span class="math inline">\(w_i\)</span>· τα γινόμενα αθροίζονται μαζί με τον όρο πόλωσης <span class="math inline">\(b\)</span> για να παραχθεί η βαθμολογία <span class="math inline">\(s\)</span>. Στη συνέχεια, η συνάρτηση ενεργοποίησης <span class="math inline">\(g\)</span> μετασχηματίζει αυτή τη βαθμολογία στην έξοδο <span class="math inline">\(\widehat{y}=g(s)\)</span>, η οποία μπορεί να χρησιμοποιηθεί είτε ως ενδιάμεση ποσότητα είτε ως τελική πρόβλεψη.</figcaption>
+</figure>
+<p>Τα βάρη καθορίζουν πώς οι μεταβολές στις εισόδους επηρεάζουν τη βαθμολογία. Αν το <span class="math inline">\(x_2\)</span> και όλες οι άλλες ποσότητες διατηρούνται σταθερά, μια μεταβολή <span class="math inline">\(\Delta x_1\)</span> αλλάζει τη βαθμολογία <span class="math inline">\(s\)</span> κατά <span class="math inline">\(w_1\Delta x_1\)</span>. Παρόμοια, μια μεταβολή <span class="math inline">\(\Delta x_2\)</span> αλλάζει τη βαθμολογία κατά <span class="math inline">\(w_2\Delta x_2\)</span>. Σημασία έχει επίσης το πρόσημο: ένα θετικό βάρος κάνει μια αύξηση της εισόδου να αυξάνει τη βαθμολογία, ενώ ένα αρνητικό βάρος έχει το αντίθετο αποτέλεσμα. Η ερμηνεία αυτή πρέπει να χρησιμοποιείται προσεκτικά όταν διαφορετικές μεταβλητές έχουν διαφορετικές μονάδες και κλίμακες. Για αυτόν τον λόγο, στις πρακτικές υλοποιήσεις τα δεδομένα εισόδου συχνά κανονικοποιούνται ή τυποποιούνται πριν από την εκπαίδευση.</p>
+<p>Ο όρος πόλωσης <span class="math inline">\(b\)</span> είναι ο σταθερός όρος του αφινικού μετασχηματισμού. Γεωμετρικά, επιτρέπει τη μετατόπιση του ορίου απόφασης. Αν <span class="math inline">\(b=0\)</span>, η εξίσωση <span class="math display">\[w_1x_1+w_2x_2=0\]</span> αναγκάζει την ευθεία να διέρχεται από την αρχή των αξόνων. Με έναν όρο πόλωσης, το όριο μπορεί να μετακινηθεί σε άλλες θέσεις. Ισοδύναμα, όταν <span class="math inline">\(x_1=x_2=0\)</span>, η βαθμολογία είναι απλώς <span class="math inline">\(s=b\)</span>.</p>
+<p>Η βαθμολογία δεν χρειάζεται να είναι η τελική έξοδος του νευρώνα. Γενικά, εφαρμόζεται σε αυτήν μια <em>συνάρτηση ενεργοποίησης</em> <span class="math inline">\(g\)</span>: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> Ο υπολογισμός αποτελείται επομένως από δύο βήματα, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>Με τις τιμές παραμέτρων της προηγούμενης ενότητας έχουμε <span class="math inline">\(s=1.6\)</span>. Αν επιλέξουμε τη βηματική συνάρτηση <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> τότε <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. Σύμφωνα με τη σύμβασή μας, το φρούτο ταξινομείται ως μήλο. Με αυτή την ενεργοποίηση, η απόφαση αλλάζει όταν το <span class="math inline">\(s\)</span> περάσει από το μηδέν, οπότε το όριο των κλάσεων είναι ακριβώς <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>Ένας μεμονωμένος νευρώνας είναι επομένως ένα απλό μαθηματικό αντικείμενο με προσαρμόσιμες παραμέτρους. Η πραγματική του σημασία εμφανίζεται όταν πολλές τέτοιες μονάδες συνδέονται μεταξύ τους. Πριν όμως κατασκευάσουμε ένα δίκτυο, πρέπει να κατανοήσουμε γιατί η συνάρτηση ενεργοποίησης είναι απαραίτητη.</p>
+</section><section class="article-section" id="γιατί-χρειαζόμαστε-μια-συνάρτηση-ενεργοποίησης"><span class="section-no">05</span><h2>Γιατί χρειαζόμαστε μια συνάρτηση ενεργοποίησης;</h2>
+<p>Ένας νευρώνας υπολογίζει πρώτα μια βαθμολογία μέσω ενός αφινικού μετασχηματισμού και μόνο στη συνέχεια εφαρμόζει μια συνάρτηση ενεργοποίησης. Αυτό το δεύτερο βήμα είναι ουσιώδες αν ένα νευρωνικό δίκτυο πρόκειται να αναπαριστά σύνθετες σχέσεις. Για να το δούμε, ας φανταστούμε ένα δίκτυο στο οποίο δεν χρησιμοποιούνται συναρτήσεις ενεργοποίησης. Κάθε μονάδα θα είχε τότε τη μορφή <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Σε ένα μονοδιάστατο παράδειγμα, ας υποθέσουμε ότι μια πρώτη μονάδα παράγει <span class="math display">\[h=ax+b\]</span> και μια δεύτερη υπολογίζει <span class="math display">\[y=ch+d.\]</span> Με αντικατάσταση παίρνουμε <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> που εξακολουθεί να είναι αφινική συνάρτηση του <span class="math inline">\(x\)</span>. Το ίδιο ισχύει και σε περισσότερες διαστάσεις: η σύνθεση αφινικών μετασχηματισμών παραμένει αφινική. Επομένως, η προσθήκη πολλών επιπέδων χωρίς μη γραμμική πράξη δεν κάνει το δίκτυο θεμελιωδώς εκφραστικότερο· ολόκληρη η σύνθεση θα μπορούσε να αντικατασταθεί από έναν μόνο αφινικό μετασχηματισμό.</p>
+<p>Μια συνάρτηση ενεργοποίησης σπάει αυτόν τον περιορισμό. Αφού υπολογιστεί η βαθμολογία <span class="math inline">\(s\)</span>, ο νευρώνας εφαρμόζει μια συνήθως μη γραμμική απεικόνιση <span class="math display">\[h=g(s).\]</span> Όταν συνδέονται πολλές τέτοιες μονάδες, η προκύπτουσα σύνθεση δεν μπορεί πλέον να αναχθεί σε έναν μόνο αφινικό μετασχηματισμό. Έτσι, το δίκτυο μπορεί να κατασκευάσει πιο σύνθετα όρια απόφασης.</p>
+<p>Η απλούστερη ενεργοποίηση είναι η βηματική συνάρτηση, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> Παράγει μια δυαδική απόφαση και είναι πολύ χρήσιμη για την κατανόηση της ταξινόμησης. Ωστόσο, η παράγωγός της είναι μηδενική για <span class="math inline">\(s\neq0\)</span> και δεν ορίζεται στο <span class="math inline">\(s=0\)</span>. Επειδή η εκπαίδευση με βάση κλίσεις χρησιμοποιεί παραγώγους για να καθορίσει πώς πρέπει να αλλάξουν οι παράμετροι, η βηματική συνάρτηση δεν είναι κατάλληλη για αυτόν τον μηχανισμό εκπαίδευσης.</p>
+<p>Μια εναλλακτική είναι η σιγμοειδής συνάρτηση, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> Απεικονίζει κάθε πραγματικό αριθμό σε μια τιμή αυστηρά μεταξύ <span class="math inline">\(0\)</span> και <span class="math inline">\(1\)</span>. Για πολύ αρνητικό <span class="math inline">\(s\)</span>, η έξοδος πλησιάζει το <span class="math inline">\(0\)</span>· για πολύ θετικό <span class="math inline">\(s\)</span>, πλησιάζει το <span class="math inline">\(1\)</span>· ανάμεσα σε αυτά τα άκρα, η μετάβαση είναι ομαλή. Η σιγμοειδής είναι παραγωγίσιμη παντού, με <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> Επειδή η έξοδος βρίσκεται μεταξύ <span class="math inline">\(0\)</span> και <span class="math inline">\(1\)</span>, η σιγμοειδής χρησιμοποιείται συχνά στο επίπεδο εξόδου ενός δυαδικού ταξινομητή. Σε μια πιθανοτική διατύπωση με κατάλληλη συνάρτηση απώλειας, η έξοδος μπορεί να ερμηνευθεί ως εκτίμηση της πιθανότητας της κλάσης που παριστάνεται από το <span class="math inline">\(1\)</span>. Ωστόσο, στα κρυφά επίπεδα η σιγμοειδής μπορεί να δημιουργήσει ένα πρόβλημα: για εισόδους μεγάλης απόλυτης τιμής, η παράγωγός της γίνεται πολύ μικρή, συμβάλλοντας στο πρόβλημα της <em>εξασθένησης της κλίσης</em> σε βαθιά δίκτυα.</p>
+<p>Μια ευρέως χρησιμοποιούμενη ενεργοποίηση στα κρυφά επίπεδα είναι η ReLU (<em>Rectified Linear Unit</em>), <span class="math display">\[\text{ReLU}(s)=\text{max}(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> Παρότι η ReLU αποτελείται από δύο γραμμικά τμήματα, η συνάρτηση δεν είναι συνολικά γραμμική. Η παράγωγος είναι <span class="math inline">\(0\)</span> για <span class="math inline">\(s&lt;0\)</span> και <span class="math inline">\(1\)</span> για <span class="math inline">\(s&gt;0\)</span>. Στο <span class="math inline">\(s=0\)</span> η συνήθης παράγωγος δεν υπάρχει και οι υλοποιήσεις λογισμικού χρησιμοποιούν κάποια σύμβαση για την κλίση. Για θετικές εισόδους, η παράγωγος δεν μικραίνει καθώς αυξάνεται το <span class="math inline">\(s\)</span>, αποφεύγοντας έτσι έναν από τους μηχανισμούς κορεσμού της σιγμοειδούς.</p>
+<p>Το Σχήμα <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> συγκρίνει οπτικά αυτές τις τρεις ενεργοποιήσεις: το απότομο άλμα της βηματικής συνάρτησης, την ομαλή μετάβαση της σιγμοειδούς και την αλλαγή κλίσης της ReLU.</p>
+<figure id="fig:activation_functions">
+<img alt="Σύγκριση τριών συναρτήσεων ενεργοποίησης που χρησιμοποιούνται συχνά σε εισαγωγικές παρουσιάσεις των νευρωνικών δικτύων. Η βηματική συνάρτηση παίρνει μια απότομη απόφαση· η σιγμοειδής δίνει μια ομαλή μετάβαση μεταξύ \(0\) και \(1\) · και η ReLU μηδενίζει τις αρνητικές εισόδους ενώ" decoding="async" loading="lazy" src="../assets/img/el/Fig04.png"/>
+<figcaption>Σύγκριση τριών συναρτήσεων ενεργοποίησης που χρησιμοποιούνται συχνά σε εισαγωγικές παρουσιάσεις των νευρωνικών δικτύων. Η βηματική συνάρτηση παίρνει μια απότομη απόφαση· η σιγμοειδής δίνει μια ομαλή μετάβαση μεταξύ <span class="math inline">\(0\)</span> και <span class="math inline">\(1\)</span>· και η ReLU μηδενίζει τις αρνητικές εισόδους ενώ διατηρεί τις θετικές. Οι μη γραμμικές ενεργοποιήσεις εμποδίζουν μια στοίβα επιπέδων να καταρρεύσει σε έναν μόνο αφινικό μετασχηματισμό.</figcaption>
+</figure>
+<p>Οι κυριότερες ιδιότητές τους συνοψίζονται παρακάτω.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Συνάρτηση</th>
+<th style="text-align: center;">Έξοδος</th>
+<th style="text-align: left;">Παράγωγος</th>
+<th style="text-align: left;">Τυπική χρήση</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Βηματική</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">Μηδενική για <span class="math inline">\(s\neq0\)</span>· δεν ορίζεται στο <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">Ιστορικά μοντέλα και διδακτικά παραδείγματα</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Σιγμοειδής</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Υπάρχει για κάθε <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">Επίπεδο εξόδου στη δυαδική ταξινόμηση</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> για <span class="math inline">\(s&lt;0\)</span> και <span class="math inline">\(1\)</span> για <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">Κρυφά επίπεδα</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Οι λεπτομέρειες αυτών των συναρτήσεων διαφέρουν, αλλά ο κοινός εννοιολογικός τους ρόλος είναι η εισαγωγή μη γραμμικότητας. Ακριβώς αυτή η μη γραμμικότητα επιτρέπει στο μικρό δίκτυο της επόμενης ενότητας να αναπαριστά σχέσεις που δεν μπορούν να περιγραφούν από μία μόνο ευθεία.</p>
+<p>Για αναγνώστες που θέλουν να προχωρήσουν περισσότερο, ο Haykin  προσφέρει μια κλασική παρουσίαση των νευρωνικών δικτύων, ενώ οι Goodfellow, Bengio και Courville  συζητούν τις συναρτήσεις ενεργοποίησης και την εκπαίδευση βαθιών δικτύων σε ευρύτερο πλαίσιο. Το ελεύθερα διαθέσιμο κείμενο του Nielsen  είναι ιδιαίτερα προσιτό για την ανάπτυξη διαίσθησης γύρω από τους νευρώνες, τις ενεργοποιήσεις και τη μάθηση.</p>
+</section><section class="article-section" id="κατασκευή-ενός-μικρού-νευρωνικού-δικτύου"><span class="section-no">06</span><h2>Κατασκευή ενός μικρού νευρωνικού δικτύου</h2>
+<p>Θεωρούμε τώρα ένα δίκτυο με δύο εισόδους, ένα κρυφό επίπεδο με τρεις νευρώνες και έναν νευρώνα εξόδου. Οι είσοδοι παραμένουν <span class="math display">\[x_1=\text{μάζα},
+\qquad
+x_2=\text{διάμετρος},\]</span> και παρέχονται και οι δύο σε κάθε κρυφό νευρώνα, όπως φαίνεται στο Σχήμα <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p>
+<figure id="fig:small_network">
+<img alt="Διδακτική αρχιτεκτονική \(2\) – \(3\) – \(1\) για την εισαγωγή του υπολογισμού σε ένα νευρωνικό δίκτυο. Οι δύο είσοδοι — μάζα και διάμετρος — τροφοδοτούν τρεις νευρώνες στο κρυφό επίπεδο. Οι ενεργοποιήσεις τους \(h_1,h_2,h_3\) συνδυάζονται στη συνέχεια από τον νευρώνα εξόδου για " decoding="async" loading="lazy" src="../assets/img/el/Fig05.png"/>
+<figcaption>Διδακτική αρχιτεκτονική <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> για την εισαγωγή του υπολογισμού σε ένα νευρωνικό δίκτυο. Οι δύο είσοδοι — μάζα και διάμετρος — τροφοδοτούν τρεις νευρώνες στο κρυφό επίπεδο. Οι ενεργοποιήσεις τους <span class="math inline">\(h_1,h_2,h_3\)</span> συνδυάζονται στη συνέχεια από τον νευρώνα εξόδου για να παραχθεί η πρόβλεψη <span class="math inline">\(\widehat{y}\)</span>. Κάθε σύνδεση έχει ένα προσαρμόσιμο βάρος και κάθε νευρώνας έναν όρο πόλωσης.</figcaption>
+</figure>
+<p>Ονομάζουμε τις εξόδους του κρυφού επιπέδου <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> και <span class="math inline">\(h_3\)</span>. Κάθε νευρώνας λαμβάνει τις ίδιες δύο εισόδους, αλλά έχει τα δικά του βάρη και τον δικό του όρο πόλωσης: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>Παρότι και οι τρεις νευρώνες λαμβάνουν την ίδια μάζα και διάμετρο, μπορούν να παράγουν διαφορετικές απαντήσεις επειδή οι παράμετροί τους διαφέρουν. Κατά την εκπαίδευση, αυτές οι παράμετροι προσαρμόζονται έτσι ώστε οι ενδιάμεσες ενεργοποιήσεις να γίνουν χρήσιμες για την ταξινόμηση.</p>
+<p>Οι τρεις ποσότητες <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> και <span class="math inline">\(h_3\)</span> μεταβιβάζονται στη συνέχεια στον νευρώνα εξόδου, ο οποίος υπολογίζει <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> και παράγει <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> Για το δυαδικό μας πρόβλημα χρησιμοποιούμε σιγμοειδή έξοδο: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>Με <span class="math inline">\(y=1\)</span> για μήλο και <span class="math inline">\(y=0\)</span> για πορτοκάλι, ένα κατώφλι <span class="math inline">\(0.5\)</span> δίνει την απόφαση κλάσης <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{μήλο},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{πορτοκάλι}.\]</span> Τιμές κοντά στο <span class="math inline">\(1\)</span> συνδέονται επομένως έντονα με τα μήλα, ενώ τιμές κοντά στο <span class="math inline">\(0\)</span> με τα πορτοκάλια. Όπως σημειώθηκε νωρίτερα, η αριθμητική ερμηνεία του <span class="math inline">\(\widehat{y}\)</span> ως πιθανότητας απαιτεί πρόσθετες υποθέσεις για το μοντέλο και την εκπαίδευση. Για τον κανόνα ταξινόμησης που χρησιμοποιείται εδώ, αρκεί να θεωρήσουμε το <span class="math inline">\(\widehat{y}\)</span> ως μια συνεχή έξοδο του δικτύου.</p>
+<p>Το κεντρικό χαρακτηριστικό αυτής της αρχιτεκτονικής είναι η ενδιάμεση αναπαράσταση <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> Το δίκτυο λαμβάνει δύο χαρακτηριστικά και κατασκευάζει τρεις νέες ποσότητες πριν παραγάγει την τελική απάντηση. Αυτές οι ενεργοποιήσεις δεν επιλέγονται χειροκίνητα: εξαρτώνται από τα βάρη και τους όρους πόλωσης και επομένως αλλάζουν όταν εκπαιδεύονται οι παράμετροι.</p>
+<p>Παρά το μικρό του μέγεθος, το δίκτυο έχει ήδη δεκατρείς προσαρμόσιμες παραμέτρους. Οι τρεις κρυφοί νευρώνες περιέχουν <span class="math display">\[3(2+1)=9\]</span> παραμέτρους και ο νευρώνας εξόδου συνεισφέρει <span class="math display">\[3+1=4.\]</span> Άρα, <span class="math display">\[9+4=13.\]</span></p>
+<p>Η ίδια απαρίθμηση γίνεται διαφανής με συμβολισμό πινάκων. Ορίζουμε <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> Τότε το κρυφό επίπεδο μπορεί να γραφεί συμπαγώς ως <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> όπου το <span class="math inline">\(g\)</span> εφαρμόζεται κατά συνιστώσα. Για την έξοδο, <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> με <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>Αυτός ο συμβολισμός προαναγγέλλει τη δομή που θα εμφανιστεί στο πρόγραμμα Python. Όταν ένα φρούτο δίνεται στην είσοδο και υπολογίζουμε τις διαδοχικές ενεργοποιήσεις μέχρι να προκύψει το <span class="math inline">\(\widehat{y}\)</span>, εκτελούμε <em>εμπρόσθια διάδοση</em> ή ένα <em>forward pass</em>. Το κεντρικό ερώτημα παραμένει: πώς μπορούν οι δεκατρείς παράμετροι να προσδιοριστούν αυτόματα ώστε οι προβλέψεις να ταιριάζουν στα δεδομένα;</p>
+</section><section class="article-section" id="πώς-μαθαίνει-ένα-νευρωνικό-δίκτυο"><span class="section-no">07</span><h2>Πώς μαθαίνει ένα νευρωνικό δίκτυο;</h2>
+<p>Τα βάρη και οι όροι πόλωσης δεν είναι γνωστά εκ των προτέρων. Πρέπει να προσαρμοστούν χρησιμοποιώντας παραδείγματα για τα οποία είναι διαθέσιμη η σωστή απάντηση. Η διαδικασία αυτή ονομάζεται <em>εκπαίδευση</em> και μπορεί να συνοψιστεί στον κύκλο <span class="math display">\[\boxed{\text{πρόβλεψε}}
+\longrightarrow
+\boxed{\text{μέτρησε το σφάλμα}}
+\longrightarrow
+\boxed{\text{προσάρμοσε τις παραμέτρους}}
+\longrightarrow
+\boxed{\text{επανάλαβε}}.\]</span></p>
+<p>Θεωρήστε ένα φρούτο με μάζα <span class="math inline">\(140\)</span> g και διάμετρο <span class="math inline">\(7.0\)</span> cm, του οποίου η σωστή κλάση είναι πορτοκάλι, άρα <span class="math inline">\(y=0\)</span>. Ας υποθέσουμε ότι σε κάποια στιγμή της εκπαίδευσης το δίκτυο παράγει <span class="math inline">\(\widehat{y}=0.80\)</span>. Ένα απλό μέτρο της διαφοράς ανάμεσα στην πρόβλεψη και την τιμή-στόχο είναι το τετραγωνικό σφάλμα <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Για αυτό το παράδειγμα, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>Η έκφραση αυτή είναι μια <em>συνάρτηση απώλειας</em> για ένα μόνο παράδειγμα. Επειδή είναι τετράγωνο, ισχύει <span class="math inline">\(E\geq0\)</span>, και οι προβλέψεις που βρίσκονται πιο μακριά από την τιμή-στόχο τιμωρούνται περισσότερο. Ο παράγοντας <span class="math inline">\(1/2\)</span> δεν αλλάζει τη θέση του ελαχίστου, αλλά απλοποιεί τις παραγώγους. Στη δυαδική ταξινόμηση χρησιμοποιούνται συχνά άλλες συναρτήσεις απώλειας, ιδίως η διασταυρούμενη εντροπία. Εδώ χρησιμοποιούμε το τετραγωνικό σφάλμα επειδή η άλγεβρα είναι διαφανής και επαρκεί για να εισαγάγει τη βελτιστοποίηση και την οπισθοδιάδοση .</p>
+<p>Αν το σύνολο εκπαίδευσης περιέχει <span class="math inline">\(N\)</span> παραδείγματα, ένα συνολικό μέτρο είναι η μέση απώλεια <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Κάθε πρόβλεψη εξαρτάται από τα βάρη και τους όρους πόλωσης του δικτύου, επομένως και το <span class="math inline">\(J\)</span> εξαρτάται από όλες αυτές τις παραμέτρους. Εκπαίδευση σημαίνει αναζήτηση τιμών παραμέτρων που κάνουν το <span class="math inline">\(J\)</span> μικρό.</p>
+<p>Για να κατανοήσουμε τον μηχανισμό προσαρμογής, ας φανταστούμε αρχικά ότι όλες οι παράμετροι εκτός από ένα βάρος <span class="math inline">\(w\)</span> παραμένουν σταθερές. Μπορούμε τότε να θεωρήσουμε την απώλεια ως συνάρτηση <span class="math inline">\(J=J(w)\)</span>. Το Σχήμα <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> συνοψίζει τα βασικά βήματα της εκπαίδευσης που εξετάζουμε τώρα.</p>
+<figure id="fig:training_cycle">
+<img alt="Βασικός κύκλος εκπαίδευσης ενός νευρωνικού δικτύου. Το forward pass μετατρέπει τις εισόδους σε πρόβλεψη· η συνάρτηση απώλειας μετρά τη διαφορά ανάμεσα στην πρόβλεψη και την τιμή-στόχο· η οπισθοδιάδοση υπολογίζει κλίσεις με τον κανόνα της αλυσίδας· και η κάθοδος κλίσης χρησιμοποιε" decoding="async" loading="lazy" src="../assets/img/el/Fig06.png"/>
+<figcaption>Βασικός κύκλος εκπαίδευσης ενός νευρωνικού δικτύου. Το forward pass μετατρέπει τις εισόδους σε πρόβλεψη· η συνάρτηση απώλειας μετρά τη διαφορά ανάμεσα στην πρόβλεψη και την τιμή-στόχο· η οπισθοδιάδοση υπολογίζει κλίσεις με τον κανόνα της αλυσίδας· και η κάθοδος κλίσης χρησιμοποιεί αυτές τις κλίσεις για να ενημερώσει τα βάρη και τους όρους πόλωσης. Η επανάληψη αυτού του κύκλου για πολλές εποχές αποτελεί τη μάθηση.</figcaption>
+</figure>
+<p>Για αναγνώστες με μικρό υπόβαθρο στον λογισμό, μια παράγωγος μπορεί εδώ να ερμηνευθεί ως μέτρο <em>τοπικής ευαισθησίας</em>: δείχνει πώς μια μικρή αλλαγή σε μία παράμετρο τείνει να μεταβάλλει την απώλεια. Το πρόσημο δείχνει προς ποια κατεύθυνση η συνάρτηση αυξάνεται ή μειώνεται τοπικά, ενώ το μέγεθος μετρά την ένταση αυτής της τοπικής μεταβολής.</p>
+<p>Η παράγωγος <span class="math display">\[\frac{\partial J}{\partial w}\]</span> δίνει την τοπική κλίση. Αν είναι θετική, μια μικρή αύξηση του <span class="math inline">\(w\)</span> τείνει να αυξάνει το <span class="math inline">\(J\)</span>, οπότε το βάρος πρέπει να κινηθεί προς την αντίθετη κατεύθυνση. Αν η παράγωγος είναι αρνητική, μια αύξηση του <span class="math inline">\(w\)</span> τείνει τοπικά να μειώνει το <span class="math inline">\(J\)</span>. Και οι δύο περιπτώσεις περιγράφονται από <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> που αποτελεί τη βασική ιδέα της <em>καθόδου κλίσης</em>. Ο θετικός αριθμός <span class="math inline">\(\eta\)</span> είναι ο <em>ρυθμός μάθησης</em>· καθορίζει το μέγεθος του βήματος. Μια πολύ μικρή τιμή μπορεί να κάνει την εκπαίδευση αργή, ενώ μια υπερβολικά μεγάλη τιμή μπορεί να προκαλέσει ταλαντώσεις ή αστάθεια.</p>
+<p>Για ένα δίκτυο με πολλές παραμέτρους, έστω <span class="math inline">\(\theta\)</span> οποιοδήποτε βάρος ή οποιοσδήποτε όρος πόλωσης. Η ενημέρωση γίνεται <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> Το σύνολο όλων των μερικών παραγώγων σχηματίζει την <em>κλίση</em> της απώλειας. Γεωμετρικά, η κλίση δείχνει την κατεύθυνση της ταχύτερης τοπικής αύξησης, οπότε η αρνητική κλίση δίνει μια τοπική κατεύθυνση μείωσης.</p>
+<p>Μένει να υπολογίσουμε αυτές τις παραγώγους όταν το δίκτυο είναι σύνθεση πολλών συναρτήσεων. Κατά την εμπρόσθια διάδοση, η πληροφορία ρέει ως <span class="math display">\[\text{είσοδοι}
+\longrightarrow
+\text{κρυφό επίπεδο}
+\longrightarrow
+\text{έξοδος}.\]</span> Για να προσδιορίσουμε πώς μια παράμετρος σε ένα πρώιμο επίπεδο επηρεάζει την απώλεια, ακολουθούμε μαθηματικά την αλυσίδα εξαρτήσεων προς την αντίθετη κατεύθυνση. Η διαδικασία αυτή ονομάζεται <em>οπισθοδιάδοση</em> ή <em>backpropagation</em>. Στην ουσία είναι μια συστηματική και αποδοτική εφαρμογή του κανόνα της αλυσίδας. Οι Rumelhart, Hinton και Williams  αποτελούν κλασική αναφορά για τη διάδοση αυτής της διαδικασίας σε δίκτυα με κρυφά επίπεδα, ενώ ο Nielsen  δίνει μια λεπτομερή και ιδιαίτερα διδακτική παραγωγή.</p>
+<p>Για μια απλή αλυσίδα εξάρτησης όπου το <span class="math inline">\(E\)</span> εξαρτάται από το <span class="math inline">\(\widehat{y}\)</span>, το οποίο εξαρτάται από μια ενεργοποίηση <span class="math inline">\(h\)</span>, η οποία με τη σειρά της εξαρτάται από ένα βάρος <span class="math inline">\(w\)</span>, ο κανόνας της αλυσίδας δίνει <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> Κάθε παράγοντας περιγράφει ένα βήμα της επίδρασης του <span class="math inline">\(w\)</span> στην τελική απώλεια. Μεγαλύτερα δίκτυα περιέχουν πολλές τέτοιες αλυσίδες και η οπισθοδιάδοση οργανώνει τον υπολογισμό έτσι ώστε οι ενδιάμεσες παράγωγοι να επαναχρησιμοποιούνται αντί να επανυπολογίζονται χωριστά για κάθε παράμετρο.</p>
+<p>Στην πράξη, η εκπαίδευση χρησιμοποιεί πολλά παραδείγματα. Μία πλήρης διέλευση από το σύνολο εκπαίδευσης ονομάζεται <em>εποχή</em> (epoch). Οι παράμετροι μπορούν να ενημερώνονται μετά από κάθε παράδειγμα, όπως στο διδακτικό πρόγραμμα αργότερα στο άρθρο, ή μετά από μικρές ομάδες παραδειγμάτων που ονομάζονται <em>mini-batches</em>, κάτι που είναι συνηθισμένο σε μεγαλύτερα δίκτυα. Και στις δύο περιπτώσεις, ο κύκλος προβλέψεων, απωλειών, κλίσεων και ενημερώσεων επαναλαμβάνεται για πολλές εποχές.</p>
+<p>Ένας συγκεκριμένος τρόπος να οπτικοποιήσουμε αυτή την εξέλιξη είναι να παρακολουθήσουμε την πρόβλεψη για ένα σταθερό παράδειγμα σε διαφορετικές φάσεις της εκπαίδευσης. Θεωρήστε ξανά το φρούτο με μάζα <span class="math inline">\(140\)</span> g και διάμετρο <span class="math inline">\(7.0\)</span> cm, του οποίου η σωστή κλάση είναι πορτοκάλι. Ο Πίνακας <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> δείχνει μια υποθετική εξέλιξη. Οι τιμές αυτές δεν αντιστοιχούν σε συγκεκριμένη εκτέλεση· απλώς απεικονίζουν τον μηχανισμό.</p>
+<div id="tab:learning">
+<table>
+<caption>Υποθετική εξέλιξη της πρόβλεψης του δικτύου για το ίδιο φρούτο κατά την εκπαίδευση. Επαναλαμβανόμενες ενημερώσεις των παραμέτρων μπορούν να μετατοπίσουν μια αρχικά λανθασμένη έξοδο προς μια ταξινόμηση που συμφωνεί με την ετικέτα-στόχο.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Εποχή</th>
+<th style="text-align: center;">Πρόβλεψη <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">Απώλεια <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">Ταξινόμηση</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">Μήλο</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">Μήλο</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">Μήλο</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">Πορτοκάλι</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">Πορτοκάλι</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Στην αρχή, η έξοδος βρίσκεται κοντά στο <span class="math inline">\(1\)</span> και το φρούτο ταξινομείται λανθασμένα ως μήλο. Καθώς προσαρμόζονται οι παράμετροι, η πρόβλεψη μειώνεται και τελικά περνά το κατώφλι <span class="math inline">\(0.5\)</span>, οπότε προκύπτει η σωστή κλάση. Αυτό που αλλάζει κατά τη διαδικασία είναι οι αριθμητικές τιμές των βαρών και των όρων πόλωσης· η αρχιτεκτονική του δικτύου παραμένει σταθερή.</p>
+<p>Η μείωση της απώλειας στα δεδομένα εκπαίδευσης δεν είναι ο τελικός στόχος. Ένα χρήσιμο δίκτυο πρέπει επίσης να κάνει καλές προβλέψεις για παραδείγματα που δεν χρησιμοποιήθηκαν για την προσαρμογή των παραμέτρων. Αυτή η ικανότητα ονομάζεται <em>γενίκευση</em>. Όταν ένα μοντέλο προσαρμόζεται υπερβολικά στις ιδιαιτερότητες του συνόλου εκπαίδευσης και αποδίδει χειρότερα σε νέα δεδομένα, μιλάμε για <em>υπερπροσαρμογή</em> (overfitting). Σε πιο προσεκτικές αξιολογήσεις, τα δεδομένα συνήθως χωρίζονται σε σύνολα εκπαίδευσης, επικύρωσης και ελέγχου: το πρώτο χρησιμοποιείται για την προσαρμογή των παραμέτρων, το δεύτερο υποστηρίζει επιλογές κατά την ανάπτυξη του μοντέλου και το τρίτο κρατείται για την τελική αξιολόγηση. Εκτενέστερες συζητήσεις για τη γενίκευση και την αξιολόγηση μοντέλων υπάρχουν στους Faceli et al.  και Goodfellow, Bengio και Courville .</p>
+<p>Έχουμε έτσι φτάσει στη μαθηματική σημασία της μάθησης σε ένα νευρωνικό δίκτυο. Σε αυτό το πλαίσιο, μάθηση σημαίνει προσαρμογή των παραμέτρων μιας σύνθετης συνάρτησης έτσι ώστε ένα μέτρο σφάλματος στα δεδομένα να μειώνεται και, ιδανικά, το μοντέλο να γενικεύει σε νέα παραδείγματα. Το δίκτυο προβλέπει, υπολογίζει μια απώλεια, χρησιμοποιεί παραγώγους για να προσδιορίσει πώς οι παράμετροί του επηρεάζουν αυτή την απώλεια και στη συνέχεια πραγματοποιεί μια σειρά μικρών διορθώσεων.</p>
+</section><section class="article-section" id="από-τα-μαθηματικά-στην-python"><span class="section-no">08</span><h2>Από τα μαθηματικά στην Python</h2>
+<p>Περνάμε τώρα από τις εξισώσεις σε ένα εκτελέσιμο πρόγραμμα. Ο στόχος δεν είναι να χρησιμοποιήσουμε μια εξειδικευμένη βιβλιοθήκη νευρωνικών δικτύων, αλλά να υλοποιήσουμε απευθείας με το <code>NumPy</code> τις μαθηματικές πράξεις που αναπτύχθηκαν σε αυτό το άρθρο . Έτσι γίνεται ορατό, γραμμή προς γραμμή, πώς οι γραμμικοί συνδυασμοί, οι συναρτήσεις ενεργοποίησης, ο υπολογισμός της απώλειας, η οπισθοδιάδοση και η κάθοδος κλίσης εμφανίζονται στον κώδικα.</p>
+<p>Για ένα πιο πειστικό τελικό παράδειγμα, χρησιμοποιούμε ένα συνθετικό σύνολο δεδομένων κατανεμημένο σε μεγαλύτερο πεδίο μάζας–διαμέτρου. Εξακολουθούμε να εργαζόμαστε με μόνο δύο φυσικά χαρακτηριστικά — μάζα σε γραμμάρια και διάμετρο σε εκατοστά — αλλά τώρα κατανέμουμε <span class="math inline">\(64\)</span> παραδείγματα εκπαίδευσης σε μεγάλη περιοχή του επιπέδου και κρατούμε οκτώ επιπλέον παραδείγματα για έναν ενδεικτικό έλεγχο. Τα δεδομένα παραμένουν συνθετικά και βρίσκονται σε εύλογα εύρη για μήλα και πορτοκάλια. Έχουν κατασκευαστεί έτσι ώστε να προκύπτει ένα μη γραμμικό όριο απόφασης χωρίς όλα τα σημεία να συγκεντρώνονται σε λίγες υπερβολικά τεχνητές συστάδες.</p>
+<p>Η γεωμετρική ιδέα είναι απλή. Ορίζουμε μια καμπύλη αναφοράς στο επίπεδο μάζας–διαμέτρου, τοποθετούμε μήλα σε δύο ζώνες πάνω από αυτή την καμπύλη και πορτοκάλια σε δύο ζώνες κάτω από αυτήν. Προσθέτουμε μικρές ντετερμινιστικές διαταραχές τόσο στη μάζα όσο και στη διάμετρο, ώστε οι παρατηρήσεις να καλύπτουν μεγαλύτερη περιοχή. Το παράδειγμα που προκύπτει είναι πλουσιότερο από τις προηγούμενες απεικονίσεις: περιέχει περισσότερα σημεία, τα δεδομένα είναι κατανεμημένα σε όλο το πεδίο και το κατάλληλο όριο απόφασης είναι σαφώς πιο καμπύλο από μια ευθεία.</p>
+<p>Για αυτό το τελευταίο υπολογιστικό πείραμα αυξάνουμε το κρυφό επίπεδο σε δώδεκα νευρώνες ReLU. Αυτό δεν αλλάζει την εννοιολογική δομή των προηγούμενων ενοτήτων· απλώς αυξάνει την ικανότητα του δικτύου να αναπαριστά ένα πιο σύνθετο όριο. Αντί για τις <span class="math inline">\(13\)</span> παραμέτρους του διδακτικού δικτύου με τρεις νευρώνες, έχουμε τώρα <span class="math inline">\(49\)</span> προσαρμόσιμες παραμέτρους: <span class="math inline">\(24\)</span> βάρη και <span class="math inline">\(12\)</span> όρους πόλωσης στο πρώτο επίπεδο, ακολουθούμενα από <span class="math inline">\(12\)</span> βάρη και έναν όρο πόλωσης στο επίπεδο εξόδου. Οι εξισώσεις διατηρούν ακριβώς την ίδια μορφή· μόνο τα διανύσματα και οι πίνακες γίνονται μεγαλύτερα.</p>
+<p>Το πλήρες πρόγραμμα δίνεται παρακάτω.</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Μήλο - εκπαίδευση")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Πορτοκάλι - εκπαίδευση")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Μήλο - έλεγχος")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Πορτοκάλι - έλεγχος")
+
+    ax.set_xlabel("Μάζα (g)")
+    ax.set_ylabel("Διάμετρος (cm)")
+    ax.set_title("Έξοδος του νευρωνικού δικτύου μετά την εκπαίδευση")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Μήλο - εκπαίδευση'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Πορτοκάλι - εκπαίδευση'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Μήλο - έλεγχος'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Πορτοκάλι - έλεγχος'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Όριο απόφασης του νευρωνικού δικτύου')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>Παρότι ο κώδικας είναι μεγαλύτερος από τις πρώτες εξισώσεις που μελετήθηκαν στο άρθρο, η δομή παραμένει διαφανής. Η συνάρτηση <code>build_data()</code> παράγει αυτόματα τα <span class="math inline">\(64\)</span> παραδείγματα εκπαίδευσης και τα οκτώ ενδεικτικά παραδείγματα ελέγχου. Στη συνέχεια τυποποιούμε και τις δύο μεταβλητές σύμφωνα με <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> όπου τα <span class="math inline">\(\mu_j\)</span> και <span class="math inline">\(\sigma_j\)</span> υπολογίζονται αποκλειστικά από το σύνολο εκπαίδευσης. Αυτό εμποδίζει το σύνολο ελέγχου να επηρεάζει την προσαρμογή των παραμέτρων και ταυτόχρονα φέρνει τη μάζα και τη διάμετρο σε συγκρίσιμες αριθμητικές κλίμακες.</p>
+<p>Η εμπρόσθια διάδοση δεν αλλάζει ουσιαστικά. Η μόνη διαφορά είναι ότι το πρώτο επίπεδο παράγει τώρα ένα διάνυσμα δώδεκα κρυφών ενεργοποιήσεων. Σε συμβολισμό πινάκων, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\text{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> Αυτές οι τέσσερις γραμμές εξακολουθούν να περιέχουν τον μαθηματικό πυρήνα του αλγορίθμου. Και η εκπαίδευση διατηρεί τη λογική που εισαγάγαμε προηγουμένως: υπολόγισε μια πρόβλεψη, μέτρησε το σφάλμα, διέδωσε προς τα πίσω πληροφορία ευαισθησίας χρησιμοποιώντας παραγώγους και ενημέρωσε τις παραμέτρους με μικρά βήματα καθόδου κλίσης.</p>
+<p>Στον κώδικα, η οπισθοδιάδοση στο επίπεδο εξόδου εμφανίζεται ως</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>και η διάδοση προς το κρυφό επίπεδο ως</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>ακολουθούμενη από ενημερώσεις όλων των βαρών και των όρων πόλωσης. Επειδή τα παραδείγματα ανακατεύονται σε κάθε εποχή και οι παράμετροι ενημερώνονται μετά από κάθε παρατήρηση, αυτή η υλοποίηση αποτελεί μια στοιχειώδη μορφή <em>στοχαστικής καθόδου κλίσης</em>.</p>
+<p>Με τον τυχαίο σπόρο και τις υπερπαραμέτρους που χρησιμοποιούνται εδώ, η τελική μέση απώλεια είναι της τάξης του <span class="math inline">\(10^{-5}\)</span> έως <span class="math inline">\(10^{-4}\)</span>, και όλα τα <span class="math inline">\(64\)</span> παραδείγματα εκπαίδευσης μαζί με τα οκτώ ενδεικτικά παραδείγματα ελέγχου λαμβάνουν την αναμενόμενη ταξινόμηση. Αυτό δεν πρέπει να ερμηνευθεί ως αυστηρή στατιστική αξιολόγηση επίδοσης: τα δεδομένα είναι συνθετικά και έχουν κατασκευαστεί για διδακτικούς σκοπούς. Ο ρόλος τους είναι να δείξουν πώς ένα μικρό νευρωνικό δίκτυο, σε ένα λιγότερο τετριμμένο πλαίσιο, μπορεί να μάθει ένα σαφώς μη γραμμικό όριο απόφασης.</p>
+<p>Το Σχήμα <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> δείχνει την τελική έξοδο του προγράμματος στο επίπεδο μάζας–διαμέτρου. Εμφανίζονται όλα τα σημεία εκπαίδευσης. Η τονισμένη καμπύλη είναι το επίπεδο <span class="math inline">\(\widehat{y}=0.5\)</span> και παριστάνει το όριο απόφασης που έμαθε το δίκτυο· οι σκιασμένες περιοχές δείχνουν τις δύο προβλεπόμενες κλάσεις. Οι κύκλοι παριστάνουν μήλα εκπαίδευσης, τα τετράγωνα πορτοκάλια εκπαίδευσης, τα τρίγωνα μήλα ελέγχου και οι σταυροί πορτοκάλια ελέγχου. Το υπόμνημα τοποθετείται έξω από την κύρια περιοχή του γραφήματος ώστε να μην καλύπτεται κανένα σημείο δεδομένων.</p>
+<figure id="fig:python_output">
+<img alt="Έξοδος της Python μετά την εκπαίδευση του νευρωνικού δικτύου. Το συνθετικό σύνολο δεδομένων περιέχει \(64\) παραδείγματα εκπαίδευσης κατανεμημένα σε μεγάλη περιοχή του επιπέδου μάζας–διαμέτρου και οκτώ επιπλέον παραδείγματα που κρατήθηκαν για έναν ενδεικτικό έλεγχο. Η τονισμένη κ" decoding="async" loading="lazy" src="../assets/img/el/Fig07.png"/>
+<figcaption>Έξοδος της Python μετά την εκπαίδευση του νευρωνικού δικτύου. Το συνθετικό σύνολο δεδομένων περιέχει <span class="math inline">\(64\)</span> παραδείγματα εκπαίδευσης κατανεμημένα σε μεγάλη περιοχή του επιπέδου μάζας–διαμέτρου και οκτώ επιπλέον παραδείγματα που κρατήθηκαν για έναν ενδεικτικό έλεγχο. Η τονισμένη καμπύλη είναι το επίπεδο <span class="math inline">\(\widehat{y}=0.5\)</span> και παριστάνει το μαθημένο όριο απόφασης· οι σκιασμένες περιοχές δείχνουν τις κλάσεις που προβλέπει το δίκτυο. Οι κύκλοι παριστάνουν μήλα εκπαίδευσης, τα τετράγωνα πορτοκάλια εκπαίδευσης, τα τρίγωνα μήλα ελέγχου και οι σταυροί πορτοκάλια ελέγχου.</figcaption>
+</figure>
+<p>Ξεκινήσαμε με μια ευθεία που διαχώριζε δύο απλές ομάδες σημείων και καταλήξαμε σε ένα πλουσιότερο υπολογιστικό παράδειγμα όπου ένα καμπύλο όριο προκύπτει από την αυτόματη προσαρμογή των παραμέτρων του δικτύου. Δεν προστέθηκε τίποτε μυστηριώδες στα μαθηματικά: η υλοποίηση απλώς οργανώνει και επαναλαμβάνει, σε μεγαλύτερη κλίμακα και με μεγάλη ταχύτητα, αφινικούς συνδυασμούς, συναρτήσεις ενεργοποίησης, παραγώγους, γινόμενα πινάκων και ενημερώσεις μέσω καθόδου κλίσης .</p>
+<p>Όλο το υπολογιστικό υλικό που συνοδεύει αυτό το άρθρο — συμπεριλαμβανομένου του κώδικα και ενός εκτελέσιμου σημειωματάριου Google Colab — είναι διαθέσιμο στη διεύθυνση <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>, ως ενιαίο σημείο πρόσβασης για αναγνώστες που θέλουν να εξερευνήσουν, να αναπαράγουν ή να προσαρμόσουν τα παραδείγματα.</p>
+<h4 id="δήλωση-για-τη-χρήση-τεχνητής-νοημοσύνης.">Δήλωση για τη χρήση τεχνητής νοημοσύνης.</h4>
+<p>Ο συγγραφέας χρησιμοποίησε το ChatGPT, που αναπτύχθηκε από την OpenAI, ως υποστηρικτικό εργαλείο για τη σύνταξη κειμένου, τη γλωσσική επιμέλεια, τη διδακτική οργάνωση και τη δημιουργία διδακτικών σχημάτων. Ο συγγραφέας φέρει την πλήρη ευθύνη για το τελικό περιεχόμενο του έργου, συμπεριλαμβανομένου του σχεδιασμού και της ανάπτυξης του μαθηματικού υλικού, του κώδικα και των βιβλιογραφικών αναφορών.</p>
+</section></div>
+<section class="article-section references"><span class="section-no">Βιβλιογραφία</span><h2>Βιβλιογραφία</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Διαθέσιμο στο: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Μετάφραση: Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Διαθέσιμο στο: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Πόροι</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/el/Article_PMO2026_NN_EL.pdf"><strong>PDF</strong><span>Η μαθηματική ανατομία ενός νευρωνικού δικτύου</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_EL.ipynb"><strong>Google Colab</strong><span>Notebook · Ελληνικά</span></a>
+</div></section>
+<section><h2>Σχετικά με το NeuralMath</h2><p class="bio">Το NeuralMath είναι ένα ανοικτό εκπαιδευτικό έργο που αναπτύχθηκε από τον Dr. Americo Cunha Jr. Στόχος του είναι να κάνει τις μαθηματικές πράξεις μέσα σε ένα μικρό νευρωνικό δίκτυο ορατές, ελέγξιμες και αναπαραγώγιμες για ένα ευρύ κοινό με σχετικά βασική μαθηματική κατάρτιση στον λογισμό και τη στατιστική.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Πώς να παραπέμψετε στο παιδαγωγικό κείμενο</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>Η βιβλιογραφική εγγραφή θα ενημερωθεί με τόμο, σελίδες και DOI μετά τη δημοσίευση. Παρακαλούμε να παραπέμπετε στο παιδαγωγικό κείμενο και όχι σε αυτόν τον ιστότοπο.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>Άδεια</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Το επεξηγηματικό κείμενο και το πρωτότυπο υλικό του ιστότοπου διατίθενται με άδεια CC BY 4.0, εκτός αν αναφέρεται διαφορετικά. Το PDF του άρθρου μπορεί να διέπεται από την άδεια του εκδότη.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

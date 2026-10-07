@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://neuralmath.org/</loc></url>
   <url><loc>https://neuralmath.org/pt/</loc></url>
+  <url><loc>https://neuralmath.org/</loc></url>
   <url><loc>https://neuralmath.org/es/</loc></url>
   <url><loc>https://neuralmath.org/fr/</loc></url>
   <url><loc>https://neuralmath.org/it/</loc></url>
   <url><loc>https://neuralmath.org/de/</loc></url>
+  <url><loc>https://neuralmath.org/ar/</loc></url>
+  <url><loc>https://neuralmath.org/bn/</loc></url>
+  <url><loc>https://neuralmath.org/cs/</loc></url>
+  <url><loc>https://neuralmath.org/el/</loc></url>
+  <url><loc>https://neuralmath.org/fa/</loc></url>
+  <url><loc>https://neuralmath.org/hi/</loc></url>
+  <url><loc>https://neuralmath.org/hu/</loc></url>
+  <url><loc>https://neuralmath.org/id/</loc></url>
+  <url><loc>https://neuralmath.org/ja/</loc></url>
+  <url><loc>https://neuralmath.org/ko/</loc></url>
+  <url><loc>https://neuralmath.org/nl/</loc></url>
+  <url><loc>https://neuralmath.org/pl/</loc></url>
+  <url><loc>https://neuralmath.org/ro/</loc></url>
+  <url><loc>https://neuralmath.org/ru/</loc></url>
+  <url><loc>https://neuralmath.org/sv/</loc></url>
+  <url><loc>https://neuralmath.org/tr/</loc></url>
+  <url><loc>https://neuralmath.org/uk/</loc></url>
+  <url><loc>https://neuralmath.org/ur/</loc></url>
+  <url><loc>https://neuralmath.org/vi/</loc></url>
+  <url><loc>https://neuralmath.org/zh/</loc></url>
 </urlset>

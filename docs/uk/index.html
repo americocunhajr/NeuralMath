@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — Математична анатомія нейронної мережі</title>
+<meta content="Ми подаємо математичний вступ до штучних нейронних мереж на прикладі простої задачі класифікації. Лінійний класифікатор природно приводить до поняття штучного нейрона; далі розглядаються ваги, зміщення, функції активації та об’єднання нейронів у невелику мережу. Навчання вводиться через функцію втра" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/uk/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag current" href="index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">Математична анатомія нейронної мережі</p>
+<p>Ми подаємо математичний вступ до штучних нейронних мереж на прикладі простої задачі класифікації. Лінійний класифікатор природно приводить до поняття штучного нейрона; далі розглядаються ваги, зміщення, функції активації та об’єднання нейронів у невелику мережу. Навчання вводиться через функцію втрат, похідні, градієнтний спуск і зворотне поширення. Наприкінці модель безпосередньо реалізується мовою Python, що робить явною відповідність між рівняннями та алгоритмом. Мета статті — показати, як знайомі ідеї аналітичної геометрії, лінійної алгебри й математичного аналізу утворюють доступну основу для розуміння базових механізмів нейронних мереж.</p>
+<div class="resource-bar"><a href="../pdf/uk/Article_PMO2026_NN_UK.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_UK.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>Оригінальний педагогічний текст</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Ця вебверсія та її переклади базуються на оригінальному рукописі португальською мовою.</p></div>
+<nav aria-label="Зміст" class="toc"><h2>Зміст</h2><ol><li><a href="#коли-компютер-може-навчатися">Коли комп’ютер може навчатися?</a></li><li><a href="#математичне-подання-задачі">Математичне подання задачі</a></li><li><a href="#пряма-як-класифікатор">Пряма як класифікатор</a></li><li><a href="#штучний-нейрон">Штучний нейрон</a></li><li><a href="#навіщо-потрібна-функція-активації">Навіщо потрібна функція активації?</a></li><li><a href="#побудова-невеликої-нейронної-мережі">Побудова невеликої нейронної мережі</a></li><li><a href="#як-нейронна-мережа-навчається">Як нейронна мережа навчається?</a></li><li><a href="#від-математики-до-python">Від математики до Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="коли-компютер-може-навчатися"><span class="section-no">01</span><h2>Коли комп’ютер може навчатися?</h2>
+<p>У повсякденному житті ми майже непомітно для себе постійно розв’язуємо задачі класифікації. Поглянувши на фрукт, швидко визначаємо, яблуко це чи апельсин; отримавши повідомлення на телефон, відрізняємо звичайне спілкування від небажаної реклами; у медичному аналізі кілька вимірювань можуть поєднуватися для підтримки рішення; а у фінансових установах перед наданням кредиту оцінюють багато різних відомостей. У всіх цих прикладах кілька характеристик розглядаються разом, щоб отримати відповідь.</p>
+<p>У багатьох традиційних комп’ютерних програмах правила, що визначають цю відповідь, явно задає програміст. Такий підхід добре працює, коли правила відомі й їх можна чітко сформулювати. Він стає менш ефективним, коли дані дуже мінливі або коли важко наперед описати всі умови, потрібні для доброго рішення. Це природно приводить до запитання:</p>
+<div class="center">
+<p><em>Чи можемо ми створити програму, яка навчиться правилу прийняття рішення на прикладах, замість того щоб отримати це правило наперед?</em></p>
+</div>
+<p>Це одна з центральних ідей <em>машинного навчання</em> — галузі штучного інтелекту, що вивчає методи налаштування моделей за даними . У задачі навчання з учителем алгоритм отримує приклади разом із правильними відповідями, а ми шукаємо модель, здатну робити корисні передбачення і для випадків, які не використовувалися під час навчання. Серед багатьох моделей, створених для цього, <em>штучні нейронні мережі</em> набули великого значення в розпізнаванні зображень, обробці мови, аналізі сигналів і прогнозуванні часових рядів .</p>
+<p>Використання нейронних мереж як містка між математикою, обчисленнями та шкільною освітою вже обговорювали в журналі <em>Professor de Matemática Online</em> Батіста і Мартінс , які описують навчальну діяльність, пов’язану з підготовкою вчителів, Python і розпізнаванням цифр. Ця стаття йде додатковим шляхом. Наша головна мета — показати внутрішню математику невеликої нейронної мережі, починаючи з аналітичної геометрії та крок за кроком доходячи до обчислення градієнтів і ручної реалізації зворотного поширення.</p>
+<p>Попри складність сучасних застосувань, математичне ядро нейронної мережі можна ввести за допомогою відносно знайомих ідей. На базовому рівні нейронна мережа є композицією функцій, параметри яких налаштовуються за даними. Ми почнемо з простої геометричної задачі, переосмислимо розділяючу пряму як штучний нейрон, з’єднаємо кілька нейронів, дослідимо роль функцій активації та покажемо, як похідні дають змогу автоматично налаштовувати параметри мережі. Потім реалізуємо повний невеликий приклад у Python, зберігаючи безпосередню відповідність між рівняннями й кодом.</p>
+</section><section class="article-section" id="математичне-подання-задачі"><span class="section-no">02</span><h2>Математичне подання задачі</h2>
+<p>Щоб зрозуміти, як працює нейронна мережа, почнемо з навмисно простої задачі: відрізнити яблука від апельсинів. Фрукт має багато характеристик, що можуть бути корисними для цього завдання, наприклад колір, масу, діаметр, текстуру й аромат. Проте початкова математична модель не повинна одразу враховувати всю цю складність. Ми використаємо лише дві величини, які легко виміряти: масу в грамах і діаметр у сантиметрах.</p>
+<p>Отже, кожен фрукт представлятимемо впорядкованою парою <span class="math display">\[(x_1,x_2),\]</span> де <span class="math display">\[x_1=\text{маса}
+\qquad\text{і}\qquad
+x_2=\text{діаметр}.\]</span></p>
+<p>Таким чином, пара <span class="math inline">\((155,\;7.2)\)</span> описує фрукт масою <span class="math inline">\(155\)</span> г і діаметром <span class="math inline">\(7.2\)</span> см. Замінюючи фізичний об’єкт двома числовими вимірюваннями, ми ставимо кожному фрукту у відповідність точку на декартовій площині: перша координата задає масу, а друга — діаметр. На Рисунку <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> показано таке подання для умовного набору яблук та апельсинів.</p>
+<figure id="fig:fruits">
+<img alt="Від фізичного спостереження до математичного моделювання. Кожен фрукт спочатку описується двома вимірюваними величинами — масою та діаметром — а потім представляється впорядкованою парою \((x_1,x_2)\) . На площині “маса–діаметр” кожне спостереження стає точкою, тому розрізнення я" decoding="async" loading="lazy" src="../assets/img/uk/Fig01.png">
+<figcaption>Від фізичного спостереження до математичного моделювання. Кожен фрукт спочатку описується двома вимірюваними величинами — масою та діаметром — а потім представляється впорядкованою парою <span class="math inline">\((x_1,x_2)\)</span>. На площині “маса–діаметр” кожне спостереження стає точкою, тому розрізнення яблук та апельсинів можна переосмислити як геометричну задачу розділення двох класів.</figcaption>
+</img></figure>
+<p>Це перетворення змінює видиму природу задачі. Замість прямого запитання, як розпізнати яблуко чи апельсин, можна поставити геометричне питання: як розділити на площині точки, що належать двом класам? Така зміна погляду є фундаментальною для машинного навчання. Зображення, тексти, звуки й експериментальні сигнали мають бути перетворені на числові подання, перш ніж алгоритм зможе їх обробляти. У нашому прикладі кожен об’єкт має лише дві координати; у реальних застосуваннях подання може містити сотні, тисячі або навіть мільйони компонентів. Принцип той самий: кожному прикладу відповідає набір чисел, а модель шукає правило, яке відображає це подання в потрібну відповідь.</p>
+<p>Почнемо з найпростішого геометричного правила й запитаємо, чи може одна пряма достатньо добре розділити точки яблук і апельсинів.</p>
+</section><section class="article-section" id="пряма-як-класифікатор"><span class="section-no">03</span><h2>Пряма як класифікатор</h2>
+<p>Після того як кожен фрукт подано точкою на декартовій площині, класифікація стає геометричною задачею: чи може пряма розділити яблука й апельсини? Це питання відображає основну ідею важливого класу методів машинного навчання, відомих як <em>лінійні класифікатори</em>.</p>
+<p>Розгляньмо пряму, що проходить крізь хмару даних, як показано на Рисунку <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>. Пряма ділить площину на дві півплощини. Якщо більшість точок яблук лежить з одного боку, а більшість точок апельсинів — з іншого, то положення нового фрукта відносно прямої можна використати як правило класифікації. Вимірявши його масу й діаметр, ми представляємо фрукт точкою та визначаємо, з якого боку прямої ця точка лежить.</p>
+<figure id="fig:linear_classifier">
+<img alt="Приклад лінійного класифікатора на площині “маса–діаметр”. Пряма виконує роль межі рішення: точки в одній півплощині отримують один клас, а точки в протилежній — інший. Отже, рішення залежить лише від того, з якого боку прямої міститься точка." decoding="async" loading="lazy" src="../assets/img/uk/Fig02.png"/>
+<figcaption>Приклад лінійного класифікатора на площині “маса–діаметр”. Пряма виконує роль межі рішення: точки в одній півплощині отримують один клас, а точки в протилежній — інший. Отже, рішення залежить лише від того, з якого боку прямої міститься точка.</figcaption>
+</figure>
+<p>На декартовій площині <span class="math inline">\((x_1,x_2)\)</span> пряму можна описати рівнянням <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>Вектор <span class="math inline">\((w_1,w_2)\)</span> перпендикулярний до прямої, тому визначає її орієнтацію, тоді як параметр <span class="math inline">\(b\)</span> впливає на її положення. Це подання має невелику надлишковість: множення <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> і <span class="math inline">\(b\)</span> на одну й ту саму ненульову сталу дає ту саму пряму. Отже, параметри, що описують межу, не є єдиними. Їхня числова інтерпретація також залежить від масштабу змінних. Оскільки масу вимірюють у грамах, а діаметр у сантиметрах, числові значення <span class="math inline">\(w_1\)</span> і <span class="math inline">\(w_2\)</span> не слід безпосередньо порівнювати, не врахувавши різні одиниці вимірювання.</p>
+<p>Саме рівняння прямої дає простий спосіб визначити, з якого боку межі лежить точка. Введемо оцінку <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Якщо <span class="math inline">\(s(x_1,x_2)=0\)</span>, точка лежить на прямій. Якщо <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>, вона міститься в одній півплощині; якщо <span class="math inline">\(s(x_1,x_2)&lt;0\)</span> — в іншій. Якщо домовитися, що додатні значення відповідають яблукам, а від’ємні — апельсинам, правило набуває вигляду <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{яблуко},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{апельсин}.
+\end{cases}\]</span></p>
+<p>Наприклад, розгляньмо межу, задану параметрами <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> Для фрукта масою <span class="math inline">\(160\)</span> г і діаметром <span class="math inline">\(7.8\)</span> см маємо <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> Оскільки оцінка додатна, точка лежить у півплощині, яку ми пов’язали з яблуками. Отже, цей класифікатор визначить фрукт як яблуко.</p>
+<p>Не кожний вибір <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> і <span class="math inline">\(b\)</span> дає хорошу класифікацію. Деякі прямі погано розділяють дві групи, тоді як інші роблять менше помилок. Задача навчання полягає саме в тому, щоб за попередньо розміченими прикладами визначити значення параметрів, які зменшують певну міру помилки моделі. Замість того щоб безпосередньо програмувати положення прямої, ми хочемо, щоб алгоритм сам налаштовував її коефіцієнти за даними.</p>
+<p>Одна пряма може добре працювати, якщо класи приблизно лінійно роздільні. Для складніших наборів даних може знадобитися нелінійна межа. Перш ніж перейти до цього обмеження, переосмислимо щойно побудований класифікатор як елементарну обчислювальну одиницю — штучний нейрон.</p>
+</section><section class="article-section" id="штучний-нейрон"><span class="section-no">04</span><h2>Штучний нейрон</h2>
+<p>У попередньому розділі вираз <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> використовувався, щоб визначити, з якого боку прямої лежить фрукт. Той самий вираз можна розглядати як перший етап обчислення, яке виконує <em>штучний нейрон</em>. Нейрон отримує числові входи, комбінує їх за допомогою ваг і зміщення, а потім застосовує математичну функцію, щоб отримати вихід.</p>
+<p>У нашому прикладі входами є маса <span class="math inline">\(x_1\)</span> і діаметр <span class="math inline">\(x_2\)</span>. Кожен вхід множиться на параметр, який називають <em>вагою</em>; добутки додаються разом зі сталим членом <span class="math inline">\(b\)</span>, який називають <em>зміщенням</em> (bias). На Рисунку <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> цю операцію показано схематично.</p>
+<figure id="fig:artificial_neuron">
+<img alt="Схема роботи штучного нейрона. Кожен вхід \(x_i\) множиться на вагу \(w_i\) ; добутки додаються до зміщення \(b\) , утворюючи оцінку \(s\) . Потім функція активації \(g\) перетворює цю оцінку на вихід \(\widehat{y}=g(s)\) , який може бути проміжною величиною або кінцевим передбач" decoding="async" loading="lazy" src="../assets/img/uk/Fig03.png"/>
+<figcaption>Схема роботи штучного нейрона. Кожен вхід <span class="math inline">\(x_i\)</span> множиться на вагу <span class="math inline">\(w_i\)</span>; добутки додаються до зміщення <span class="math inline">\(b\)</span>, утворюючи оцінку <span class="math inline">\(s\)</span>. Потім функція активації <span class="math inline">\(g\)</span> перетворює цю оцінку на вихід <span class="math inline">\(\widehat{y}=g(s)\)</span>, який може бути проміжною величиною або кінцевим передбаченням.</figcaption>
+</figure>
+<p>Ваги визначають, як зміни входів впливають на оцінку. Якщо <span class="math inline">\(x_2\)</span> та всі інші величини залишити незмінними, зміна <span class="math inline">\(\Delta x_1\)</span> змінює <span class="math inline">\(s\)</span> на <span class="math inline">\(w_1\Delta x_1\)</span>. Аналогічно зміна <span class="math inline">\(\Delta x_2\)</span> змінює оцінку на <span class="math inline">\(w_2\Delta x_2\)</span>. Важливий і знак: додатна вага означає, що збільшення входу збільшує оцінку, тоді як від’ємна вага дає протилежний ефект. Таке тлумачення слід застосовувати обережно, коли різні змінні мають різні одиниці й масштаби. Тому в практичних реалізаціях вхідні дані перед навчанням часто нормалізують або стандартизують.</p>
+<p>Зміщення <span class="math inline">\(b\)</span> є сталим членом афінного перетворення. Геометрично воно дає змогу зсувати межу рішення. Якщо <span class="math inline">\(b=0\)</span>, рівняння <span class="math display">\[w_1x_1+w_2x_2=0\]</span> змушує пряму проходити через початок координат. Завдяки зміщенню межа може переміщуватися в інші положення. Еквівалентно, коли <span class="math inline">\(x_1=x_2=0\)</span>, оцінка просто дорівнює <span class="math inline">\(s=b\)</span>.</p>
+<p>Оцінка не обов’язково є остаточним виходом нейрона. Загалом до неї застосовують <em>функцію активації</em> <span class="math inline">\(g\)</span>: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> Отже, обчислення складається з двох етапів, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>Використовуючи значення параметрів із попереднього розділу, отримуємо <span class="math inline">\(s=1.6\)</span>. Якщо вибрати ступінчасту функцію <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> то <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. За нашою домовленістю фрукт класифікується як яблуко. За такої активації рішення змінюється, коли <span class="math inline">\(s\)</span> переходить через нуль, тому межею класів є саме <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>Отже, один нейрон — це простий математичний об’єкт із параметрами, які можна налаштовувати. Його справжня важливість проявляється тоді, коли багато таких одиниць з’єднують між собою. Але перш ніж будувати мережу, треба зрозуміти, чому функція активації є необхідною.</p>
+</section><section class="article-section" id="навіщо-потрібна-функція-активації"><span class="section-no">05</span><h2>Навіщо потрібна функція активації?</h2>
+<p>Нейрон спочатку обчислює оцінку за допомогою афінного перетворення, а вже потім застосовує функцію активації. Цей другий етап необхідний, якщо нейронна мережа має представляти складні залежності. Щоб побачити чому, уявімо мережу без функцій активації. Кожна її одиниця тоді мала б вигляд <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Для одновимірної ілюстрації припустімо, що перша одиниця обчислює <span class="math display">\[h=ax+b\]</span> а друга — <span class="math display">\[y=ch+d.\]</span> Підстановка дає <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> що знову є афінною функцією від <span class="math inline">\(x\)</span>. Те саме справедливо в кількох вимірах: композиція афінних перетворень залишається афінною. Тому додавання багатьох шарів без нелінійної операції принципово не збільшує виразну здатність мережі; всю композицію можна було б замінити одним афінним перетворенням.</p>
+<p>Функція активації усуває це обмеження. Після обчислення оцінки <span class="math inline">\(s\)</span> нейрон застосовує, як правило, нелінійне відображення <span class="math display">\[h=g(s).\]</span> Коли кілька таких одиниць з’єднано, отриману композицію вже не можна звести до одного афінного перетворення. Це дає мережі змогу будувати складніші межі рішення.</p>
+<p>Найпростішою активацією є ступінчаста функція, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> Вона формує бінарне рішення й дуже корисна для розуміння класифікації. Однак її похідна дорівнює нулю для <span class="math inline">\(s\neq0\)</span> і не визначена при <span class="math inline">\(s=0\)</span>. Оскільки градієнтне навчання використовує похідні, щоб визначати напрям зміни параметрів, ступінчаста функція не підходить для цього механізму навчання.</p>
+<p>Однією з альтернатив є сигмоїдна функція, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> Вона відображає будь-яке дійсне число в значення строго між <span class="math inline">\(0\)</span> і <span class="math inline">\(1\)</span>. Для дуже від’ємних <span class="math inline">\(s\)</span> вихід наближається до <span class="math inline">\(0\)</span>; для дуже додатних — до <span class="math inline">\(1\)</span>; між цими крайніми випадками перехід є плавним. Сигмоїда диференційовна всюди, причому <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> Оскільки її значення лежать між <span class="math inline">\(0\)</span> і <span class="math inline">\(1\)</span>, її часто використовують у вихідному шарі бінарного класифікатора. У ймовірнісному формулюванні з відповідною функцією втрат вихід можна інтерпретувати як оцінку ймовірності класу, позначеного <span class="math inline">\(1\)</span>. Проте в прихованих шарах сигмоїда може створювати проблему: для входів великої за модулем величини її похідна стає дуже малою, що сприяє проблемі <em>зникнення градієнта</em> в глибоких мережах.</p>
+<p>Широко вживаною активацією прихованих шарів є ReLU (<em>Rectified Linear Unit</em>), <span class="math display">\[\mathrm{ReLU}(s)=\mathrm{max}(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> Хоча вона складається з двох лінійних частин, ReLU не є глобально лінійною. Її похідна дорівнює <span class="math inline">\(0\)</span> для <span class="math inline">\(s&lt;0\)</span> і <span class="math inline">\(1\)</span> для <span class="math inline">\(s&gt;0\)</span>. У точці <span class="math inline">\(s=0\)</span> звичайна похідна не існує, тому програмні реалізації використовують певну домовленість для градієнта. Для додатних входів похідна не зменшується зі зростанням <span class="math inline">\(s\)</span>, що дає змогу уникнути одного з механізмів насичення сигмоїди.</p>
+<p>На Рисунку <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> ці три активації порівнюються візуально: різкий стрибок ступінчастої функції, плавний перехід сигмоїди та зміна нахилу ReLU.</p>
+<figure id="fig:activation_functions">
+<img alt="Порівняння трьох функцій активації, які часто використовують у вступному викладі нейронних мереж. Ступінчаста функція приймає різке рішення; сигмоїда забезпечує плавний перехід між \(0\) і \(1\) ; ReLU пригнічує від’ємні входи та зберігає додатні. Нелінійні активації не дають пос" decoding="async" loading="lazy" src="../assets/img/uk/Fig04.png"/>
+<figcaption>Порівняння трьох функцій активації, які часто використовують у вступному викладі нейронних мереж. Ступінчаста функція приймає різке рішення; сигмоїда забезпечує плавний перехід між <span class="math inline">\(0\)</span> і <span class="math inline">\(1\)</span>; ReLU пригнічує від’ємні входи та зберігає додатні. Нелінійні активації не дають послідовності шарів звестися до одного афінного перетворення.</figcaption>
+</figure>
+<p>Їхні основні властивості підсумовано нижче.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Функція</th>
+<th style="text-align: center;">Вихід</th>
+<th style="text-align: left;">Похідна</th>
+<th style="text-align: left;">Типове використання</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ступінчаста</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">Нуль для <span class="math inline">\(s\neq0\)</span>; не визначена при <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">Історичні моделі та дидактичні приклади</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Сигмоїдна</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Існує для кожного <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">Вихідний шар у бінарній класифікації</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> для <span class="math inline">\(s&lt;0\)</span> і <span class="math inline">\(1\)</span> для <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">Приховані шари</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Деталі цих функцій різняться, але їхня спільна концептуальна роль полягає у введенні нелінійності. Саме ця нелінійність дозволяє невеликій мережі з наступного розділу описувати залежності, які не може відтворити одна пряма.</p>
+<p>Для читачів, які бажають заглибитися в тему, Гайкін  дає класичний виклад нейронних мереж, а Гудфеллоу, Бенджіо та Курвіль  розглядають функції активації й навчання глибоких мереж у ширшому контексті. Вільно доступна книга Нільсена  особливо придатна для формування інтуїції щодо нейронів, активацій і навчання.</p>
+</section><section class="article-section" id="побудова-невеликої-нейронної-мережі"><span class="section-no">06</span><h2>Побудова невеликої нейронної мережі</h2>
+<p>Розглянемо мережу з двома входами, одним прихованим шаром із трьох нейронів та одним вихідним нейроном. Входи залишаються <span class="math display">\[x_1=\text{маса},
+\qquad
+x_2=\text{діаметр},\]</span> і обидва подаються на кожний прихований нейрон, як показано на Рисунку <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p>
+<figure id="fig:small_network">
+<img alt="Дидактична архітектура \(2\) – \(3\) – \(1\) , використана для введення обчислень у нейронній мережі. Два входи — маса та діаметр — надходять до трьох нейронів прихованого шару. Їхні активації \(h_1,h_2,h_3\) потім комбінуються вихідним нейроном для отримання передбачення \(\wide" decoding="async" loading="lazy" src="../assets/img/uk/Fig05.png"/>
+<figcaption>Дидактична архітектура <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span>, використана для введення обчислень у нейронній мережі. Два входи — маса та діаметр — надходять до трьох нейронів прихованого шару. Їхні активації <span class="math inline">\(h_1,h_2,h_3\)</span> потім комбінуються вихідним нейроном для отримання передбачення <span class="math inline">\(\widehat{y}\)</span>. Кожне з’єднання має вагу, що налаштовується, а кожний нейрон — зміщення.</figcaption>
+</figure>
+<p>Нехай виходами прихованого шару є <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> і <span class="math inline">\(h_3\)</span>. Кожен нейрон отримує ті самі два входи, але має власні ваги й зміщення: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>Хоча всі три нейрони отримують ті самі масу й діаметр, вони можуть давати різні відповіді, бо їхні параметри різні. Під час навчання ці параметри налаштовуються так, щоб проміжні активації стали корисними для класифікації.</p>
+<p>Три величини <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> і <span class="math inline">\(h_3\)</span> потім надходять до вихідного нейрона, який обчислює <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> і формує <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> Для нашої бінарної задачі використаємо сигмоїдний вихід: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>Якщо позначити яблуко через <span class="math inline">\(y=1\)</span>, а апельсин через <span class="math inline">\(y=0\)</span>, поріг <span class="math inline">\(0.5\)</span> дає правило класу <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{яблуко},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{апельсин}.\]</span> Отже, значення поблизу <span class="math inline">\(1\)</span> сильно пов’язані з яблуками, а значення поблизу <span class="math inline">\(0\)</span> — з апельсинами. Як зазначалося раніше, числове тлумачення <span class="math inline">\(\widehat{y}\)</span> як імовірності потребує додаткових припущень щодо моделі та її навчання. Для використаного тут правила класифікації достатньо розглядати <span class="math inline">\(\widehat{y}\)</span> як неперервний вихід мережі.</p>
+<p>Центральною особливістю цієї архітектури є проміжне подання <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> Мережа отримує дві ознаки та конструює три нові величини перед формуванням остаточної відповіді. Ці активації не задаються вручну: вони залежать від ваг і зміщень, а отже змінюються під час навчання параметрів.</p>
+<p>Попри невеликий розмір, мережа вже має тринадцять параметрів, що налаштовуються. Три приховані нейрони містять <span class="math display">\[3(2+1)=9\]</span> параметрів, а вихідний нейрон додає <span class="math display">\[3+1=4.\]</span> Отже, <span class="math display">\[9+4=13.\]</span></p>
+<p>Той самий підрахунок прозоро видно в матричному записі. Визначимо <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> Тоді прихований шар компактно записується як <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> де <span class="math inline">\(g\)</span> діє покомпонентно. Для виходу маємо <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> де <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>Цей запис передбачає структуру, що з’явиться у програмі Python. Коли фрукт подається на вхід і ми послідовно обчислюємо активації до отримання <span class="math inline">\(\widehat{y}\)</span>, виконується <em>пряме поширення</em> або <em>прямий прохід</em> (forward pass). Залишається головне питання: як автоматично визначити тринадцять параметрів так, щоб передбачення узгоджувалися з даними?</p>
+</section><section class="article-section" id="як-нейронна-мережа-навчається"><span class="section-no">07</span><h2>Як нейронна мережа навчається?</h2>
+<p>Ваги й зміщення наперед невідомі. Їх треба налаштувати, використовуючи приклади, для яких правильна відповідь відома. Цей процес називається <em>навчанням</em> і його можна підсумувати циклом <span class="math display">\[\boxed{\text{передбачити}}
+\longrightarrow
+\boxed{\text{оцінити помилку}}
+\longrightarrow
+\boxed{\text{оновити параметри}}
+\longrightarrow
+\boxed{\text{повторити}}.\]</span></p>
+<p>Розгляньмо фрукт масою <span class="math inline">\(140\)</span> г і діаметром <span class="math inline">\(7.0\)</span> см, правильним класом якого є апельсин, тобто <span class="math inline">\(y=0\)</span>. Припустімо, що на певному етапі навчання мережа видає <span class="math inline">\(\widehat{y}=0.80\)</span>. Однією з простих мір невідповідності між передбаченням і цільовим значенням є квадратична помилка <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Для цього прикладу <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>Цей вираз є <em>функцією втрат</em> для одного прикладу. Оскільки це квадрат, <span class="math inline">\(E\geq0\)</span>, а передбачення, що далі від цільового значення, отримують більший штраф. Множник <span class="math inline">\(1/2\)</span> не змінює положення мінімуму, але спрощує похідні. У бінарній класифікації часто використовують інші функції втрат, особливо перехресну ентропію. Тут ми застосовуємо квадратичну помилку, оскільки її алгебра прозора й достатня для введення оптимізації та зворотного поширення .</p>
+<p>Якщо навчальна вибірка містить <span class="math inline">\(N\)</span> прикладів, однією з глобальних мір є середня втрата <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Кожне передбачення залежить від ваг і зміщень мережі, тому <span class="math inline">\(J\)</span> також залежить від усіх цих параметрів. Навчання означає пошук таких значень параметрів, за яких <span class="math inline">\(J\)</span> є малою.</p>
+<p>Щоб зрозуміти механізм налаштування, спочатку уявімо, що всі параметри, крім однієї ваги <span class="math inline">\(w\)</span>, зафіксовані. Тоді втрату можна розглядати як функцію <span class="math inline">\(J=J(w)\)</span>. На Рисунку <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> підсумовано основні етапи навчання, які ми зараз розглянемо.</p>
+<figure id="fig:training_cycle">
+<img alt="Базовий цикл навчання нейронної мережі. Прямий прохід перетворює входи на передбачення; функція втрат вимірює невідповідність між передбаченням і ціллю; зворотне поширення обчислює градієнти за правилом ланцюга; градієнтний спуск використовує ці градієнти для оновлення ваг і зміщ" decoding="async" loading="lazy" src="../assets/img/uk/Fig06.png"/>
+<figcaption>Базовий цикл навчання нейронної мережі. Прямий прохід перетворює входи на передбачення; функція втрат вимірює невідповідність між передбаченням і ціллю; зворотне поширення обчислює градієнти за правилом ланцюга; градієнтний спуск використовує ці градієнти для оновлення ваг і зміщень. Повторення цього циклу протягом багатьох епох і є навчанням.</figcaption>
+</figure>
+<p>Для читачів із невеликим досвідом математичного аналізу похідну тут можна тлумачити як міру <em>локальної чутливості</em>: вона показує, як мала зміна одного параметра зазвичай змінює втрату. Її знак указує, у якому напрямі функція локально зростає або спадає, а модуль характеризує силу цієї локальної зміни.</p>
+<p>Похідна <span class="math display">\[\frac{\partial J}{\partial w}\]</span> задає локальний нахил. Якщо вона додатна, невелике збільшення <span class="math inline">\(w\)</span> зазвичай збільшує <span class="math inline">\(J\)</span>, тому вагу слід рухати в протилежному напрямі. Якщо вона від’ємна, збільшення <span class="math inline">\(w\)</span> локально має тенденцію зменшувати <span class="math inline">\(J\)</span>. Обидва випадки описуються формулою <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> яка виражає базову ідею <em>градієнтного спуску</em>. Додатне число <span class="math inline">\(\eta\)</span> називають <em>швидкістю навчання</em>; воно керує розміром кроку. Надто мале значення може зробити навчання повільним, а надто велике — спричинити коливання або нестійкість.</p>
+<p>Для мережі з багатьма параметрами позначимо через <span class="math inline">\(\theta\)</span> будь-яку вагу або зміщення. Тоді оновлення має вигляд <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> Сукупність усіх частинних похідних утворює <em>градієнт</em> функції втрат. Геометрично градієнт спрямований у бік найшвидшого локального зростання, тому від’ємний градієнт задає локальний напрям спадання.</p>
+<p>Треба ще навчитися обчислювати ці похідні, коли мережа є композицією кількох функцій. Під час прямого проходу інформація рухається так: <span class="math display">\[\text{входи}
+\longrightarrow
+\text{прихований шар}
+\longrightarrow
+\text{вихід}.\]</span> Щоб визначити, як параметр раннього шару впливає на втрату, математично простежуємо ланцюг залежностей у зворотному напрямі. Цю процедуру називають <em>зворотним поширенням</em> (backpropagation). По суті, це систематичне й ефективне застосування правила ланцюга. Румельгарт, Гінтон і Вільямс  є класичним джерелом, що популяризувало цю процедуру для мереж із прихованими шарами; Нільсен  подає докладний і особливо дидактичний вивід.</p>
+<p>Для простого ланцюга залежностей, у якому <span class="math inline">\(E\)</span> залежить від <span class="math inline">\(\widehat{y}\)</span>, <span class="math inline">\(\widehat{y}\)</span> залежить від активації <span class="math inline">\(h\)</span>, а <span class="math inline">\(h\)</span> своєю чергою залежить від ваги <span class="math inline">\(w\)</span>, правило ланцюга дає <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> Кожний множник описує один етап впливу <span class="math inline">\(w\)</span> на кінцеву втрату. У більших мережах є багато таких ланцюгів, а зворотне поширення організує обчислення так, щоб проміжні похідні можна було повторно використовувати, а не обчислювати окремо для кожного параметра.</p>
+<p>На практиці навчання використовує багато прикладів. Один повний прохід усією навчальною вибіркою називають <em>епохою</em>. Параметри можна оновлювати після кожного прикладу, як у дидактичній програмі нижче, або після невеликих груп прикладів, що називаються <em>мініпакетами</em> (mini-batches), як часто роблять у більших мережах. У будь-якому разі цикл передбачень, втрат, градієнтів і оновлень повторюється протягом багатьох епох.</p>
+<p>Наочний спосіб побачити цю еволюцію — простежити передбачення для одного фіксованого прикладу на різних етапах навчання. Знову розгляньмо фрукт масою <span class="math inline">\(140\)</span> г і діаметром <span class="math inline">\(7.0\)</span> см, правильним класом якого є апельсин. У Таблиці <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> показано умовну послідовність. Ці значення не відповідають конкретному запуску; вони лише ілюструють механізм.</p>
+<div id="tab:learning">
+<table>
+<caption>Умовна еволюція передбачення мережі для того самого фрукта під час навчання. Повторні оновлення параметрів можуть поступово перемістити спочатку неправильний вихід до класифікації, узгодженої з цільовою міткою.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Епоха</th>
+<th style="text-align: center;">Передбачення <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">Втрата <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">Класифікація</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">Яблуко</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">Яблуко</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">Яблуко</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">Апельсин</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">Апельсин</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Спочатку вихід близький до <span class="math inline">\(1\)</span>, і фрукт помилково класифікується як яблуко. У міру налаштування параметрів передбачення зменшується й зрештою перетинає поріг <span class="math inline">\(0.5\)</span>, даючи правильний клас. У цьому процесі змінюються числові значення ваг і зміщень; архітектура мережі залишається фіксованою.</p>
+<p>Зменшення втрат на навчальних даних не є кінцевою метою. Корисна мережа повинна також добре передбачати для прикладів, які не використовувалися для налаштування параметрів. Цю здатність називають <em>узагальненням</em>. Коли модель надто сильно пристосовується до особливостей навчальної вибірки й гірше працює на нових даних, маємо <em>перенавчання</em>. У ретельніших оцінюваннях дані зазвичай поділяють на навчальну, валідаційну та тестову вибірки: перша використовується для налаштування параметрів, друга підтримує рішення під час розроблення моделі, а третю резервують для остаточного оцінювання. Ширше обговорення узагальнення й оцінювання моделей можна знайти у Faceli та ін.  і Goodfellow, Bengio та Courville .</p>
+<p>Отже, ми дійшли математичного змісту навчання нейронної мережі. У цьому контексті навчатися означає налаштовувати параметри композиції функцій так, щоб зменшувати міру помилки на даних і, в ідеалі, узагальнювати на нові приклади. Мережа робить передбачення, обчислює втрату, використовує похідні, щоб визначити вплив параметрів на цю втрату, і виконує послідовність малих корекцій.</p>
+</section><section class="article-section" id="від-математики-до-python"><span class="section-no">08</span><h2>Від математики до Python</h2>
+<p>Тепер перейдемо від рівнянь до виконуваної програми. Мета полягає не у використанні спеціалізованої бібліотеки нейронних мереж, а в безпосередній реалізації за допомогою <code>NumPy</code> математичних операцій, розвинених у статті . Завдяки цьому можна рядок за рядком побачити, як у коді з’являються лінійні комбінації, функції активації, обчислення втрат, зворотне поширення та градієнтний спуск.</p>
+<p>Для переконливішого фінального прикладу використаємо синтетичний набір даних, розподілений по ширшій області “маса–діаметр”. Ми й далі працюємо лише з двома фізичними ознаками — масою в грамах і діаметром у сантиметрах, — але тепер розміщуємо <span class="math inline">\(64\)</span> навчальні приклади в широкій області площини й залишаємо ще вісім прикладів для ілюстративного тесту. Дані залишаються синтетичними й лежать у правдоподібних діапазонах для яблук та апельсинів. Їх побудовано так, щоб отримати нелінійну межу рішення без надмірної концентрації всіх точок у кількох штучних кластерах.</p>
+<p>Геометрична ідея проста. Ми задаємо опорну криву на площині “маса–діаметр”, розміщуємо яблука у двох смугах над цією кривою, а апельсини — у двох смугах під нею. До маси й діаметра додаються невеликі детерміновані збурення, щоб спостереження займали ширшу область. Отриманий приклад багатший за попередні ілюстрації: він містить більше точок, дані розподілені по області, а відповідна межа рішення явно криволінійніша за пряму.</p>
+<p>Для цього фінального обчислювального експерименту збільшимо прихований шар до дванадцяти нейронів ReLU. Це не змінює концептуальної структури, вивченої в попередніх розділах; лише збільшує здатність мережі представляти складнішу межу. Замість <span class="math inline">\(13\)</span> параметрів у дидактичній мережі з трьома нейронами тепер маємо <span class="math inline">\(49\)</span> параметрів, що налаштовуються: <span class="math inline">\(24\)</span> ваги та <span class="math inline">\(12\)</span> зміщень у першому шарі, потім <span class="math inline">\(12\)</span> ваг і одне зміщення у вихідному шарі. Рівняння зберігають точно ту саму форму; лише вектори й матриці стають більшими.</p>
+<p>Повну програму наведено нижче.</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Яблуко - навчання")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Апельсин - навчання")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Яблуко - тест")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Апельсин - тест")
+
+    ax.set_xlabel("Маса (г)")
+    ax.set_ylabel("Діаметр (см)")
+    ax.set_title("Вихід нейронної мережі після навчання")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Яблуко - навчання'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Апельсин - навчання'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Яблуко - тест'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Апельсин - тест'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Межа рішення нейронної мережі')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>Хоча код довший за перші рівняння, розглянуті в статті, його структура залишається прозорою. Функція <code>build_data()</code> автоматично генерує <span class="math inline">\(64\)</span> навчальні приклади та вісім ілюстративних тестових прикладів. Потім обидві змінні стандартизуються за формулою <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> де <span class="math inline">\(\mu_j\)</span> і <span class="math inline">\(\sigma_j\)</span> обчислюються лише за навчальною вибіркою. Це не дозволяє тестовим даним впливати на налаштування параметрів і водночас приводить масу й діаметр до порівнянних числових масштабів.</p>
+<p>Суть прямого проходу не змінюється. Єдина відмінність полягає в тому, що перший шар тепер формує вектор із дванадцяти прихованих активацій. У матричному записі <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\mathrm{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> Ці чотири рядки й надалі містять математичне ядро алгоритму. Навчання також зберігає раніше введену логіку: обчислити передбачення, виміряти його помилку, поширити інформацію про чутливість назад за допомогою похідних і оновити параметри малими кроками градієнтного спуску.</p>
+<p>У коді зворотне поширення на вихідному шарі з’являється у рядку</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>а поширення до прихованого шару — у рядку</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>після чого оновлюються всі ваги та зміщення. Оскільки приклади перемішуються на кожній епосі, а параметри оновлюються після кожного спостереження, ця реалізація є елементарною формою <em>стохастичного градієнтного спуску</em>.</p>
+<p>Для використаного випадкового зерна та гіперпараметрів фінальна середня втрата має порядок від <span class="math inline">\(10^{-5}\)</span> до <span class="math inline">\(10^{-4}\)</span>, і всі <span class="math inline">\(64\)</span> навчальні приклади разом із вісьмома ілюстративними тестовими прикладами отримують очікувану класифікацію. Це не слід тлумачити як суворе статистичне оцінювання якості: дані синтетичні й побудовані з дидактичною метою. Їхня роль — показати в менш тривіальному випадку, як невелика нейронна мережа може вивчити явно нелінійну межу рішення.</p>
+<p>На Рисунку <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> показано фінальний вихід програми на площині “маса–діаметр”. Відображено всі навчальні точки. Виділена крива є рівнем <span class="math inline">\(\widehat{y}=0.5\)</span> і представляє межу рішення, вивчену мережею; зафарбовані області відповідають двом передбачуваним класам. Кола позначають навчальні яблука, квадрати — навчальні апельсини, трикутники — тестові яблука, а хрестики — тестові апельсини. Легенду винесено за межі основної області графіка, щоб вона не закривала жодної точки даних.</p>
+<figure id="fig:python_output">
+<img alt="Вихід Python після навчання нейронної мережі. Синтетичний набір даних містить \(64\) навчальні приклади, розподілені по широкій області площини “маса–діаметр”, і вісім додаткових прикладів, зарезервованих для ілюстративного тесту. Виділена крива є рівнем \(\widehat{y}=0.5\) і пре" decoding="async" loading="lazy" src="../assets/img/uk/Fig07.png"/>
+<figcaption>Вихід Python після навчання нейронної мережі. Синтетичний набір даних містить <span class="math inline">\(64\)</span> навчальні приклади, розподілені по широкій області площини “маса–діаметр”, і вісім додаткових прикладів, зарезервованих для ілюстративного тесту. Виділена крива є рівнем <span class="math inline">\(\widehat{y}=0.5\)</span> і представляє вивчену межу рішення; зафарбовані області показують класи, передбачені мережею. Кола відповідають навчальним яблукам, квадрати — навчальним апельсинам, трикутники — тестовим яблукам, а хрестики — тестовим апельсинам.</figcaption>
+</figure>
+<p>Ми почали з прямої, що розділяє дві прості групи точок, і завершили багатшим обчислювальним прикладом, у якому криволінійна межа виникає внаслідок автоматичного налаштування параметрів мережі. До математики не додалося нічого таємничого: реалізація лише організує й багаторазово повторює, у більшому масштабі й з високою швидкістю, афінні комбінації, функції активації, похідні, матричні добутки та кроки градієнтного спуску .</p>
+<p>Усі обчислювальні матеріали, пов’язані з цією статтею, — включно з кодом та виконуваним блокнотом Google Colab — доступні за адресою <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>; це єдина точка доступу для читачів, які хочуть дослідити, відтворити або адаптувати приклади.</p>
+<h4 id="заява-про-використання-ші.">Заява про використання ШІ.</h4>
+<p>Автор використовував ChatGPT, розроблений OpenAI, як допоміжний інструмент для підготовки чернетки, мовного редагування, організації викладу та створення дидактичних рисунків. Автор несе повну відповідальність за остаточний зміст роботи, включно із задумом і розробленням математичного матеріалу, кодом та використаними джерелами.</p>
+</section></div>
+<section class="article-section references"><span class="section-no">Література</span><h2>Література</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Ресурси</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/uk/Article_PMO2026_NN_UK.pdf"><strong>PDF</strong><span>Математична анатомія нейронної мережі</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_UK.ipynb"><strong>Google Colab</strong><span>Notebook · Українська</span></a>
+</div></section>
+<section><h2>Про NeuralMath</h2><p class="bio">NeuralMath — відкритий освітній проєкт, розроблений Dr. Americo Cunha Jr. Його мета — зробити математичні операції всередині невеликої нейронної мережі видимими, доступними для перевірки та відтворення широкою аудиторією з відносно базовою підготовкою з математичного аналізу й статистики.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Як цитувати педагогічний текст</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>Після публікації бібліографічний запис буде доповнено томом, сторінками та DOI. Будь ласка, цитуйте педагогічний текст, а не цей вебсайт.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>Ліцензія</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Пояснювальний текст сайту та оригінальні матеріали доступні за ліцензією CC BY 4.0, якщо не зазначено інше. PDF статті може підпадати під ліцензію видавця.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

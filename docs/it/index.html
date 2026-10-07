@@ -1,80 +1,882 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="it">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NeuralMath — la matematica dentro una rete neurale</title><meta name="description" content="Un’introduzione multilingue e centrata sul codice alla matematica delle reti neurali, costruita attorno a un esempio NumPy completo."><meta name="theme-color" content="#090d12">
-<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/css/site.css">
-<link rel="canonical" href="https://neuralmath.org/it/">
-<link rel="alternate" hreflang="en" href="https://neuralmath.org/"><link rel="alternate" hreflang="pt-BR" href="https://neuralmath.org/pt/"><link rel="alternate" hreflang="es" href="https://neuralmath.org/es/"><link rel="alternate" hreflang="fr" href="https://neuralmath.org/fr/"><link rel="alternate" hreflang="it" href="https://neuralmath.org/it/"><link rel="alternate" hreflang="de" href="https://neuralmath.org/de/"><link rel="alternate" hreflang="x-default" href="https://neuralmath.org/">
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — L'anatomia matematica di una rete neurale</title>
+<meta content="Introduzione ricca e multilingue alla matematica delle reti neurali, dalla geometria analitica e dal neurone artificiale alla retropropagazione e NumPy." name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/it/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
-<body><header class="topbar"><div class="flags"><a class="flag" href="../index.html" hreflang="en" lang="en" title="English" aria-label="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a class="flag" href="../pt/index.html" hreflang="pt" lang="pt" title="Português" aria-label="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español" aria-label="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français" aria-label="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a class="flag current" href="../it/index.html" hreflang="it" lang="it" title="Italiano" aria-label="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch" aria-label="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a></div></header>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag current" href="index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
 <main class="page">
-<div class="hero"><div class="brandline"><img class="mark" src="../assets/favicon.svg" alt=""><span>Matematica · reti neurali · Python</span></div><h1><span>NeuralMath</span></h1><p class="subtitle">Un’introduzione centrata sul codice, progettata per rendere visibile ogni operazione matematica di una rete neurale.</p><p>NeuralMath è un progetto didattico per studenti, docenti e lettori con formazione quantitativa che desiderano capire che cosa calcola realmente una rete neurale. Il sito segue un unico esempio completo in Python/NumPy, dai dati fino alla frontiera decisionale appresa. Le spiegazioni matematiche più estese restano nel testo didattico associato, così questa pagina può rimanere lineare, eseguibile e facile da consultare.</p><p class="meta-links"><a href="../pdf/pt/A_anatomia_matematica_de_uma_rede_neural.pdf">Leggi il testo didattico originale (PDF, portoghese)</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Colab</a></p></div>
-<div class="citation"><h2>Come citare il testo didattico</h2><p>Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manoscritto sottoposto a Professor de Matemática Online (PMO), 2026.</p><p class="small">La citazione sarà aggiornata con volume, pagine e DOI dopo la pubblicazione. Nei lavori accademici, citare il testo didattico e non questo sito web.</p><pre><code>@unpublished{cunha2026anatomia,
-  author = {Cunha Jr, Americo},
-  title  = {A anatomia matemática de uma rede neural},
-  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
-  year   = {2026}
-}</code></pre></div>
-<section id="s1"><span class="section-no">1</span><h2>Funzioni di attivazione</h2><p>L’implementazione inizia con le due non linearità usate dalla rete. ReLU agisce nello strato nascosto, mentre la sigmoide trasforma il punteggio finale in un valore compreso tra 0 e 1.</p><pre class=""><code>def relu(s):
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Matematica · reti neurali · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">Un percorso trasparente dalla geometria analitica alla retropropagazione.</p>
+<p>NeuralMath è un’edizione web pedagogica dell’articolo associato al progetto. Invece di presentare una rete neurale come una scatola nera, sviluppa la matematica passo dopo passo: rappresentazione numerica dei dati, frontiere decisionali lineari, neuroni artificiali, funzioni di attivazione, reti multistrato, funzione di perdita, gradienti, retropropagazione e un’implementazione completa in NumPy.</p>
+<div class="resource-bar"><a href="../pdf/it/Article_PMO2026_NN_IT.pdf">Leggi l’articolo completo (PDF)</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_IT.ipynb">Apri in Colab</a></div>
+</div>
+<div class="citation"><h2>Testo pedagogico originale</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Questa edizione web e le sue traduzioni si basano sul manoscritto originale in portoghese.</p></div>
+<nav aria-label="Contenuti" class="toc"><h2>Contenuti</h2><ol><li><a href="#quando-può-imparare-un-computer">Quando può imparare un
+computer?</a></li><li><a href="#rappresentazione-matematica-del-problema">Rappresentazione
+matematica del problema</a></li><li><a href="#una-retta-come-classificatore">Una retta come
+classificatore</a></li><li><a href="#il-neurone-artificiale">Il neurone artificiale</a></li><li><a href="#perché-abbiamo-bisogno-di-una-funzione-di-attivazione">Perché
+abbiamo bisogno di una funzione di attivazione?</a></li><li><a href="#costruzione-di-una-piccola-rete-neurale">Costruzione di una
+piccola rete neurale</a></li><li><a href="#come-impara-una-rete-neurale">Come impara una rete neurale?</a></li><li><a href="#dalla-matematica-a-python">Dalla matematica a Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="quando-può-imparare-un-computer"><span class="section-no">01</span><h2>Quando può imparare un
+computer?</h2><p>Nella vita quotidiana prendiamo decisioni di classificazione quasi
+senza rendercene conto. Osservando un frutto, lo identifichiamo
+rapidamente come una mela o un’arancia; quando arriva un messaggio sul
+telefono, distinguiamo una conversazione legittima da una pubblicità
+indesiderata; in un’analisi medica, diverse misure possono essere
+combinate per supportare una decisione; e, negli istituti finanziari,
+vengono valutati numerosi dati prima di concedere un credito. In tutti
+questi esempi, più caratteristiche vengono considerate congiuntamente
+per produrre una risposta.</p><p>In molti programmi informatici tradizionali, le regole che producono
+questa risposta sono scritte esplicitamente dal programmatore. Questo
+approccio funziona bene quando le regole sono note e possono essere
+formulate con chiarezza. Diventa meno efficace quando i dati sono molto
+variabili o quando è difficile stabilire in anticipo tutte le condizioni
+necessarie per una buona decisione. Ciò conduce a una domanda
+naturale:</p><div class="center">
+<p><em>Possiamo costruire un programma che impari una regola decisionale
+dagli<br/>
+esempi, invece di ricevere la regola in anticipo?</em></p>
+</div><p>Questa è una delle idee centrali dell’<em>apprendimento
+automatico</em>, un’area dell’intelligenza artificiale dedicata a metodi
+che adattano modelli a partire dai dati . In un problema di
+apprendimento supervisionato, l’algoritmo riceve esempi insieme alle
+risposte corrette e cerchiamo un modello capace di produrre previsioni
+utili anche per casi che non sono stati utilizzati durante
+l’addestramento. Tra i numerosi modelli sviluppati a questo scopo, le
+<em>reti neurali artificiali</em> hanno acquisito grande importanza in
+applicazioni quali il riconoscimento di immagini, l’elaborazione del
+linguaggio, l’analisi di segnali e la previsione di serie temporali
+.</p><p>L’uso delle reti neurali come ponte tra matematica, informatica e
+didattica scolastica è già stato discusso in <em>Professor de Matemática
+Online</em> da Batista e Martins , che presentano un’attività
+comprendente formazione degli insegnanti, Python e riconoscimento di
+cifre. Il presente articolo segue un percorso complementare. Il nostro
+obiettivo principale è esporre la matematica interna di una piccola rete
+neurale, partendo dalla geometria analitica e procedendo passo dopo
+passo fino al calcolo dei gradienti e a un’implementazione manuale della
+retropropagazione.</p><p>Nonostante la sofisticazione delle applicazioni moderne, il nucleo
+matematico di una rete neurale può essere introdotto mediante idee
+relativamente familiari. A un livello elementare, una rete neurale è una
+composizione di funzioni i cui parametri vengono adattati a partire dai
+dati. Iniziamo con un semplice problema geometrico, reinterpretando una
+retta separatrice come un neurone artificiale; colleghiamo poi più
+neuroni, studiamo il ruolo delle funzioni di attivazione e mostriamo
+come le derivate possano essere utilizzate per regolare automaticamente
+i parametri della rete. Infine, implementiamo in Python un esempio
+piccolo ma completo, mantenendo una corrispondenza diretta tra le
+equazioni e il codice.</p></section><section class="article-section" id="rappresentazione-matematica-del-problema"><span class="section-no">02</span><h2>Rappresentazione
+matematica del problema</h2><p>Per comprendere il funzionamento di una rete neurale, iniziamo con un
+problema volutamente semplice: distinguere le mele dalle arance. Un
+frutto possiede molte caratteristiche che potrebbero essere utili per
+questo compito, come il colore, la massa, il diametro, la consistenza e
+l’aroma. Tuttavia, un primo modello matematico non deve necessariamente
+includere tutta questa complessità. Utilizzeremo soltanto due grandezze
+facili da misurare: la massa, in grammi, e il diametro, in
+centimetri.</p><p>Pertanto, ogni frutto sarà rappresentato da una coppia ordinata <span class="math display">\[(x_1,x_2),\]</span> dove <span class="math display">\[x_1=\text{massa}
+\qquad\text{e}\qquad
+x_2=\text{diametro}.\]</span></p><p>Così, la coppia <span class="math inline">\((155,\;7.2)\)</span>
+rappresenta un frutto con massa di <span class="math inline">\(155\)</span> g e diametro di <span class="math inline">\(7.2\)</span> cm. Sostituendo l’oggetto fisico con
+due misure numeriche, associamo ogni frutto a un punto del piano
+cartesiano: la prima coordinata indica la massa e la seconda il
+diametro. La Figura <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> illustra questa rappresentazione per
+un insieme ipotetico di mele e arance.</p><figure id="fig:fruits">
+<img alt="Dall’osservazione fisica alla modellizzazione matematica." decoding="async" loading="lazy" src="../assets/img/it/Fig01.png"/>
+<figcaption>Dall’osservazione fisica alla modellizzazione matematica.
+Ogni frutto viene prima descritto mediante due grandezze misurabili —
+massa e diametro — e quindi rappresentato dalla coppia ordinata <span class="math inline">\((x_1,x_2)\)</span>. Nel piano massa–diametro, ogni
+osservazione diventa un punto, così che distinguere le mele dalle arance
+può essere reinterpretato come un problema geometrico di separazione di
+due classi.</figcaption>
+</figure><p>Questa trasformazione cambia la natura apparente del problema. Invece
+di chiedere direttamente come riconoscere una mela o un’arancia,
+possiamo formulare una domanda geometrica: come separare nel piano i
+punti appartenenti alle due classi? Questo cambiamento di prospettiva è
+fondamentale nell’apprendimento automatico. Immagini, testi, suoni e
+segnali sperimentali devono essere convertiti in rappresentazioni
+numeriche prima di poter essere elaborati da un algoritmo. Nel nostro
+esempio, ogni oggetto ha soltanto due coordinate; nelle applicazioni
+reali, una rappresentazione può contenere centinaia, migliaia o perfino
+milioni di componenti. Il principio rimane lo stesso: ogni esempio è
+associato a una collezione di numeri e il modello cerca una regola che
+trasformi tale rappresentazione nella risposta desiderata.</p><p>Iniziamo dalla regola geometrica più semplice disponibile e ci
+chiediamo se una sola retta possa separare adeguatamente i punti
+corrispondenti alle mele da quelli corrispondenti alle arance.</p></section><section class="article-section" id="una-retta-come-classificatore"><span class="section-no">03</span><h2>Una retta come
+classificatore</h2><p>Una volta rappresentato ogni frutto mediante un punto del piano
+cartesiano, la classificazione diventa un problema geometrico: può una
+retta separare le mele dalle arance? Questa domanda esprime l’idea
+fondamentale di un’importante famiglia di metodi di apprendimento
+automatico noti come <em>classificatori lineari</em>.</p><p>Consideriamo una retta che attraversa la nuvola di dati, come
+illustrato nella Figura <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>.
+La retta divide il piano in due semipiani. Se la maggior parte dei punti
+corrispondenti alle mele si trova da un lato e la maggior parte dei
+punti corrispondenti alle arance dall’altro, la posizione di un nuovo
+frutto rispetto alla retta può essere utilizzata come regola di
+classificazione. Dopo averne misurato massa e diametro, rappresentiamo
+il frutto con un punto e determiniamo da quale lato della retta si trovi
+tale punto.</p><figure id="fig:linear_classifier">
+<img alt="Esempio di classificatore lineare nel piano massa–diametro." decoding="async" loading="lazy" src="../assets/img/it/Fig02.png"/>
+<figcaption>Esempio di classificatore lineare nel piano massa–diametro.
+La retta svolge il ruolo di frontiera di decisione: i punti di un
+semipiano ricevono una classe, mentre quelli del semipiano opposto
+ricevono l’altra. La decisione dipende quindi unicamente dal lato della
+retta in cui si trova il punto.</figcaption>
+</figure><p>Nel piano cartesiano <span class="math inline">\((x_1,x_2)\)</span>,
+una retta può essere descritta da <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p><p>Il vettore <span class="math inline">\((w_1,w_2)\)</span> è
+perpendicolare alla retta e ne determina quindi l’orientamento, mentre
+il parametro <span class="math inline">\(b\)</span> contribuisce a
+determinarne la posizione. Questa rappresentazione presenta una piccola
+ridondanza: moltiplicare <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> e <span class="math inline">\(b\)</span> per una stessa costante non nulla
+produce esattamente la stessa retta. Di conseguenza, i parametri che
+descrivono la frontiera non sono unici. Anche la loro interpretazione
+numerica dipende dalla scala delle variabili. Poiché la massa è misurata
+in grammi e il diametro in centimetri, i valori numerici di <span class="math inline">\(w_1\)</span> e <span class="math inline">\(w_2\)</span> non devono essere confrontati senza
+considerare le diverse unità.</p><p>La stessa equazione della retta fornisce un modo semplice per
+determinare da quale lato della frontiera si trovi un punto. Definiamo
+il punteggio <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p><p>Se <span class="math inline">\(s(x_1,x_2)=0\)</span>, il punto si
+trova sulla retta. Se <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>, si trova in un
+semipiano; se <span class="math inline">\(s(x_1,x_2)&lt;0\)</span>, si
+trova nell’altro. Se decidiamo che i punteggi positivi corrispondono
+alle mele e quelli negativi alle arance, la regola diventa <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{mela},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{arancia}.
+\end{cases}\]</span></p><p>Per esempio, consideriamo la frontiera definita da <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> Per un frutto con massa di <span class="math inline">\(160\)</span> g e diametro di <span class="math inline">\(7.8\)</span> cm, <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> Poiché il punteggio è positivo, il punto si trova
+nel semipiano che associamo alle mele. Pertanto, questo classificatore
+etichetterebbe il frutto come una mela.</p><p>Non ogni scelta di <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> e <span class="math inline">\(b\)</span> produce una buona classificazione.
+Alcune rette separano male i due gruppi, mentre altre commettono meno
+errori. Il problema di apprendimento consiste precisamente
+nell’utilizzare esempi già etichettati per determinare valori dei
+parametri che riducano una misura dell’errore del modello. Invece di
+programmare direttamente la posizione della retta, vogliamo che
+l’algoritmo ne adatti i coefficienti a partire dai dati.</p><p>Una sola retta può funzionare bene quando le classi sono
+approssimativamente separabili linearmente. Insiemi di dati più
+complessi possono richiedere una frontiera non lineare. Prima di
+affrontare questa limitazione, reinterpretiamo il classificatore appena
+costruito come un’unità computazionale elementare: un neurone
+artificiale.</p></section><section class="article-section" id="il-neurone-artificiale"><span class="section-no">04</span><h2>Il neurone artificiale</h2><p>Nella sezione precedente, l’espressione <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> è stata utilizzata per
+determinare da quale lato di una retta si trovi un frutto. La stessa
+espressione può essere considerata come la prima fase del calcolo
+eseguito da un <em>neurone artificiale</em>. Un neurone riceve ingressi
+numerici, li combina usando pesi e un bias, quindi applica una funzione
+matematica per ottenere la propria uscita.</p><p>Nel nostro esempio, gli ingressi sono la massa <span class="math inline">\(x_1\)</span> e il diametro <span class="math inline">\(x_2\)</span>. Ogni ingresso viene moltiplicato per
+un parametro chiamato <em>peso</em>; i prodotti vengono sommati insieme
+a un termine costante <span class="math inline">\(b\)</span>, chiamato
+<em>bias</em>. La Figura <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a>
+mostra schematicamente questo calcolo.</p><figure id="fig:artificial_neuron">
+<img alt="Funzionamento schematico di un neurone artificiale." decoding="async" loading="lazy" src="../assets/img/it/Fig03.png"/>
+<figcaption>Funzionamento schematico di un neurone artificiale. Ogni
+ingresso <span class="math inline">\(x_i\)</span> viene moltiplicato per
+un peso <span class="math inline">\(w_i\)</span>; i prodotti vengono
+sommati al bias <span class="math inline">\(b\)</span> per produrre il
+punteggio <span class="math inline">\(s\)</span>. La funzione di
+attivazione <span class="math inline">\(g\)</span> trasforma quindi
+questo punteggio nell’uscita <span class="math inline">\(\widehat{y}=g(s)\)</span>, che può essere
+utilizzata come quantità intermedia o come previsione
+finale.</figcaption>
+</figure><p>I pesi determinano come le variazioni degli ingressi influenzano il
+punteggio. Se <span class="math inline">\(x_2\)</span> e tutte le altre
+quantità rimangono fisse, una variazione <span class="math inline">\(\Delta x_1\)</span> modifica <span class="math inline">\(s\)</span> di <span class="math inline">\(w_1\Delta x_1\)</span>. Analogamente, una
+variazione <span class="math inline">\(\Delta x_2\)</span> modifica il
+punteggio di <span class="math inline">\(w_2\Delta x_2\)</span>. Anche
+il segno è importante: un peso positivo fa sì che un aumento
+dell’ingresso aumenti il punteggio, mentre un peso negativo produce
+l’effetto opposto. Questa interpretazione deve essere usata con cautela
+quando le variabili hanno unità e scale diverse. Per questo motivo, le
+implementazioni pratiche spesso normalizzano o standardizzano i dati di
+ingresso prima dell’addestramento.</p><p>Il bias <span class="math inline">\(b\)</span> è il termine costante
+della trasformazione affine. Geometricamente, permette di traslare la
+frontiera di decisione. Se <span class="math inline">\(b=0\)</span>,
+l’equazione <span class="math display">\[w_1x_1+w_2x_2=0\]</span>
+obbliga la retta a passare per l’origine. Con un bias, la frontiera può
+essere spostata in altre posizioni. Equivalentemente, quando <span class="math inline">\(x_1=x_2=0\)</span>, il punteggio è semplicemente
+<span class="math inline">\(s=b\)</span>.</p><p>Il punteggio non deve necessariamente essere l’uscita finale del
+neurone. In generale, gli si applica una <em>funzione di
+attivazione</em> <span class="math inline">\(g\)</span>: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span>
+Il calcolo avviene quindi in due fasi, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p><p>Utilizzando i valori dei parametri della sezione precedente otteniamo
+<span class="math inline">\(s=1.6\)</span>. Se scegliamo la funzione a
+gradino <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> allora <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. Secondo la nostra
+convenzione, il frutto viene classificato come una mela. Con questa
+attivazione, la decisione cambia quando <span class="math inline">\(s\)</span> attraversa lo zero, quindi la frontiera
+tra le classi è esattamente <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p><p>Un singolo neurone è quindi un oggetto matematico semplice con
+parametri regolabili. La sua vera importanza emerge collegando molte
+unità di questo tipo. Prima di costruire una rete, tuttavia, dobbiamo
+comprendere perché la funzione di attivazione sia essenziale.</p></section><section class="article-section" id="perché-abbiamo-bisogno-di-una-funzione-di-attivazione"><span class="section-no">05</span><h2>Perché
+abbiamo bisogno di una funzione di attivazione?</h2><p>Un neurone calcola dapprima un punteggio mediante una trasformazione
+affine e soltanto dopo applica una funzione di attivazione. Questa
+seconda fase è essenziale affinché una rete neurale possa rappresentare
+relazioni complesse. Per capire perché, immaginiamo una rete in cui non
+vengano utilizzate funzioni di attivazione. Ogni unità avrebbe allora la
+forma <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p><p>Per un’illustrazione unidimensionale, supponiamo che una prima unità
+produca <span class="math display">\[h=ax+b\]</span> e una seconda
+calcoli <span class="math display">\[y=ch+d.\]</span> La sostituzione
+fornisce <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span>
+che è ancora una funzione affine di <span class="math inline">\(x\)</span>. La stessa affermazione vale in più
+dimensioni: una composizione di trasformazioni affini rimane affine.
+Pertanto, aggiungere molti strati senza un’operazione non lineare non
+rende la rete fondamentalmente più espressiva; l’intera composizione
+potrebbe essere sostituita da una sola trasformazione affine.</p><p>Una funzione di attivazione rompe questa limitazione. Dopo aver
+calcolato il punteggio <span class="math inline">\(s\)</span>, il
+neurone applica una mappa, normalmente non lineare, <span class="math display">\[h=g(s).\]</span> Quando si collegano più unità di
+questo tipo, la composizione risultante non può più essere ridotta a una
+singola trasformazione affine. Ciò permette alla rete di costruire
+frontiere di decisione più complesse.</p><p>L’attivazione più semplice è la funzione a gradino, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> Produce una decisione binaria ed è molto utile per
+comprendere la classificazione. Tuttavia, la sua derivata è zero per
+<span class="math inline">\(s\neq0\)</span> e non è definita in <span class="math inline">\(s=0\)</span>. Poiché l’addestramento basato sul
+gradiente utilizza le derivate per determinare come debbano cambiare i
+parametri, la funzione a gradino non è adatta a questo meccanismo di
+addestramento.</p><p>Un’alternativa è la funzione sigmoide, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> Essa
+trasforma ogni numero reale in un valore strettamente compreso tra <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>. Per valori molto negativi di <span class="math inline">\(s\)</span>, l’uscita si avvicina a <span class="math inline">\(0\)</span>; per valori molto positivi, si avvicina
+a <span class="math inline">\(1\)</span>; tra i due estremi, la
+transizione è regolare. La sigmoide è derivabile in ogni punto e <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span>
+Poiché le sue uscite sono comprese tra <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>, viene spesso utilizzata nello strato
+di uscita di un classificatore binario. In una formulazione
+probabilistica e con una funzione di perdita appropriata, l’uscita può
+essere interpretata come una stima della probabilità della classe
+rappresentata da <span class="math inline">\(1\)</span>. Negli strati
+nascosti, tuttavia, la sigmoide può creare una difficoltà: per ingressi
+di grande modulo, la sua derivata diventa molto piccola, contribuendo al
+problema del <em>gradiente evanescente</em> nelle reti profonde.</p><p>Un’attivazione molto utilizzata negli strati nascosti è ReLU
+(<em>Rectified Linear Unit</em>), <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> Sebbene sia composta da due tratti lineari, ReLU
+non è globalmente lineare. La sua derivata è <span class="math inline">\(0\)</span> per <span class="math inline">\(s&lt;0\)</span> e <span class="math inline">\(1\)</span> per <span class="math inline">\(s&gt;0\)</span>. In <span class="math inline">\(s=0\)</span> la derivata usuale non esiste e le
+implementazioni software adottano una convenzione per il gradiente. Per
+ingressi positivi, la derivata non diminuisce al crescere di <span class="math inline">\(s\)</span>, evitando uno dei meccanismi di
+saturazione della sigmoide.</p><p>La Figura <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> confronta visivamente
+queste tre attivazioni: il salto brusco della funzione a gradino, la
+transizione regolare della sigmoide e il cambiamento di pendenza di
+ReLU.</p><figure id="fig:activation_functions">
+<img alt="Confronto tra tre funzioni di attivazione comunemente
+utilizzate nelle introduzioni alle reti neurali." decoding="async" loading="lazy" src="../assets/img/it/Fig04.png"/>
+<figcaption>Confronto tra tre funzioni di attivazione comunemente
+utilizzate nelle introduzioni alle reti neurali. La funzione a gradino
+realizza una decisione brusca; la sigmoide fornisce una transizione
+regolare tra <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>; e ReLU annulla gli ingressi negativi
+preservando quelli positivi. Le attivazioni non lineari impediscono che
+una successione di strati collassi in un’unica trasformazione
+affine.</figcaption>
+</figure><p>Le loro principali proprietà sono riassunte di seguito.</p><div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Funzione</th>
+<th style="text-align: center;">Uscita</th>
+<th style="text-align: left;">Derivata</th>
+<th style="text-align: left;">Uso tipico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gradino</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">Zero per <span class="math inline">\(s\neq0\)</span>; non definita in <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">Modelli storici ed esempi didattici</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigmoide</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Esiste per ogni <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">Strato di uscita nella classificazione
+binaria</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> per
+<span class="math inline">\(s&lt;0\)</span> e <span class="math inline">\(1\)</span> per <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">Strati nascosti</td>
+</tr>
+</tbody>
+</table>
+</div><p>I dettagli di queste funzioni differiscono, ma il loro ruolo
+concettuale comune consiste nell’introdurre non linearità. È questa non
+linearità che consente alla piccola rete della sezione successiva di
+rappresentare relazioni che una singola retta non può catturare.</p><p>Per i lettori che desiderino approfondire, Haykin  offre una trattazione
+classica delle reti neurali, mentre Goodfellow, Bengio e Courville  discutono le
+funzioni di attivazione e l’addestramento delle reti profonde in un
+contesto più ampio. Il testo di Nielsen, disponibile gratuitamente , è particolarmente
+accessibile per sviluppare intuizione su neuroni, attivazioni e
+apprendimento.</p></section><section class="article-section" id="costruzione-di-una-piccola-rete-neurale"><span class="section-no">06</span><h2>Costruzione di una
+piccola rete neurale</h2><p>Consideriamo ora una rete con due ingressi, uno strato nascosto
+contenente tre neuroni e un neurone di uscita. Gli ingressi rimangono
+<span class="math display">\[x_1=\text{massa},
+\qquad
+x_2=\text{diametro},\]</span> e vengono entrambi forniti a ciascun
+neurone nascosto, come mostrato nella Figura <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p><figure id="fig:small_network">
+<img alt="Architettura didattica \(2\) – \(3\) – \(1\) utilizzata per introdurre il calcolo in una rete neurale." decoding="async" loading="lazy" src="../assets/img/it/Fig05.png"/>
+<figcaption>Architettura didattica <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span>
+utilizzata per introdurre il calcolo in una rete neurale. I due ingressi
+— massa e diametro — alimentano tre neuroni dello strato nascosto. Le
+loro attivazioni <span class="math inline">\(h_1,h_2,h_3\)</span>
+vengono poi combinate dal neurone di uscita per produrre la previsione
+<span class="math inline">\(\widehat{y}\)</span>. Ogni connessione
+possiede un peso regolabile e ogni neurone ha un bias.</figcaption>
+</figure><p>Siano <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> e <span class="math inline">\(h_3\)</span> le uscite dello strato nascosto. Ogni
+neurone riceve gli stessi due ingressi, ma possiede i propri pesi e il
+proprio bias: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p><p>Sebbene i tre neuroni ricevano la stessa massa e lo stesso diametro,
+possono produrre risposte differenti perché i loro parametri sono
+diversi. Durante l’addestramento, tali parametri vengono adattati
+affinché le attivazioni intermedie risultino utili per la
+classificazione.</p><p>Le tre quantità <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> e <span class="math inline">\(h_3\)</span> vengono quindi inviate al neurone di
+uscita, che calcola <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span>
+e produce <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span>
+Per il nostro problema binario, utilizziamo un’uscita sigmoide: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p><p>Utilizzando <span class="math inline">\(y=1\)</span> per la mela e
+<span class="math inline">\(y=0\)</span> per l’arancia, una soglia di
+<span class="math inline">\(0.5\)</span> fornisce la decisione di classe
+<span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{mela},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{arancia}.\]</span> Pertanto, i valori vicini a <span class="math inline">\(1\)</span> sono fortemente associati alle mele,
+mentre quelli vicini a <span class="math inline">\(0\)</span> sono
+associati alle arance. Come osservato in precedenza, interpretare
+numericamente <span class="math inline">\(\widehat{y}\)</span> come una
+probabilità richiede ipotesi aggiuntive sul modello e sul suo
+addestramento. Per la regola di classificazione utilizzata qui, è
+sufficiente considerare <span class="math inline">\(\widehat{y}\)</span>
+come un’uscita continua della rete.</p><p>La caratteristica centrale di questa architettura è la
+rappresentazione intermedia <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> La rete riceve due caratteristiche e costruisce
+tre nuove quantità prima di produrre la risposta finale. Queste
+attivazioni non vengono scelte manualmente: dipendono dai pesi e dai
+bias e quindi cambiano man mano che i parametri vengono addestrati.</p><p>Nonostante le sue piccole dimensioni, la rete possiede già tredici
+parametri regolabili. I tre neuroni nascosti contengono <span class="math display">\[3(2+1)=9\]</span> parametri, e il neurone di
+uscita ne aggiunge <span class="math display">\[3+1=4.\]</span>
+Pertanto, <span class="math display">\[9+4=13.\]</span></p><p>Lo stesso conteggio risulta trasparente in notazione matriciale.
+Definiamo <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> Allora, lo strato nascosto può essere scritto in
+forma compatta come <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span>
+dove <span class="math inline">\(g\)</span> agisce componente per
+componente. Per l’uscita, <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> con <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p><p>Questa notazione anticipa la struttura che apparirà nel programma
+Python. Quando presentiamo un frutto in ingresso e calcoliamo le
+attivazioni successive fino a ottenere <span class="math inline">\(\widehat{y}\)</span>, eseguiamo una
+<em>propagazione in avanti</em> o un <em>passaggio in avanti</em>.
+Rimane la domanda centrale: come possono essere determinati
+automaticamente i tredici parametri affinché le previsioni si adattino
+ai dati?</p></section><section class="article-section" id="come-impara-una-rete-neurale"><span class="section-no">07</span><h2>Come impara una rete neurale?</h2><p>I pesi e i bias non sono noti in anticipo. Devono essere adattati
+utilizzando esempi per i quali è disponibile la risposta corretta.
+Questo processo è chiamato <em>addestramento</em> e può essere riassunto
+dal ciclo <span class="math display">\[\boxed{\text{prevedere}}
+\longrightarrow
+\boxed{\text{misurare l'errore}}
+\longrightarrow
+\boxed{\text{regolare i parametri}}
+\longrightarrow
+\boxed{\text{ripetere}}.\]</span></p><p>Consideriamo un frutto con massa di <span class="math inline">\(140\)</span> g e diametro di <span class="math inline">\(7.0\)</span> cm la cui classe corretta è arancia,
+quindi <span class="math inline">\(y=0\)</span>. Supponiamo che, in un
+certo momento dell’addestramento, la rete produca <span class="math inline">\(\widehat{y}=0.80\)</span>. Una misura semplice
+della discrepanza tra la previsione e il valore obiettivo è l’errore
+quadratico <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span>
+Per questo esempio, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p><p>Questa espressione è una <em>funzione di perdita</em> per un singolo
+esempio. Poiché è un quadrato, <span class="math inline">\(E\geq0\)</span>, e le previsioni più lontane
+dall’obiettivo ricevono penalizzazioni maggiori. Il fattore <span class="math inline">\(1/2\)</span> non modifica la posizione del minimo,
+ma semplifica le derivate. Nella classificazione binaria vengono spesso
+utilizzate altre perdite, in particolare l’entropia incrociata. Qui
+impieghiamo l’errore quadratico perché la sua algebra è trasparente ed è
+sufficiente per introdurre l’ottimizzazione e la retropropagazione .</p><p>Se l’insieme di addestramento contiene <span class="math inline">\(N\)</span> esempi, una misura globale è la perdita
+media <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Ogni
+previsione dipende dai pesi e dai bias della rete, quindi <span class="math inline">\(J\)</span> dipende anch’essa da tutti questi
+parametri. Addestrare significa cercare valori dei parametri che rendano
+piccola <span class="math inline">\(J\)</span>.</p><p>Per comprendere il meccanismo di regolazione, immaginiamo dapprima
+che tutti i parametri, tranne un singolo peso <span class="math inline">\(w\)</span>, rimangano fissi. Possiamo allora
+considerare la perdita come una funzione <span class="math inline">\(J=J(w)\)</span>. La Figura <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> riassume le fasi fondamentali
+dell’addestramento che esamineremo di seguito.</p><figure id="fig:training_cycle">
+<img alt="Ciclo fondamentale di addestramento di una rete neurale." decoding="async" loading="lazy" src="../assets/img/it/Fig06.png"/>
+<figcaption>Ciclo fondamentale di addestramento di una rete neurale. Il
+passaggio in avanti trasforma gli ingressi in una previsione; la
+funzione di perdita misura la discrepanza tra la previsione e
+l’obiettivo; la retropropagazione calcola i gradienti mediante la regola
+della catena; e la discesa del gradiente utilizza tali gradienti per
+aggiornare pesi e bias. Ripetere questo ciclo per molte epoche è ciò che
+chiamiamo apprendimento.</figcaption>
+</figure><p>Per i lettori con poca familiarità con il calcolo differenziale, una
+derivata può essere interpretata qui come una misura di <em>sensibilità
+locale</em>: indica come una piccola variazione di un parametro tende a
+modificare la perdita. Il suo segno indica quale direzione aumenta o
+diminuisce localmente la funzione, mentre il suo modulo misura
+l’intensità di tale variazione locale.</p><p>La derivata <span class="math display">\[\frac{\partial J}{\partial
+w}\]</span> fornisce la pendenza locale. Se è positiva, un piccolo
+aumento di <span class="math inline">\(w\)</span> tende ad aumentare
+<span class="math inline">\(J\)</span>, quindi il peso deve muoversi
+nella direzione opposta. Se è negativa, aumentare <span class="math inline">\(w\)</span> tende localmente a diminuire <span class="math inline">\(J\)</span>. Entrambi i casi sono descritti da
+<span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> che costituisce l’idea
+fondamentale della <em>discesa del gradiente</em>. Il numero positivo
+<span class="math inline">\(\eta\)</span> è il <em>tasso di
+apprendimento</em>; controlla la dimensione del passo. Un valore molto
+piccolo può rendere lento l’addestramento, mentre un valore
+eccessivamente grande può provocare oscillazioni o instabilità.</p><p>Per una rete con molti parametri, sia <span class="math inline">\(\theta\)</span> un qualsiasi peso o bias.
+L’aggiornamento diventa <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> L’insieme di tutte le
+derivate parziali forma il <em>gradiente</em> della perdita.
+Geometricamente, il gradiente punta nella direzione di massima crescita
+locale, per cui il gradiente negativo fornisce una direzione locale di
+discesa.</p><p>Dobbiamo ancora calcolare queste derivate quando la rete è una
+composizione di più funzioni. Durante il passaggio in avanti,
+l’informazione viaggia come <span class="math display">\[\text{ingressi}
+\longrightarrow
+\text{strato nascosto}
+\longrightarrow
+\text{uscita}.\]</span> Per determinare come un parametro di uno strato
+iniziale influisca sulla perdita, seguiamo matematicamente la catena
+delle dipendenze in senso inverso. Questo procedimento è chiamato
+<em>retropropagazione</em>. In sostanza, è un’applicazione sistematica
+ed efficiente della regola della catena. Rumelhart, Hinton e Williams
+ costituiscono
+un riferimento classico per la diffusione di questo procedimento nelle
+reti con strati nascosti; Nielsen  offre una derivazione dettagliata e
+particolarmente didattica.</p><p>Per una semplice catena di dipendenze in cui <span class="math inline">\(E\)</span> dipende da <span class="math inline">\(\widehat{y}\)</span>, che dipende da
+un’attivazione <span class="math inline">\(h\)</span>, che a sua volta
+dipende da un peso <span class="math inline">\(w\)</span>, la regola
+della catena fornisce <span class="math display">\[\frac{\partial
+E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> Ogni fattore descrive una fase
+dell’influenza di <span class="math inline">\(w\)</span> sulla perdita
+finale. Le reti più grandi contengono molte catene di questo tipo e la
+retropropagazione organizza il calcolo in modo che le derivate
+intermedie possano essere riutilizzate invece di essere ricalcolate
+separatamente per ciascun parametro.</p><p>In pratica, l’addestramento utilizza molti esempi. Un passaggio
+completo attraverso l’insieme di addestramento è chiamato
+un’<em>epoca</em>. I parametri possono essere aggiornati dopo ogni
+esempio, come nel programma didattico utilizzato più avanti in questo
+articolo, oppure dopo piccoli gruppi di esempi chiamati
+<em>mini-batch</em>, come avviene comunemente nelle reti più grandi. In
+entrambi i casi, il ciclo di previsioni, perdite, gradienti e
+aggiornamenti viene ripetuto per molte epoche.</p><p>Un modo concreto per visualizzare questa evoluzione consiste nel
+seguire la previsione per uno stesso esempio fisso in diverse fasi
+dell’addestramento. Consideriamo di nuovo il frutto con massa di <span class="math inline">\(140\)</span> g e diametro di <span class="math inline">\(7.0\)</span> cm, la cui classe corretta è arancia.
+La Tabella <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> mostra una progressione ipotetica.
+Questi valori non corrispondono a una particolare esecuzione; servono
+soltanto a illustrare il meccanismo.</p><div id="tab:learning">
+<table>
+<caption>Evoluzione ipotetica della previsione della rete per lo stesso
+frutto durante l’addestramento. Gli aggiornamenti ripetuti dei parametri
+possono portare un’uscita inizialmente errata verso una classificazione
+coerente con l’etichetta obiettivo.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Epoca</th>
+<th style="text-align: center;">Previsione <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">Perdita <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">Classificazione</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">Mela</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">Mela</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">Mela</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">Arancia</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">Arancia</td>
+</tr>
+</tbody>
+</table>
+</div><p>All’inizio, l’uscita è vicina a <span class="math inline">\(1\)</span> e il frutto viene classificato
+erroneamente come mela. Man mano che i parametri vengono regolati, la
+previsione diminuisce e infine attraversa la soglia <span class="math inline">\(0.5\)</span>, producendo la classe corretta. Ciò
+che cambia durante questo processo sono i valori numerici dei pesi e dei
+bias; l’architettura della rete rimane fissa.</p><p>Ridurre la perdita sui dati di addestramento non è l’obiettivo
+finale. Una rete utile deve produrre buone previsioni anche per esempi
+che non sono stati utilizzati per regolare i parametri. Questa capacità
+è chiamata <em>generalizzazione</em>. Quando un modello si adatta troppo
+strettamente alle particolarità dell’insieme di addestramento e funziona
+peggio su dati nuovi, si verifica <em>overfitting</em>. Nelle
+valutazioni più accurate, i dati vengono spesso suddivisi in insiemi di
+addestramento, validazione e test: il primo regola i parametri, il
+secondo supporta le decisioni prese durante lo sviluppo del modello e il
+terzo viene riservato alla valutazione finale. Discussioni più ampie
+sulla generalizzazione e sulla valutazione dei modelli si trovano in
+Faceli et al.  e
+Goodfellow, Bengio e Courville .</p><p>Siamo così giunti al significato matematico dell’apprendimento in una
+rete neurale. In questo contesto, apprendere significa regolare i
+parametri di una funzione composta in modo da ridurre una misura di
+errore sui dati e, idealmente, generalizzare a nuovi esempi. La rete
+produce una previsione, calcola una perdita, utilizza le derivate per
+determinare come i parametri influenzino tale perdita ed esegue una
+sequenza di piccole correzioni.</p></section><section class="article-section" id="dalla-matematica-a-python"><span class="section-no">08</span><h2>Dalla matematica a Python</h2><p>Passiamo ora dalle equazioni a un programma eseguibile. Lo scopo non
+è utilizzare una libreria specializzata per reti neurali, ma
+implementare direttamente, con <code>NumPy</code>, le operazioni
+matematiche sviluppate nel corso dell’articolo . Ciò permette di osservare, riga
+per riga, come le combinazioni lineari, le funzioni di attivazione, il
+calcolo della perdita, la retropropagazione e la discesa del gradiente
+compaiano nel codice.</p><p>Per ottenere un esempio finale più convincente, utilizziamo un
+insieme di dati sintetico distribuito su un dominio massa–diametro più
+ampio. Continuiamo a lavorare soltanto con due caratteristiche fisiche —
+massa in grammi e diametro in centimetri —, ma ora distribuiamo <span class="math inline">\(64\)</span> esempi di addestramento su una regione
+estesa del piano e riserviamo altri otto esempi a un test illustrativo.
+I dati rimangono sintetici e sono mantenuti entro intervalli plausibili
+per mele e arance. Sono costruiti per produrre una frontiera di
+decisione non lineare senza concentrare tutti i punti in pochi gruppi
+eccessivamente artificiali.</p><p>L’idea geometrica è semplice. Definiamo una curva di riferimento nel
+piano massa–diametro, collochiamo le mele in due fasce al di sopra della
+curva e le arance in due fasce al di sotto. Piccole perturbazioni
+deterministiche vengono aggiunte sia alla massa sia al diametro affinché
+le osservazioni occupino una regione più ampia. L’esempio risultante è
+più ricco delle illustrazioni precedenti: contiene più punti, i dati
+sono distribuiti nel dominio e la frontiera di decisione appropriata è
+chiaramente più curva di una retta.</p><p>Per questo esperimento computazionale finale, ampliamo lo strato
+nascosto a dodici neuroni ReLU. Ciò non modifica la struttura
+concettuale studiata nelle sezioni precedenti; aumenta soltanto la
+capacità della rete di rappresentare una frontiera più elaborata. Invece
+dei <span class="math inline">\(13\)</span> parametri della rete
+didattica a tre neuroni, ora abbiamo <span class="math inline">\(49\)</span> parametri regolabili: <span class="math inline">\(24\)</span> pesi e <span class="math inline">\(12\)</span> bias nel primo strato, seguiti da
+<span class="math inline">\(12\)</span> pesi e un bias nello strato di
+uscita. Le equazioni conservano esattamente la stessa forma; aumentano
+soltanto le dimensioni dei vettori e delle matrici.</p><p>Il programma completo è mostrato di seguito.</p><pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+def relu(s):
     return np.maximum(0, s)
 
 def relu_derivative(s):
     return (s &gt; 0).astype(float)
 
 def sigmoid(s):
-    return 1 / (1 + np.exp(-s))</code></pre></section><section id="s2"><span class="section-no">2</span><h2>Costruire un ampio insieme di dati sintetici</h2><p>Usiamo massa e diametro come due caratteristiche fisiche. I dati sono sintetici, ma restano in intervalli plausibili per l’esempio didattico. Una curva di riferimento liscia serve soltanto a generare una geometria non banale; la rete non riceve mai questa curva.</p><pre class=""><code>def base_boundary(m):
-    return (
-        6.68
-        + 0.74 * np.exp(-((m - 155) / 20) ** 2)
-        + 1.50 / (1 + np.exp(-(m - 202) / 5))
-    )
+    return 1 / (1 + np.exp(-s))
 
-X_train = np.vstack([apple_1, apple_2, orange_1, orange_2])
-y_train = np.array([1.0] * 32 + [0.0] * 32)</code></pre></section><section id="s3"><span class="section-no">3</span><h2>Standardizzare gli ingressi</h2><p>Massa e diametro hanno scale numeriche diverse. Media e deviazione standard vengono calcolate soltanto sull’insieme di addestramento e poi riutilizzate coerentemente.</p><pre class=""><code>mean = X_train.mean(axis=0)
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+return X_train, y_train, X_test, y_test
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
 std = X_train.std(axis=0)
-Xn = (X_train - mean) / std</code></pre></section><section id="s4"><span class="section-no">4</span><h2>Inizializzare una rete 2–12–1</h2><p>Il modello ha due ingressi, dodici neuroni ReLU nascosti e un’uscita sigmoide. In totale ci sono 49 parametri addestrabili, ma la rete resta abbastanza piccola da poter essere letta riga per riga.</p><pre class=""><code>rng = np.random.default_rng(42)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
 W1 = 0.1 * rng.standard_normal((12, 2))
 b1 = np.zeros(12)
 W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0</code></pre></section><section id="s5"><span class="section-no">5</span><h2>Propagazione in avanti</h2><p>Una previsione è una sequenza di trasformazioni affini e funzioni di attivazione. Queste quattro righe costituiscono il nucleo computazionale dell’inferenza.</p><pre class=""><code>z1 = W1 @ x + b1
-h = relu(z1)
-z2 = W2 @ h + b2
-y_hat = sigmoid(z2)</code></pre></section><section id="s6"><span class="section-no">6</span><h2>Retropropagazione</h2><p>Le derivate sono scritte esplicitamente. Non viene usata la differenziazione automatica: la regola della catena compare direttamente nel codice, che è il punto didattico centrale dell’esempio.</p><pre class=""><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-dW2 = delta2 * h
-db2 = delta2
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
 
-delta1 = (delta2 * W2) * relu_derivative(z1)
-dW1 = np.outer(delta1, x)
-db1 = delta1</code></pre></section><section id="s7"><span class="section-no">7</span><h2>Discesa del gradiente stocastica</h2><p>A ogni epoca gli esempi vengono mescolati e i parametri aggiornati dopo ogni osservazione. La procedura riutilizza i gradienti calcolati sopra per ridurre la perdita.</p><pre class=""><code>for epoch in range(n_epochs):
+for epoch in range(n_epochs):
     for i in rng.permutation(len(Xn)):
-        # forward pass and backpropagation
-        W1 -= learning_rate * dW1
-        b1 -= learning_rate * db1
-        W2 -= learning_rate * dW2
-        b2 -= learning_rate * db2</code></pre></section><section id="s8"><span class="section-no">8</span><h2>Che cosa produce l’addestramento</h2><p>Con il seme casuale e gli iperparametri fissati qui, la piccola rete classifica i 64 esempi di addestramento e gli 8 esempi di test illustrativi secondo le etichette definite per l’esperimento sintetico.</p><pre class="terminal"><code>Final mean loss: 0.0001785644
-Training accuracy: 1.0000
-Illustrative test accuracy: 1.0000
+        x = Xn[i]
+        target = y_train[i]
 
-Test outputs:
-[121.0, 7.20] -&gt; 0.999927 -&gt; apple
-[135.0, 7.45] -&gt; 0.999900 -&gt; apple
-[152.0, 7.75] -&gt; 0.999780 -&gt; apple
-[171.0, 7.32] -&gt; 0.986972 -&gt; apple
-[121.0, 6.28] -&gt; 0.000019 -&gt; orange
-[152.0, 6.86] -&gt; 0.000009 -&gt; orange
-[189.0, 6.48] -&gt; 0.000028 -&gt; orange
-[208.0, 7.55] -&gt; 0.014957 -&gt; orange</code></pre></section><section id="s9"><span class="section-no">9</span><h2>Disegnare la frontiera decisionale appresa</h2><p>Dopo l’addestramento, la rete viene valutata su una griglia fitta. Il livello y-hat = 0,5 diventa la frontiera decisionale appresa e mostra la geometria non lineare costruita dallo strato nascosto.</p><pre class=""><code>masses = np.linspace(116, 214, 500)
-diameters = np.linspace(6.0, 8.85, 500)
-M, D = np.meshgrid(masses, diameters)
-grid = np.column_stack([M.ravel(), D.ravel()])
-P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
 
-ax.contour(M, D, P, levels=[0.5], linewidths=2.2)</code></pre><figure class="figure"><img src="../assets/img/neural_network_output_en.png" alt="NeuralMath decision boundary"><figcaption>Regioni decisionali apprese dall’esempio NumPy canonico. Tutti i punti di addestramento restano visibili; la curva evidenziata corrisponde al livello y-hat = 0,5.</figcaption></figure></section>
-<section><span class="section-no">10</span><h2>Risorse complete</h2><p>Gli script completi, i notebook e gli output riproducibili sono disponibili qui sotto. Il codice mostrato in tutte le lingue mantiene gli stessi identificatori canonici in inglese, evitando divergenze tra le traduzioni.</p><p class="linksline"><a href="../assets/code/neural_network_from_scratch.py">Python source</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub repository</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/NeuralMath_Colab_EN.ipynb">Google Colab</a><a href="../assets/img/neural_network_output_en.pdf">Figure (PDF)</a></p></section>
-<section><h2>Estensioni future</h2><p>NeuralMath è progettato per crescere come una sequenza di esempi computazionali. Le estensioni previste includono la dinamica dell’addestramento, la visualizzazione del contributo dei neuroni nascosti, il controllo dei gradienti, la classificazione multiclasse con softmax, reti più profonde e piccoli esperimenti interattivi nel browser.</p></section>
-<section><h2>L’autore</h2><p class="bio">Americo Cunha Jr è uno scienziato computazionale, ricercatore presso il Laboratório Nacional de Computação Científica (LNCC) e professore associato presso l’Universidade do Estado do Rio de Janeiro (UERJ). La sua ricerca si colloca all’intersezione tra dinamica non lineare, modellazione matematica e computazionale, quantificazione dell’incertezza, problemi inversi e intelligenza artificiale/apprendimento automatico scientifico. Ha ricevuto il Premio ABMEC per giovani scienziati nel 2023 ed è attivo in collaborazioni scientifiche ed editoriali internazionali.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&hl=en">Google Scholar</a></p></section>
-<section><h2>Licenza</h2><div class="license-row"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" alt="Creative Commons Attribution 4.0 International"></a><p>Salvo diversa indicazione, il testo esplicativo del sito e le figure originali sono disponibili con licenza Creative Commons Attribuzione 4.0 Internazionale (CC BY 4.0). Il PDF didattico può essere soggetto alla licenza della versione pubblicata dalla rivista. Il codice sorgente è distribuito separatamente e dovrebbe adottare una licenza software dedicata.</p></div></section>
-<section class="support" data-support hidden><h2>Sostieni NeuralMath</h2><p>Se questo materiale gratuito ti è stato utile, puoi sostenerne la manutenzione con un piccolo contributo di 5 USD. Il sostegno è completamente facoltativo e non modifica mai l’accesso ai contenuti.</p><p><a href="#">Sostieni il progetto</a></p></section>
+delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Mela - addestramento")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Arancia - addestramento")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Mela - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Arancia - test")
+
+ax.set_xlabel("Massa (g)")
+    ax.set_ylabel("Diametro (cm)")
+    ax.set_title("Uscita della rete neurale dopo l'addestramento")
+
+handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Mela - addestramento'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Arancia - addestramento'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Mela - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Arancia - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Frontiera di decisione della rete neurale')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+fig.tight_layout()
+    plt.show()</code></pre><p>Sebbene il codice sia più lungo delle prime equazioni studiate
+nell’articolo, la sua struttura rimane trasparente. La funzione
+<code>build_data()</code> genera automaticamente i <span class="math inline">\(64\)</span> esempi di addestramento e gli otto
+esempi illustrativi di test. Successivamente standardizziamo entrambe le
+variabili secondo <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span>
+dove <span class="math inline">\(\mu_j\)</span> e <span class="math inline">\(\sigma_j\)</span> sono calcolati esclusivamente a
+partire dall’insieme di addestramento. Ciò evita che l’insieme di test
+influenzi l’adattamento dei parametri e, inoltre, colloca massa e
+diametro su scale numeriche comparabili.</p><p>Il passaggio in avanti non cambia sostanzialmente. L’unica differenza
+è che il primo strato produce ora un vettore di dodici attivazioni
+nascoste. In notazione matriciale, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> Queste quattro righe contengono
+ancora il nucleo matematico dell’algoritmo. Anche l’addestramento
+conserva la logica introdotta in precedenza: calcolare una previsione,
+misurarne l’errore, propagare all’indietro l’informazione di sensibilità
+mediante derivate e aggiornare i parametri con piccoli passi di discesa
+del gradiente.</p><p>Nel codice, la retropropagazione nello strato di uscita compare
+in</p><pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre><p>e la propagazione verso lo strato nascosto compare in</p><pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre><p>seguita dagli aggiornamenti di tutti i pesi e bias. Poiché gli esempi
+vengono mescolati a ogni epoca e i parametri vengono aggiornati dopo
+ogni osservazione, questa implementazione costituisce una forma
+elementare di <em>discesa stocastica del gradiente</em>.</p><p>Con il seme casuale e gli iperparametri utilizzati qui, la perdita
+media finale è dell’ordine di <span class="math inline">\(10^{-5}\)</span>–<span class="math inline">\(10^{-4}\)</span>, e i <span class="math inline">\(64\)</span> esempi di addestramento insieme agli
+otto esempi illustrativi di test ricevono la classificazione attesa. Ciò
+non deve essere interpretato come una valutazione statistica rigorosa
+delle prestazioni: i dati sono sintetici e sono stati costruiti a fini
+didattici. Il loro ruolo è mostrare, in uno scenario meno banale, come
+una piccola rete neurale possa apprendere una frontiera di decisione
+chiaramente non lineare.</p><p>La Figura <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> mostra l’uscita finale del
+programma nel piano massa–diametro. Sono rappresentati tutti i punti di
+addestramento. La curva evidenziata corrisponde al livello <span class="math inline">\(\widehat{y}=0.5\)</span> e rappresenta la
+frontiera di decisione appresa dalla rete; le regioni ombreggiate
+indicano le due classi previste. I cerchi rappresentano le mele di
+addestramento, i quadrati le arance di addestramento, i triangoli le
+mele di test e le croci le arance di test. La legenda è collocata
+all’esterno della regione principale del grafico per non nascondere
+alcun punto dei dati.</p><figure id="fig:python_output">
+<img alt="Uscita di Python dopo l’addestramento della rete neurale." decoding="async" loading="lazy" src="../assets/img/it/Fig07.png"/>
+<figcaption>Uscita di Python dopo l’addestramento della rete neurale.
+L’insieme di dati sintetico contiene <span class="math inline">\(64\)</span> esempi di addestramento distribuiti su
+un’ampia regione del piano massa–diametro e otto esempi aggiuntivi
+riservati a un test illustrativo. La curva evidenziata corrisponde al
+livello <span class="math inline">\(\widehat{y}=0.5\)</span> e
+rappresenta la frontiera di decisione appresa; le regioni ombreggiate
+indicano le classi previste dalla rete. I cerchi rappresentano le mele
+di addestramento, i quadrati le arance di addestramento, i triangoli le
+mele di test e le croci le arance di test.</figcaption>
+</figure><p>Abbiamo iniziato con una retta che separava due semplici gruppi di
+punti e concludiamo con un esempio computazionale più ricco in cui una
+frontiera curva emerge dall’adattamento automatico dei parametri della
+rete. Nulla di misterioso è stato aggiunto alla matematica:
+l’implementazione organizza e ripete semplicemente, su scala maggiore e
+ad alta velocità, combinazioni affini, funzioni di attivazione,
+derivate, prodotti matriciali e aggiornamenti mediante discesa del
+gradiente .</p><p>Tutto il materiale computazionale associato a questo articolo —
+compresi il codice e un notebook Google Colab eseguibile — è disponibile
+all’indirizzo <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>, che fornisce un unico punto di
+accesso ai lettori che desiderino esplorare, riprodurre o adattare gli
+esempi.</p></section></div>
+<section class="article-section references"><span class="section-no">Riferimenti</span><h2>Riferimenti</h2><div class="thebibliography">
+<p>M. Batista e A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, e A. C. P. L. F.
+de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado
+de Máquina</em>. 2ª ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, e A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Disponibile all’indirizzo: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Traduzione
+di Paulo Martins Engel. 2ª ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, e G. Hinton. “Deep learning”. <em>Nature</em>,
+v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Disponibile all’indirizzo: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, e R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">Edizione web</span><h2>Risorse</h2><p>Usa il PDF tradotto per consultare l’articolo completo, il repository per i file sorgente e il codice, e il notebook eseguibile per riprodurre l’esempio computazionale.</p><div class="resource-grid">
+<a class="resource-card" href="../pdf/it/Article_PMO2026_NN_IT.pdf"><strong>PDF</strong><span>L'anatomia matematica di una rete neurale</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_IT.ipynb"><strong>Google Colab</strong><span>Notebook · Italiano</span></a>
+</div></section>
+<section><h2>Informazioni su NeuralMath</h2><p class="bio">NeuralMath è un progetto educativo aperto sviluppato dal Dr. Americo Cunha Jr. Il suo obiettivo è rendere visibili, ispezionabili e riproducibili le operazioni matematiche all’interno di una piccola rete neurale per un pubblico ampio con una preparazione matematica relativamente elementare in calcolo e statistica.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Come citare il testo pedagogico</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>La voce bibliografica sarà aggiornata con volume, pagine e DOI dopo la pubblicazione. Si prega di citare il testo pedagogico, non questo sito web.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>Licenza</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Il testo esplicativo del sito e il materiale originale del sito sono disponibili con licenza CC BY 4.0, salvo diversa indicazione. Il PDF dell’articolo può essere soggetto alla licenza della sede di pubblicazione.</p></div></section>
 <div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
-</main><script src="../assets/js/site.js" defer></script></body></html>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

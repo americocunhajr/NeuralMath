@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ur">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — ایک عصبی نیٹ ورک کی ریاضیاتی ساخت</title>
+<meta content="ہم ایک سادہ درجہ بندی کے مسئلے کے ذریعے مصنوعی اعصابی نیٹ ورکس کا ریاضیاتی تعارف پیش کرتے ہیں۔ ایک خطی درجہ بند فطری طور پر مصنوعی نیورون کے تصور تک لے جاتا ہے؛ اس کے بعد ہم اوزان، بائس، فعال سازی فنکشنز، اور نیورونز کو ایک چھوٹے نیٹ ورک میں جوڑنے کے طریقے پر بحث کرتے ہیں۔ تربیت کو لاس فنکشنز، مشتقا" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/ur/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag current" href="index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">ایک عصبی نیٹ ورک کی ریاضیاتی ساخت</p>
+<p>ہم ایک سادہ درجہ بندی کے مسئلے کے ذریعے مصنوعی اعصابی نیٹ ورکس کا ریاضیاتی تعارف پیش کرتے ہیں۔ ایک خطی درجہ بند فطری طور پر مصنوعی نیورون کے تصور تک لے جاتا ہے؛ اس کے بعد ہم اوزان، بائس، فعال سازی فنکشنز، اور نیورونز کو ایک چھوٹے نیٹ ورک میں جوڑنے کے طریقے پر بحث کرتے ہیں۔ تربیت کو لاس فنکشنز، مشتقات، گریڈینٹ ڈیسنٹ اور بیک پروپیگیشن کے ذریعے متعارف کرایا جاتا ہے۔ آخر میں ماڈل کو براہ راست Python میں نافذ کیا جاتا ہے، تاکہ مساوات اور الگورتھم کے درمیان تعلق واضح رہے۔ مقصد یہ دکھانا ہے کہ تحلیلی ہندسہ، خطی الجبرا اور حسابان کے مانوس تصورات اعصابی نیٹ ورکس کے بنیادی طریقۂ کار کو سمجھنے کے لیے ایک قابلِ رسائی بنیاد فراہم کرتے ہیں۔</p>
+<div class="resource-bar"><a href="../pdf/ur/Article_PMO2026_NN_UR.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_UR.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>اصل تدریسی متن</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">یہ ویب ایڈیشن اور اس کے تراجم اصل پرتگالی مخطوطے پر مبنی ہیں۔</p></div>
+<nav aria-label="فہرست" class="toc"><h2>فہرست</h2><ol><li><a href="#کمپیوٹر-کب-سیکھ-سکتا-ہے">کمپیوٹر کب سیکھ سکتا ہے؟</a></li><li><a href="#مسئلے-کی-ریاضیاتی-نمائندگی">مسئلے کی ریاضیاتی نمائندگی</a></li><li><a href="#سیدھی-لکیر-بطور-درجہ-بند">سیدھی لکیر بطور درجہ بند</a></li><li><a href="#مصنوعی-نیورون">مصنوعی نیورون</a></li><li><a href="#فعال-سازی-فنکشن-کی-ضرورت-کیوں-ہے">فعال سازی فنکشن کی ضرورت کیوں ہے؟</a></li><li><a href="#ایک-چھوٹا-اعصابی-نیٹ-ورک-بنانا">ایک چھوٹا اعصابی نیٹ ورک بنانا</a></li><li><a href="#اعصابی-نیٹ-ورک-کیسے-سیکھتا-ہے">اعصابی نیٹ ورک کیسے سیکھتا ہے؟</a></li><li><a href="#ریاضی-سے-python-تک">ریاضی سے Python تک</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="کمپیوٹر-کب-سیکھ-سکتا-ہے"><span class="section-no">01</span><h2>کمپیوٹر کب سیکھ سکتا ہے؟</h2>
+<p>روزمرہ زندگی میں ہم تقریباً غیر محسوس طور پر درجہ بندی کے فیصلے کرتے رہتے ہیں۔ کسی پھل کو دیکھ کر ہم فوراً پہچان لیتے ہیں کہ وہ سیب ہے یا سنترہ؛ فون پر پیغام آنے پر ہم حقیقی گفتگو کو ناپسندیدہ اشتہار سے الگ کرتے ہیں؛ طبی تجزیے میں کئی پیمائشوں کو ملا کر کسی فیصلے کی مدد کی جا سکتی ہے؛ اور مالیاتی اداروں میں قرض دینے سے پہلے متعدد معلومات کا جائزہ لیا جاتا ہے۔ ان سب مثالوں میں جواب پیدا کرنے کے لیے کئی خصوصیات کو ایک ساتھ دیکھا جاتا ہے۔</p>
+<p>بہت سے روایتی کمپیوٹر پروگراموں میں وہ قواعد جن سے جواب پیدا ہوتا ہے، پروگرامر واضح طور پر لکھتا ہے۔ جب قواعد معلوم ہوں اور انہیں صاف انداز میں بیان کیا جا سکے تو یہ طریقہ اچھا کام کرتا ہے۔ لیکن جب ڈیٹا بہت متغیر ہو، یا اچھے فیصلے کے لیے درکار تمام شرائط پہلے سے لکھنا دشوار ہو، تو یہ طریقہ کم مؤثر ہو جاتا ہے۔ اس سے ایک فطری سوال پیدا ہوتا ہے:</p>
+<div class="center">
+<p><em>کیا ہم ایسا پروگرام بنا سکتے ہیں جو فیصلہ کرنے کا قاعدہ پہلے سے حاصل کرنے کے بجائے مثالوں سے سیکھے؟</em></p>
+</div>
+<p>یہ <em>مشین لرننگ</em> کے مرکزی تصورات میں سے ایک ہے، جو مصنوعی ذہانت کا وہ شعبہ ہے جس میں ڈیٹا سے ماڈل موزوں کرنے کے طریقوں کا مطالعہ کیا جاتا ہے ۔ زیرِ نگرانی سیکھنے کے مسئلے میں الگورتھم کو درست جوابات کے ساتھ مثالیں دی جاتی ہیں، اور ہم ایسا ماڈل تلاش کرتے ہیں جو تربیت میں استعمال نہ ہونے والے معاملات کے لیے بھی مفید پیش گوئیاں کر سکے۔ اس مقصد کے لیے بنائے گئے بہت سے ماڈلز میں <em>مصنوعی اعصابی نیٹ ورکس</em> تصویر شناسی، زبان کی پروسیسنگ، سگنل تجزیے اور زمانی سلسلوں کی پیش گوئی جیسی تطبیقات میں اہم ہو چکے ہیں ۔</p>
+<p>اعصابی نیٹ ورکس کو ریاضی، کمپیوٹنگ اور اسکولی تعلیم کے درمیان پل کے طور پر استعمال کرنے پر Batista اور Martins نے <em>Professor de Matemática Online</em> میں پہلے ہی بحث کی ہے ؛ انہوں نے اساتذہ کی تربیت، Python اور ہندسوں کی شناخت پر مشتمل ایک سرگرمی پیش کی۔ موجودہ مضمون ایک تکمیلی راستہ اختیار کرتا ہے۔ ہمارا بنیادی مقصد ایک چھوٹے اعصابی نیٹ ورک کی اندرونی ریاضی کو واضح کرنا ہے: تحلیلی ہندسہ سے آغاز کرتے ہوئے قدم بہ قدم گریڈینٹ کے حساب اور بیک پروپیگیشن کی دستی تنفیذ تک پہنچنا۔</p>
+<p>جدید تطبیقات کی پیچیدگی کے باوجود، اعصابی نیٹ ورک کا ریاضیاتی جوہر نسبتاً مانوس تصورات سے متعارف کرایا جا سکتا ہے۔ بنیادی سطح پر اعصابی نیٹ ورک فنکشنز کا ایک مرکب ہے جس کے پیرامیٹرز ڈیٹا سے ایڈجسٹ کیے جاتے ہیں۔ ہم ایک سادہ ہندسی مسئلے سے شروع کرتے ہیں، جدا کرنے والی لکیر کو مصنوعی نیورون کے طور پر دوبارہ تعبیر کرتے ہیں، کئی نیورونز کو جوڑتے ہیں، فعال سازی فنکشنز کے کردار کا مطالعہ کرتے ہیں، اور دکھاتے ہیں کہ مشتقات نیٹ ورک کے پیرامیٹرز کو خودکار طور پر ایڈجسٹ کرنے کے لیے کیسے استعمال ہو سکتے ہیں۔ آخر میں ہم Python میں ایک مکمل مگر چھوٹی مثال نافذ کرتے ہیں، جس میں مساوات اور کوڈ کے درمیان براہ راست مطابقت برقرار رہتی ہے۔</p>
+</section><section class="article-section" id="مسئلے-کی-ریاضیاتی-نمائندگی"><span class="section-no">02</span><h2>مسئلے کی ریاضیاتی نمائندگی</h2>
+<p>اعصابی نیٹ ورک کے کام کرنے کے طریقے کو سمجھنے کے لیے ہم جان بوجھ کر ایک سادہ مسئلے سے آغاز کرتے ہیں: سیب اور سنترے میں فرق کرنا۔ کسی پھل کی بہت سی خصوصیات اس کام کے لیے مفید ہو سکتی ہیں، مثلاً رنگ، کمیت، قطر، بناوٹ اور خوشبو۔ تاہم ابتدائی ریاضیاتی ماڈل میں یہ تمام پیچیدگی شامل کرنا ضروری نہیں۔ ہم صرف دو ایسی مقداریں استعمال کریں گے جنہیں آسانی سے ناپا جا سکتا ہے: کمیت، گرام میں، اور قطر، سینٹی میٹر میں۔</p>
+<p>لہٰذا ہر پھل کو ایک مرتب جوڑے سے ظاہر کیا جائے گا <span class="math display">\[(x_1,x_2),\]</span> جہاں <span class="math display">\[x_1=\text{کمیت}
+\qquad\text{اور}\qquad
+x_2=\text{قطر}.\]</span></p>
+<p>پس جوڑا <span class="math inline">\((155,\;7.2)\)</span> ایک ایسے پھل کی نمائندگی کرتا ہے جس کی کمیت <span class="math inline">\(155\)</span> g اور قطر <span class="math inline">\(7.2\)</span> cm ہے۔ طبعی شے کی جگہ دو عددی پیمائشیں رکھ کر ہم ہر پھل کو کارتیسی سطح پر ایک نقطے سے وابستہ کرتے ہیں: پہلی محدد کمیت اور دوسری قطر بتاتی ہے۔ شکل <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> فرضی سیبوں اور سنتروں کے ایک مجموعے کے لیے اس نمائندگی کو دکھاتی ہے۔</p>
+<figure id="fig:fruits">
+<img alt="طبعی مشاہدے سے ریاضیاتی ماڈلنگ تک۔ ہر پھل کو پہلے دو قابلِ پیمائش مقداروں — کمیت اور قطر — سے بیان کیا جاتا ہے، پھر مرتب جوڑے \((x_1,x_2)\) سے ظاہر کیا جاتا ہے۔ کمیت–قطر کی سطح میں ہر مشاہدہ ایک نقطہ بن جاتا ہے، اس لیے سیب اور سنترے میں فرق کرنے کے مسئلے کو دو جماعتوں کو جدا کرنے" decoding="async" loading="lazy" src="../assets/img/ur/Fig01.png">
+<figcaption>طبعی مشاہدے سے ریاضیاتی ماڈلنگ تک۔ ہر پھل کو پہلے دو قابلِ پیمائش مقداروں — کمیت اور قطر — سے بیان کیا جاتا ہے، پھر مرتب جوڑے <span class="math inline">\((x_1,x_2)\)</span> سے ظاہر کیا جاتا ہے۔ کمیت–قطر کی سطح میں ہر مشاہدہ ایک نقطہ بن جاتا ہے، اس لیے سیب اور سنترے میں فرق کرنے کے مسئلے کو دو جماعتوں کو جدا کرنے کے ہندسی مسئلے کے طور پر دوبارہ تعبیر کیا جا سکتا ہے۔</figcaption>
+</img></figure>
+<p>یہ تبدیلی مسئلے کی ظاہری نوعیت بدل دیتی ہے۔ سیب یا سنترے کو براہ راست پہچاننے کا سوال پوچھنے کے بجائے ہم ایک ہندسی سوال پوچھ سکتے ہیں: دونوں جماعتوں سے تعلق رکھنے والے نقاط کو سطح میں کیسے جدا کیا جا سکتا ہے؟ زاویۂ نظر کی یہ تبدیلی مشین لرننگ میں بنیادی اہمیت رکھتی ہے۔ تصاویر، متون، آوازیں اور تجرباتی سگنلز کسی الگورتھم کے ذریعے پروسیس ہونے سے پہلے عددی نمائندگیوں میں تبدیل کیے جانے چاہییں۔ ہماری مثال میں ہر شے کی صرف دو محدد ہیں؛ حقیقی تطبیقات میں ایک نمائندگی سینکڑوں، ہزاروں، بلکہ لاکھوں اجزا پر مشتمل ہو سکتی ہے۔ اصول وہی رہتا ہے: ہر مثال کو اعداد کے ایک مجموعے سے وابستہ کیا جاتا ہے، اور ماڈل ایسا قاعدہ تلاش کرتا ہے جو اس نمائندگی کو مطلوبہ جواب سے ملائے۔</p>
+<p>ہم سب سے سادہ دستیاب ہندسی قاعدے سے آغاز کرتے ہیں اور پوچھتے ہیں کہ کیا ایک واحد سیدھی لکیر سیب کے نقاط کو سنترے کے نقاط سے مناسب طور پر جدا کر سکتی ہے۔</p>
+</section><section class="article-section" id="سیدھی-لکیر-بطور-درجہ-بند"><span class="section-no">03</span><h2>سیدھی لکیر بطور درجہ بند</h2>
+<p>جب ہر پھل کو کارتیسی سطح پر ایک نقطے سے ظاہر کر دیا جائے تو درجہ بندی ایک ہندسی مسئلہ بن جاتی ہے: کیا ایک سیدھی لکیر سیبوں کو سنتروں سے جدا کر سکتی ہے؟ یہ سوال مشین لرننگ کے ایک اہم خاندان، جسے <em>خطی درجہ بند</em> کہا جاتا ہے، کے بنیادی تصور کو بیان کرتا ہے۔</p>
+<p>ڈیٹا کے بادل کو کاٹتی ہوئی ایک لکیر پر غور کریں، جیسا کہ شکل <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a> میں دکھایا گیا ہے۔ یہ لکیر سطح کو دو نصف سطحوں میں تقسیم کرتی ہے۔ اگر زیادہ تر سیب ایک طرف اور زیادہ تر سنترے دوسری طرف ہوں، تو کسی نئے پھل کی لکیر کے نسبت پوزیشن کو درجہ بندی کے قاعدے کے طور پر استعمال کیا جا سکتا ہے۔ کمیت اور قطر ناپنے کے بعد ہم پھل کو ایک نقطے سے ظاہر کرتے ہیں اور طے کرتے ہیں کہ یہ نقطہ لکیر کے کس طرف ہے۔</p>
+<figure id="fig:linear_classifier">
+<img alt="کمیت–قطر کی سطح میں خطی درجہ بند کی مثال۔ سیدھی لکیر فیصلہ حد کے طور پر کام کرتی ہے: ایک نصف سطح کے نقاط کو ایک جماعت اور مخالف نصف سطح کے نقاط کو دوسری جماعت دی جاتی ہے۔ لہٰذا فیصلہ صرف اس بات پر منحصر ہے کہ نقطہ لکیر کے کس طرف واقع ہے۔" decoding="async" loading="lazy" src="../assets/img/ur/Fig02.png"/>
+<figcaption>کمیت–قطر کی سطح میں خطی درجہ بند کی مثال۔ سیدھی لکیر فیصلہ حد کے طور پر کام کرتی ہے: ایک نصف سطح کے نقاط کو ایک جماعت اور مخالف نصف سطح کے نقاط کو دوسری جماعت دی جاتی ہے۔ لہٰذا فیصلہ صرف اس بات پر منحصر ہے کہ نقطہ لکیر کے کس طرف واقع ہے۔</figcaption>
+</figure>
+<p>کارتیسی سطح <span class="math inline">\((x_1,x_2)\)</span> میں ایک لکیر کو یوں بیان کیا جا سکتا ہے <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>ویکٹر <span class="math inline">\((w_1,w_2)\)</span> لکیر پر عمود ہے، اس لیے اس کی سمت متعین کرتا ہے، جبکہ پیرامیٹر <span class="math inline">\(b\)</span> اس کی جگہ میں حصہ ڈالتا ہے۔ اس نمائندگی میں ایک معمولی زائد پن ہے: <span class="math inline">\(w_1\)</span>، <span class="math inline">\(w_2\)</span> اور <span class="math inline">\(b\)</span> کو ایک ہی غیر صفر مستقل سے ضرب دینے پر بالکل وہی لکیر حاصل ہوتی ہے۔ چنانچہ حد کو بیان کرنے والے پیرامیٹرز یکتا نہیں۔ ان کی عددی تعبیر متغیرات کے پیمانے پر بھی منحصر ہے۔ چونکہ کمیت گرام اور قطر سینٹی میٹر میں ناپے جاتے ہیں، اس لیے مختلف اکائیوں کو مدنظر رکھے بغیر <span class="math inline">\(w_1\)</span> اور <span class="math inline">\(w_2\)</span> کی عددی قدروں کا براہ راست موازنہ نہیں کرنا چاہیے۔</p>
+<p>لکیر کی مساوات خود یہ معلوم کرنے کا سادہ طریقہ دیتی ہے کہ نقطہ حد کے کس طرف ہے۔ اسکور کو یوں تعریف کریں <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>اگر <span class="math inline">\(s(x_1,x_2)=0\)</span> ہو تو نقطہ لکیر پر ہے۔ اگر <span class="math inline">\(s(x_1,x_2)&gt;0\)</span> ہو تو وہ ایک نصف سطح میں، اور اگر <span class="math inline">\(s(x_1,x_2)&lt;0\)</span> ہو تو دوسری نصف سطح میں ہے۔ اگر ہم طے کریں کہ مثبت اسکور سیب اور منفی اسکور سنترے کے مطابق ہیں، تو قاعدہ بنتا ہے <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{سیب},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{سنترہ}.
+\end{cases}\]</span></p>
+<p>مثال کے طور پر اس حد پر غور کریں <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> <span class="math inline">\(160\)</span> g کمیت اور <span class="math inline">\(7.8\)</span> cm قطر والے پھل کے لیے <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> چونکہ اسکور مثبت ہے، نقطہ اس نصف سطح میں واقع ہے جسے ہم نے سیبوں سے وابستہ کیا ہے۔ لہٰذا یہ درجہ بند اس پھل کو سیب قرار دے گا۔</p>
+<p><span class="math inline">\(w_1\)</span>، <span class="math inline">\(w_2\)</span> اور <span class="math inline">\(b\)</span> کا ہر انتخاب اچھی درجہ بندی نہیں دیتا۔ کچھ لکیریں دونوں گروہوں کو خراب انداز میں جدا کرتی ہیں، جبکہ کچھ کم غلطیاں کرتی ہیں۔ سیکھنے کا مسئلہ یہی ہے کہ پہلے سے لیبل شدہ مثالوں کو استعمال کرکے ایسے پیرامیٹرز تلاش کیے جائیں جو ماڈل کی خطا کے کسی پیمانے کو کم کریں۔ لکیر کی جگہ براہ راست پروگرام کرنے کے بجائے ہم چاہتے ہیں کہ الگورتھم ڈیٹا سے اس کے معاملات ایڈجسٹ کرے۔</p>
+<p>اگر جماعتیں تقریباً خطی طور پر جدا ہونے کے قابل ہوں تو ایک لکیر اچھی کارکردگی دکھا سکتی ہے۔ زیادہ پیچیدہ ڈیٹا سیٹس کے لیے غیر خطی حد درکار ہو سکتی ہے۔ اس محدودیت پر بات کرنے سے پہلے ہم ابھی بنائے گئے درجہ بند کو ایک بنیادی حسابی اکائی، یعنی مصنوعی نیورون، کے طور پر دوبارہ تعبیر کرتے ہیں۔</p>
+</section><section class="article-section" id="مصنوعی-نیورون"><span class="section-no">04</span><h2>مصنوعی نیورون</h2>
+<p>پچھلے حصے میں اظہار <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> اس بات کا تعین کرنے کے لیے استعمال ہوا کہ کوئی پھل لکیر کے کس طرف واقع ہے۔ اسی اظہار کو <em>مصنوعی نیورون</em> کے حساب کے پہلے مرحلے کے طور پر بھی دیکھا جا سکتا ہے۔ ایک نیورون عددی مدخلات وصول کرتا ہے، انہیں اوزان اور بائس کی مدد سے جوڑتا ہے، پھر اپنا آؤٹ پٹ حاصل کرنے کے لیے ایک ریاضیاتی فنکشن لاگو کرتا ہے۔</p>
+<p>ہماری مثال میں مدخلات کمیت <span class="math inline">\(x_1\)</span> اور قطر <span class="math inline">\(x_2\)</span> ہیں۔ ہر مدخل کو ایک پیرامیٹر سے ضرب دی جاتی ہے جسے <em>وزن</em> کہتے ہیں؛ حاصل ضربوں کو ایک مستقل جزو <span class="math inline">\(b\)</span> کے ساتھ جمع کیا جاتا ہے، جسے <em>بائس</em> کہتے ہیں۔ شکل <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> اس حساب کو خاکے کی صورت میں دکھاتی ہے۔</p>
+<figure id="fig:artificial_neuron">
+<img alt="مصنوعی نیورون کے کام کا خاکہ۔ ہر مدخل \(x_i\) کو وزن \(w_i\) سے ضرب دی جاتی ہے؛ حاصل ضربوں کو بائس \(b\) کے ساتھ جمع کرکے اسکور \(s\) حاصل کیا جاتا ہے۔ پھر فعال سازی فنکشن \(g\) اس اسکور کو آؤٹ پٹ \(\widehat{y}=g(s)\) میں تبدیل کرتا ہے، جو درمیانی مقدار یا آخری پیش گوئی کے طور پر" decoding="async" loading="lazy" src="../assets/img/ur/Fig03.png"/>
+<figcaption>مصنوعی نیورون کے کام کا خاکہ۔ ہر مدخل <span class="math inline">\(x_i\)</span> کو وزن <span class="math inline">\(w_i\)</span> سے ضرب دی جاتی ہے؛ حاصل ضربوں کو بائس <span class="math inline">\(b\)</span> کے ساتھ جمع کرکے اسکور <span class="math inline">\(s\)</span> حاصل کیا جاتا ہے۔ پھر فعال سازی فنکشن <span class="math inline">\(g\)</span> اس اسکور کو آؤٹ پٹ <span class="math inline">\(\widehat{y}=g(s)\)</span> میں تبدیل کرتا ہے، جو درمیانی مقدار یا آخری پیش گوئی کے طور پر استعمال ہو سکتا ہے۔</figcaption>
+</figure>
+<p>اوزان طے کرتے ہیں کہ مدخلات میں تبدیلی اسکور کو کیسے متاثر کرتی ہے۔ اگر <span class="math inline">\(x_2\)</span> اور باقی تمام مقداریں مستقل رکھی جائیں تو <span class="math inline">\(\Delta x_1\)</span> کی تبدیلی <span class="math inline">\(s\)</span> کو <span class="math inline">\(w_1\Delta x_1\)</span> سے بدلتی ہے۔ اسی طرح <span class="math inline">\(\Delta x_2\)</span> کی تبدیلی اسکور کو <span class="math inline">\(w_2\Delta x_2\)</span> سے بدلتی ہے۔ وزن کا نشان بھی اہم ہے: مثبت وزن کے ساتھ مدخل میں اضافہ اسکور بڑھاتا ہے، جبکہ منفی وزن اس کے برعکس اثر پیدا کرتا ہے۔ جب مختلف متغیرات کی اکائیاں اور پیمانے مختلف ہوں تو اس تعبیر کو احتیاط سے استعمال کرنا چاہیے۔ اسی لیے عملی تنفیذات میں تربیت سے پہلے مدخلاتی ڈیٹا کو اکثر نارملائز یا اسٹینڈرڈائز کیا جاتا ہے۔</p>
+<p>بائس <span class="math inline">\(b\)</span> افائن تبدیلی کا مستقل جزو ہے۔ ہندسی طور پر یہ فیصلہ حد کو منتقل ہونے دیتا ہے۔ اگر <span class="math inline">\(b=0\)</span> ہو تو مساوات <span class="math display">\[w_1x_1+w_2x_2=0\]</span> لکیر کو مبدا سے گزرنے پر مجبور کرتی ہے۔ بائس کی موجودگی میں حد دوسری جگہوں پر منتقل ہو سکتی ہے۔ مساوی طور پر، جب <span class="math inline">\(x_1=x_2=0\)</span> ہو تو اسکور صرف <span class="math inline">\(s=b\)</span> ہوتا ہے۔</p>
+<p>ضروری نہیں کہ اسکور ہی نیورون کا آخری آؤٹ پٹ ہو۔ عام طور پر اس پر ایک <em>فعال سازی فنکشن</em> <span class="math inline">\(g\)</span> لاگو کیا جاتا ہے: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> یوں حساب کے دو مراحل ہیں، <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>پچھلے حصے کے پیرامیٹرز استعمال کرنے پر <span class="math inline">\(s=1.6\)</span> ملتا ہے۔ اگر ہم اسٹیپ فنکشن منتخب کریں <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> تو <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>۔ ہماری اختیار کردہ روایت کے تحت پھل کو سیب درجہ بند کیا جاتا ہے۔ اس فعال سازی کے ساتھ فیصلہ اس وقت بدلتا ہے جب <span class="math inline">\(s\)</span> صفر کو عبور کرتا ہے، اس لیے جماعتی حد بالکل <span class="math display">\[w_1x_1+w_2x_2+b=0\]</span> ہے۔</p>
+<p>پس ایک واحد نیورون قابلِ ایڈجسٹ پیرامیٹرز رکھنے والی ایک سادہ ریاضیاتی شے ہے۔ اس کی حقیقی اہمیت تب سامنے آتی ہے جب ایسی بہت سی اکائیوں کو باہم جوڑا جائے۔ تاہم نیٹ ورک بنانے سے پہلے یہ سمجھنا ضروری ہے کہ فعال سازی فنکشن کیوں بنیادی اہمیت رکھتا ہے۔</p>
+</section><section class="article-section" id="فعال-سازی-فنکشن-کی-ضرورت-کیوں-ہے"><span class="section-no">05</span><h2>فعال سازی فنکشن کی ضرورت کیوں ہے؟</h2>
+<p>ایک نیورون پہلے افائن تبدیلی کے ذریعے اسکور حساب کرتا ہے اور پھر فعال سازی فنکشن لاگو کرتا ہے۔ اگر اعصابی نیٹ ورک کو پیچیدہ تعلقات کی نمائندگی کرنی ہو تو یہ دوسرا مرحلہ لازمی ہے۔ وجہ سمجھنے کے لیے ایسے نیٹ ورک کا تصور کریں جس میں کوئی فعال سازی فنکشن استعمال نہ ہو۔ تب ہر اکائی کی صورت یہ ہوگی <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>یک بعدی مثال کے لیے فرض کریں کہ پہلی اکائی <span class="math display">\[h=ax+b\]</span> پیدا کرتی ہے، اور دوسری <span class="math display">\[y=ch+d\]</span> حساب کرتی ہے۔ بدلنے پر <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> جو اب بھی <span class="math inline">\(x\)</span> کا افائن فنکشن ہے۔ یہی بات کئی ابعاد میں بھی درست ہے: افائن تبدیلیوں کا مرکب بھی افائن ہی رہتا ہے۔ لہٰذا غیر خطی عمل کے بغیر کئی تہیں شامل کرنے سے نیٹ ورک بنیادی طور پر زیادہ اظہاری نہیں ہو جاتا؛ پوری ترکیب کو ایک واحد افائن تبدیلی سے بدلا جا سکتا ہے۔</p>
+<p>فعال سازی فنکشن اس محدودیت کو توڑتا ہے۔ اسکور <span class="math inline">\(s\)</span> حساب کرنے کے بعد نیورون عموماً ایک غیر خطی نقشہ لاگو کرتا ہے <span class="math display">\[h=g(s).\]</span> جب ایسی کئی اکائیاں جوڑی جاتی ہیں تو حاصل شدہ ترکیب کو ایک واحد افائن تبدیلی میں سمیٹا نہیں جا سکتا۔ یوں نیٹ ورک زیادہ پیچیدہ فیصلہ حدود بنا سکتا ہے۔</p>
+<p>سب سے سادہ فعال سازی اسٹیپ فنکشن ہے، <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> یہ دوئی فیصلہ پیدا کرتا ہے اور درجہ بندی کو سمجھنے کے لیے بہت مفید ہے۔ تاہم اس کا مشتق <span class="math inline">\(s\neq0\)</span> کے لیے صفر اور <span class="math inline">\(s=0\)</span> پر غیر معین ہے۔ چونکہ گریڈینٹ پر مبنی تربیت مشتقات سے یہ طے کرتی ہے کہ پیرامیٹرز کیسے بدلیں، اس لیے اسٹیپ فنکشن اس تربیتی طریقے کے لیے موزوں نہیں۔</p>
+<p>ایک متبادل سگموئڈ فنکشن ہے، <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> یہ ہر حقیقی عدد کو <span class="math inline">\(0\)</span> اور <span class="math inline">\(1\)</span> کے درمیان ایک قدر میں نقش کرتا ہے۔ بہت منفی <span class="math inline">\(s\)</span> کے لیے آؤٹ پٹ <span class="math inline">\(0\)</span> کے قریب جاتا ہے، بہت مثبت <span class="math inline">\(s\)</span> کے لیے <span class="math inline">\(1\)</span> کے قریب، اور ان دونوں انتہاؤں کے درمیان منتقلی ہموار ہوتی ہے۔ سگموئڈ ہر جگہ قابلِ اشتقاق ہے، اور <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> چونکہ اس کا آؤٹ پٹ <span class="math inline">\(0\)</span> اور <span class="math inline">\(1\)</span> کے درمیان رہتا ہے، اسے دوئی درجہ بند کی آؤٹ پٹ تہہ میں اکثر استعمال کیا جاتا ہے۔ مناسب لاس فنکشن کے ساتھ احتمالی تشکیل میں آؤٹ پٹ کو اس جماعت کے احتمال کے تخمینے کے طور پر سمجھا جا سکتا ہے جو <span class="math inline">\(1\)</span> سے ظاہر ہوتی ہے۔ تاہم پوشیدہ تہوں میں سگموئڈ ایک مشکل پیدا کر سکتا ہے: بڑی قدر والے مدخلات کے لیے اس کا مشتق بہت چھوٹا ہو جاتا ہے، جس سے گہرے نیٹ ورکس میں <em>vanishing-gradient</em> مسئلہ پیدا ہو سکتا ہے۔</p>
+<p>پوشیدہ تہوں کے لیے وسیع طور پر استعمال ہونے والا فعال سازی فنکشن ReLU (<em>Rectified Linear Unit</em>) ہے، <span class="math display">\[\text{ReLU}(s)=\text{max}(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> اگرچہ یہ دو خطی حصوں سے بنا ہے، ReLU مجموعی طور پر خطی نہیں۔ اس کا مشتق <span class="math inline">\(s&lt;0\)</span> کے لیے <span class="math inline">\(0\)</span> اور <span class="math inline">\(s&gt;0\)</span> کے لیے <span class="math inline">\(1\)</span> ہے۔ <span class="math inline">\(s=0\)</span> پر معمول کا مشتق موجود نہیں، اور سافٹ ویئر تنفیذات گریڈینٹ کے لیے ایک طے شدہ اصطلاح اختیار کرتی ہیں۔ مثبت مدخلات کے لیے <span class="math inline">\(s\)</span> بڑھنے پر مشتق سکڑتا نہیں، اس لیے سگموئڈ میں پائے جانے والے تشبع کے ایک طریقۂ کار سے بچا جاتا ہے۔</p>
+<p>شکل <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> ان تین فعال سازی فنکشنز کا بصری موازنہ کرتی ہے: اسٹیپ فنکشن کی اچانک چھلانگ، سگموئڈ کی ہموار منتقلی، اور ReLU میں ڈھلوان کی تبدیلی۔</p>
+<figure id="fig:activation_functions">
+<img alt="اعصابی نیٹ ورکس کی ابتدائی بحث میں عام طور پر استعمال ہونے والے تین فعال سازی فنکشنز کا موازنہ۔ اسٹیپ فنکشن اچانک فیصلہ کرتا ہے؛ سگموئڈ \(0\) اور \(1\) کے درمیان ہموار منتقلی فراہم کرتا ہے؛ اور ReLU منفی مدخلات کو دباتا جبکہ مثبت مدخلات کو برقرار رکھتا ہے۔ غیر خطی فعال سازیاں تہو" decoding="async" loading="lazy" src="../assets/img/ur/Fig04.png"/>
+<figcaption>اعصابی نیٹ ورکس کی ابتدائی بحث میں عام طور پر استعمال ہونے والے تین فعال سازی فنکشنز کا موازنہ۔ اسٹیپ فنکشن اچانک فیصلہ کرتا ہے؛ سگموئڈ <span class="math inline">\(0\)</span> اور <span class="math inline">\(1\)</span> کے درمیان ہموار منتقلی فراہم کرتا ہے؛ اور ReLU منفی مدخلات کو دباتا جبکہ مثبت مدخلات کو برقرار رکھتا ہے۔ غیر خطی فعال سازیاں تہوں کے ڈھیر کو ایک واحد افائن تبدیلی میں سمٹنے سے روکتی ہیں۔</figcaption>
+</figure>
+<p>ان کی بنیادی خصوصیات ذیل میں خلاصہ کی گئی ہیں۔</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">فنکشن</th>
+<th style="text-align: center;">آؤٹ پٹ</th>
+<th style="text-align: left;">مشتق</th>
+<th style="text-align: left;">عام استعمال</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Step</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(s\neq0\)</span> کے لیے صفر؛ <span class="math inline">\(s=0\)</span> پر غیر معین</td>
+<td style="text-align: left;">تاریخی ماڈلز اور تدریسی مثالیں</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigmoid</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">ہر <span class="math inline">\(s\)</span> کے لیے موجود</td>
+<td style="text-align: left;">دوئی درجہ بندی میں آؤٹ پٹ تہہ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(s&lt;0\)</span> کے لیے <span class="math inline">\(0\)</span> اور <span class="math inline">\(s&gt;0\)</span> کے لیے <span class="math inline">\(1\)</span></td>
+<td style="text-align: left;">پوشیدہ تہیں</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ان فنکشنز کی تفصیلات مختلف ہیں، مگر ان کا مشترک تصوری کردار غیر خطیت متعارف کرانا ہے۔ یہی غیر خطیت اگلے حصے کے چھوٹے نیٹ ورک کو ایسے تعلقات کی نمائندگی کرنے دیتی ہے جنہیں ایک سیدھی لکیر بیان نہیں کر سکتی۔</p>
+<p>مزید مطالعہ کے خواہش مند قارئین کے لیے Haykin  اعصابی نیٹ ورکس کا کلاسیکی بیان پیش کرتے ہیں، جبکہ Goodfellow، Bengio اور Courville  وسیع تر تناظر میں فعال سازی فنکشنز اور گہرے نیٹ ورکس کی تربیت پر گفتگو کرتے ہیں۔ Nielsen کا آزادانہ دستیاب متن  نیورونز، فعال سازیاں اور سیکھنے کے بارے میں بدیہی فہم پیدا کرنے کے لیے خاص طور پر قابلِ رسائی ہے۔</p>
+</section><section class="article-section" id="ایک-چھوٹا-اعصابی-نیٹ-ورک-بنانا"><span class="section-no">06</span><h2>ایک چھوٹا اعصابی نیٹ ورک بنانا</h2>
+<p>اب ہم ایسے نیٹ ورک پر غور کرتے ہیں جس میں دو مدخلات، تین نیورونز پر مشتمل ایک پوشیدہ تہہ، اور ایک آؤٹ پٹ نیورون ہے۔ مدخلات بدستور <span class="math display">\[x_1=\text{کمیت},
+\qquad
+x_2=\text{قطر},\]</span> ہیں، اور شکل <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a> کے مطابق دونوں مدخلات ہر پوشیدہ نیورون کو دیے جاتے ہیں۔</p>
+<figure id="fig:small_network">
+<img alt="اعصابی نیٹ ورک کے حساب کو متعارف کرانے کے لیے استعمال ہونے والی تدریسی \(2\) – \(3\) – \(1\) ساخت۔ دو مدخلات — کمیت اور قطر — پوشیدہ تہہ کے تین نیورونز تک پہنچتی ہیں۔ ان کی فعال قدریں \(h_1,h_2,h_3\) پھر آؤٹ پٹ نیورون میں جمع ہو کر پیش گوئی \(\widehat{y}\) پیدا کرتی ہیں۔ ہر رابطے" decoding="async" loading="lazy" src="../assets/img/ur/Fig05.png"/>
+<figcaption>اعصابی نیٹ ورک کے حساب کو متعارف کرانے کے لیے استعمال ہونے والی تدریسی <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> ساخت۔ دو مدخلات — کمیت اور قطر — پوشیدہ تہہ کے تین نیورونز تک پہنچتی ہیں۔ ان کی فعال قدریں <span class="math inline">\(h_1,h_2,h_3\)</span> پھر آؤٹ پٹ نیورون میں جمع ہو کر پیش گوئی <span class="math inline">\(\widehat{y}\)</span> پیدا کرتی ہیں۔ ہر رابطے کا ایک قابلِ ایڈجسٹ وزن اور ہر نیورون کا ایک بائس ہوتا ہے۔</figcaption>
+</figure>
+<p>پوشیدہ تہہ کے آؤٹ پٹس کو <span class="math inline">\(h_1\)</span>، <span class="math inline">\(h_2\)</span> اور <span class="math inline">\(h_3\)</span> کہیں۔ ہر نیورون کو یہی دو مدخلات ملتے ہیں لیکن اس کے اپنے اوزان اور بائس ہوتے ہیں: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>اگرچہ تینوں نیورونز کو ایک ہی کمیت اور قطر ملتے ہیں، وہ مختلف جوابات پیدا کر سکتے ہیں کیونکہ ان کے پیرامیٹرز مختلف ہیں۔ تربیت کے دوران ان پیرامیٹرز کو اس طرح ایڈجسٹ کیا جاتا ہے کہ درمیانی فعال قدریں درجہ بندی کے لیے مفید ہو جائیں۔</p>
+<p>پھر تین مقداریں <span class="math inline">\(h_1\)</span>، <span class="math inline">\(h_2\)</span> اور <span class="math inline">\(h_3\)</span> آؤٹ پٹ نیورون کو دی جاتی ہیں، جو <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> حساب کرتا ہے اور <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right)\]</span> پیدا کرتا ہے۔ ہمارے دوئی مسئلے کے لیے ہم سگموئڈ آؤٹ پٹ استعمال کرتے ہیں: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>سیب کے لیے <span class="math inline">\(y=1\)</span> اور سنترے کے لیے <span class="math inline">\(y=0\)</span> استعمال کرتے ہوئے، <span class="math inline">\(0.5\)</span> کی حد جماعتی فیصلہ دیتی ہے <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{سیب},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{سنترہ}.\]</span> اس لیے <span class="math inline">\(1\)</span> کے قریب قدریں سیب سے مضبوطی سے وابستہ ہیں، جبکہ <span class="math inline">\(0\)</span> کے قریب قدریں سنترے سے۔ جیسا کہ پہلے ذکر ہوا، <span class="math inline">\(\widehat{y}\)</span> کو عددی طور پر احتمال سمجھنے کے لیے ماڈل اور اس کی تربیت سے متعلق اضافی مفروضات درکار ہیں۔ یہاں استعمال ہونے والے درجہ بندی کے قاعدے کے لیے اسے مسلسل نیٹ ورک آؤٹ پٹ سمجھنا کافی ہے۔</p>
+<p>اس ساخت کی مرکزی خصوصیت درمیانی نمائندگی ہے <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> نیٹ ورک دو خصوصیات وصول کرتا ہے اور آخری جواب دینے سے پہلے تین نئی مقداریں بناتا ہے۔ یہ فعال قدریں دستی طور پر منتخب نہیں کی جاتیں: یہ اوزان اور بائس پر منحصر ہوتی ہیں اور اس لیے تربیت کے دوران پیرامیٹرز کے ساتھ بدلتی رہتی ہیں۔</p>
+<p>اپنے چھوٹے حجم کے باوجود، اس نیٹ ورک میں پہلے ہی تیرہ قابلِ ایڈجسٹ پیرامیٹرز ہیں۔ تین پوشیدہ نیورونز میں <span class="math display">\[3(2+1)=9\]</span> پیرامیٹرز ہیں، اور آؤٹ پٹ نیورون <span class="math display">\[3+1=4\]</span> مزید دیتا ہے۔ لہٰذا <span class="math display">\[9+4=13.\]</span></p>
+<p>یہی گنتی میٹرکس نوٹیشن میں بالکل واضح ہو جاتی ہے۔ تعریف کریں <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> تب پوشیدہ تہہ کو مختصر طور پر یوں لکھا جا سکتا ہے <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> جہاں <span class="math inline">\(g\)</span> ہر جزو پر الگ الگ لاگو ہوتا ہے۔ آؤٹ پٹ کے لیے <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> جہاں <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>یہ نوٹیشن اس ساخت کی پیش گوئی کرتا ہے جو Python پروگرام میں سامنے آئے گی۔ جب کوئی پھل مدخل پر دیا جاتا ہے اور ہم یکے بعد دیگرے فعال قدریں حساب کرتے ہوئے <span class="math inline">\(\widehat{y}\)</span> تک پہنچتے ہیں، تو ہم <em>فارورڈ پروپیگیشن</em> یا <em>فارورڈ پاس</em> انجام دیتے ہیں۔ بنیادی سوال اب بھی یہی ہے: تیرہ پیرامیٹرز خودکار طور پر کیسے متعین کیے جائیں تاکہ پیش گوئیاں ڈیٹا کے مطابق ہو جائیں؟</p>
+</section><section class="article-section" id="اعصابی-نیٹ-ورک-کیسے-سیکھتا-ہے"><span class="section-no">07</span><h2>اعصابی نیٹ ورک کیسے سیکھتا ہے؟</h2>
+<p>اوزان اور بائس پہلے سے معلوم نہیں ہوتے۔ انہیں ایسی مثالوں کی مدد سے ایڈجسٹ کرنا پڑتا ہے جن کے درست جواب معلوم ہوں۔ اس عمل کو <em>تربیت</em> کہتے ہیں اور اسے اس چکر سے خلاصہ کیا جا سکتا ہے <span class="math display">\[\boxed{\text{پیش گوئی}}
+\longrightarrow
+\boxed{\text{خطا ناپیں}}
+\longrightarrow
+\boxed{\text{پیرامیٹرز ایڈجسٹ کریں}}
+\longrightarrow
+\boxed{\text{دہرائیں}}.\]</span></p>
+<p><span class="math inline">\(140\)</span> g کمیت اور <span class="math inline">\(7.0\)</span> cm قطر والے ایک پھل پر غور کریں جس کی درست جماعت سنترہ ہے، یعنی <span class="math inline">\(y=0\)</span>۔ فرض کریں تربیت کے کسی مرحلے پر نیٹ ورک <span class="math inline">\(\widehat{y}=0.80\)</span> آؤٹ پٹ دیتا ہے۔ پیش گوئی اور ہدف کے درمیان فرق کی ایک سادہ پیمائش مربع خطا ہے <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> اس مثال کے لیے <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>یہ اظہار ایک مثال کے لیے <em>لاس فنکشن</em> ہے۔ چونکہ یہ مربع ہے، <span class="math inline">\(E\geq0\)</span>، اور ہدف سے زیادہ دور پیش گوئیوں پر زیادہ جرمانہ عائد ہوتا ہے۔ عامل <span class="math inline">\(1/2\)</span> کم از کم کی جگہ نہیں بدلتا، لیکن مشتقات کو سادہ بناتا ہے۔ دوئی درجہ بندی میں دوسرے لاس فنکشنز، خاص طور پر cross-entropy، بھی کثرت سے استعمال ہوتے ہیں۔ یہاں ہم مربع خطا استعمال کرتے ہیں کیونکہ اس کی الجبرا شفاف ہے اور optimization اور backpropagation متعارف کرانے کے لیے کافی ہے ۔</p>
+<p>اگر تربیتی مجموعے میں <span class="math inline">\(N\)</span> مثالیں ہوں تو ایک مجموعی پیمانہ اوسط لاس ہے <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> ہر پیش گوئی نیٹ ورک کے اوزان اور بائس پر منحصر ہے، اس لیے <span class="math inline">\(J\)</span> بھی ان تمام پیرامیٹرز پر منحصر ہے۔ تربیت کا مطلب ایسے پیرامیٹرز تلاش کرنا ہے جو <span class="math inline">\(J\)</span> کو چھوٹا کریں۔</p>
+<p>ایڈجسٹمنٹ کے طریقے کو سمجھنے کے لیے پہلے فرض کریں کہ ایک وزن <span class="math inline">\(w\)</span> کے سوا تمام پیرامیٹرز مستقل ہیں۔ تب لاس کو <span class="math inline">\(J=J(w)\)</span> فنکشن سمجھا جا سکتا ہے۔ شکل <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> تربیت کے بنیادی مراحل کا خلاصہ کرتی ہے جنہیں اب ہم دیکھتے ہیں۔</p>
+<figure id="fig:training_cycle">
+<img alt="اعصابی نیٹ ورک کی تربیت کا بنیادی چکر۔ فارورڈ پاس مدخلات کو پیش گوئی میں تبدیل کرتا ہے؛ لاس فنکشن پیش گوئی اور ہدف کے اختلاف کو ناپتا ہے؛ بیک پروپیگیشن chain rule کے ذریعے گریڈینٹس حساب کرتا ہے؛ اور گریڈینٹ ڈیسنٹ انہی گریڈینٹس سے اوزان اور بائس کو اپ ڈیٹ کرتا ہے۔ کئی epochs تک یہ" decoding="async" loading="lazy" src="../assets/img/ur/Fig06.png"/>
+<figcaption>اعصابی نیٹ ورک کی تربیت کا بنیادی چکر۔ فارورڈ پاس مدخلات کو پیش گوئی میں تبدیل کرتا ہے؛ لاس فنکشن پیش گوئی اور ہدف کے اختلاف کو ناپتا ہے؛ بیک پروپیگیشن chain rule کے ذریعے گریڈینٹس حساب کرتا ہے؛ اور گریڈینٹ ڈیسنٹ انہی گریڈینٹس سے اوزان اور بائس کو اپ ڈیٹ کرتا ہے۔ کئی epochs تک یہ چکر دہرانا ہی وہ عمل ہے جسے ہم سیکھنا کہتے ہیں۔</figcaption>
+</figure>
+<p>جن قارئین کا حسابان سے کم تعارف ہے، ان کے لیے مشتق کو یہاں <em>مقامی حساسیت</em> کی پیمائش کے طور پر سمجھا جا سکتا ہے: یہ بتاتا ہے کہ کسی ایک پیرامیٹر میں چھوٹی تبدیلی لاس کو کس طرح بدلنے کا رجحان رکھتی ہے۔ اس کا نشان بتاتا ہے کہ کون سی سمت مقامی طور پر فنکشن کو بڑھاتی یا گھٹاتی ہے، جبکہ اس کی قدر اس مقامی تبدیلی کی شدت بتاتی ہے۔</p>
+<p>مشتق <span class="math display">\[\frac{\partial J}{\partial w}\]</span> مقامی ڈھلوان دیتا ہے۔ اگر یہ مثبت ہو تو <span class="math inline">\(w\)</span> میں تھوڑا اضافہ عموماً <span class="math inline">\(J\)</span> بڑھاتا ہے، اس لیے وزن کو مخالف سمت میں منتقل کرنا چاہیے۔ اگر یہ منفی ہو تو <span class="math inline">\(w\)</span> بڑھانے سے مقامی طور پر <span class="math inline">\(J\)</span> کم ہونے کا رجحان ہوتا ہے۔ دونوں حالتیں اس قاعدے میں سمٹ جاتی ہیں <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> جو <em>گریڈینٹ ڈیسنٹ</em> کا بنیادی تصور ہے۔ مثبت عدد <span class="math inline">\(\eta\)</span> <em>سیکھنے کی شرح</em> ہے؛ یہ قدم کے حجم کو کنٹرول کرتا ہے۔ بہت چھوٹی قدر تربیت کو سست کر سکتی ہے، جبکہ بہت بڑی قدر ارتعاش یا عدم استحکام پیدا کر سکتی ہے۔</p>
+<p>کئی پیرامیٹرز والے نیٹ ورک کے لیے <span class="math inline">\(\theta\)</span> کو کوئی بھی وزن یا بائس سمجھیں۔ اپ ڈیٹ یوں ہو جاتا ہے <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> تمام جزوی مشتقات کا مجموعہ لاس کا <em>گریڈینٹ</em> بناتا ہے۔ ہندسی طور پر گریڈینٹ تیز ترین مقامی اضافے کی سمت بتاتا ہے، اس لیے منفی گریڈینٹ مقامی کمی کی سمت فراہم کرتا ہے۔</p>
+<p>اب بھی یہ حساب کرنا باقی ہے کہ جب نیٹ ورک کئی فنکشنز کا مرکب ہو تو یہ مشتقات کیسے حاصل کیے جائیں۔ فارورڈ پاس میں معلومات اس ترتیب سے گزرتی ہے <span class="math display">\[\text{مدخلات}
+\longrightarrow
+\text{پوشیدہ تہہ}
+\longrightarrow
+\text{آؤٹ پٹ}.\]</span> ابتدائی تہہ کے کسی پیرامیٹر کا لاس پر اثر معلوم کرنے کے لیے ہم انحصارات کے سلسلے کو ریاضیاتی طور پر الٹی سمت میں دنبال کرتے ہیں۔ اس عمل کو <em>بیک پروپیگیشن</em> کہتے ہیں۔ بنیادی طور پر یہ chain rule کا منظم اور مؤثر استعمال ہے۔ Rumelhart، Hinton اور Williams  پوشیدہ تہوں والے نیٹ ورکس میں اس طریقے کی مقبولیت کا کلاسیکی حوالہ فراہم کرتے ہیں، جبکہ Nielsen  ایک مفصل اور خاص طور پر تدریسی اخذ پیش کرتے ہیں۔</p>
+<p>ایک سادہ انحصاری زنجیر میں، جہاں <span class="math inline">\(E\)</span> کا انحصار <span class="math inline">\(\widehat{y}\)</span> پر، <span class="math inline">\(\widehat{y}\)</span> کا فعال قدر <span class="math inline">\(h\)</span> پر، اور <span class="math inline">\(h\)</span> کا وزن <span class="math inline">\(w\)</span> پر ہو، chain rule دیتا ہے <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> ہر عامل آخری لاس پر <span class="math inline">\(w\)</span> کے اثر کے ایک مرحلے کو بیان کرتا ہے۔ بڑے نیٹ ورکس میں ایسی بہت سی زنجیریں ہوتی ہیں، اور بیک پروپیگیشن حساب کو اس طرح منظم کرتا ہے کہ درمیانی مشتقات کو ہر پیرامیٹر کے لیے الگ سے دوبارہ حساب کرنے کے بجائے دوبارہ استعمال کیا جا سکے۔</p>
+<p>عملی تربیت میں بہت سی مثالیں استعمال ہوتی ہیں۔ پورے تربیتی مجموعے سے ایک مکمل گزر کو <em>epoch</em> کہتے ہیں۔ پیرامیٹرز ہر مثال کے بعد اپ ڈیٹ کیے جا سکتے ہیں، جیسا کہ اس مضمون کے بعد کے تدریسی پروگرام میں ہوگا، یا مثالوں کے چھوٹے گروہوں کے بعد جنہیں <em>mini-batches</em> کہتے ہیں، جو بڑے نیٹ ورکس میں عام ہیں۔ دونوں صورتوں میں پیش گوئی، لاس، گریڈینٹ اور اپ ڈیٹ کا چکر کئی epochs تک دہرایا جاتا ہے۔</p>
+<p>اس ارتقا کو ٹھوس طور پر دیکھنے کا ایک طریقہ یہ ہے کہ ایک ہی مثال کی پیش گوئی کو تربیت کے مختلف مراحل میں دیکھا جائے۔ دوبارہ اس پھل پر غور کریں جس کی کمیت <span class="math inline">\(140\)</span> g، قطر <span class="math inline">\(7.0\)</span> cm اور درست جماعت سنترہ ہے۔ جدول <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> ایک فرضی پیش رفت دکھاتا ہے۔ یہ قدریں کسی مخصوص run سے نہیں، صرف طریقۂ کار کی وضاحت کے لیے ہیں۔</p>
+<div id="tab:learning">
+<table>
+<caption>تربیت کے دوران ایک ہی پھل کے لیے نیٹ ورک کی پیش گوئی کا فرضی ارتقا۔ بار بار پیرامیٹر اپ ڈیٹس ابتدا میں غلط آؤٹ پٹ کو ہدفی لیبل کے مطابق درجہ بندی کی طرف لے جا سکتی ہیں۔</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Epoch</th>
+<th style="text-align: center;"><span>پیش گوئی</span> <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;"><span>لاس</span> <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;"><span>درجہ بندی</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;"><span>سیب</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;"><span>سیب</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;"><span>سیب</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;"><span>سنترہ</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;"><span>سنترہ</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>ابتدا میں آؤٹ پٹ <span class="math inline">\(1\)</span> کے قریب ہے اور پھل غلطی سے سیب درجہ بند ہوتا ہے۔ پیرامیٹرز ایڈجسٹ ہوتے جاتے ہیں تو پیش گوئی کم ہوتی ہے اور آخرکار <span class="math inline">\(0.5\)</span> کی حد عبور کرکے درست جماعت پیدا کرتی ہے۔ اس عمل میں اوزان اور بائس کی عددی قدریں بدلتی ہیں؛ نیٹ ورک کی ساخت مستقل رہتی ہے۔</p>
+<p>تربیتی ڈیٹا پر لاس کم کرنا آخری مقصد نہیں۔ ایک مفید نیٹ ورک کو ان مثالوں پر بھی اچھی پیش گوئیاں کرنی چاہییں جو پیرامیٹرز موزوں کرنے میں استعمال نہیں ہوئیں۔ اس صلاحیت کو <em>generalization</em> کہتے ہیں۔ جب ماڈل تربیتی مجموعے کی مخصوص تفصیلات کے ساتھ ضرورت سے زیادہ مطابقت اختیار کر لے اور نئے ڈیٹا پر خراب کارکردگی دکھائے تو اسے <em>overfitting</em> کہتے ہیں۔ زیادہ محتاط جائزوں میں ڈیٹا کو عموماً training، validation اور test مجموعوں میں تقسیم کیا جاتا ہے: پہلا پیرامیٹرز موزوں کرتا ہے، دوسرا ماڈل بناتے وقت فیصلوں کی رہنمائی کرتا ہے، اور تیسرا آخری جائزے کے لیے محفوظ رہتا ہے۔ generalization اور ماڈل evaluation پر وسیع تر بحث Faceli et al.  اور Goodfellow، Bengio و Courville  میں ملتی ہے۔</p>
+<p>یوں ہم اعصابی نیٹ ورک میں سیکھنے کے ریاضیاتی معنی تک پہنچتے ہیں۔ اس تناظر میں سیکھنے کا مطلب ایک مرکب فنکشن کے پیرامیٹرز کو اس طرح ایڈجسٹ کرنا ہے کہ ڈیٹا پر خطا کی پیمائش کم ہو اور، مثالی طور پر، نئے نمونوں پر بھی اچھی عمومی کارکردگی حاصل ہو۔ نیٹ ورک پیش گوئی کرتا ہے، لاس حساب کرتا ہے، مشتقات سے طے کرتا ہے کہ پیرامیٹرز اس لاس کو کیسے متاثر کرتے ہیں، اور پھر چھوٹی چھوٹی اصلاحات کا سلسلہ انجام دیتا ہے۔</p>
+</section><section class="article-section" id="ریاضی-سے-python-تک"><span class="section-no">08</span><h2>ریاضی سے Python تک</h2>
+<p>اب ہم مساوات سے ایک قابلِ اجرا پروگرام کی طرف بڑھتے ہیں۔ مقصد کسی مخصوص اعصابی نیٹ ورک لائبریری کو استعمال کرنا نہیں، بلکہ مضمون بھر میں تیار کیے گئے ریاضیاتی عملیات کو <code>NumPy</code> کے ذریعے براہ راست نافذ کرنا ہے ۔ اس طرح سطر بہ سطر دیکھا جا سکتا ہے کہ خطی امتزاج، فعال سازی فنکشنز، لاس کا حساب، بیک پروپیگیشن اور گریڈینٹ ڈیسنٹ کوڈ میں کس طرح ظاہر ہوتے ہیں۔</p>
+<p>زیادہ قائل کرنے والی آخری مثال کے لیے ہم ایک مصنوعی ڈیٹا سیٹ استعمال کرتے ہیں جو کمیت–قطر کے زیادہ وسیع خطے میں پھیلا ہوا ہے۔ ہم اب بھی صرف دو طبعی خصوصیات — گرام میں کمیت اور سینٹی میٹر میں قطر — استعمال کرتے ہیں، لیکن اب <span class="math inline">\(64\)</span> تربیتی مثالوں کو سطح کے ایک بڑے حصے میں پھیلاتے ہیں اور آٹھ اضافی مثالیں ایک وضاحتی آزمائش کے لیے الگ رکھتے ہیں۔ ڈیٹا مصنوعی ہے اور سیبوں اور سنتروں کے معقول حدود میں رکھا گیا ہے۔ اسے اس طرح بنایا گیا ہے کہ تمام نقاط کو چند غیر فطری گچھوں میں سمیٹے بغیر ایک غیر خطی فیصلہ حد حاصل ہو۔</p>
+<p>ہندسی تصور سادہ ہے۔ ہم کمیت–قطر کی سطح میں ایک حوالہ منحنی تعریف کرتے ہیں، سیبوں کو اس منحنی کے اوپر دو پٹیوں میں، اور سنتروں کو نیچے دو پٹیوں میں رکھتے ہیں۔ مشاہدات کو وسیع تر خطے میں پھیلانے کے لیے کمیت اور قطر دونوں میں چھوٹی متعین تبدیلیاں شامل کی جاتی ہیں۔ حاصل شدہ مثال پچھلی تصویروں سے زیادہ بھرپور ہے: اس میں زیادہ نقاط ہیں، ڈیٹا خطے میں پھیلا ہوا ہے، اور مناسب فیصلہ حد سیدھی لکیر سے واضح طور پر زیادہ منحنی ہے۔</p>
+<p>اس آخری حسابی تجربے کے لیے ہم پوشیدہ تہہ کو بارہ ReLU نیورونز تک بڑھاتے ہیں۔ اس سے پچھلے حصوں میں مطالعہ کی گئی تصوری ساخت نہیں بدلتی؛ صرف زیادہ پیچیدہ حد کی نمائندگی کرنے کی نیٹ ورک کی صلاحیت بڑھتی ہے۔ تین نیورونز والے تدریسی نیٹ ورک کے <span class="math inline">\(13\)</span> پیرامیٹرز کے بجائے اب ہمارے پاس <span class="math inline">\(49\)</span> قابلِ ایڈجسٹ پیرامیٹرز ہیں: پہلی تہہ میں <span class="math inline">\(24\)</span> اوزان اور <span class="math inline">\(12\)</span> بائس، پھر آؤٹ پٹ تہہ میں <span class="math inline">\(12\)</span> اوزان اور ایک بائس۔ مساوات بالکل وہی صورت رکھتی ہیں؛ صرف ویکٹر اور میٹرکس بڑے ہو جاتے ہیں۔</p>
+<p>مکمل پروگرام ذیل میں دیا گیا ہے۔</p>
+<div lang="en">
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Apple - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Orange - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Apple - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Orange - test")
+
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Neural-network output after training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Apple - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Orange - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Neural-network decision boundary')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+</div>
+<p>اگرچہ کوڈ مضمون میں پہلے مطالعہ کی گئی مساوات سے لمبا ہے، اس کی ساخت شفاف رہتی ہے۔ <code>build_data()</code> فنکشن خودکار طور پر <span class="math inline">\(64\)</span> تربیتی مثالیں اور آٹھ وضاحتی آزمائشی مثالیں بناتا ہے۔ پھر ہم دونوں متغیرات کو اس قاعدے کے مطابق معیاری بناتے ہیں <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> جہاں <span class="math inline">\(\mu_j\)</span> اور <span class="math inline">\(\sigma_j\)</span> صرف تربیتی مجموعے سے حساب کیے جاتے ہیں۔ اس سے آزمائشی مجموعہ پیرامیٹرز کی fitting پر اثر انداز نہیں ہوتا اور کمیت و قطر کو قابلِ موازنہ عددی پیمانوں پر بھی لایا جاتا ہے۔</p>
+<p>فارورڈ پاس اپنی اصل میں نہیں بدلتا۔ فرق صرف یہ ہے کہ پہلی تہہ اب بارہ پوشیدہ فعال قدروں کا ویکٹر پیدا کرتی ہے۔ میٹرکس نوٹیشن میں، <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\text{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> یہ چار سطریں اب بھی الگورتھم کا ریاضیاتی جوہر رکھتی ہیں۔ تربیت بھی پہلے متعارف کرائی گئی منطق برقرار رکھتی ہے: پیش گوئی حساب کریں، خطا ناپیں، مشتقات کی مدد سے حساسیت کی معلومات پیچھے منتقل کریں، اور چھوٹے گریڈینٹ ڈیسنٹ قدموں سے پیرامیٹرز اپ ڈیٹ کریں۔</p>
+<p>کوڈ میں آؤٹ پٹ تہہ پر بیک پروپیگیشن اس سطر میں ظاہر ہوتی ہے</p>
+<div lang="en">
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+</div>
+<p>اور پوشیدہ تہہ تک منتقلی اس سطر میں</p>
+<div lang="en">
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+</div>
+<p>نظر آتی ہے، جس کے بعد تمام اوزان اور بائس اپ ڈیٹ ہوتے ہیں۔ چونکہ ہر epoch میں مثالوں کی ترتیب بدلی جاتی ہے اور ہر مشاہدے کے بعد پیرامیٹرز اپ ڈیٹ ہوتے ہیں، یہ تنفیذ <em>stochastic gradient descent</em> کی ایک بنیادی شکل ہے۔</p>
+<p>یہاں استعمال ہونے والے تصادفی بیج اور ہائپر پیرامیٹرز کے ساتھ آخری اوسط لاس <span class="math inline">\(10^{-5}\)</span> سے <span class="math inline">\(10^{-4}\)</span> کے درجے میں ہے، اور تمام <span class="math inline">\(64\)</span> تربیتی مثالیں اور آٹھ وضاحتی آزمائشی مثالیں متوقع درجہ بندی حاصل کرتی ہیں۔ اسے سخت شماریاتی کارکردگی کے جائزے کے طور پر نہیں سمجھنا چاہیے: ڈیٹا مصنوعی ہے اور تدریسی مقصد کے لیے بنایا گیا ہے۔ اس کا کردار ایک کم معمولی صورتِ حال میں یہ دکھانا ہے کہ ایک چھوٹا اعصابی نیٹ ورک واضح طور پر غیر خطی فیصلہ حد سیکھ سکتا ہے۔</p>
+<p>شکل <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> کمیت–قطر کی سطح میں پروگرام کا آخری آؤٹ پٹ دکھاتی ہے۔ تمام تربیتی نقاط دکھائے گئے ہیں۔ نمایاں منحنی سطح <span class="math inline">\(\widehat{y}=0.5\)</span> ہے اور نیٹ ورک کی سیکھی ہوئی فیصلہ حد کی نمائندگی کرتا ہے؛ سایہ دار خطے نیٹ ورک کی پیش گوئی کردہ دو جماعتیں دکھاتے ہیں۔ دائرے تربیتی سیب، مربع تربیتی سنترے، مثلث آزمائشی سیب، اور ضرب کے نشان آزمائشی سنترے ہیں۔ وضاحتی کلید کو مرکزی رسم کے باہر رکھا گیا ہے تاکہ کوئی ڈیٹا نقطہ چھپ نہ جائے۔</p>
+<figure id="fig:python_output">
+<img alt="اعصابی نیٹ ورک کی تربیت کے بعد حاصل ہونے والا Python آؤٹ پٹ۔ مصنوعی ڈیٹا سیٹ میں کمیت–قطر کی سطح کے وسیع خطے میں پھیلی \(64\) تربیتی مثالیں اور وضاحتی آزمائش کے لیے محفوظ آٹھ اضافی مثالیں شامل ہیں۔ نمایاں منحنی سطح \(\widehat{y}=0.5\) ہے اور سیکھی ہوئی فیصلہ حد کی نمائندگی کرتا ہ" decoding="async" loading="lazy" src="../assets/img/ur/Fig07.png"/>
+<figcaption>اعصابی نیٹ ورک کی تربیت کے بعد حاصل ہونے والا Python آؤٹ پٹ۔ مصنوعی ڈیٹا سیٹ میں کمیت–قطر کی سطح کے وسیع خطے میں پھیلی <span class="math inline">\(64\)</span> تربیتی مثالیں اور وضاحتی آزمائش کے لیے محفوظ آٹھ اضافی مثالیں شامل ہیں۔ نمایاں منحنی سطح <span class="math inline">\(\widehat{y}=0.5\)</span> ہے اور سیکھی ہوئی فیصلہ حد کی نمائندگی کرتا ہے؛ سایہ دار خطے نیٹ ورک کی پیش گوئی کردہ جماعتیں دکھاتے ہیں۔ دائرے تربیتی سیب، مربع تربیتی سنترے، مثلث آزمائشی سیب، اور ضرب کے نشان آزمائشی سنترے ظاہر کرتے ہیں۔</figcaption>
+</figure>
+<p>ہم نے دو سادہ نقطہ گروہوں کو جدا کرنے والی سیدھی لکیر سے آغاز کیا اور ایک زیادہ بھرپور حسابی مثال پر اختتام کیا جس میں نیٹ ورک کے پیرامیٹرز کی خودکار ایڈجسٹمنٹ سے ایک منحنی حد نمودار ہوتی ہے۔ ریاضی میں کوئی پراسرار چیز شامل نہیں ہوئی: تنفیذ صرف افائن امتزاج، فعال سازی فنکشنز، مشتقات، میٹرکس ضرب اور گریڈینٹ ڈیسنٹ اپ ڈیٹس کو بڑے پیمانے اور تیز رفتاری سے منظم کرکے دہراتی ہے ۔</p>
+<p>اس مضمون سے متعلق تمام حسابی مواد — کوڈ اور قابلِ اجرا Google Colab notebook سمیت — <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> پر دستیاب ہے، تاکہ مثالوں کو دیکھنے، دوبارہ پیدا کرنے یا اپنی ضرورت کے مطابق ڈھالنے والے قارئین کے لیے ایک واحد رسائی مقام فراہم ہو۔</p>
+<p>مصنف نے OpenAI کی تیار کردہ ChatGPT کو مسودہ سازی، لسانی نظرِ ثانی، توضیحی تنظیم اور تدریسی اشکال بنانے میں معاون آلے کے طور پر استعمال کیا۔ ریاضیاتی مواد کے تصور اور ترقی، کوڈ اور استعمال شدہ حوالہ جات سمیت کام کے آخری مواد کی مکمل ذمہ داری مصنف پر ہے۔</p>
+<div lang="en">
+</div>
+</section></div>
+<section class="article-section references"><span class="section-no">حوالہ جات</span><h2>حوالہ جات</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>وسائل</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/ur/Article_PMO2026_NN_UR.pdf"><strong>PDF</strong><span>ایک عصبی نیٹ ورک کی ریاضیاتی ساخت</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_UR.ipynb"><strong>Google Colab</strong><span>Notebook · اردو</span></a>
+</div></section>
+<section><h2>NeuralMath کے بارے میں</h2><p class="bio">NeuralMath ایک کھلا تعلیمی منصوبہ ہے جسے Dr. Americo Cunha Jr. نے تیار کیا ہے۔ اس کا مقصد ایک چھوٹے عصبی نیٹ ورک کے اندر موجود ریاضیاتی عملیات کو ایسے وسیع قارئین کے لیے قابلِ مشاہدہ، قابلِ جانچ اور قابلِ تکرار بنانا ہے جن کی کیلکولس اور شماریات میں نسبتاً بنیادی تیاری ہو۔</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>تدریسی متن کا حوالہ کیسے دیں</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>اشاعت کے بعد کتابی اندراج میں جلد، صفحات اور DOI شامل کر کے اسے تازہ کیا جائے گا۔ براہِ کرم اس ویب سائٹ کے بجائے تدریسی متن کا حوالہ دیں۔</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>لائسنس</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>ویب سائٹ کا توضیحی متن اور اصل مواد، جب تک دوسری صورت نہ لکھی ہو، CC BY 4.0 کے تحت دستیاب ہے۔ مضمون کا PDF ناشر کے لائسنس کے تابع ہو سکتا ہے۔</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

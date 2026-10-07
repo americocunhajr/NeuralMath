@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="bn">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — নিউরাল নেটওয়ার্কের গাণিতিক গঠন</title>
+<meta content="একটি সরল শ্রেণিবিন্যাস সমস্যাকে কেন্দ্র করে আমরা কৃত্রিম নিউরাল নেটওয়ার্কের একটি গাণিতিক পরিচয় উপস্থাপন করি। একটি রৈখিক শ্রেণিবিন্যাসকারী স্বাভাবিকভাবেই কৃত্রিম নিউরনের ধারণায় নিয়ে যায়; এরপর আমরা ওজন, বায়াস, সক্রিয়করণ ফাংশন এবং কয়েকটি নিউরনকে যুক্ত করে একটি ছোট নেটওয়ার্ক গঠনের বিষয় আলোচনা " name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/bn/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag current" href="index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">নিউরাল নেটওয়ার্কের গাণিতিক গঠন</p>
+<p>একটি সরল শ্রেণিবিন্যাস সমস্যাকে কেন্দ্র করে আমরা কৃত্রিম নিউরাল নেটওয়ার্কের একটি গাণিতিক পরিচয় উপস্থাপন করি। একটি রৈখিক শ্রেণিবিন্যাসকারী স্বাভাবিকভাবেই কৃত্রিম নিউরনের ধারণায় নিয়ে যায়; এরপর আমরা ওজন, বায়াস, সক্রিয়করণ ফাংশন এবং কয়েকটি নিউরনকে যুক্ত করে একটি ছোট নেটওয়ার্ক গঠনের বিষয় আলোচনা করি। প্রশিক্ষণকে ব্যাখ্যা করা হয় লস ফাংশন, অবকলজ, গ্রেডিয়েন্ট ডিসেন্ট এবং ব্যাকপ্রোপাগেশনের মাধ্যমে। শেষে মডেলটি সরাসরি Python-এ বাস্তবায়ন করা হয়, যাতে সমীকরণ ও অ্যালগরিদমের সম্পর্ক স্পষ্ট থাকে। উদ্দেশ্য হলো দেখানো যে বিশ্লেষণাত্মক জ্যামিতি, রৈখিক বীজগণিত এবং ক্যালকুলাসের পরিচিত ধারণাগুলো নিউরাল নেটওয়ার্কের মৌলিক কার্যপ্রণালী বোঝার জন্য একটি সহজলভ্য ভিত্তি দেয়।</p>
+<div class="resource-bar"><a href="../pdf/bn/Article_PMO2026_NN_BN.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_BN.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>মূল শিক্ষামূলক লেখা</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">এই ওয়েব সংস্করণ ও এর অনুবাদগুলো মূল পর্তুগিজ পাণ্ডুলিপির উপর ভিত্তি করে তৈরি।</p></div>
+<nav aria-label="সূচিপত্র" class="toc"><h2>সূচিপত্র</h2><ol><li><a href="#একট-কমপউটর-কখন-শখত-পর">একটি কম্পিউটার কখন শিখতে পারে?</a></li><li><a href="#সমসযটর-গণতক-উপসথপন">সমস্যাটির গাণিতিক উপস্থাপন</a></li><li><a href="#শরণবনযসকর-হসব-একট-সরলরখ">শ্রেণিবিন্যাসকারী হিসেবে একটি সরলরেখা</a></li><li><a href="#কতরম-নউরন">কৃত্রিম নিউরন</a></li><li><a href="#সকরযকরণ-ফশন-কন-দরকর">সক্রিয়করণ ফাংশন কেন দরকার?</a></li><li><a href="#একট-ছট-নউরল-নটওযরক-গঠন">একটি ছোট নিউরাল নেটওয়ার্ক গঠন</a></li><li><a href="#নউরল-নটওযরক-কভব-শখ">নিউরাল নেটওয়ার্ক কীভাবে শেখে?</a></li><li><a href="#গণত-থক-python">গণিত থেকে Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="একট-কমপউটর-কখন-শখত-পর"><span class="section-no">01</span><h2>একটি কম্পিউটার কখন শিখতে পারে?</h2>
+<p>দৈনন্দিন জীবনে আমরা প্রায় অজান্তেই শ্রেণিবিন্যাসের সিদ্ধান্ত নিই। কোনো ফল দেখে দ্রুত বুঝে ফেলি সেটি আপেল নাকি কমলা; ফোনে বার্তা এলে বৈধ কথোপকথন ও অনাকাঙ্ক্ষিত বিজ্ঞাপন আলাদা করি; চিকিৎসাবিষয়ক বিশ্লেষণে একাধিক পরিমাপ একত্র করে সিদ্ধান্তে সহায়তা নেওয়া হয়; আর আর্থিক প্রতিষ্ঠানে ঋণ দেওয়ার আগে বিভিন্ন ধরনের তথ্য মূল্যায়ন করা হয়। এসব ক্ষেত্রেই একটি উত্তর পেতে একাধিক বৈশিষ্ট্যকে একসঙ্গে বিবেচনা করা হয়।</p>
+<p>অনেক প্রচলিত কম্পিউটার প্রোগ্রামে এই সিদ্ধান্ত তৈরির নিয়মগুলো প্রোগ্রামার স্পষ্টভাবে লিখে দেন। নিয়ম জানা থাকলে এবং পরিষ্কারভাবে প্রকাশ করা গেলে এই পদ্ধতি ভালো কাজ করে। কিন্তু ডেটা খুব বৈচিত্র্যময় হলে, অথবা ভালো সিদ্ধান্তের জন্য প্রয়োজনীয় সব শর্ত আগে থেকে নির্দিষ্ট করা কঠিন হলে, পদ্ধতিটি সীমাবদ্ধ হয়ে পড়ে। তখন স্বাভাবিক একটি প্রশ্ন উঠে আসে:</p>
+<div class="center">
+<p><em>আমরা কি এমন একটি প্রোগ্রাম তৈরি করতে পারি, যা সিদ্ধান্তের নিয়ম আগে থেকে না পেয়ে উদাহরণ থেকে নিজেই সেই নিয়ম শিখবে?</em></p>
+</div>
+<p>এটি <em>মেশিন লার্নিং</em>-এর কেন্দ্রীয় ধারণাগুলোর একটি। মেশিন লার্নিং হলো কৃত্রিম বুদ্ধিমত্তার সেই ক্ষেত্র যেখানে ডেটা থেকে মডেলের প্যারামিটার নির্ধারণের পদ্ধতি অধ্যয়ন করা হয় । সুপারভাইজড লার্নিং সমস্যায় অ্যালগরিদমকে সঠিক উত্তরসহ উদাহরণ দেওয়া হয়, এবং লক্ষ্য থাকে এমন একটি মডেল পাওয়া যা প্রশিক্ষণে না দেখা উদাহরণেও কার্যকর পূর্বানুমান দিতে পারে। এই উদ্দেশ্যে তৈরি বহু মডেলের মধ্যে <em>কৃত্রিম নিউরাল নেটওয়ার্ক</em> ছবি শনাক্তকরণ, ভাষা প্রক্রিয়াকরণ, সংকেত বিশ্লেষণ এবং টাইম সিরিজ পূর্বানুমানের মতো কাজে বিশেষ গুরুত্ব পেয়েছে ।</p>
+<p>গণিত, গণনা এবং বিদ্যালয় শিক্ষার মধ্যে সেতু হিসেবে নিউরাল নেটওয়ার্কের ব্যবহার নিয়ে <em>Professor de Matemática Online</em>-এ Batista এবং Martins  ইতিমধ্যে আলোচনা করেছেন। তাঁরা শিক্ষকশিক্ষা, Python এবং অঙ্ক শনাক্তকরণকে যুক্ত করে একটি কার্যক্রম উপস্থাপন করেন। বর্তমান প্রবন্ধটি একটি পরিপূরক পথ অনুসরণ করে। আমাদের মূল লক্ষ্য একটি ছোট নিউরাল নেটওয়ার্কের অভ্যন্তরীণ গাণিতিক কাঠামো স্পষ্ট করা: বিশ্লেষণাত্মক জ্যামিতি থেকে শুরু করে ধাপে ধাপে গ্রেডিয়েন্ট গণনা এবং ব্যাকপ্রোপাগেশনের সরাসরি বাস্তবায়ন পর্যন্ত পৌঁছানো।</p>
+<p>আধুনিক প্রয়োগের জটিলতা সত্ত্বেও, নিউরাল নেটওয়ার্কের গাণিতিক মূল তুলনামূলকভাবে পরিচিত ধারণার সাহায্যে বোঝানো যায়। মৌলিকভাবে, নিউরাল নেটওয়ার্ক হলো কয়েকটি ফাংশনের সমন্বয়, যার প্যারামিটার ডেটা থেকে সমন্বয় করা হয়। আমরা একটি সরল জ্যামিতিক সমস্যা দিয়ে শুরু করব, একটি বিভাজক সরলরেখাকে কৃত্রিম নিউরন হিসেবে পুনর্ব্যাখ্যা করব, কয়েকটি নিউরন সংযুক্ত করব, সক্রিয়করণ ফাংশনের ভূমিকা বুঝব এবং দেখব কীভাবে অবকলজ ব্যবহার করে নেটওয়ার্কের প্যারামিটার স্বয়ংক্রিয়ভাবে সমন্বয় করা যায়। শেষে Python-এ একটি সম্পূর্ণ ছোট উদাহরণ বাস্তবায়ন করব, যাতে সমীকরণ ও কোডের মধ্যে সরাসরি সম্পর্ক বজায় থাকে।</p>
+</section><section class="article-section" id="সমসযটর-গণতক-উপসথপন"><span class="section-no">02</span><h2>সমস্যাটির গাণিতিক উপস্থাপন</h2>
+<p>নিউরাল নেটওয়ার্ক কীভাবে কাজ করে তা বোঝার জন্য আমরা ইচ্ছাকৃতভাবে একটি সহজ সমস্যা দিয়ে শুরু করি: আপেল ও কমলা আলাদা করা। কোনো ফলে রং, ভর, ব্যাস, গঠন এবং গন্ধের মতো বহু বৈশিষ্ট্য থাকতে পারে, যেগুলো এই কাজে সহায়ক হতে পারে। কিন্তু প্রাথমিক গাণিতিক মডেলে সব জটিলতা অন্তর্ভুক্ত করার প্রয়োজন নেই। আমরা কেবল দুটি সহজে পরিমাপযোগ্য রাশি ব্যবহার করব: গ্রামে ভর এবং সেন্টিমিটারে ব্যাস।</p>
+<p>অতএব প্রতিটি ফলকে একটি সুশৃঙ্খল যুগল দ্বারা উপস্থাপন করা হবে <span class="math display">\[(x_1,x_2),\]</span> যেখানে <span class="math display">\[x_1=\text{{ভর}}
+\qquad\text{{এবং}}\qquad
+x_2=\text{{ব্যাস}}.\]</span></p>
+<p>তাই <span class="math inline">\((155,\;7.2)\)</span> যুগলটি এমন একটি ফলকে বোঝায় যার ভর <span class="math inline">\(155\)</span> g এবং ব্যাস <span class="math inline">\(7.2\)</span> cm। ভৌত বস্তুটিকে দুটি সংখ্যাগত পরিমাপে রূপান্তর করলে প্রতিটি ফল কার্তেসীয় সমতলের একটি বিন্দুর সঙ্গে যুক্ত হয়: প্রথম স্থানাঙ্ক তার ভর এবং দ্বিতীয়টি তার ব্যাস নির্দেশ করে। চিত্র <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a>-এ আপেল ও কমলার একটি কাল্পনিক সেটের জন্য এই উপস্থাপন দেখানো হয়েছে।</p>
+<figure id="fig:fruits">
+<img alt="ভৌত পর্যবেক্ষণ থেকে গাণিতিক মডেলিং। প্রতিটি ফলকে প্রথমে দুটি পরিমাপযোগ্য রাশি — ভর ও ব্যাস — দিয়ে বর্ণনা করা হয় এবং পরে সুশৃঙ্খল যুগল \((x_1,x_2)\) দ্বারা উপস্থাপন করা হয়। ভর–ব্যাস সমতলে প্রতিটি পর্যবেক্ষণ একটি বিন্দুতে পরিণত হয়; ফলে আপেল ও কমলা আলাদা করার কাজটি দুই শ্রেণিকে " decoding="async" loading="lazy" src="../assets/img/bn/Fig01.png">
+<figcaption>ভৌত পর্যবেক্ষণ থেকে গাণিতিক মডেলিং। প্রতিটি ফলকে প্রথমে দুটি পরিমাপযোগ্য রাশি — ভর ও ব্যাস — দিয়ে বর্ণনা করা হয় এবং পরে সুশৃঙ্খল যুগল <span class="math inline">\((x_1,x_2)\)</span> দ্বারা উপস্থাপন করা হয়। ভর–ব্যাস সমতলে প্রতিটি পর্যবেক্ষণ একটি বিন্দুতে পরিণত হয়; ফলে আপেল ও কমলা আলাদা করার কাজটি দুই শ্রেণিকে পৃথক করার একটি জ্যামিতিক সমস্যা হিসেবে দেখা যায়।</figcaption>
+</img></figure>
+<p>এই রূপান্তর সমস্যাটিকে দেখার পদ্ধতিই বদলে দেয়। সরাসরি “কীভাবে আপেল বা কমলা চিনব” প্রশ্নটির বদলে আমরা একটি জ্যামিতিক প্রশ্ন করি: সমতলে দুই শ্রেণির বিন্দুগুলোকে কীভাবে আলাদা করা যায়? মেশিন লার্নিংয়ে এই দৃষ্টিভঙ্গির পরিবর্তন অত্যন্ত গুরুত্বপূর্ণ। ছবি, লেখা, শব্দ এবং পরীক্ষণমূলক সংকেত — সবকিছুকেই অ্যালগরিদমে দেওয়ার আগে সংখ্যাগত উপস্থাপনে রূপান্তর করতে হয়। আমাদের উদাহরণে প্রতিটি বস্তুর মাত্র দুটি স্থানাঙ্ক আছে; বাস্তব প্রয়োগে একটি উপস্থাপনে শত, সহস্র বা এমনকি লক্ষাধিক উপাদান থাকতে পারে। নীতিটি একই: প্রতিটি উদাহরণকে কিছু সংখ্যার সঙ্গে যুক্ত করা হয় এবং মডেল এমন একটি নিয়ম খোঁজে যা সেই উপস্থাপনকে কাঙ্ক্ষিত উত্তরে রূপান্তর করে।</p>
+<p>আমরা সবচেয়ে সহজ জ্যামিতিক নিয়ম দিয়ে শুরু করি এবং প্রশ্ন করি: একটি মাত্র সরলরেখা কি আপেলের বিন্দুগুলোকে কমলার বিন্দু থেকে যথেষ্ট ভালোভাবে আলাদা করতে পারে?</p>
+</section><section class="article-section" id="শরণবনযসকর-হসব-একট-সরলরখ"><span class="section-no">03</span><h2>শ্রেণিবিন্যাসকারী হিসেবে একটি সরলরেখা</h2>
+<p>প্রতিটি ফলকে কার্তেসীয় সমতলে একটি বিন্দু হিসেবে উপস্থাপন করার পর শ্রেণিবিন্যাস একটি জ্যামিতিক সমস্যায় পরিণত হয়: একটি সরলরেখা কি আপেলকে কমলা থেকে আলাদা করতে পারে? এই প্রশ্নটি মেশিন লার্নিংয়ের একটি গুরুত্বপূর্ণ পরিবার, <em>রৈখিক শ্রেণিবিন্যাসকারী</em>, সম্পর্কে মৌলিক ধারণা দেয়।</p>
+<p>চিত্র <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>-এর মতো ডেটার মেঘের মধ্যে দিয়ে একটি সরলরেখা কল্পনা করি। রেখাটি সমতলকে দুটি অর্ধসমতলে ভাগ করে। যদি অধিকাংশ আপেলের বিন্দু এক পাশে এবং অধিকাংশ কমলার বিন্দু অন্য পাশে থাকে, তবে নতুন কোনো ফলের অবস্থানকে শ্রেণিবিন্যাসের নিয়ম হিসেবে ব্যবহার করা যায়। তার ভর ও ব্যাস মেপে আমরা ফলটিকে একটি বিন্দু হিসেবে উপস্থাপন করি এবং দেখি বিন্দুটি রেখার কোন পাশে আছে।</p>
+<figure id="fig:linear_classifier">
+<img alt="ভর–ব্যাস সমতলে একটি রৈখিক শ্রেণিবিন্যাসকারীর উদাহরণ। সরলরেখাটি সিদ্ধান্তসীমা হিসেবে কাজ করে: এক অর্ধসমতলের বিন্দুগুলো এক শ্রেণি পায় এবং বিপরীত অর্ধসমতলের বিন্দুগুলো অন্য শ্রেণি পায়। তাই সিদ্ধান্তটি নির্ভর করে বিন্দুটি রেখার কোন পাশে রয়েছে তার উপর।" decoding="async" loading="lazy" src="../assets/img/bn/Fig02.png"/>
+<figcaption>ভর–ব্যাস সমতলে একটি রৈখিক শ্রেণিবিন্যাসকারীর উদাহরণ। সরলরেখাটি সিদ্ধান্তসীমা হিসেবে কাজ করে: এক অর্ধসমতলের বিন্দুগুলো এক শ্রেণি পায় এবং বিপরীত অর্ধসমতলের বিন্দুগুলো অন্য শ্রেণি পায়। তাই সিদ্ধান্তটি নির্ভর করে বিন্দুটি রেখার কোন পাশে রয়েছে তার উপর।</figcaption>
+</figure>
+<p>কার্তেসীয় সমতল <span class="math inline">\((x_1,x_2)\)</span>-এ একটি সরলরেখা লেখা যায় <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>ভেক্টর <span class="math inline">\((w_1,w_2)\)</span> রেখাটির লম্ব এবং তাই তার অভিমুখ নির্ধারণ করে, আর প্যারামিটার <span class="math inline">\(b\)</span> তার অবস্থানে অবদান রাখে। এই উপস্থাপনে সামান্য অতিরিক্ততা আছে: <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> এবং <span class="math inline">\(b\)</span>-কে একই অশূন্য ধ্রুবক দিয়ে গুণ করলে একই রেখাই পাওয়া যায়। ফলে সীমার প্যারামিটারগুলো অনন্য নয়। এদের সংখ্যাগত ব্যাখ্যা চলকগুলোর স্কেলের উপরও নির্ভর করে। ভর গ্রামে এবং ব্যাস সেন্টিমিটারে মাপা হয় বলে এককের পার্থক্য বিবেচনা না করে <span class="math inline">\(w_1\)</span> ও <span class="math inline">\(w_2\)</span>-এর মান সরাসরি তুলনা করা উচিত নয়।</p>
+<p>রেখার সমীকরণ নিজেই একটি বিন্দু সীমার কোন পাশে আছে তা নির্ধারণের সহজ উপায় দেয়। স্কোর সংজ্ঞায়িত করি <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>যদি <span class="math inline">\(s(x_1,x_2)=0\)</span>, তবে বিন্দুটি রেখার উপর। যদি <span class="math inline">\(s(x_1,x_2)&gt;0\)</span>, তবে এটি এক অর্ধসমতলে; আর যদি <span class="math inline">\(s(x_1,x_2)&lt;0\)</span>, তবে অন্য অর্ধসমতলে। ধরি ধনাত্মক স্কোর আপেল এবং ঋণাত্মক স্কোর কমলাকে নির্দেশ করে। তাহলে নিয়মটি হবে <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{{আপেল}},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{{কমলা}}.
+\end{cases}\]</span></p>
+<p>উদাহরণ হিসেবে ধরি সীমাটি নির্ধারিত হয়েছে <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> ভর <span class="math inline">\(160\)</span> g এবং ব্যাস <span class="math inline">\(7.8\)</span> cm এমন একটি ফলের জন্য <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> স্কোর ধনাত্মক, তাই বিন্দুটি সেই অর্ধসমতলে রয়েছে যেটিকে আমরা আপেলের সঙ্গে যুক্ত করেছি। এই শ্রেণিবিন্যাসকারী ফলটিকে আপেল হিসেবে শনাক্ত করবে।</p>
+<p><span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> এবং <span class="math inline">\(b\)</span>-এর প্রতিটি নির্বাচন ভালো শ্রেণিবিন্যাস দেয় না। কিছু রেখা দুই দলকে খারাপভাবে আলাদা করে, অন্যগুলো কম ভুল করে। শেখার সমস্যাটি হলো লেবেলযুক্ত পূর্ববর্তী উদাহরণ ব্যবহার করে এমন প্যারামিটার নির্ধারণ করা যা মডেলের ত্রুটির কোনো পরিমাপ কমায়। রেখাটির অবস্থান সরাসরি প্রোগ্রাম না করে আমরা চাই অ্যালগরিদম ডেটা থেকে তার সহগগুলো সমন্বয় করুক।</p>
+<p>শ্রেণিগুলো আনুমানিকভাবে রৈখিকভাবে পৃথকযোগ্য হলে একটি রেখাই যথেষ্ট ভালো কাজ করতে পারে। আরও জটিল ডেটাসেটে অরৈখিক সিদ্ধান্তসীমা প্রয়োজন হতে পারে। সেই সীমাবদ্ধতা নিয়ে আলোচনার আগে আমরা সদ্য তৈরি শ্রেণিবিন্যাসকারীকে একটি প্রাথমিক গণনামূলক একক হিসেবে পুনর্ব্যাখ্যা করি: একটি কৃত্রিম নিউরন।</p>
+</section><section class="article-section" id="কতরম-নউরন"><span class="section-no">04</span><h2>কৃত্রিম নিউরন</h2>
+<p>আগের অংশে <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> রাশিটি ব্যবহার করে নির্ধারণ করা হয়েছিল একটি ফল রেখার কোন পাশে আছে। একই রাশিকে <em>কৃত্রিম নিউরন</em>-এর গণনার প্রথম ধাপ হিসেবে দেখা যায়। একটি নিউরন সংখ্যাগত ইনপুট গ্রহণ করে, ওজন ও বায়াস ব্যবহার করে সেগুলোকে একত্র করে এবং পরে একটি গাণিতিক ফাংশন প্রয়োগ করে আউটপুট তৈরি করে।</p>
+<p>আমাদের উদাহরণে ইনপুট হলো ভর <span class="math inline">\(x_1\)</span> এবং ব্যাস <span class="math inline">\(x_2\)</span>। প্রতিটি ইনপুটকে <em>ওজন</em> নামের একটি প্যারামিটার দিয়ে গুণ করা হয়; গুণফলগুলো <span class="math inline">\(b\)</span> নামের একটি ধ্রুবক পদ, অর্থাৎ <em>বায়াস</em>,-এর সঙ্গে যোগ করা হয়। চিত্র <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a>-এ এই গণনাটি পরিকল্পিতভাবে দেখানো হয়েছে।</p>
+<figure id="fig:artificial_neuron">
+<img alt="একটি কৃত্রিম নিউরনের কার্যপদ্ধতি। প্রতিটি ইনপুট \(x_i\) -কে একটি ওজন \(w_i\) দিয়ে গুণ করা হয়; গুণফলগুলো বায়াস \(b\) -এর সঙ্গে যোগ করে স্কোর \(s\) পাওয়া যায়। এরপর সক্রিয়করণ ফাংশন \(g\) এই স্কোরকে আউটপুট \(\widehat{y}=g(s)\) -এ রূপান্তর করে, যা মধ্যবর্তী রাশি অথবা চূড়ান্ত পূ" decoding="async" loading="lazy" src="../assets/img/bn/Fig03.png"/>
+<figcaption>একটি কৃত্রিম নিউরনের কার্যপদ্ধতি। প্রতিটি ইনপুট <span class="math inline">\(x_i\)</span>-কে একটি ওজন <span class="math inline">\(w_i\)</span> দিয়ে গুণ করা হয়; গুণফলগুলো বায়াস <span class="math inline">\(b\)</span>-এর সঙ্গে যোগ করে স্কোর <span class="math inline">\(s\)</span> পাওয়া যায়। এরপর সক্রিয়করণ ফাংশন <span class="math inline">\(g\)</span> এই স্কোরকে আউটপুট <span class="math inline">\(\widehat{y}=g(s)\)</span>-এ রূপান্তর করে, যা মধ্যবর্তী রাশি অথবা চূড়ান্ত পূর্বানুমান হিসেবে ব্যবহৃত হতে পারে।</figcaption>
+</figure>
+<p>ওজনগুলো নির্ধারণ করে ইনপুটের পরিবর্তন স্কোরকে কীভাবে প্রভাবিত করবে। <span class="math inline">\(x_2\)</span> এবং অন্য সব রাশি স্থির রেখে <span class="math inline">\(x_1\)</span>-এ <span class="math inline">\(\Delta x_1\)</span> পরিবর্তন করলে <span class="math inline">\(s\)</span> পরিবর্তিত হয় <span class="math inline">\(w_1\Delta x_1\)</span> পরিমাণে। একইভাবে <span class="math inline">\(x_2\)</span>-এ <span class="math inline">\(\Delta x_2\)</span> পরিবর্তন স্কোরকে <span class="math inline">\(w_2\Delta x_2\)</span> পরিমাণে বদলে দেয়। চিহ্নও গুরুত্বপূর্ণ: ধনাত্মক ওজনের ক্ষেত্রে ইনপুট বাড়লে স্কোর বাড়ে, আর ঋণাত্মক ওজনে বিপরীত প্রভাব হয়। ভিন্ন ভিন্ন চলকের একক ও স্কেল আলাদা হলে এই ব্যাখ্যা সতর্কতার সঙ্গে ব্যবহার করতে হয়। এজন্য বাস্তব বাস্তবায়নে প্রশিক্ষণের আগে ইনপুট ডেটা প্রায়ই নরমালাইজ বা স্ট্যান্ডার্ডাইজ করা হয়।</p>
+<p>বায়াস <span class="math inline">\(b\)</span> হলো অ্যাফাইন রূপান্তরের ধ্রুবক পদ। জ্যামিতিকভাবে এটি সিদ্ধান্তসীমাকে সরাতে দেয়। যদি <span class="math inline">\(b=0\)</span> হয়, তবে <span class="math display">\[w_1x_1+w_2x_2=0\]</span> রেখাটিকে উৎসবিন্দুর মধ্য দিয়ে যেতে বাধ্য করে। বায়াস থাকলে সীমাটি অন্য স্থানে সরতে পারে। সমতুল্যভাবে, <span class="math inline">\(x_1=x_2=0\)</span> হলে স্কোর কেবল <span class="math inline">\(s=b\)</span>।</p>
+<p>স্কোরই নিউরনের চূড়ান্ত আউটপুট হওয়া জরুরি নয়। সাধারণভাবে এর উপর একটি <em>সক্রিয়করণ ফাংশন</em> <span class="math inline">\(g\)</span> প্রয়োগ করা হয়: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> অতএব গণনাটি দুই ধাপে হয়, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>আগের অংশের প্যারামিটার ব্যবহার করলে <span class="math inline">\(s=1.6\)</span>। যদি আমরা ধাপ ফাংশন <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> নির্বাচন করি, তবে <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>। আমাদের নিয়ম অনুযায়ী ফলটি আপেল হিসেবে শ্রেণিবদ্ধ হবে। এই সক্রিয়করণে <span class="math inline">\(s\)</span> শূন্য অতিক্রম করলেই সিদ্ধান্ত বদলে যায়, তাই শ্রেণিসীমা ঠিক <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>একটি নিউরন তাই সমন্বয়যোগ্য প্যারামিটারসহ একটি সহজ গাণিতিক বস্তু। এর প্রকৃত গুরুত্ব আসে অনেকগুলো এমন একককে যুক্ত করার মাধ্যমে। তবে নেটওয়ার্ক গঠনের আগে বোঝা দরকার সক্রিয়করণ ফাংশন কেন অপরিহার্য।</p>
+</section><section class="article-section" id="সকরযকরণ-ফশন-কন-দরকর"><span class="section-no">05</span><h2>সক্রিয়করণ ফাংশন কেন দরকার?</h2>
+<p>একটি নিউরন প্রথমে অ্যাফাইন রূপান্তর ব্যবহার করে একটি স্কোর গণনা করে এবং তারপর একটি সক্রিয়করণ ফাংশন প্রয়োগ করে। নিউরাল নেটওয়ার্ককে জটিল সম্পর্ক উপস্থাপন করতে হলে এই দ্বিতীয় ধাপটি অপরিহার্য। কারণটি বোঝার জন্য এমন একটি নেটওয়ার্ক কল্পনা করি যেখানে কোনো সক্রিয়করণ ফাংশন নেই। প্রতিটি একক তখন হবে <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>এক-মাত্রিক উদাহরণে ধরি প্রথম একক তৈরি করে <span class="math display">\[h=ax+b\]</span> এবং দ্বিতীয়টি গণনা করে <span class="math display">\[y=ch+d.\]</span> প্রতিস্থাপন করলে <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> যা এখনও <span class="math inline">\(x\)</span>-এর একটি অ্যাফাইন ফাংশন। একাধিক মাত্রাতেও একই কথা সত্য: অ্যাফাইন রূপান্তরের সমন্বয় আবারও অ্যাফাইন। ফলে অরৈখিক কোনো ক্রিয়া ছাড়া অনেক স্তর যোগ করলেও নেটওয়ার্ক মৌলিকভাবে বেশি প্রকাশক্ষম হয় না; পুরো সমন্বয়কে একটি মাত্র অ্যাফাইন রূপান্তর দিয়ে প্রতিস্থাপন করা সম্ভব।</p>
+<p>সক্রিয়করণ ফাংশন এই সীমাবদ্ধতা ভাঙে। স্কোর <span class="math inline">\(s\)</span> গণনার পর নিউরন সাধারণত একটি অরৈখিক ম্যাপ প্রয়োগ করে <span class="math display">\[h=g(s).\]</span> এমন বহু একক সংযুক্ত হলে ফলিত সমন্বয়কে আর একটি মাত্র অ্যাফাইন রূপান্তরে নামিয়ে আনা যায় না। এর ফলে নেটওয়ার্ক আরও জটিল সিদ্ধান্তসীমা তৈরি করতে পারে।</p>
+<p>সবচেয়ে সহজ সক্রিয়করণ হলো ধাপ ফাংশন, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> এটি দ্বিমূল্য সিদ্ধান্ত দেয় এবং শ্রেণিবিন্যাস বোঝাতে খুব উপযোগী। কিন্তু <span class="math inline">\(s\neq0\)</span> হলে এর অবকলজ শূন্য এবং <span class="math inline">\(s=0\)</span>-এ অবকলজ সংজ্ঞায়িত নয়। গ্রেডিয়েন্ট-ভিত্তিক প্রশিক্ষণে প্যারামিটার কীভাবে বদলানো উচিত তা নির্ধারণ করতে অবকলজ ব্যবহৃত হয়, তাই এই প্রশিক্ষণ পদ্ধতির জন্য ধাপ ফাংশন উপযুক্ত নয়।</p>
+<p>একটি বিকল্প হলো সিগময়েড ফাংশন, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> এটি প্রতিটি বাস্তব সংখ্যাকে <span class="math inline">\(0\)</span> ও <span class="math inline">\(1\)</span>-এর মাঝের মানে রূপান্তর করে। খুব ঋণাত্মক <span class="math inline">\(s\)</span>-এ আউটপুট <span class="math inline">\(0\)</span>-এর দিকে যায়; খুব ধনাত্মক <span class="math inline">\(s\)</span>-এ <span class="math inline">\(1\)</span>-এর দিকে যায়; আর মাঝামাঝি অঞ্চলে পরিবর্তনটি মসৃণ। সিগময়েড সর্বত্র অবকলনযোগ্য এবং <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> এর আউটপুট <span class="math inline">\(0\)</span> ও <span class="math inline">\(1\)</span>-এর মধ্যে হওয়ায় দ্বিমূল্য শ্রেণিবিন্যাসকারীর আউটপুট স্তরে এটি প্রায়ই ব্যবহৃত হয়। উপযুক্ত লস ফাংশনসহ একটি সম্ভাবনামূলক মডেলে আউটপুটকে <span class="math inline">\(1\)</span>-দ্বারা নির্দেশিত শ্রেণির সম্ভাবনার আনুমানিক মান হিসেবে ব্যাখ্যা করা যায়। তবে গোপন স্তরে সিগময়েডের একটি অসুবিধা রয়েছে: বড় পরম মানের ইনপুটে এর অবকলজ খুব ছোট হয়ে যায়, যা গভীর নেটওয়ার্কে <em>ভ্যানিশিং গ্রেডিয়েন্ট</em> সমস্যায় অবদান রাখে।</p>
+<p>গোপন স্তরে বহুল ব্যবহৃত সক্রিয়করণ হলো ReLU (<em>Rectified Linear Unit</em>), <span class="math display">\[\mathrm{ReLU}(s)=\mathrm{max}(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> দুটি রৈখিক অংশ দিয়ে গঠিত হলেও ReLU সামগ্রিকভাবে রৈখিক নয়। <span class="math inline">\(s&lt;0\)</span> হলে এর অবকলজ <span class="math inline">\(0\)</span> এবং <span class="math inline">\(s&gt;0\)</span> হলে <span class="math inline">\(1\)</span>। <span class="math inline">\(s=0\)</span>-এ প্রচলিত অর্থে অবকলজ নেই, এবং সফটওয়্যার বাস্তবায়নে গ্রেডিয়েন্টের জন্য একটি প্রচলিত মান বেছে নেওয়া হয়। ধনাত্মক ইনপুটে <span class="math inline">\(s\)</span> বড় হলেও অবকলজ ছোট হয়ে যায় না, ফলে সিগময়েডের একটি স্যাচুরেশন সমস্যা এড়ানো যায়।</p>
+<p>চিত্র <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a>-এ এই তিনটি সক্রিয়করণ তুলনা করা হয়েছে: ধাপ ফাংশনের হঠাৎ লাফ, সিগময়েডের মসৃণ পরিবর্তন এবং ReLU-এর ঢাল পরিবর্তন।</p>
+<figure id="fig:activation_functions">
+<img alt="নিউরাল নেটওয়ার্কের প্রাথমিক আলোচনায় ব্যবহৃত তিনটি সক্রিয়করণ ফাংশনের তুলনা। ধাপ ফাংশন হঠাৎ সিদ্ধান্ত দেয়; সিগময়েড \(0\) ও \(1\) -এর মধ্যে মসৃণ পরিবর্তন দেয়; আর ReLU ঋণাত্মক ইনপুটকে শূন্য করে এবং ধনাত্মক ইনপুটকে অপরিবর্তিত রাখে। অরৈখিক সক্রিয়করণ বহু স্তরকে একটি মাত্র অ্যাফাই" decoding="async" loading="lazy" src="../assets/img/bn/Fig04.png"/>
+<figcaption>নিউরাল নেটওয়ার্কের প্রাথমিক আলোচনায় ব্যবহৃত তিনটি সক্রিয়করণ ফাংশনের তুলনা। ধাপ ফাংশন হঠাৎ সিদ্ধান্ত দেয়; সিগময়েড <span class="math inline">\(0\)</span> ও <span class="math inline">\(1\)</span>-এর মধ্যে মসৃণ পরিবর্তন দেয়; আর ReLU ঋণাত্মক ইনপুটকে শূন্য করে এবং ধনাত্মক ইনপুটকে অপরিবর্তিত রাখে। অরৈখিক সক্রিয়করণ বহু স্তরকে একটি মাত্র অ্যাফাইন রূপান্তরে সংকুচিত হয়ে যাওয়া থেকে রক্ষা করে।</figcaption>
+</figure>
+<p>তাদের প্রধান বৈশিষ্ট্যগুলো নিচে সংক্ষেপে দেওয়া হলো।</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span>ফাংশন</span></th>
+<th style="text-align: center;"><span>আউটপুট</span></th>
+<th style="text-align: left;"><span>অবকলজ</span></th>
+<th style="text-align: left;"><span>সাধারণ ব্যবহার</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span>ধাপ</span></td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;"><span><span class="math inline">\(s\neq0\)</span> হলে শূন্য; <span class="math inline">\(s=0\)</span>-এ সংজ্ঞায়িত নয়</span></td>
+<td style="text-align: left;"><span>ঐতিহাসিক মডেল ও শিক্ষামূলক উদাহরণ</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span>সিগময়েড</span></td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;"><span>প্রতিটি <span class="math inline">\(s\)</span>-এর জন্য বিদ্যমান</span></td>
+<td style="text-align: left;"><span>দ্বিমূল্য শ্রেণিবিন্যাসের আউটপুট স্তর</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span><span class="math inline">\(s&lt;0\)</span> হলে <span class="math inline">\(0\)</span> এবং <span class="math inline">\(s&gt;0\)</span> হলে <span class="math inline">\(1\)</span></span></td>
+<td style="text-align: left;"><span>গোপন স্তর</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>এই ফাংশনগুলোর বিস্তারিত বৈশিষ্ট্য আলাদা হলেও তাদের সাধারণ ধারণাগত ভূমিকা হলো অরৈখিকতা প্রবর্তন করা। এই অরৈখিকতাই পরবর্তী অংশের ছোট নেটওয়ার্ককে এমন সম্পর্ক উপস্থাপন করতে দেয় যা একটি মাত্র সরলরেখা দিয়ে সম্ভব নয়।</p>
+<p>আরও পড়তে আগ্রহী পাঠকের জন্য Haykin  নিউরাল নেটওয়ার্কের একটি ধ্রুপদি উপস্থাপন দেন; Goodfellow, Bengio এবং Courville  সক্রিয়করণ ফাংশন ও গভীর নেটওয়ার্কের প্রশিক্ষণকে বিস্তৃত প্রেক্ষাপটে আলোচনা করেন। Nielsen-এর উন্মুক্ত বই  নিউরন, সক্রিয়করণ এবং শেখা সম্পর্কে অন্তর্দৃষ্টি তৈরির জন্য বিশেষভাবে সহজলভ্য।</p>
+</section><section class="article-section" id="একট-ছট-নউরল-নটওযরক-গঠন"><span class="section-no">06</span><h2>একটি ছোট নিউরাল নেটওয়ার্ক গঠন</h2>
+<p>এখন আমরা দুটি ইনপুট, তিনটি নিউরনবিশিষ্ট একটি গোপন স্তর এবং একটি আউটপুট নিউরন নিয়ে একটি নেটওয়ার্ক বিবেচনা করি। ইনপুটগুলো আগের মতোই <span class="math display">\[x_1=\text{{ভর}},
+\qquad
+x_2=\text{{ব্যাস}},\]</span> এবং চিত্র <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>-এর মতো এগুলো প্রত্যেক গোপন নিউরনে সরবরাহ করা হয়।</p>
+<figure id="fig:small_network">
+<img alt="নিউরাল নেটওয়ার্কের গণনা বোঝাতে ব্যবহৃত শিক্ষামূলক \(2\) – \(3\) – \(1\) স্থাপত্য। দুটি ইনপুট — ভর ও ব্যাস — গোপন স্তরের তিনটি নিউরনে প্রবেশ করে। তাদের সক্রিয়করণ \(h_1,h_2,h_3\) পরে আউটপুট নিউরনে একত্রিত হয়ে পূর্বানুমান \(\widehat{y}\) তৈরি করে। প্রতিটি সংযোগের একটি সমন্বয়যোগ্" decoding="async" loading="lazy" src="../assets/img/bn/Fig05.png"/>
+<figcaption>নিউরাল নেটওয়ার্কের গণনা বোঝাতে ব্যবহৃত শিক্ষামূলক <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> স্থাপত্য। দুটি ইনপুট — ভর ও ব্যাস — গোপন স্তরের তিনটি নিউরনে প্রবেশ করে। তাদের সক্রিয়করণ <span class="math inline">\(h_1,h_2,h_3\)</span> পরে আউটপুট নিউরনে একত্রিত হয়ে পূর্বানুমান <span class="math inline">\(\widehat{y}\)</span> তৈরি করে। প্রতিটি সংযোগের একটি সমন্বয়যোগ্য ওজন এবং প্রতিটি নিউরনের একটি বায়াস আছে।</figcaption>
+</figure>
+<p>গোপন স্তরের আউটপুটগুলো <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> এবং <span class="math inline">\(h_3\)</span> হোক। প্রতিটি নিউরন একই দুটি ইনপুট পায়, কিন্তু তার নিজস্ব ওজন ও বায়াস থাকে: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>তিনটি নিউরনই একই ভর ও ব্যাস পেলেও তাদের প্যারামিটার আলাদা বলে আউটপুট ভিন্ন হতে পারে। প্রশিক্ষণের সময় এই প্যারামিটারগুলো এমনভাবে সমন্বয় করা হয় যাতে মধ্যবর্তী সক্রিয়করণগুলো শ্রেণিবিন্যাসে কার্যকর হয়।</p>
+<p>এরপর <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> এবং <span class="math inline">\(h_3\)</span> আউটপুট নিউরনে যায়, যা গণনা করে <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> এবং উৎপন্ন করে <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> আমাদের দ্বিমূল্য সমস্যার জন্য আউটপুটে সিগময়েড ব্যবহার করি: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>আপেলের জন্য <span class="math inline">\(y=1\)</span> এবং কমলার জন্য <span class="math inline">\(y=0\)</span> নিলে <span class="math inline">\(0.5\)</span> সীমা থেকে শ্রেণির সিদ্ধান্ত হয় <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{{আপেল}},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{{কমলা}}.\]</span> অতএব <span class="math inline">\(1\)</span>-এর কাছাকাছি মান আপেলের সঙ্গে এবং <span class="math inline">\(0\)</span>-এর কাছাকাছি মান কমলার সঙ্গে দৃঢ়ভাবে যুক্ত। আগে যেমন বলা হয়েছে, <span class="math inline">\(\widehat{y}\)</span>-কে সরাসরি সম্ভাবনা হিসেবে ব্যাখ্যা করতে হলে মডেল ও প্রশিক্ষণ সম্পর্কে অতিরিক্ত অনুমান প্রয়োজন। এখানে ব্যবহৃত শ্রেণিবিন্যাসের জন্য <span class="math inline">\(\widehat{y}\)</span>-কে নেটওয়ার্কের একটি ধারাবাহিক আউটপুট হিসেবে দেখাই যথেষ্ট।</p>
+<p>এই স্থাপত্যের কেন্দ্রীয় বৈশিষ্ট্য হলো মধ্যবর্তী উপস্থাপন <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> নেটওয়ার্ক দুটি বৈশিষ্ট্য গ্রহণ করে এবং চূড়ান্ত উত্তর দেওয়ার আগে তিনটি নতুন রাশি তৈরি করে। এই সক্রিয়করণগুলো হাতে বেছে নেওয়া নয়: এগুলো ওজন ও বায়াসের উপর নির্ভর করে এবং প্রশিক্ষণের সঙ্গে সঙ্গে বদলে যায়।</p>
+<p>ছোট হলেও নেটওয়ার্কটিতে ইতিমধ্যেই তেরোটি সমন্বয়যোগ্য প্যারামিটার আছে। তিনটি গোপন নিউরনে রয়েছে <span class="math display">\[3(2+1)=9\]</span> টি প্যারামিটার এবং আউটপুট নিউরন যোগ করে <span class="math display">\[3+1=4.\]</span> অতএব <span class="math display">\[9+4=13.\]</span></p>
+<p>ম্যাট্রিক্স নোটেশনে একই গণনা আরও পরিষ্কার। সংজ্ঞায়িত করি <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> তখন গোপন স্তরকে লেখা যায় <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> যেখানে <span class="math inline">\(g\)</span> প্রতিটি উপাদানের উপর আলাদাভাবে কাজ করে। আউটপুটের জন্য <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> যেখানে <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>এই নোটেশনটি Python প্রোগ্রামে যে কাঠামো দেখা যাবে তার পূর্বাভাস দেয়। কোনো ফল ইনপুটে দেওয়ার পর ধারাবাহিক সক্রিয়করণ গণনা করে <span class="math inline">\(\widehat{y}\)</span> পাওয়ার প্রক্রিয়াকে <em>ফরওয়ার্ড প্রোপাগেশন</em> বা <em>forward pass</em> বলা হয়। এখন মূল প্রশ্ন: তেরোটি প্যারামিটার কীভাবে স্বয়ংক্রিয়ভাবে নির্ধারণ করা যায় যাতে পূর্বানুমানগুলো ডেটার সঙ্গে ভালোভাবে মিলে?</p>
+</section><section class="article-section" id="নউরল-নটওযরক-কভব-শখ"><span class="section-no">07</span><h2>নিউরাল নেটওয়ার্ক কীভাবে শেখে?</h2>
+<p>ওজন ও বায়াস আগে থেকে জানা থাকে না। সঠিক উত্তর জানা এমন উদাহরণ ব্যবহার করে এগুলো সমন্বয় করতে হয়। এই প্রক্রিয়াকে <em>প্রশিক্ষণ</em> বলা হয় এবং সংক্ষেপে লেখা যায় <span class="math display">\[\boxed{\text{{পূর্বানুমান}}}
+\longrightarrow
+\boxed{\text{{ত্রুটি মাপা}}}
+\longrightarrow
+\boxed{\text{{প্যারামিটার সমন্বয়}}}
+\longrightarrow
+\boxed{\text{{পুনরাবৃত্তি}}}.\]</span></p>
+<p>ভর <span class="math inline">\(140\)</span> g এবং ব্যাস <span class="math inline">\(7.0\)</span> cm এমন একটি ফল বিবেচনা করি যার সঠিক শ্রেণি কমলা, অর্থাৎ <span class="math inline">\(y=0\)</span>। ধরি প্রশিক্ষণের কোনো পর্যায়ে নেটওয়ার্ক <span class="math inline">\(\widehat{y}=0.80\)</span> দেয়। পূর্বানুমান ও লক্ষ্যমানের পার্থক্যের একটি সহজ পরিমাপ হলো বর্গ ত্রুটি <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> এই উদাহরণে <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>এই রাশিটি একটি উদাহরণের জন্য <em>লস ফাংশন</em>। বর্গ হওয়ায় <span class="math inline">\(E\geq0\)</span>, এবং লক্ষ্য থেকে দূরের পূর্বানুমান বেশি শাস্তি পায়। <span class="math inline">\(1/2\)</span> গুণকটি ন্যূনতমের অবস্থান বদলায় না, কিন্তু অবকলজ সহজ করে। দ্বিমূল্য শ্রেণিবিন্যাসে অন্যান্য লসও ব্যবহৃত হয়, বিশেষ করে ক্রস-এন্ট্রপি। এখানে বর্গ ত্রুটি ব্যবহার করছি কারণ এর বীজগণিত স্বচ্ছ এবং অপ্টিমাইজেশন ও ব্যাকপ্রোপাগেশন পরিচয় করানোর জন্য যথেষ্ট ।</p>
+<p>প্রশিক্ষণ সেটে <span class="math inline">\(N\)</span>টি উদাহরণ থাকলে একটি সামগ্রিক পরিমাপ হলো গড় লস <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> প্রতিটি পূর্বানুমান নেটওয়ার্কের ওজন ও বায়াসের উপর নির্ভর করে, তাই <span class="math inline">\(J\)</span>-ও সব প্যারামিটারের উপর নির্ভরশীল। প্রশিক্ষণ মানে এমন প্যারামিটার খোঁজা যাতে <span class="math inline">\(J\)</span> ছোট হয়।</p>
+<p>সমন্বয়ের প্রক্রিয়া বোঝার জন্য প্রথমে ধরি একটি মাত্র ওজন <span class="math inline">\(w\)</span> ছাড়া অন্য সব প্যারামিটার স্থির। তখন লসকে <span class="math inline">\(J=J(w)\)</span> হিসেবে দেখা যায়। চিত্র <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a>-এ প্রশিক্ষণের মৌলিক ধাপগুলো সংক্ষেপে দেখানো হয়েছে।</p>
+<figure id="fig:training_cycle">
+<img alt="নিউরাল নেটওয়ার্ক প্রশিক্ষণের মৌলিক চক্র। ফরওয়ার্ড পাস ইনপুটকে পূর্বানুমানে রূপান্তর করে; লস ফাংশন পূর্বানুমান ও লক্ষ্যমানের পার্থক্য মাপে; ব্যাকপ্রোপাগেশন চেইন রুল ব্যবহার করে গ্রেডিয়েন্ট গণনা করে; এবং গ্রেডিয়েন্ট ডিসেন্ট সেই গ্রেডিয়েন্ট দিয়ে ওজন ও বায়াস হালনাগাদ করে। বহু " decoding="async" loading="lazy" src="../assets/img/bn/Fig06.png"/>
+<figcaption>নিউরাল নেটওয়ার্ক প্রশিক্ষণের মৌলিক চক্র। ফরওয়ার্ড পাস ইনপুটকে পূর্বানুমানে রূপান্তর করে; লস ফাংশন পূর্বানুমান ও লক্ষ্যমানের পার্থক্য মাপে; ব্যাকপ্রোপাগেশন চেইন রুল ব্যবহার করে গ্রেডিয়েন্ট গণনা করে; এবং গ্রেডিয়েন্ট ডিসেন্ট সেই গ্রেডিয়েন্ট দিয়ে ওজন ও বায়াস হালনাগাদ করে। বহু epoch ধরে এই চক্র পুনরাবৃত্তি করাই শেখা।</figcaption>
+</figure>
+<p>যেসব পাঠকের ক্যালকুলাসের অভিজ্ঞতা কম, তাদের জন্য অবকলজকে এখানে <em>স্থানীয় সংবেদনশীলতা</em> হিসেবে বোঝা যায়: কোনো প্যারামিটারে ছোট পরিবর্তন করলে লস কীভাবে বদলাতে পারে তা এটি জানায়। এর চিহ্ন বলে কোন দিকটিতে ফাংশন স্থানীয়ভাবে বাড়ে বা কমে, আর পরম মান পরিবর্তনের স্থানীয় শক্তি নির্দেশ করে।</p>
+<p>অবকলজ <span class="math display">\[\frac{\partial J}{\partial w}\]</span> স্থানীয় ঢাল দেয়। এটি ধনাত্মক হলে <span class="math inline">\(w\)</span> সামান্য বাড়ালে <span class="math inline">\(J\)</span> সাধারণত বাড়ে, তাই ওজনকে বিপরীত দিকে সরানো উচিত। এটি ঋণাত্মক হলে <span class="math inline">\(w\)</span> বাড়ানো স্থানীয়ভাবে <span class="math inline">\(J\)</span> কমাতে পারে। দুই ক্ষেত্রই লেখা যায় <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> যা <em>গ্রেডিয়েন্ট ডিসেন্ট</em>-এর মৌলিক ধারণা। ধনাত্মক সংখ্যা <span class="math inline">\(\eta\)</span> হলো <em>শেখার হার</em>; এটি পদক্ষেপের আকার নিয়ন্ত্রণ করে। খুব ছোট মান প্রশিক্ষণ ধীর করতে পারে, আর খুব বড় মান দোলন বা অস্থিতিশীলতা ঘটাতে পারে।</p>
+<p>অনেক প্যারামিটারের নেটওয়ার্কে <span class="math inline">\(\theta\)</span>-কে যেকোনো ওজন বা বায়াস ধরি। হালনাগাদ হয় <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> সব আংশিক অবকলজের সমষ্টিই লসের <em>গ্রেডিয়েন্ট</em>। জ্যামিতিকভাবে গ্রেডিয়েন্ট স্থানীয়ভাবে দ্রুততম বৃদ্ধির দিক নির্দেশ করে, তাই ঋণাত্মক গ্রেডিয়েন্ট হ্রাসের একটি স্থানীয় দিক দেয়।</p>
+<p>নেটওয়ার্ক যখন কয়েকটি ফাংশনের সমন্বয়, তখন এসব অবকলজ কীভাবে গণনা করব সেটিই বাকি। ফরওয়ার্ড পাসে তথ্য প্রবাহিত হয় <span class="math display">\[\text{{ইনপুট}}
+\longrightarrow
+\text{{গোপন স্তর}}
+\longrightarrow
+\text{{আউটপুট}}.\]</span> প্রথম দিকের কোনো প্যারামিটার লসকে কীভাবে প্রভাবিত করে তা জানতে আমরা নির্ভরতার শৃঙ্খলকে গাণিতিকভাবে উল্টো দিকে অনুসরণ করি। এই পদ্ধতিকে <em>ব্যাকপ্রোপাগেশন</em> বলা হয়। মূলত এটি চেইন রুলের একটি নিয়মিত ও দক্ষ প্রয়োগ। গোপন স্তরসহ নেটওয়ার্কে এই পদ্ধতির জনপ্রিয়করণের ধ্রুপদি রেফারেন্স Rumelhart, Hinton এবং Williams ; Nielsen  একটি বিশদ ও বিশেষভাবে শিক্ষামূলক ব্যাখ্যা দিয়েছেন।</p>
+<p>একটি সরল নির্ভরতা-শৃঙ্খলে যেখানে <span class="math inline">\(E\)</span> নির্ভর করে <span class="math inline">\(\widehat{y}\)</span>-এর উপর, <span class="math inline">\(\widehat{y}\)</span> নির্ভর করে সক্রিয়করণ <span class="math inline">\(h\)</span>-এর উপর, এবং <span class="math inline">\(h\)</span> নির্ভর করে ওজন <span class="math inline">\(w\)</span>-এর উপর, চেইন রুল দেয় <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> প্রতিটি গুণক <span class="math inline">\(w\)</span> কীভাবে চূড়ান্ত লসকে প্রভাবিত করে তার একটি ধাপ বর্ণনা করে। বড় নেটওয়ার্কে এমন বহু শৃঙ্খল থাকে, এবং ব্যাকপ্রোপাগেশন গণনাটিকে এমনভাবে সংগঠিত করে যাতে মধ্যবর্তী অবকলজগুলো পুনর্ব্যবহার করা যায়, প্রতিটি প্যারামিটারের জন্য আলাদা করে আবার গণনা করতে না হয়।</p>
+<p>বাস্তবে প্রশিক্ষণে অনেক উদাহরণ ব্যবহৃত হয়। প্রশিক্ষণ সেটের উপর একবার সম্পূর্ণ চলাকে একটি <em>epoch</em> বলা হয়। এই প্রবন্ধের শিক্ষামূলক প্রোগ্রামের মতো প্রতিটি উদাহরণের পর প্যারামিটার হালনাগাদ করা যায়, অথবা বড় নেটওয়ার্কে প্রচলিত ছোট ছোট উদাহরণগুচ্ছ, অর্থাৎ <em>mini-batch</em>,-এর পর হালনাগাদ করা যায়। উভয় ক্ষেত্রেই পূর্বানুমান, লস, গ্রেডিয়েন্ট এবং হালনাগাদের চক্র বহু epoch ধরে পুনরাবৃত্তি হয়।</p>
+<p>এই পরিবর্তনকে দৃশ্যমান করার একটি উপায় হলো প্রশিক্ষণের বিভিন্ন পর্যায়ে একই নির্দিষ্ট উদাহরণের পূর্বানুমান অনুসরণ করা। ভর <span class="math inline">\(140\)</span> g এবং ব্যাস <span class="math inline">\(7.0\)</span> cm সেই ফলটিকেই আবার বিবেচনা করি, যার সঠিক শ্রেণি কমলা। সারণি <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a>-এ একটি কাল্পনিক অগ্রগতি দেখানো হয়েছে। মানগুলো কোনো নির্দিষ্ট চালনার ফল নয়; কেবল প্রক্রিয়াটি বোঝাতে ব্যবহৃত।</p>
+<div id="tab:learning">
+<table>
+<caption>প্রশিক্ষণের সময় একই ফলের জন্য নেটওয়ার্কের পূর্বানুমানের কাল্পনিক পরিবর্তন। পুনরাবৃত্ত প্যারামিটার হালনাগাদ একটি প্রাথমিক ভুল আউটপুটকে লক্ষ্য লেবেলের সঙ্গে সামঞ্জস্যপূর্ণ শ্রেণিবিন্যাসের দিকে নিয়ে যেতে পারে।</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span>Epoch</span></th>
+<th style="text-align: center;"><span>পূর্বানুমান</span> <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;"><span>লস</span> <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;"><span>শ্রেণিবিন্যাস</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;"><span>আপেল</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;"><span>আপেল</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;"><span>আপেল</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;"><span>কমলা</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;"><span>কমলা</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>শুরুতে আউটপুট <span class="math inline">\(1\)</span>-এর কাছাকাছি এবং ফলটি ভুলভাবে আপেল হিসেবে শ্রেণিবদ্ধ হয়। প্যারামিটার সমন্বয়ের সঙ্গে পূর্বানুমান কমে এবং একসময় <span class="math inline">\(0.5\)</span> সীমা অতিক্রম করে, ফলে সঠিক শ্রেণি পাওয়া যায়। এই প্রক্রিয়ায় বদলায় ওজন ও বায়াসের সংখ্যাগত মান; নেটওয়ার্কের স্থাপত্য অপরিবর্তিত থাকে।</p>
+<p>প্রশিক্ষণ ডেটায় লস কমানোই চূড়ান্ত লক্ষ্য নয়। একটি কার্যকর নেটওয়ার্ককে এমন উদাহরণেও ভালো পূর্বানুমান দিতে হবে যেগুলো প্যারামিটার নির্ধারণে ব্যবহার করা হয়নি। এই ক্ষমতাকে <em>জেনারালাইজেশন</em> বলা হয়। কোনো মডেল যদি প্রশিক্ষণ সেটের বিশেষ বৈশিষ্ট্যের সঙ্গে অতিরিক্তভাবে খাপ খেয়ে নতুন ডেটায় খারাপ কাজ করে, তাকে <em>ওভারফিটিং</em> বলা হয়। আরও সতর্ক মূল্যায়নে ডেটাকে সাধারণত প্রশিক্ষণ, ভ্যালিডেশন এবং টেস্ট সেটে ভাগ করা হয়: প্রথমটি প্যারামিটার নির্ধারণ করে, দ্বিতীয়টি মডেল উন্নয়নের সময় সিদ্ধান্ত নিতে সহায়তা করে, এবং তৃতীয়টি চূড়ান্ত মূল্যায়নের জন্য সংরক্ষিত থাকে। জেনারালাইজেশন ও মডেল মূল্যায়ন নিয়ে বিস্তৃত আলোচনা Faceli et al.  এবং Goodfellow, Bengio ও Courville -এ পাওয়া যায়।</p>
+<p>এখন আমরা নিউরাল নেটওয়ার্কে শেখার গাণিতিক অর্থে পৌঁছেছি। এই প্রেক্ষিতে শেখা মানে হলো একটি যৌগিক ফাংশনের প্যারামিটার এমনভাবে সমন্বয় করা যাতে ডেটার উপর ত্রুটির একটি পরিমাপ কমে এবং, আদর্শভাবে, নতুন উদাহরণে ভালোভাবে সাধারণীকরণ করা যায়। নেটওয়ার্ক পূর্বানুমান করে, লস গণনা করে, অবকলজ ব্যবহার করে বোঝে প্যারামিটারগুলো সেই লসকে কীভাবে প্রভাবিত করে, এবং ধারাবাহিকভাবে ছোট সংশোধন করে।</p>
+</section><section class="article-section" id="গণত-থক-python"><span class="section-no">08</span><h2>গণিত থেকে Python</h2>
+<p>এখন আমরা সমীকরণ থেকে একটি চলমান প্রোগ্রামে যাই। উদ্দেশ্য কোনো বিশেষায়িত নিউরাল-নেটওয়ার্ক লাইব্রেরি ব্যবহার করা নয়; বরং <code>NumPy</code> দিয়ে সরাসরি এই প্রবন্ধে তৈরি গাণিতিক ক্রিয়াগুলো বাস্তবায়ন করা । এতে লাইন ধরে দেখা যায় কীভাবে রৈখিক সমন্বয়, সক্রিয়করণ ফাংশন, লস গণনা, ব্যাকপ্রোপাগেশন এবং গ্রেডিয়েন্ট ডিসেন্ট কোডে উপস্থিত হয়।</p>
+<p>আরও বিশ্বাসযোগ্য চূড়ান্ত উদাহরণের জন্য আমরা বিস্তৃত ভর–ব্যাস অঞ্চলে ছড়ানো একটি কৃত্রিম ডেটাসেট ব্যবহার করি। এখনও কেবল দুটি ভৌত বৈশিষ্ট্য — গ্রামে ভর এবং সেন্টিমিটারে ব্যাস — ব্যবহার করা হচ্ছে, তবে এখন সমতলের বড় অঞ্চলে <span class="math inline">\(64\)</span>টি প্রশিক্ষণ উদাহরণ ছড়িয়ে দেওয়া হয়েছে এবং আটটি অতিরিক্ত উদাহরণ একটি শিক্ষামূলক পরীক্ষার জন্য আলাদা রাখা হয়েছে। ডেটা কৃত্রিম হলেও আপেল ও কমলার যুক্তিযুক্ত পরিসরের মধ্যে রাখা হয়েছে। উদ্দেশ্য হলো কয়েকটি অতিরিক্তভাবে কৃত্রিম ক্লাস্টারে সব বিন্দু জমা না করে একটি অরৈখিক সিদ্ধান্তসীমা তৈরি করা।</p>
+<p>জ্যামিতিক ধারণাটি সহজ। ভর–ব্যাস সমতলে একটি রেফারেন্স বক্ররেখা নির্ধারণ করি, তার উপরে দুটি ব্যান্ডে আপেল এবং নিচে দুটি ব্যান্ডে কমলা রাখি। ভর ও ব্যাস উভয়েই ছোট নির্ধারিত বিচ্যুতি যোগ করা হয় যাতে পর্যবেক্ষণগুলো বৃহত্তর অঞ্চলে ছড়ায়। ফলে আগের চিত্রগুলোর তুলনায় উদাহরণটি সমৃদ্ধ: বেশি বিন্দু আছে, ডেটা পুরো অঞ্চলে ছড়ানো এবং উপযুক্ত সিদ্ধান্তসীমা স্পষ্টভাবে একটি সরলরেখার চেয়ে বেশি বক্র।</p>
+<p>এই চূড়ান্ত গণনামূলক পরীক্ষায় আমরা গোপন স্তরকে বারোটি ReLU নিউরনে প্রসারিত করি। এতে আগের অংশগুলোর ধারণাগত কাঠামো বদলায় না; শুধু আরও জটিল সীমা উপস্থাপনের ক্ষমতা বাড়ে। তিন-নিউরনের শিক্ষামূলক নেটওয়ার্কের <span class="math inline">\(13\)</span> প্যারামিটারের বদলে এখন <span class="math inline">\(49\)</span>টি সমন্বয়যোগ্য প্যারামিটার: প্রথম স্তরে <span class="math inline">\(24\)</span>টি ওজন ও <span class="math inline">\(12\)</span>টি বায়াস, তারপর আউটপুট স্তরে <span class="math inline">\(12\)</span>টি ওজন ও একটি বায়াস। সমীকরণের রূপ একই থাকে; শুধু ভেক্টর ও ম্যাট্রিক্স বড় হয়।</p>
+<p>সম্পূর্ণ প্রোগ্রামটি নিচে দেওয়া হলো।</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Apple - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Orange - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Apple - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Orange - test")
+
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Neural-network output after training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Apple - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Orange - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Neural-network decision boundary')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>যদিও কোডটি প্রবন্ধের প্রথম দিকের সমীকরণগুলোর তুলনায় দীর্ঘ, এর কাঠামো স্বচ্ছই থাকে। <code>build_data()</code> ফাংশনটি স্বয়ংক্রিয়ভাবে <span class="math inline">\(64\)</span>টি প্রশিক্ষণ উদাহরণ এবং আটটি শিক্ষামূলক পরীক্ষা উদাহরণ তৈরি করে। এরপর আমরা দুই চলককে স্ট্যান্ডার্ডাইজ করি <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> যেখানে <span class="math inline">\(\mu_j\)</span> এবং <span class="math inline">\(\sigma_j\)</span> কেবল প্রশিক্ষণ সেট থেকে গণনা করা হয়। এতে টেস্ট সেট প্যারামিটার নির্ধারণে প্রভাব ফেলতে পারে না এবং ভর ও ব্যাসকে তুলনীয় সংখ্যাগত স্কেলে আনা যায়।</p>
+<p>ফরওয়ার্ড পাসের মূল ধারণা বদলায় না। পার্থক্য শুধু এই যে প্রথম স্তর এখন বারোটি গোপন সক্রিয়করণের একটি ভেক্টর তৈরি করে। ম্যাট্রিক্স নোটেশনে, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\mathrm{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> এই চারটি লাইনেই অ্যালগরিদমের গাণিতিক মূল নিহিত। প্রশিক্ষণও আগের যুক্তি অনুসরণ করে: পূর্বানুমান গণনা করা, তার ত্রুটি মাপা, অবকলজ ব্যবহার করে সংবেদনশীলতার তথ্য পিছনের দিকে প্রবাহিত করা এবং ছোট গ্রেডিয়েন্ট-ডিসেন্ট পদক্ষেপে প্যারামিটার হালনাগাদ করা।</p>
+<p>কোডে আউটপুট স্তরের ব্যাকপ্রোপাগেশন দেখা যায়</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>এবং গোপন স্তরে প্রবাহ দেখা যায়</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>এরপর সব ওজন ও বায়াস হালনাগাদ করা হয়। প্রতিটি epoch-এ উদাহরণগুলোর ক্রম এলোমেলো করা হয় এবং প্রতিটি পর্যবেক্ষণের পর প্যারামিটার বদলানো হয় বলে এই বাস্তবায়ন <em>স্টোকাস্টিক গ্রেডিয়েন্ট ডিসেন্ট</em>-এর একটি প্রাথমিক রূপ।</p>
+<p>এখানে ব্যবহৃত র্যান্ডম সিড ও হাইপারপ্যারামিটারের ক্ষেত্রে চূড়ান্ত গড় লস সাধারণত <span class="math inline">\(10^{-5}\)</span> থেকে <span class="math inline">\(10^{-4}\)</span> মাত্রার এবং <span class="math inline">\(64\)</span>টি প্রশিক্ষণ উদাহরণসহ আটটি শিক্ষামূলক টেস্ট উদাহরণ প্রত্যাশিত শ্রেণি পায়। এটিকে কঠোর পরিসংখ্যানিক কর্মদক্ষতার মূল্যায়ন হিসেবে ব্যাখ্যা করা উচিত নয়: ডেটা কৃত্রিম এবং শিক্ষামূলক উদ্দেশ্যে তৈরি। এর কাজ হলো তুলনামূলকভাবে কম সরল একটি প্রেক্ষাপটে দেখানো যে ছোট নিউরাল নেটওয়ার্ক স্পষ্টভাবে অরৈখিক সিদ্ধান্তসীমা শিখতে পারে।</p>
+<p>চিত্র <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a>-এ ভর–ব্যাস সমতলে প্রোগ্রামের চূড়ান্ত আউটপুট দেখানো হয়েছে। সব প্রশিক্ষণ বিন্দু দৃশ্যমান। গাঢ় বক্ররেখাটি <span class="math inline">\(\widehat{y}=0.5\)</span> স্তর এবং নেটওয়ার্ক শেখা সিদ্ধান্তসীমা নির্দেশ করে; ছায়াযুক্ত অঞ্চলগুলো দুইটি পূর্বানুমিত শ্রেণি দেখায়। বৃত্ত প্রশিক্ষণ আপেল, বর্গ প্রশিক্ষণ কমলা, ত্রিভুজ টেস্ট আপেল এবং ক্রস টেস্ট কমলা নির্দেশ করে। কোনো ডেটা বিন্দু ঢাকা না পড়ার জন্য লেজেন্ডটি মূল প্লটের বাইরে রাখা হয়েছে।</p>
+<figure id="fig:python_output">
+<img alt="নিউরাল নেটওয়ার্ক প্রশিক্ষণের পর Python আউটপুট। কৃত্রিম ডেটাসেটে ভর–ব্যাস সমতলের বিস্তৃত অঞ্চলে ছড়ানো \(64\) টি প্রশিক্ষণ উদাহরণ এবং শিক্ষামূলক পরীক্ষার জন্য সংরক্ষিত আরও আটটি উদাহরণ রয়েছে। গাঢ় বক্ররেখাটি \(\widehat{y}=0.5\) স্তর এবং শেখা সিদ্ধান্তসীমা নির্দেশ করে; ছায়াযুক্ত " decoding="async" loading="lazy" src="../assets/img/bn/Fig07.png"/>
+<figcaption>নিউরাল নেটওয়ার্ক প্রশিক্ষণের পর Python আউটপুট। কৃত্রিম ডেটাসেটে ভর–ব্যাস সমতলের বিস্তৃত অঞ্চলে ছড়ানো <span class="math inline">\(64\)</span>টি প্রশিক্ষণ উদাহরণ এবং শিক্ষামূলক পরীক্ষার জন্য সংরক্ষিত আরও আটটি উদাহরণ রয়েছে। গাঢ় বক্ররেখাটি <span class="math inline">\(\widehat{y}=0.5\)</span> স্তর এবং শেখা সিদ্ধান্তসীমা নির্দেশ করে; ছায়াযুক্ত অঞ্চলগুলো নেটওয়ার্কের পূর্বানুমিত শ্রেণি দেখায়। বৃত্ত প্রশিক্ষণ আপেল, বর্গ প্রশিক্ষণ কমলা, ত্রিভুজ টেস্ট আপেল এবং ক্রস টেস্ট কমলাকে নির্দেশ করে।</figcaption>
+</figure>
+<p>আমরা দুইটি সরল বিন্দুগুচ্ছকে একটি সরলরেখা দিয়ে আলাদা করা থেকে শুরু করেছিলাম এবং শেষ করেছি আরও সমৃদ্ধ একটি গণনামূলক উদাহরণে, যেখানে নেটওয়ার্কের প্যারামিটার স্বয়ংক্রিয়ভাবে সমন্বিত হয়ে একটি বক্র সিদ্ধান্তসীমা তৈরি হয়েছে। গণিতে রহস্যময় কিছু যোগ করা হয়নি: বাস্তবায়নটি কেবল বৃহত্তর স্কেলে এবং উচ্চ গতিতে অ্যাফাইন সমন্বয়, সক্রিয়করণ ফাংশন, অবকলজ, ম্যাট্রিক্স গুণ এবং গ্রেডিয়েন্ট-ডিসেন্ট হালনাগাদকে সংগঠিত ও পুনরাবৃত্ত করে ।</p>
+<p>এই প্রবন্ধের সঙ্গে সংশ্লিষ্ট সব গণনামূলক উপাদান — কোড এবং চলমান Google Colab নোটবুকসহ — <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>-এ পাওয়া যায়। উদাহরণগুলো অন্বেষণ, পুনরুৎপাদন বা পরিবর্তন করতে ইচ্ছুক পাঠকের জন্য এটি একক প্রবেশবিন্দু হিসেবে কাজ করে।</p>
+<h4 id="কতরম-বদধমতত-বযবহরর-ববত">কৃত্রিম বুদ্ধিমত্তা ব্যবহারের বিবৃতি।</h4>
+<p>লেখক খসড়া তৈরি, ভাষা সংশোধন, উপস্থাপনার সংগঠন এবং শিক্ষামূলক চিত্র তৈরিতে OpenAI নির্মিত ChatGPT-কে সহায়ক সরঞ্জাম হিসেবে ব্যবহার করেছেন। গাণিতিক উপাদানের ধারণা ও বিকাশ, কোড এবং ব্যবহৃত তথ্যসূত্রসহ এই কাজের চূড়ান্ত বিষয়বস্তুর সম্পূর্ণ দায়িত্ব লেখকের।</p>
+</section></div>
+<section class="article-section references"><span class="section-no">তথ্যসূত্র</span><h2>তথ্যসূত্র</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>রিসোর্স</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/bn/Article_PMO2026_NN_BN.pdf"><strong>PDF</strong><span>নিউরাল নেটওয়ার্কের গাণিতিক গঠন</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_BN.ipynb"><strong>Google Colab</strong><span>Notebook · বাংলা</span></a>
+</div></section>
+<section><h2>NeuralMath সম্পর্কে</h2><p class="bio">NeuralMath হলো Dr. Americo Cunha Jr. নির্মিত একটি উন্মুক্ত শিক্ষামূলক প্রকল্প। এর লক্ষ্য হলো একটি ছোট নিউরাল নেটওয়ার্কের ভেতরের গাণিতিক ক্রিয়াগুলোকে এমন বৃহৎ পাঠকগোষ্ঠীর জন্য দৃশ্যমান, পরিদর্শনযোগ্য ও পুনরুৎপাদনযোগ্য করা, যাদের ক্যালকুলাস ও পরিসংখ্যানে তুলনামূলকভাবে প্রাথমিক প্রস্তুতি রয়েছে।</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>শিক্ষামূলক লেখাটি কীভাবে উদ্ধৃত করবেন</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>প্রকাশের পরে খণ্ড, পৃষ্ঠা ও DOI যুক্ত করে গ্রন্থপঞ্জির তথ্য হালনাগাদ করা হবে। অনুগ্রহ করে এই ওয়েবসাইট নয়, শিক্ষামূলক লেখাটিকেই উদ্ধৃত করুন।</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>লাইসেন্স</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>ওয়েবসাইটের ব্যাখ্যামূলক লেখা ও মৌলিক উপকরণ CC BY 4.0 লাইসেন্সে উপলভ্য, যদি অন্যথা উল্লেখ না থাকে। নিবন্ধের PDF প্রকাশনার লাইসেন্সের অধীন হতে পারে।</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

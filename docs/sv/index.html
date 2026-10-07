@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="sv">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — Den matematiska anatomin hos ett neuralt nätverk</title>
+<meta content="Vi presenterar en matematisk introduktion till artificiella neurala nätverk med utgångspunkt i ett enkelt klassificeringsproblem. En linjär klassificerare leder naturligt till begreppet artificiell neuron; därefter behandlar vi vikter, bias, aktiveringsfunktioner och hur neuroner sätts samman till e" name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/sv/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag" href="../hi/index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag current" href="index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">Den matematiska anatomin hos ett neuralt nätverk</p>
+<p>Vi presenterar en matematisk introduktion till artificiella neurala nätverk med utgångspunkt i ett enkelt klassificeringsproblem. En linjär klassificerare leder naturligt till begreppet artificiell neuron; därefter behandlar vi vikter, bias, aktiveringsfunktioner och hur neuroner sätts samman till ett litet nätverk. Träning introduceras med hjälp av förlustfunktioner, derivator, gradientnedstigning och bakåtpropagering. Slutligen implementeras modellen direkt i Python, så att sambandet mellan ekvationer och algoritm blir tydligt. Syftet är att visa hur välkända idéer från analytisk geometri, linjär algebra och differentialkalkyl ger en tillgänglig grund för att förstå de grundläggande mekanismerna i neurala nätverk.</p>
+<div class="resource-bar"><a href="../pdf/sv/Article_PMO2026_NN_SV.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_SV.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>Pedagogisk originaltext</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Denna webbutgåva och dess översättningar bygger på det ursprungliga portugisiska manuskriptet.</p></div>
+<nav aria-label="Innehåll" class="toc"><h2>Innehåll</h2><ol><li><a href="#när-kan-en-dator-lära-sig">När kan en dator lära sig?</a></li><li><a href="#att-representera-problemet-matematiskt">Att representera problemet matematiskt</a></li><li><a href="#en-rät-linje-som-klassificerare">En rät linje som klassificerare</a></li><li><a href="#den-artificiella-neuronen">Den artificiella neuronen</a></li><li><a href="#varför-behöver-vi-en-aktiveringsfunktion">Varför behöver vi en aktiveringsfunktion?</a></li><li><a href="#att-bygga-ett-litet-neuralt-nätverk">Att bygga ett litet neuralt nätverk</a></li><li><a href="#hur-lär-sig-ett-neuralt-nätverk">Hur lär sig ett neuralt nätverk?</a></li><li><a href="#från-matematik-till-python">Från matematik till Python</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="när-kan-en-dator-lära-sig"><span class="section-no">01</span><h2>När kan en dator lära sig?</h2>
+<p>I vardagen fattar vi klassificeringsbeslut nästan utan att märka det. När vi ser en frukt identifierar vi den snabbt som ett äpple eller en apelsin; när ett meddelande kommer till telefonen skiljer vi ett legitimt samtal från oönskad reklam; i medicinska analyser kan flera mätningar kombineras för att stödja ett beslut; och i finansiella institutioner bedöms flera uppgifter innan kredit beviljas. I alla dessa exempel vägs flera egenskaper samman för att ge ett svar.</p>
+<p>I många traditionella datorprogram skrivs reglerna som ger detta svar uttryckligen av programmeraren. Detta fungerar bra när reglerna är kända och kan formuleras tydligt. Metoden blir mindre effektiv när data varierar mycket eller när det är svårt att i förväg formulera alla villkor som krävs för ett bra beslut. Det leder till en naturlig fråga:</p>
+<div class="center">
+<p><em>Kan vi bygga ett program som lär sig en beslutsregel från exempel i stället för att få regeln given i förväg?</em></p>
+</div>
+<p>Detta är en av de centrala idéerna inom <em>maskininlärning</em>, ett område inom artificiell intelligens som behandlar metoder för att anpassa modeller till data . I ett övervakat inlärningsproblem får algoritmen exempel tillsammans med deras korrekta svar, och vi söker en modell som också kan ge användbara förutsägelser för fall som inte användes under träningen. Bland de många modeller som utvecklats för detta ändamål har <em>artificiella neurala nätverk</em> blivit viktiga i tillämpningar som bildigenkänning, språkbehandling, signalanalys och tidsserieprognoser .</p>
+<p>Användningen av neurala nätverk som en bro mellan matematik, beräkningar och skolundervisning har redan diskuterats i <em>Professor de Matemática Online</em> av Batista och Martins , som presenterar en aktivitet med lärarutbildning, Python och sifferigenkänning. Den här artikeln följer en kompletterande väg. Vårt huvudmål är att synliggöra den interna matematiken i ett litet neuralt nätverk, med början i analytisk geometri och stegvis vidare till gradientberäkning och en manuell implementering av bakåtpropagering.</p>
+<p>Trots sofistikationen i moderna tillämpningar kan den matematiska kärnan i ett neuralt nätverk introduceras med relativt välkända idéer. På en grundläggande nivå är ett neuralt nätverk en sammansättning av funktioner vars parametrar anpassas utifrån data. Vi börjar med ett enkelt geometriskt problem, tolkar om en separerande linje som en artificiell neuron, kopplar samman flera neuroner, studerar aktiveringsfunktionernas roll och visar hur derivator kan användas för att automatiskt justera nätverkets parametrar. Därefter implementerar vi ett komplett litet exempel i Python med en direkt motsvarighet mellan ekvationerna och koden.</p>
+</section><section class="article-section" id="att-representera-problemet-matematiskt"><span class="section-no">02</span><h2>Att representera problemet matematiskt</h2>
+<p>För att förstå hur ett neuralt nätverk fungerar börjar vi med ett avsiktligt enkelt problem: att skilja äpplen från apelsiner. En frukt har många egenskaper som kan vara användbara för denna uppgift, exempelvis färg, massa, diameter, textur och arom. En första matematisk modell behöver dock inte omfatta all denna komplexitet. Vi använder endast två lätt mätbara storheter: massa i gram och diameter i centimeter.</p>
+<p>Varje frukt representeras därför av ett ordnat par <span class="math display">\[(x_1,x_2),\]</span> where <span class="math display">\[x_1=\text{massa}
+\qquad\text{and}\qquad
+x_2=\text{diameter}.\]</span></p>
+<p>Paret <span class="math inline">\((155,\;7.2)\)</span> representerar alltså en frukt med massan <span class="math inline">\(155\)</span> g och diametern <span class="math inline">\(7.2\)</span> cm. Genom att ersätta det fysiska objektet med två numeriska mätvärden associerar vi varje frukt med en punkt i det kartesiska planet: den första koordinaten anger massan och den andra diametern. Figur <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> illustrerar denna representation för en hypotetisk uppsättning äpplen och apelsiner.</p>
+<figure id="fig:fruits">
+<img alt="Från fysisk observation till matematisk modellering. Varje frukt beskrivs först med två mätbara storheter — massa och diameter — och representeras sedan av det ordnade paret \((x_1,x_2)\) . I massa–diameter-planet blir varje observation en punkt, vilket gör att problemet att skil" decoding="async" loading="lazy" src="../assets/img/sv/Fig01.png">
+<figcaption>Från fysisk observation till matematisk modellering. Varje frukt beskrivs först med två mätbara storheter — massa och diameter — och representeras sedan av det ordnade paret <span class="math inline">\((x_1,x_2)\)</span>. I massa–diameter-planet blir varje observation en punkt, vilket gör att problemet att skilja äpplen från apelsiner kan omtolkas som ett geometriskt problem där två klasser ska separeras.</figcaption>
+</img></figure>
+<p>Denna omvandling förändrar problemets skenbara natur. I stället för att direkt fråga hur man känner igen ett äpple eller en apelsin kan vi ställa en geometrisk fråga: hur kan punkterna som tillhör de två klasserna separeras i planet? Detta perspektivskifte är grundläggande inom maskininlärning. Bilder, texter, ljud och experimentella signaler måste alla omvandlas till numeriska representationer innan de kan behandlas av en algoritm. I vårt exempel har varje objekt bara två koordinater; i verkliga tillämpningar kan en representation innehålla hundratals, tusentals eller till och med miljontals komponenter. Principen är densamma: varje exempel associeras med en samling tal, och modellen söker en regel som avbildar denna representation till det önskade svaret.</p>
+<p>Vi börjar med den enklaste tillgängliga geometriska regeln och frågar om en enda rät linje kan separera äppelpunkterna från apelsinpunkterna på ett tillfredsställande sätt.</p>
+</section><section class="article-section" id="en-rät-linje-som-klassificerare"><span class="section-no">03</span><h2>En rät linje som klassificerare</h2>
+<p>När varje frukt har representerats av en punkt i det kartesiska planet blir klassificeringen ett geometriskt problem: kan en rät linje separera äpplena från apelsinerna? Denna fråga fångar grundidén i en viktig familj av maskininlärningsmetoder som kallas <em>linjära klassificerare</em>.</p>
+<p>Betrakta en linje som går genom punktmolnet, som i Figur <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>. Linjen delar planet i två halvplan. Om de flesta äppelpunkterna ligger på ena sidan och de flesta apelsinpunkterna på den andra kan en ny frukts position relativt linjen användas som klassificeringsregel. Efter att dess massa och diameter har mätts representerar vi frukten med en punkt och bestämmer på vilken sida av linjen punkten ligger.</p>
+<figure id="fig:linear_classifier">
+<img alt="Exempel på en linjär klassificerare i massa–diameter-planet. Den räta linjen fungerar som en beslutsgräns: punkter i det ena halvplanet tilldelas den ena klassen, medan punkter i det motsatta halvplanet tilldelas den andra. Beslutet beror alltså endast på vilken sida av linjen pu" decoding="async" loading="lazy" src="../assets/img/sv/Fig02.png"/>
+<figcaption>Exempel på en linjär klassificerare i massa–diameter-planet. Den räta linjen fungerar som en beslutsgräns: punkter i det ena halvplanet tilldelas den ena klassen, medan punkter i det motsatta halvplanet tilldelas den andra. Beslutet beror alltså endast på vilken sida av linjen punkten ligger.</figcaption>
+</figure>
+<p>I det kartesiska planet <span class="math inline">\((x_1,x_2)\)</span> kan en linje beskrivas av <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>Vektorn <span class="math inline">\((w_1,w_2)\)</span> är vinkelrät mot linjen och bestämmer därför dess orientering, medan parametern <span class="math inline">\(b\)</span> bidrar till dess läge. Denna representation har en liten redundans: om <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> och <span class="math inline">\(b\)</span> multipliceras med samma icke-nollkonstant fås exakt samma linje. Parametrarna som beskriver gränsen är alltså inte entydiga. Deras numeriska tolkning beror också på variablernas skalor. Eftersom massa mäts i gram och diameter i centimeter bör storleken på <span class="math inline">\(w_1\)</span> och <span class="math inline">\(w_2\)</span> inte jämföras utan hänsyn till de olika enheterna.</p>
+<p>Linjeekvationen ger i sig ett enkelt sätt att avgöra på vilken sida av gränsen en punkt ligger. Definiera poängvärdet <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Om <span class="math inline">\(s(x_1,x_2)=0\)</span> ligger punkten på linjen. Om <span class="math inline">\(s(x_1,x_2)&gt;0\)</span> ligger den i det ena halvplanet, och om <span class="math inline">\(s(x_1,x_2)&lt;0\)</span> ligger den i det andra. Om vi bestämmer att positiva poängvärden motsvarar äpplen och negativa poängvärden apelsiner blir regeln <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{äpple},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{apelsin}.
+\end{cases}\]</span></p>
+<p>Betrakta till exempel gränsen som definieras av <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> För en frukt med massan <span class="math inline">\(160\)</span> g och diametern <span class="math inline">\(7.8\)</span> cm gäller <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> Eftersom poängvärdet är positivt ligger punkten i det halvplan som vi har associerat med äpplen. Klassificeraren skulle därför märka frukten som ett äpple.</p>
+<p>Inte varje val av <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> och <span class="math inline">\(b\)</span> ger en bra klassificering. Vissa linjer separerar de två grupperna dåligt, medan andra ger färre fel. Inlärningsproblemet består just i att använda tidigare etiketterade exempel för att bestämma parametervärden som minskar ett mått på modellens fel. I stället för att programmera linjens läge direkt vill vi att algoritmen justerar dess koefficienter utifrån data.</p>
+<p>En enda linje kan fungera bra när klasserna är ungefär linjärt separerbara. Mer komplicerade datamängder kan kräva en icke-linjär gräns. Innan vi behandlar den begränsningen tolkar vi om den nyss konstruerade klassificeraren som en elementär beräkningsenhet: en artificiell neuron.</p>
+</section><section class="article-section" id="den-artificiella-neuronen"><span class="section-no">04</span><h2>Den artificiella neuronen</h2>
+<p>I föregående avsnitt användes uttrycket <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> för att avgöra på vilken sida av en linje en frukt ligger. Samma uttryck kan ses som det första steget i beräkningen som utförs av en <em>artificiell neuron</em>. En neuron tar emot numeriska indata, kombinerar dem med hjälp av vikter och en bias och applicerar därefter en matematisk funktion för att få sin utdata.</p>
+<p>I vårt exempel är indata massan <span class="math inline">\(x_1\)</span> och diametern <span class="math inline">\(x_2\)</span>. Varje indata multipliceras med en parameter som kallas en <em>vikt</em>; produkterna adderas tillsammans med en konstant term <span class="math inline">\(b\)</span>, kallad <em>bias</em>. Figur <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> visar denna beräkning schematiskt.</p>
+<figure id="fig:artificial_neuron">
+<img alt="Schematisk funktion hos en artificiell neuron. Varje indata \(x_i\) multipliceras med en vikt \(w_i\) ; produkterna adderas till biasen \(b\) och ger poängvärdet \(s\) . Aktiveringsfunktionen \(g\) omvandlar därefter detta poängvärde till utdata \(\widehat{y}=g(s)\) , som kan anv" decoding="async" loading="lazy" src="../assets/img/sv/Fig03.png"/>
+<figcaption>Schematisk funktion hos en artificiell neuron. Varje indata <span class="math inline">\(x_i\)</span> multipliceras med en vikt <span class="math inline">\(w_i\)</span>; produkterna adderas till biasen <span class="math inline">\(b\)</span> och ger poängvärdet <span class="math inline">\(s\)</span>. Aktiveringsfunktionen <span class="math inline">\(g\)</span> omvandlar därefter detta poängvärde till utdata <span class="math inline">\(\widehat{y}=g(s)\)</span>, som kan användas som en mellanliggande storhet eller som den slutliga förutsägelsen.</figcaption>
+</figure>
+<p>Vikterna bestämmer hur förändringar i indata påverkar poängvärdet. Om <span class="math inline">\(x_2\)</span> och alla andra storheter hålls fasta ändrar en variation <span class="math inline">\(\Delta x_1\)</span> värdet på <span class="math inline">\(s\)</span> med <span class="math inline">\(w_1\Delta x_1\)</span>. På motsvarande sätt ändrar en variation <span class="math inline">\(\Delta x_2\)</span> poängvärdet med <span class="math inline">\(w_2\Delta x_2\)</span>. Även tecknet spelar roll: en positiv vikt gör att en ökning av indata ökar poängvärdet, medan en negativ vikt ger motsatt effekt. Denna tolkning måste användas försiktigt när olika variabler har olika enheter och skalor. Därför normaliserar eller standardiserar praktiska implementationer ofta sina indata före träning.</p>
+<p>Biasen <span class="math inline">\(b\)</span> är den konstanta termen i den affina transformationen. Geometriskt gör den det möjligt att förskjuta beslutsgränsen. Om <span class="math inline">\(b=0\)</span> tvingar ekvationen <span class="math display">\[w_1x_1+w_2x_2=0\]</span> linjen att gå genom origo. Med en bias kan gränsen flyttas till andra lägen. Ekvivalent gäller att när <span class="math inline">\(x_1=x_2=0\)</span> är poängvärdet helt enkelt <span class="math inline">\(s=b\)</span>.</p>
+<p>Poängvärdet behöver inte vara neuronens slutliga utdata. I allmänhet appliceras en <em>aktiveringsfunktion</em> <span class="math inline">\(g\)</span> på det: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> Beräkningen har alltså två steg, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>Med parametervärdena från föregående avsnitt får vi <span class="math inline">\(s=1.6\)</span>. Om vi väljer stegfunktionen <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> blir <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>. Enligt vår konvention klassificeras frukten som ett äpple. Med denna aktivering ändras beslutet när <span class="math inline">\(s\)</span> passerar noll, så klassgränsen är exakt <span class="math display">\[w_1x_1+w_2x_2+b=0.\]</span></p>
+<p>En enskild neuron är alltså ett enkelt matematiskt objekt med justerbara parametrar. Dess verkliga betydelse framträder när många sådana enheter kopplas samman. Innan vi bygger ett nätverk behöver vi dock förstå varför aktiveringsfunktionen är avgörande.</p>
+</section><section class="article-section" id="varför-behöver-vi-en-aktiveringsfunktion"><span class="section-no">05</span><h2>Varför behöver vi en aktiveringsfunktion?</h2>
+<p>En neuron beräknar först ett poängvärde med en affin transformation och applicerar därefter en aktiveringsfunktion. Detta andra steg är avgörande för att ett neuralt nätverk ska kunna representera komplicerade samband. För att se varför kan vi tänka oss ett nätverk utan aktiveringsfunktioner. Varje enhet skulle då ha formen <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>Som ett endimensionellt exempel, anta att en första enhet ger <span class="math display">\[h=ax+b\]</span> och att en andra beräknar <span class="math display">\[y=ch+d.\]</span> Insättning ger <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> vilket fortfarande är en affin funktion av <span class="math inline">\(x\)</span>. Samma påstående gäller i flera dimensioner: en sammansättning av affina transformationer är fortfarande affin. Att lägga till många lager utan en icke-linjär operation gör därför inte nätverket i grunden mer uttrycksfullt; hela sammansättningen skulle kunna ersättas av en enda affin transformation.</p>
+<p>En aktiveringsfunktion bryter denna begränsning. Efter att ha beräknat poängvärdet <span class="math inline">\(s\)</span> applicerar neuronen en vanligen icke-linjär avbildning <span class="math display">\[h=g(s).\]</span> När flera sådana enheter kopplas samman kan den resulterande sammansättningen inte längre reduceras till en enda affin transformation. Därmed kan nätverket konstruera mer komplicerade beslutsgränser.</p>
+<p>Den enklaste aktiveringen är stegfunktionen, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> Den ger ett binärt beslut och är mycket användbar för att förstå klassificering. Dess derivata är emellertid noll för <span class="math inline">\(s\neq0\)</span> och odefinierad vid <span class="math inline">\(s=0\)</span>. Eftersom gradientbaserad träning använder derivator för att avgöra hur parametrarna ska ändras är stegfunktionen inte lämplig för denna träningsmekanism.</p>
+<p>Ett alternativ är sigmoidfunktionen, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> Den avbildar varje reellt tal till ett värde strikt mellan <span class="math inline">\(0\)</span> och <span class="math inline">\(1\)</span>. För mycket negativa <span class="math inline">\(s\)</span> närmar sig utdata <span class="math inline">\(0\)</span>; för mycket positiva <span class="math inline">\(s\)</span> närmar de sig <span class="math inline">\(1\)</span>; mellan dessa ytterligheter är övergången mjuk. Sigmoidfunktionen är deriverbar överallt, med <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> Eftersom dess utdata ligger mellan <span class="math inline">\(0\)</span> och <span class="math inline">\(1\)</span> används den ofta i utlagret hos en binär klassificerare. Med en probabilistisk formulering och en lämplig förlustfunktion kan utdata tolkas som en skattning av sannolikheten för klassen som representeras av <span class="math inline">\(1\)</span>. I dolda lager kan sigmoidfunktionen dock skapa ett problem: för indata med stort absolutbelopp blir derivatan mycket liten, vilket bidrar till problemet med <em>försvinnande gradienter</em> i djupa nätverk.</p>
+<p>En ofta använd aktivering i dolda lager är ReLU (<em>Rectified Linear Unit</em>), <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> Även om ReLU består av två linjära delar är funktionen inte globalt linjär. Dess derivata är <span class="math inline">\(0\)</span> för <span class="math inline">\(s&lt;0\)</span> och <span class="math inline">\(1\)</span> för <span class="math inline">\(s&gt;0\)</span>. Vid <span class="math inline">\(s=0\)</span> finns den vanliga derivatan inte, och programvaruimplementationer använder en konvention för gradienten. För positiva indata minskar derivatan inte när <span class="math inline">\(s\)</span> växer, vilket undviker en av sigmoidfunktionens mättnadsmekanismer.</p>
+<p>Figur <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> jämför dessa tre aktiveringar visuellt: stegfunktionens abrupta hopp, sigmoidfunktionens mjuka övergång och ReLU:s förändring i lutning.</p>
+<figure id="fig:activation_functions">
+<img alt="Jämförelse av tre aktiveringsfunktioner som ofta används i introduktioner till neurala nätverk. Stegfunktionen ger ett abrupt beslut; sigmoidfunktionen ger en mjuk övergång mellan \(0\) och \(1\) ; och ReLU undertrycker negativa indata samtidigt som positiva värden bevaras. Icke-" decoding="async" loading="lazy" src="../assets/img/sv/Fig04.png"/>
+<figcaption>Jämförelse av tre aktiveringsfunktioner som ofta används i introduktioner till neurala nätverk. Stegfunktionen ger ett abrupt beslut; sigmoidfunktionen ger en mjuk övergång mellan <span class="math inline">\(0\)</span> och <span class="math inline">\(1\)</span>; och ReLU undertrycker negativa indata samtidigt som positiva värden bevaras. Icke-linjära aktiveringar hindrar en stapel av lager från att reduceras till en enda affin transformation.</figcaption>
+</figure>
+<p>Deras viktigaste egenskaper sammanfattas nedan.</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Funktion</th>
+<th style="text-align: center;">Utdata</th>
+<th style="text-align: left;">Derivata</th>
+<th style="text-align: left;">Typisk användning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Steg</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;">Noll för <span class="math inline">\(s\neq0\)</span>; odefinierad vid <span class="math inline">\(s=0\)</span></td>
+<td style="text-align: left;">Historiska modeller och didaktiska exempel</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sigmoid</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">Finns för varje <span class="math inline">\(s\)</span></td>
+<td style="text-align: left;">Utlager vid binär klassificering</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> för <span class="math inline">\(s&lt;0\)</span> och <span class="math inline">\(1\)</span> för <span class="math inline">\(s&gt;0\)</span></td>
+<td style="text-align: left;">Dolda lager</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Detaljerna hos dessa funktioner skiljer sig åt, men deras gemensamma konceptuella roll är att införa icke-linjäritet. Det är denna icke-linjäritet som gör att det lilla nätverket i nästa avsnitt kan representera samband som en enda rät linje inte kan fånga.</p>
+<p>För läsare som vill gå vidare ger Haykin  en klassisk behandling av neurala nätverk, medan Goodfellow, Bengio och Courville  diskuterar aktiveringsfunktioner och träning av djupa nätverk i ett bredare sammanhang. Nielsens fritt tillgängliga text  är särskilt lättillgänglig för att utveckla intuition om neuroner, aktiveringar och inlärning.</p>
+</section><section class="article-section" id="att-bygga-ett-litet-neuralt-nätverk"><span class="section-no">06</span><h2>Att bygga ett litet neuralt nätverk</h2>
+<p>Vi betraktar nu ett nätverk med två indata, ett dolt lager med tre neuroner och en utneuron. Indata är fortfarande <span class="math display">\[x_1=\text{massa},
+\qquad
+x_2=\text{diameter},\]</span> och båda matas till varje dold neuron, som visas i Figur <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p>
+<figure id="fig:small_network">
+<img alt="Didaktisk \(2\) – \(3\) – \(1\) -arkitektur som används för att introducera beräkningar i neurala nätverk. De två indata — massa och diameter — matas till tre neuroner i det dolda lagret. Deras aktiveringar \(h_1,h_2,h_3\) kombineras därefter av utneuronen för att ge förutsägelse" decoding="async" loading="lazy" src="../assets/img/sv/Fig05.png"/>
+<figcaption>Didaktisk <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span>-arkitektur som används för att introducera beräkningar i neurala nätverk. De två indata — massa och diameter — matas till tre neuroner i det dolda lagret. Deras aktiveringar <span class="math inline">\(h_1,h_2,h_3\)</span> kombineras därefter av utneuronen för att ge förutsägelsen <span class="math inline">\(\widehat{y}\)</span>. Varje koppling har en justerbar vikt och varje neuron har en bias.</figcaption>
+</figure>
+<p>Låt utdata från det dolda lagret vara <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> och <span class="math inline">\(h_3\)</span>. Varje neuron tar emot samma två indata men har sina egna vikter och sin egen bias: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>Även om alla tre neuroner tar emot samma massa och diameter kan de ge olika svar eftersom deras parametrar skiljer sig åt. Under träningen justeras parametrarna så att de mellanliggande aktiveringarna blir användbara för klassificeringen.</p>
+<p>De tre storheterna <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> och <span class="math inline">\(h_3\)</span> skickas därefter till utneuronen, som beräknar <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> och ger <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right).\]</span> För vårt binära problem använder vi sigmoidaktivering i utlagret: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>Med <span class="math inline">\(y=1\)</span> för äpple och <span class="math inline">\(y=0\)</span> för apelsin ger tröskeln <span class="math inline">\(0.5\)</span> klassbeslutet <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{äpple},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{apelsin}.\]</span> Värden nära <span class="math inline">\(1\)</span> är därmed starkt förknippade med äpplen, medan värden nära <span class="math inline">\(0\)</span> är förknippade med apelsiner. Som tidigare påpekats kräver en numerisk tolkning av <span class="math inline">\(\widehat{y}\)</span> som sannolikhet ytterligare antaganden om modellen och dess träning. För klassificeringsregeln som används här räcker det att betrakta <span class="math inline">\(\widehat{y}\)</span> som en kontinuerlig nätverksutdata.</p>
+<p>Den centrala egenskapen hos denna arkitektur är mellanrepresentationen <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> Nätverket tar emot två egenskaper och konstruerar tre nya storheter innan det slutliga svaret produceras. Dessa aktiveringar väljs inte manuellt: de beror på vikterna och biasparametrarna och förändras därför när parametrarna tränas.</p>
+<p>Trots sin ringa storlek har nätverket redan tretton justerbara parametrar. De tre dolda neuronerna innehåller <span class="math display">\[3(2+1)=9\]</span> parametrar, och utneuronen bidrar med <span class="math display">\[3+1=4.\]</span> Alltså, <span class="math display">\[9+4=13.\]</span></p>
+<p>Samma parameterantal blir tydligt i matrisnotation. Definiera <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> Då kan det dolda lagret skrivas kompakt som <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> där <span class="math inline">\(g\)</span> verkar komponentvis. För utdata gäller <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> med <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>Denna notation föregriper strukturen som senare visas i Python-programmet. När en frukt matas in och vi beräknar de successiva aktiveringarna tills vi får <span class="math inline">\(\widehat{y}\)</span> utför vi <em>framåtpropagering</em>, eller en <em>framåtpassage</em>. Den centrala frågan kvarstår: hur kan de tretton parametrarna bestämmas automatiskt så att förutsägelserna passar data?</p>
+</section><section class="article-section" id="hur-lär-sig-ett-neuralt-nätverk"><span class="section-no">07</span><h2>Hur lär sig ett neuralt nätverk?</h2>
+<p>Vikterna och biasparametrarna är inte kända i förväg. De måste justeras med hjälp av exempel där det korrekta svaret är känt. Denna process kallas <em>träning</em> och kan sammanfattas med cykeln <span class="math display">\[\boxed{\text{förutsäg}}
+\longrightarrow
+\boxed{\text{mät felet}}
+\longrightarrow
+\boxed{\text{justera parametrarna}}
+\longrightarrow
+\boxed{\text{upprepa}}.\]</span></p>
+<p>Betrakta en frukt med massan <span class="math inline">\(140\)</span> g och diametern <span class="math inline">\(7.0\)</span> cm vars korrekta klass är apelsin, alltså <span class="math inline">\(y=0\)</span>. Anta att nätverket vid någon tidpunkt under träningen ger <span class="math inline">\(\widehat{y}=0.80\)</span>. Ett enkelt mått på avvikelsen mellan förutsägelsen och målvärdet är kvadratfelet <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> För detta exempel, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>Detta uttryck är en <em>förlustfunktion</em> för ett exempel. Eftersom det är en kvadrat gäller <span class="math inline">\(E\geq0\)</span>, och förutsägelser längre från målvärdet ger större straff. Faktorn <span class="math inline">\(1/2\)</span> ändrar inte minimipunktens läge men förenklar derivatorna. Vid binär klassificering används ofta andra förluster, särskilt korsentropi. Här använder vi kvadratfel eftersom algebran är tydlig och tillräcklig för att introducera optimering och bakåtpropagering .</p>
+<p>Om träningsmängden innehåller <span class="math inline">\(N\)</span> exempel är ett globalt mått medelförlusten <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Varje förutsägelse beror på nätverkets vikter och biasparametrar, så <span class="math inline">\(J\)</span> beror också på alla dessa parametrar. Träning innebär att söka parametervärden som gör <span class="math inline">\(J\)</span> litet.</p>
+<p>För att förstå justeringsmekanismen kan vi först tänka oss att alla parametrar utom en enda vikt <span class="math inline">\(w\)</span> hålls fasta. Då kan förlusten betraktas som en funktion <span class="math inline">\(J=J(w)\)</span>. Figur <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> sammanfattar de grundläggande träningssteg som vi nu studerar.</p>
+<figure id="fig:training_cycle">
+<img alt="Grundläggande träningscykel för ett neuralt nätverk. Framåtpassagen omvandlar indata till en förutsägelse; förlustfunktionen mäter avvikelsen mellan förutsägelse och målvärde; bakåtpropagering beräknar gradienter med kedjeregeln; och gradientnedstigning använder dessa gradienter " decoding="async" loading="lazy" src="../assets/img/sv/Fig06.png"/>
+<figcaption>Grundläggande träningscykel för ett neuralt nätverk. Framåtpassagen omvandlar indata till en förutsägelse; förlustfunktionen mäter avvikelsen mellan förutsägelse och målvärde; bakåtpropagering beräknar gradienter med kedjeregeln; och gradientnedstigning använder dessa gradienter för att uppdatera vikter och biasparametrar. Att upprepa denna cykel under många epoker är det vi kallar inlärning.</figcaption>
+</figure>
+<p>För läsare med begränsad bakgrund i differentialkalkyl kan en derivata här tolkas som ett mått på <em>lokal känslighet</em>: den anger hur en liten förändring i en parameter tenderar att ändra förlusten. Tecknet visar vilken riktning som lokalt ökar eller minskar funktionen, medan absolutbeloppet mäter styrkan hos denna lokala variation.</p>
+<p>Derivatan <span class="math display">\[\frac{\partial J}{\partial w}\]</span> ger den lokala lutningen. Om den är positiv tenderar en liten ökning av <span class="math inline">\(w\)</span> att öka <span class="math inline">\(J\)</span>, så vikten bör flyttas i motsatt riktning. Om den är negativ tenderar en ökning av <span class="math inline">\(w\)</span> lokalt att minska <span class="math inline">\(J\)</span>. Båda fallen beskrivs av <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> vilket är grundidén i <em>gradientnedstigning</em>. Det positiva talet <span class="math inline">\(\eta\)</span> är <em>inlärningshastigheten</em>; det styr steglängden. Ett mycket litet värde kan göra träningen långsam, medan ett alltför stort värde kan orsaka oscillationer eller instabilitet.</p>
+<p>För ett nätverk med många parametrar låter vi <span class="math inline">\(\theta\)</span> beteckna valfri vikt eller bias. Uppdateringen blir <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> Samlingen av alla partiella derivator bildar förlustens <em>gradient</em>. Geometriskt pekar gradienten i riktningen för den snabbaste lokala ökningen, så den negativa gradienten anger en lokal minskningsriktning.</p>
+<p>Vi behöver fortfarande beräkna dessa derivator när nätverket är en sammansättning av flera funktioner. Under framåtpassagen färdas informationen som <span class="math display">\[\text{indata}
+\longrightarrow
+\text{dolt lager}
+\longrightarrow
+\text{utdata}.\]</span> För att bestämma hur en parameter i ett tidigt lager påverkar förlusten följer vi matematiskt beroendekedjan i motsatt riktning. Denna procedur kallas <em>bakåtpropagering</em>. Den är i grunden en systematisk och effektiv tillämpning av kedjeregeln. Rumelhart, Hinton och Williams  är en klassisk referens för populariseringen av denna procedur i nätverk med dolda lager; Nielsen  ger en detaljerad och särskilt didaktisk härledning.</p>
+<p>För en enkel beroendekedja där <span class="math inline">\(E\)</span> beror på <span class="math inline">\(\widehat{y}\)</span>, som beror på en aktivering <span class="math inline">\(h\)</span>, som i sin tur beror på en vikt <span class="math inline">\(w\)</span>, ger kedjeregeln <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> Varje faktor beskriver ett steg i hur <span class="math inline">\(w\)</span> påverkar den slutliga förlusten. Större nätverk innehåller många sådana kedjor, och bakåtpropagering organiserar beräkningen så att mellanliggande derivator kan återanvändas i stället för att beräknas om separat för varje parameter.</p>
+<p>I praktiken använder träningen många exempel. En fullständig genomgång av träningsmängden kallas en <em>epok</em>. Parametrarna kan uppdateras efter varje exempel, som i det didaktiska programmet senare i artikeln, eller efter små grupper av exempel som kallas <em>minibatcher</em>, vilket är vanligt i större nätverk. I båda fallen upprepas cykeln med förutsägelser, förluster, gradienter och uppdateringar under många epoker.</p>
+<p>Ett konkret sätt att visualisera denna utveckling är att följa förutsägelsen för ett och samma exempel i olika träningsstadier. Betrakta åter frukten med massan <span class="math inline">\(140\)</span> g och diametern <span class="math inline">\(7.0\)</span> cm, vars korrekta klass är apelsin. Tabell <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> visar en hypotetisk utveckling. Värdena motsvarar inte en viss körning; de illustrerar endast mekanismen.</p>
+<div id="tab:learning">
+<table>
+<caption>Hypotetisk utveckling av nätverkets förutsägelse för samma frukt under träningen. Upprepade parameteruppdateringar kan föra en inledningsvis felaktig utdata mot en klassificering som överensstämmer med måletiketten.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Epok</th>
+<th style="text-align: center;">Förutsägelse <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">Förlust <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">Klassificering</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">Äpple</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">Äpple</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">Äpple</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">Apelsin</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">Apelsin</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>I början ligger utdata nära <span class="math inline">\(1\)</span> och frukten klassificeras felaktigt som ett äpple. När parametrarna justeras minskar förutsägelsen och passerar till slut tröskeln <span class="math inline">\(0.5\)</span>, vilket ger rätt klass. Det som förändras under processen är de numeriska värdena på vikterna och biasparametrarna; nätverksarkitekturen förblir oförändrad.</p>
+<p>Att minska förlusten på träningsdata är inte det slutliga målet. Ett användbart nätverk måste också ge goda förutsägelser för exempel som inte användes för att anpassa parametrarna. Denna förmåga kallas <em>generalisering</em>. När en modell anpassar sig alltför nära till särdrag i träningsmängden och presterar sämre på nya data har vi <em>överanpassning</em>. Vid mer noggranna utvärderingar delas data vanligen upp i tränings-, validerings- och testmängder: den första används för att anpassa parametrarna, den andra stödjer val under modellutvecklingen och den tredje reserveras för den slutliga utvärderingen. Bredare diskussioner om generalisering och modellutvärdering finns hos Faceli et al.  samt Goodfellow, Bengio och Courville .</p>
+<p>Vi har därmed nått den matematiska innebörden av inlärning i ett neuralt nätverk. I detta sammanhang innebär att lära sig att justera parametrarna i en sammansatt funktion så att ett felmått på data minskar och, idealiskt, att modellen generaliserar till nya exempel. Nätverket gör en förutsägelse, beräknar en förlust, använder derivator för att avgöra hur parametrarna påverkar förlusten och genomför en följd av små korrigeringar.</p>
+</section><section class="article-section" id="från-matematik-till-python"><span class="section-no">08</span><h2>Från matematik till Python</h2>
+<p>Vi går nu från ekvationer till ett körbart program. Syftet är inte att använda ett specialiserat bibliotek för neurala nätverk, utan att direkt med <code>NumPy</code> implementera de matematiska operationer som utvecklats genom artikeln . Därmed kan vi rad för rad se hur linjära kombinationer, aktiveringsfunktioner, förlustberäkning, bakåtpropagering och gradientnedstigning tar form i kod.</p>
+<p>För ett mer övertygande avslutande exempel använder vi en syntetisk datamängd som är utspridd över ett större massa–diameter-område. Vi arbetar fortfarande med endast två fysiska egenskaper — massa i gram och diameter i centimeter — men fördelar nu <span class="math inline">\(64\)</span> träningsexempel över ett stort område i planet och reserverar ytterligare åtta exempel för ett illustrativt test. Data är fortfarande syntetiska och ligger inom rimliga intervall för äpplen och apelsiner. De är konstruerade för att ge en icke-linjär beslutsgräns utan att alla punkter koncentreras till ett fåtal alltför artificiella kluster.</p>
+<p>Den geometriska idén är enkel. Vi definierar en referenskurva i massa–diameter-planet, placerar äpplen i två band ovanför kurvan och apelsiner i två band under den. Små deterministiska perturbationer läggs till både massa och diameter så att observationerna täcker ett större område. Det resulterande exemplet är rikare än de tidigare illustrationerna: det innehåller fler punkter, data är spridda över området och den lämpliga beslutsgränsen är tydligt mer krökt än en rät linje.</p>
+<p>I detta avslutande beräkningsexperiment utökar vi det dolda lagret till tolv ReLU-neuroner. Detta ändrar inte den konceptuella struktur som studerats i föregående avsnitt; det ökar endast nätverkets kapacitet att representera en mer komplex gräns. I stället för de <span class="math inline">\(13\)</span> parametrarna i det didaktiska nätverket med tre neuroner har vi nu <span class="math inline">\(49\)</span> justerbara parametrar: <span class="math inline">\(24\)</span> vikter och <span class="math inline">\(12\)</span> biasparametrar i det första lagret, följt av <span class="math inline">\(12\)</span> vikter och en bias i utlagret. Ekvationerna behåller exakt samma form; endast vektorerna och matriserna blir större.</p>
+<p>Det fullständiga programmet visas nedan.</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Apple - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Orange - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Apple - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Orange - test")
+
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Neural-network output after training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Apple - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Orange - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Neural-network decision boundary')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>Även om koden är längre än de första ekvationerna i artikeln är dess struktur fortfarande tydlig. Funktionen <code>build_data()</code> genererar automatiskt de <span class="math inline">\(64\)</span> träningsexemplen och de åtta illustrativa testexemplen. Därefter standardiserar vi båda variablerna enligt <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> där <span class="math inline">\(\mu_j\)</span> och <span class="math inline">\(\sigma_j\)</span> beräknas enbart från träningsmängden. Detta hindrar testmängden från att påverka parameteranpassningen och placerar samtidigt massa och diameter på jämförbara numeriska skalor.</p>
+<p>Framåtpassagen förändras inte i grunden. Den enda skillnaden är att det första lagret nu producerar en vektor med tolv dolda aktiveringar. I matrisnotation, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> Dessa fyra rader innehåller fortfarande algoritmens matematiska kärna. Träningen behåller också den tidigare introducerade logiken: beräkna en förutsägelse, mät dess fel, propagera känslighetsinformation bakåt med hjälp av derivator och uppdatera parametrarna med små steg av gradientnedstigning.</p>
+<p>I koden visas bakåtpropageringen i utlagret i</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>och propageringen till det dolda lagret i</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>följt av uppdateringar av alla vikter och biasparametrar. Eftersom exemplen blandas om vid varje epok och parametrarna uppdateras efter varje observation är denna implementation en elementär form av <em>stokastisk gradientnedstigning</em>.</p>
+<p>Med det slumpfrö och de hyperparametrar som används här ligger den slutliga medelförlusten i storleksordningen <span class="math inline">\(10^{-5}\)</span> till <span class="math inline">\(10^{-4}\)</span>, och samtliga <span class="math inline">\(64\)</span> träningsexempel samt de åtta illustrativa testexemplen får den förväntade klassificeringen. Detta ska inte tolkas som en rigorös statistisk prestandautvärdering: data är syntetiska och konstruerade för pedagogiska syften. Deras roll är att i en mindre trivial situation visa hur ett litet neuralt nätverk kan lära sig en tydligt icke-linjär beslutsgräns.</p>
+<p>Figur <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> visar programmets slutliga resultat i massa–diameter-planet. Alla träningspunkter visas. Den markerade kurvan är nivån <span class="math inline">\(\widehat{y}=0.5\)</span> och representerar beslutsgränsen som nätverket har lärt sig; de skuggade områdena visar de två förutsagda klasserna. Cirklar betecknar träningsäpplen, kvadrater träningsapelsiner, trianglar testäpplen och kryss testapelsiner. Teckenförklaringen ligger utanför det huvudsakliga diagramområdet så att ingen datapunkt döljs.</p>
+<figure id="fig:python_output">
+<img alt="Python-resultat efter träning av det neurala nätverket. Den syntetiska datamängden innehåller \(64\) träningsexempel utspridda över ett stort område i massa–diameter-planet samt åtta ytterligare exempel reserverade för ett illustrativt test. Den markerade kurvan är nivån \(\wideh" decoding="async" loading="lazy" src="../assets/img/sv/Fig07.png"/>
+<figcaption>Python-resultat efter träning av det neurala nätverket. Den syntetiska datamängden innehåller <span class="math inline">\(64\)</span> träningsexempel utspridda över ett stort område i massa–diameter-planet samt åtta ytterligare exempel reserverade för ett illustrativt test. Den markerade kurvan är nivån <span class="math inline">\(\widehat{y}=0.5\)</span> och representerar den inlärda beslutsgränsen; de skuggade områdena visar de klasser som nätverket förutsäger. Cirklar representerar träningsäpplen, kvadrater träningsapelsiner, trianglar testäpplen och kryss testapelsiner.</figcaption>
+</figure>
+<p>Vi började med en rät linje som separerade två enkla grupper av punkter och avslutade med ett rikare beräkningsexempel där en krökt gräns växer fram genom automatisk justering av nätverkets parametrar. Inget mystiskt har lagts till matematiken: implementationen organiserar och upprepar helt enkelt, i större skala och med hög hastighet, affina kombinationer, aktiveringsfunktioner, derivator, matrisprodukter och uppdateringar med gradientnedstigning .</p>
+<p>Allt beräkningsmaterial som hör till denna artikel — inklusive koden och en körbar Google Colab-anteckningsbok — finns på <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>, som ger läsare en samlad åtkomstpunkt för att utforska, reproducera eller anpassa exemplen.</p>
+<h4 id="redogörelse-för-användning-av-ai.">Redogörelse för användning av AI.</h4>
+<p>Författaren använde ChatGPT, utvecklat av OpenAI, som ett stödverktyg för utkast, språkgranskning, framställningens struktur och generering av didaktiska figurer. Författaren tar fullt ansvar för arbetets slutliga innehåll, inklusive utformningen och utvecklingen av det matematiska materialet, koden och de använda referenserna.</p>
+</section></div>
+<section class="article-section references"><span class="section-no">Referenser</span><h2>Referenser</h2><div class="thebibliography">
+<p>M. Batista och A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, och A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2:a uppl. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, och A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Tillgänglig på: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Översättning av Paulo Martins Engel. 2:a uppl. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, och G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Tillgänglig på: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, och R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Resurser</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/sv/Article_PMO2026_NN_SV.pdf"><strong>PDF</strong><span>Den matematiska anatomin hos ett neuralt nätverk</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_SV.ipynb"><strong>Google Colab</strong><span>Notebook · Svenska</span></a>
+</div></section>
+<section><h2>Om NeuralMath</h2><p class="bio">NeuralMath är ett öppet utbildningsprojekt utvecklat av Dr. Americo Cunha Jr. Målet är att göra de matematiska operationerna i ett litet neuralt nätverk synliga, granskbara och reproducerbara för en bred publik med relativt grundläggande kunskaper i analys och statistik.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Så citerar du den pedagogiska texten</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>Den bibliografiska posten uppdateras med volym, sidor och DOI efter publicering. Citera den pedagogiska texten, inte denna webbplats.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>Licens</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Webbplatsens förklarande text och originalmaterial är tillgängliga under CC BY 4.0 om inget annat anges. Artikelns PDF kan omfattas av utgivarens licens.</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>

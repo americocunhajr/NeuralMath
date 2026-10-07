@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="hi">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>NeuralMath — तंत्रिका नेटवर्क की गणितीय संरचना</title>
+<meta content="हम एक सरल वर्गीकरण समस्या के माध्यम से कृत्रिम तंत्रिका नेटवर्क का गणितीय परिचय प्रस्तुत करते हैं। एक रैखिक वर्गीकारक स्वाभाविक रूप से कृत्रिम न्यूरॉन की अवधारणा तक ले जाता है; इसके बाद हम भार, बायस, सक्रियण फलनों और अनेक न्यूरॉनों को एक छोटे नेटवर्क में संयोजित करने की प्रक्रिया पर चर्चा करते हैं। " name="description"/><meta content="#090d12" name="theme-color"/>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
+<link href="https://neuralmath.org/hi/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<header class="topbar"><nav aria-label="Languages" class="flags"><a aria-label="Português" class="flag" href="../pt/index.html" hreflang="pt-BR" lang="pt-BR" title="Português"><span aria-hidden="true">🇧🇷</span><span class="visually-hidden">Português</span></a><a aria-label="English" class="flag" href="../index.html" hreflang="en" lang="en" title="English"><span aria-hidden="true">🇬🇧</span><span class="visually-hidden">English</span></a><a aria-label="Español" class="flag" href="../es/index.html" hreflang="es" lang="es" title="Español"><span aria-hidden="true">🇪🇸</span><span class="visually-hidden">Español</span></a><a aria-label="Français" class="flag" href="../fr/index.html" hreflang="fr" lang="fr" title="Français"><span aria-hidden="true">🇫🇷</span><span class="visually-hidden">Français</span></a><a aria-label="Italiano" class="flag" href="../it/index.html" hreflang="it" lang="it" title="Italiano"><span aria-hidden="true">🇮🇹</span><span class="visually-hidden">Italiano</span></a><a aria-label="Deutsch" class="flag" href="../de/index.html" hreflang="de" lang="de" title="Deutsch"><span aria-hidden="true">🇩🇪</span><span class="visually-hidden">Deutsch</span></a><a aria-label="العربية" class="flag" href="../ar/index.html" hreflang="ar" lang="ar" title="العربية"><span aria-hidden="true">🇸🇦</span><span class="visually-hidden">العربية</span></a><a aria-label="বাংলা" class="flag" href="../bn/index.html" hreflang="bn" lang="bn" title="বাংলা"><span aria-hidden="true">🇧🇩</span><span class="visually-hidden">বাংলা</span></a><a aria-label="Čeština" class="flag" href="../cs/index.html" hreflang="cs" lang="cs" title="Čeština"><span aria-hidden="true">🇨🇿</span><span class="visually-hidden">Čeština</span></a><a aria-label="Ελληνικά" class="flag" href="../el/index.html" hreflang="el" lang="el" title="Ελληνικά"><span aria-hidden="true">🇬🇷</span><span class="visually-hidden">Ελληνικά</span></a><a aria-label="فارسی" class="flag" href="../fa/index.html" hreflang="fa" lang="fa" title="فارسی"><span aria-hidden="true">🇮🇷</span><span class="visually-hidden">فارسی</span></a><a aria-label="हिन्दी" class="flag current" href="index.html" hreflang="hi" lang="hi" title="हिन्दी"><span aria-hidden="true">🇮🇳</span><span class="visually-hidden">हिन्दी</span></a><a aria-label="Magyar" class="flag" href="../hu/index.html" hreflang="hu" lang="hu" title="Magyar"><span aria-hidden="true">🇭🇺</span><span class="visually-hidden">Magyar</span></a><a aria-label="Bahasa Indonesia" class="flag" href="../id/index.html" hreflang="id" lang="id" title="Bahasa Indonesia"><span aria-hidden="true">🇮🇩</span><span class="visually-hidden">Bahasa Indonesia</span></a><a aria-label="日本語" class="flag" href="../ja/index.html" hreflang="ja" lang="ja" title="日本語"><span aria-hidden="true">🇯🇵</span><span class="visually-hidden">日本語</span></a><a aria-label="한국어" class="flag" href="../ko/index.html" hreflang="ko" lang="ko" title="한국어"><span aria-hidden="true">🇰🇷</span><span class="visually-hidden">한국어</span></a><a aria-label="Nederlands" class="flag" href="../nl/index.html" hreflang="nl" lang="nl" title="Nederlands"><span aria-hidden="true">🇳🇱</span><span class="visually-hidden">Nederlands</span></a><a aria-label="Polski" class="flag" href="../pl/index.html" hreflang="pl" lang="pl" title="Polski"><span aria-hidden="true">🇵🇱</span><span class="visually-hidden">Polski</span></a><a aria-label="Română" class="flag" href="../ro/index.html" hreflang="ro" lang="ro" title="Română"><span aria-hidden="true">🇷🇴</span><span class="visually-hidden">Română</span></a><a aria-label="Русский" class="flag" href="../ru/index.html" hreflang="ru" lang="ru" title="Русский"><span aria-hidden="true">🇷🇺</span><span class="visually-hidden">Русский</span></a><a aria-label="Svenska" class="flag" href="../sv/index.html" hreflang="sv" lang="sv" title="Svenska"><span aria-hidden="true">🇸🇪</span><span class="visually-hidden">Svenska</span></a><a aria-label="Türkçe" class="flag" href="../tr/index.html" hreflang="tr" lang="tr" title="Türkçe"><span aria-hidden="true">🇹🇷</span><span class="visually-hidden">Türkçe</span></a><a aria-label="Українська" class="flag" href="../uk/index.html" hreflang="uk" lang="uk" title="Українська"><span aria-hidden="true">🇺🇦</span><span class="visually-hidden">Українська</span></a><a aria-label="اردو" class="flag" href="../ur/index.html" hreflang="ur" lang="ur" title="اردو"><span aria-hidden="true">🇵🇰</span><span class="visually-hidden">اردو</span></a><a aria-label="Tiếng Việt" class="flag" href="../vi/index.html" hreflang="vi" lang="vi" title="Tiếng Việt"><span aria-hidden="true">🇻🇳</span><span class="visually-hidden">Tiếng Việt</span></a><a aria-label="中文" class="flag" href="../zh/index.html" hreflang="zh-Hans" lang="zh-Hans" title="中文"><span aria-hidden="true">🇨🇳</span><span class="visually-hidden">中文</span></a></nav></header>
+<main class="page">
+<div class="hero">
+<div class="brandline"><img alt="" class="mark" src="../assets/favicon.svg"/><span>Mathematics · neural networks · Python</span></div>
+<h1><span>NeuralMath</span></h1>
+<p class="subtitle">तंत्रिका नेटवर्क की गणितीय संरचना</p>
+<p>हम एक सरल वर्गीकरण समस्या के माध्यम से कृत्रिम तंत्रिका नेटवर्क का गणितीय परिचय प्रस्तुत करते हैं। एक रैखिक वर्गीकारक स्वाभाविक रूप से कृत्रिम न्यूरॉन की अवधारणा तक ले जाता है; इसके बाद हम भार, बायस, सक्रियण फलनों और अनेक न्यूरॉनों को एक छोटे नेटवर्क में संयोजित करने की प्रक्रिया पर चर्चा करते हैं। प्रशिक्षण को हानि फलनों, अवकलजों, ग्रेडिएंट अवरोह और प्रतिप्रसारण के माध्यम से प्रस्तुत किया जाता है। अंत में मॉडल को सीधे Python में लागू किया जाता है, जिससे समीकरणों और एल्गोरिथ्म के बीच का संबंध स्पष्ट हो जाता है। उद्देश्य यह दिखाना है कि विश्लेषणात्मक ज्यामिति, रैखिक बीजगणित और कलन की परिचित अवधारणाएँ तंत्रिका नेटवर्क की मूल कार्यप्रणाली को समझने के लिए एक सुलभ आधार प्रदान करती हैं।</p>
+<div class="resource-bar"><a href="../pdf/hi/Article_PMO2026_NN_HI.pdf">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_HI.ipynb">Google Colab</a></div>
+</div>
+<div class="citation"><h2>मूल शैक्षणिक पाठ</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">यह वेब संस्करण और इसके अनुवाद मूल पुर्तगाली पांडुलिपि पर आधारित हैं।</p></div>
+<nav aria-label="विषय-सूची" class="toc"><h2>विषय-सूची</h2><ol><li><a href="#कपयटर-कब-सख-सकत-ह">कंप्यूटर कब सीख सकता है?</a></li><li><a href="#समसय-क-गणतय-नरपण">समस्या का गणितीय निरूपण</a></li><li><a href="#वरगकरक-क-रप-म-एक-सध-रख">वर्गीकारक के रूप में एक सीधी रेखा</a></li><li><a href="#कतरम-नयरन">कृत्रिम न्यूरॉन</a></li><li><a href="#सकरयण-फलन-क-आवशयकत-कय-ह">सक्रियण फलन की आवश्यकता क्यों है?</a></li><li><a href="#एक-छट-ततरक-नटवरक-बनन">एक छोटा तंत्रिका नेटवर्क बनाना</a></li><li><a href="#ततरक-नटवरक-कस-सखत-ह">तंत्रिका नेटवर्क कैसे सीखता है?</a></li><li><a href="#गणत-स-python-तक">गणित से Python तक</a></li></ol></nav>
+<div class="article-body"><section class="article-section" id="कपयटर-कब-सख-सकत-ह"><span class="section-no">01</span><h2>कंप्यूटर कब सीख सकता है?</h2>
+<p>हम रोज़मर्रा के जीवन में लगभग बिना ध्यान दिए वर्गीकरण संबंधी निर्णय लेते रहते हैं। किसी फल को देखकर हम शीघ्र पहचान लेते हैं कि वह सेब है या संतरा; मोबाइल पर संदेश आने पर हम सामान्य बातचीत और अवांछित विज्ञापन में अंतर कर लेते हैं; चिकित्सा विश्लेषण में कई मापों को मिलाकर किसी निर्णय में सहायता ली जा सकती है; और वित्तीय संस्थानों में ऋण देने से पहले अनेक प्रकार की सूचनाओं का मूल्यांकन किया जाता है। इन सभी उदाहरणों में उत्तर प्राप्त करने के लिए कई विशेषताओं को एक साथ देखा जाता है।</p>
+<p>बहुत-से पारंपरिक कंप्यूटर प्रोग्रामों में इस उत्तर तक पहुँचने वाले नियम प्रोग्रामर द्वारा स्पष्ट रूप से लिखे जाते हैं। जब नियम ज्ञात हों और उन्हें साफ़ शब्दों में व्यक्त किया जा सके, तब यह तरीका अच्छी तरह काम करता है। लेकिन जब आँकड़ों में बहुत अधिक विविधता हो, या अच्छे निर्णय के लिए आवश्यक सभी शर्तों को पहले से लिखना कठिन हो, तब यह तरीका सीमित हो जाता है। इससे एक स्वाभाविक प्रश्न उठता है:</p>
+<div class="center">
+<p><span>क्या हम ऐसा प्रोग्राम बना सकते हैं जो निर्णय का नियम तैयार रूप में पाने के बजाय उदाहरणों से स्वयं सीख सके?</span></p>
+</div>
+<p>यह <span>मशीन लर्निंग</span> की केंद्रीय धारणाओं में से एक है। मशीन लर्निंग कृत्रिम बुद्धिमत्ता का वह क्षेत्र है जिसमें डेटा से मॉडल समायोजित करने की विधियों का अध्ययन किया जाता है । पर्यवेक्षित अधिगम की समस्या में एल्गोरिथ्म को सही उत्तरों के साथ उदाहरण दिए जाते हैं, और हमारा उद्देश्य ऐसा मॉडल प्राप्त करना होता है जो प्रशिक्षण में न देखे गए उदाहरणों के लिए भी उपयोगी पूर्वानुमान दे सके। इस उद्देश्य के लिए विकसित अनेक मॉडलों में <span>कृत्रिम तंत्रिका नेटवर्क</span> ने चित्र पहचान, भाषा प्रसंस्करण, संकेत विश्लेषण और समय-श्रृंखला पूर्वानुमान जैसे अनुप्रयोगों में विशेष महत्व प्राप्त किया है ।</p>
+<p>गणित, संगणना और विद्यालयी शिक्षा के बीच सेतु के रूप में तंत्रिका नेटवर्क के उपयोग पर <em>Professor de Matemática Online</em> में Batista और Martins  पहले ही चर्चा कर चुके हैं। उन्होंने शिक्षक-शिक्षा, Python और अंकों की पहचान को जोड़ने वाली एक गतिविधि प्रस्तुत की। वर्तमान लेख एक पूरक मार्ग अपनाता है। हमारा मुख्य उद्देश्य एक छोटे तंत्रिका नेटवर्क की आंतरिक गणितीय संरचना को स्पष्ट करना है: विश्लेषणात्मक ज्यामिति से आरंभ करके हम क्रमशः ग्रेडिएंट की गणना और प्रतिप्रसारण के प्रत्यक्ष कार्यान्वयन तक पहुँचेंगे।</p>
+<p>आधुनिक अनुप्रयोगों की जटिलता के बावजूद, तंत्रिका नेटवर्क का गणितीय मूल अपेक्षाकृत परिचित विचारों से समझाया जा सकता है। मूल रूप में तंत्रिका नेटवर्क फलनों का एक संयोजन है, जिसके पैरामीटर डेटा से समायोजित किए जाते हैं। हम एक सरल ज्यामितीय समस्या से आरंभ करेंगे, एक विभाजक सीधी रेखा को कृत्रिम न्यूरॉन के रूप में पुनर्व्याख्यायित करेंगे, कई न्यूरॉनों को जोड़ेंगे, सक्रियण फलनों की भूमिका समझेंगे और दिखाएँगे कि अवकलजों की सहायता से नेटवर्क के पैरामीटर स्वचालित रूप से कैसे समायोजित किए जा सकते हैं। अंत में हम Python में एक पूरा छोटा उदाहरण लागू करेंगे, जिसमें समीकरणों और कोड के बीच सीधा संबंध बना रहेगा।</p>
+</section><section class="article-section" id="समसय-क-गणतय-नरपण"><span class="section-no">02</span><h2>समस्या का गणितीय निरूपण</h2>
+<p>तंत्रिका नेटवर्क कैसे काम करता है, यह समझने के लिए हम जानबूझकर एक सरल समस्या से शुरुआत करते हैं: सेब और संतरे में अंतर करना। किसी फल में रंग, द्रव्यमान, व्यास, बनावट और सुगंध जैसी अनेक विशेषताएँ हो सकती हैं, जिनका उपयोग इस कार्य में किया जा सकता है। किंतु एक प्रारंभिक गणितीय मॉडल को यह सारी जटिलता शामिल करने की आवश्यकता नहीं है। हम केवल दो ऐसी राशियाँ चुनेंगे जिन्हें आसानी से मापा जा सकता है: ग्राम में द्रव्यमान और सेंटीमीटर में व्यास।</p>
+<p>इस प्रकार प्रत्येक फल को एक क्रमित युग्म से दर्शाया जाएगा <span class="math display">\[(x_1,x_2),\]</span> जहाँ <span class="math display">\[x_1=\text{द्रव्यमान}
+\qquad\text{और}\qquad
+x_2=\text{व्यास}.\]</span></p>
+<p>अतः युग्म <span class="math inline">\((155,\;7.2)\)</span> ऐसे फल को दर्शाता है जिसका द्रव्यमान <span class="math inline">\(155\)</span> g और व्यास <span class="math inline">\(7.2\)</span> cm है। भौतिक वस्तु को दो संख्यात्मक मापों से बदलने पर हम प्रत्येक फल को कार्तीय तल के एक बिंदु से जोड़ देते हैं: पहला निर्देशांक उसका द्रव्यमान और दूसरा उसका व्यास बताता है। चित्र <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> सेब और संतरे के एक काल्पनिक समूह के लिए इस निरूपण को दर्शाता है।</p>
+<figure id="fig:fruits">
+<img alt="भौतिक अवलोकन से गणितीय मॉडलिंग तक। प्रत्येक फल को पहले दो मापनीय राशियों — द्रव्यमान और व्यास — से वर्णित किया जाता है और फिर क्रमित युग्म \((x_1,x_2)\) द्वारा निरूपित किया जाता है। द्रव्यमान–व्यास तल में प्रत्येक अवलोकन एक बिंदु बन जाता है; इस प्रकार सेब और संतरे में अंतर करने क" decoding="async" loading="lazy" src="../assets/img/hi/Fig01.png">
+<figcaption>भौतिक अवलोकन से गणितीय मॉडलिंग तक। प्रत्येक फल को पहले दो मापनीय राशियों — द्रव्यमान और व्यास — से वर्णित किया जाता है और फिर क्रमित युग्म <span class="math inline">\((x_1,x_2)\)</span> द्वारा निरूपित किया जाता है। द्रव्यमान–व्यास तल में प्रत्येक अवलोकन एक बिंदु बन जाता है; इस प्रकार सेब और संतरे में अंतर करने की समस्या को दो वर्गों को अलग करने की ज्यामितीय समस्या के रूप में देखा जा सकता है।</figcaption>
+</img></figure>
+<p>यह रूपांतरण समस्या के दिखाई देने वाले स्वरूप को बदल देता है। सीधे यह पूछने के बजाय कि सेब या संतरे को कैसे पहचाना जाए, हम एक ज्यामितीय प्रश्न पूछ सकते हैं: तल में दोनों वर्गों के बिंदुओं को कैसे अलग किया जाए? दृष्टिकोण का यह परिवर्तन मशीन लर्निंग में मूलभूत है। किसी एल्गोरिथ्म द्वारा संसाधित किए जाने से पहले चित्रों, पाठ, ध्वनि और प्रयोगात्मक संकेतों को संख्यात्मक निरूपण में बदलना पड़ता है। हमारे उदाहरण में प्रत्येक वस्तु के केवल दो निर्देशांक हैं; वास्तविक अनुप्रयोगों में किसी निरूपण में सैकड़ों, हज़ारों या लाखों अवयव हो सकते हैं। सिद्धांत वही रहता है: प्रत्येक उदाहरण को संख्याओं के एक समूह से जोड़ा जाता है, और मॉडल ऐसा नियम खोजता है जो इस निरूपण को वांछित उत्तर से जोड़ सके।</p>
+<p>हम सबसे सरल उपलब्ध ज्यामितीय नियम से शुरुआत करते हैं और पूछते हैं कि क्या एक ही सीधी रेखा सेब के बिंदुओं को संतरे के बिंदुओं से पर्याप्त रूप से अलग कर सकती है।</p>
+</section><section class="article-section" id="वरगकरक-क-रप-म-एक-सध-रख"><span class="section-no">03</span><h2>वर्गीकारक के रूप में एक सीधी रेखा</h2>
+<p>जब प्रत्येक फल को कार्तीय तल में एक बिंदु के रूप में निरूपित कर दिया जाता है, तब वर्गीकरण एक ज्यामितीय समस्या बन जाता है: क्या कोई सीधी रेखा सेबों को संतरों से अलग कर सकती है? यह प्रश्न मशीन लर्निंग की एक महत्वपूर्ण श्रेणी, <span>रैखिक वर्गीकारकों</span>, की मूल धारणा व्यक्त करता है।</p>
+<p>चित्र <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a> की तरह डेटा के बीच से गुजरती एक रेखा पर विचार करें। यह तल को दो अर्धतलों में विभाजित करती है। यदि अधिकांश सेब एक ओर और अधिकांश संतरे दूसरी ओर हों, तो किसी नए फल की रेखा के सापेक्ष स्थिति को वर्गीकरण नियम के रूप में उपयोग किया जा सकता है। फल का द्रव्यमान और व्यास मापने के बाद हम उसे एक बिंदु के रूप में रखते हैं और देखते हैं कि वह रेखा के किस ओर स्थित है।</p>
+<figure id="fig:linear_classifier">
+<img alt="द्रव्यमान–व्यास तल में एक रैखिक वर्गीकारक का उदाहरण। सीधी रेखा निर्णय सीमा का कार्य करती है: एक अर्धतल के बिंदुओं को एक वर्ग और विपरीत अर्धतल के बिंदुओं को दूसरा वर्ग दिया जाता है। इसलिए निर्णय केवल इस बात पर निर्भर करता है कि बिंदु रेखा के किस ओर स्थित है।" decoding="async" loading="lazy" src="../assets/img/hi/Fig02.png"/>
+<figcaption>द्रव्यमान–व्यास तल में एक रैखिक वर्गीकारक का उदाहरण। सीधी रेखा निर्णय सीमा का कार्य करती है: एक अर्धतल के बिंदुओं को एक वर्ग और विपरीत अर्धतल के बिंदुओं को दूसरा वर्ग दिया जाता है। इसलिए निर्णय केवल इस बात पर निर्भर करता है कि बिंदु रेखा के किस ओर स्थित है।</figcaption>
+</figure>
+<p>कार्तीय तल <span class="math inline">\((x_1,x_2)\)</span> में एक रेखा को इस प्रकार लिखा जा सकता है <span class="math display">\[w_1x_1+w_2x_2+b=0,
+\qquad
+(w_1,w_2)\neq(0,0).\]</span></p>
+<p>सदिश <span class="math inline">\((w_1,w_2)\)</span> रेखा पर लंबवत होता है और इसलिए उसकी दिशा निर्धारित करता है, जबकि पैरामीटर <span class="math inline">\(b\)</span> उसकी स्थिति निर्धारित करने में योगदान देता है। इस निरूपण में थोड़ी पुनरावृत्ति है: यदि <span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> और <span class="math inline">\(b\)</span> को एक ही अशून्य नियतांक से गुणा किया जाए, तो वही रेखा प्राप्त होती है। इसलिए सीमा का वर्णन करने वाले पैरामीटर अद्वितीय नहीं हैं। उनका संख्यात्मक अर्थ चर की मापनी पर भी निर्भर करता है। चूँकि द्रव्यमान ग्राम में और व्यास सेंटीमीटर में मापा जाता है, इसलिए अलग-अलग इकाइयों को ध्यान में रखे बिना <span class="math inline">\(w_1\)</span> और <span class="math inline">\(w_2\)</span> के परिमाणों की सीधी तुलना नहीं करनी चाहिए।</p>
+<p>रेखा का समीकरण स्वयं यह निर्धारित करने का सरल तरीका देता है कि कोई बिंदु सीमा के किस ओर है। हम स्कोर परिभाषित करते हैं <span class="math display">\[s(x_1,x_2)=w_1x_1+w_2x_2+b.\]</span></p>
+<p>यदि <span class="math inline">\(s(x_1,x_2)=0\)</span> है, तो बिंदु रेखा पर है। यदि <span class="math inline">\(s(x_1,x_2)&gt;0\)</span> है, तो वह एक अर्धतल में है; यदि <span class="math inline">\(s(x_1,x_2)&lt;0\)</span> है, तो वह दूसरे अर्धतल में है। यदि हम तय करें कि धनात्मक स्कोर सेब और ऋणात्मक स्कोर संतरे को दर्शाते हैं, तो निर्णय नियम होगा <span class="math display">\[\begin{cases}
+s(x_1,x_2)\geq 0 &amp; \Longrightarrow \text{सेब},\\
+s(x_1,x_2)&lt;0 &amp; \Longrightarrow \text{संतरा}.
+\end{cases}\]</span></p>
+<p>उदाहरण के लिए, निम्न सीमा पर विचार करें <span class="math display">\[w_1=\frac{1}{10},
+\qquad
+w_2=2,
+\qquad
+b=-30.\]</span> <span class="math inline">\(160\)</span> g द्रव्यमान और <span class="math inline">\(7.8\)</span> cm व्यास वाले फल के लिए <span class="math display">\[\begin{aligned}
+s
+&amp;=\frac{1}{10}\times160+2\times7.8-30\\
+&amp;=16+15.6-30\\
+&amp;=1.6.
+\end{aligned}\]</span> चूँकि स्कोर धनात्मक है, बिंदु उस अर्धतल में आता है जिसे हमने सेब से जोड़ा है। अतः यह वर्गीकारक फल को सेब कहेगा।</p>
+<p><span class="math inline">\(w_1\)</span>, <span class="math inline">\(w_2\)</span> और <span class="math inline">\(b\)</span> का हर चयन अच्छा वर्गीकरण नहीं देता। कुछ रेखाएँ दोनों समूहों को खराब ढंग से अलग करती हैं, जबकि अन्य कम त्रुटियाँ करती हैं। सीखने की समस्या का अर्थ है पहले से वर्गीकृत उदाहरणों का उपयोग करके ऐसे पैरामीटर निर्धारित करना जो मॉडल की त्रुटि के किसी माप को कम करें। रेखा की स्थिति को सीधे प्रोग्राम करने के बजाय हम चाहते हैं कि एल्गोरिथ्म डेटा से उसके गुणांक स्वयं समायोजित करे।</p>
+<p>एक ही रेखा तब पर्याप्त हो सकती है जब वर्ग लगभग रैखिक रूप से पृथक किए जा सकें। अधिक जटिल डेटा के लिए गैर-रैखिक सीमा आवश्यक हो सकती है। इस सीमा को पार करने से पहले हम अभी बनाए गए वर्गीकारक को गणना की एक मूल इकाई के रूप में पुनर्व्याख्यायित करेंगे: कृत्रिम न्यूरॉन।</p>
+</section><section class="article-section" id="कतरम-नयरन"><span class="section-no">04</span><h2>कृत्रिम न्यूरॉन</h2>
+<p>पिछले अनुभाग में अभिव्यक्ति <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> का उपयोग यह निर्धारित करने के लिए किया गया कि किसी फल का बिंदु रेखा के किस ओर है। यही अभिव्यक्ति <span>कृत्रिम न्यूरॉन</span> द्वारा की जाने वाली गणना की पहली अवस्था भी मानी जा सकती है। एक न्यूरॉन संख्यात्मक इनपुट लेता है, उन्हें भार और बायस की सहायता से संयोजित करता है और फिर आउटपुट प्राप्त करने के लिए एक गणितीय फलन लागू करता है।</p>
+<p>हमारे उदाहरण में इनपुट द्रव्यमान <span class="math inline">\(x_1\)</span> और व्यास <span class="math inline">\(x_2\)</span> हैं। प्रत्येक इनपुट को <span>भार</span> कहलाने वाले एक पैरामीटर से गुणा किया जाता है; गुणनफलों को नियत पद <span class="math inline">\(b\)</span> के साथ जोड़ा जाता है, जिसे <span>बायस</span> कहते हैं। चित्र <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> इस गणना को योजनात्मक रूप से दिखाता है।</p>
+<figure id="fig:artificial_neuron">
+<img alt="कृत्रिम न्यूरॉन की योजनात्मक कार्यप्रणाली। प्रत्येक इनपुट \(x_i\) को भार \(w_i\) से गुणा किया जाता है; गुणनफलों को बायस \(b\) के साथ जोड़कर स्कोर \(s\) प्राप्त किया जाता है। सक्रियण फलन \(g\) इस स्कोर को आउटपुट \(\widehat{y}=g(s)\) में बदलता है, जिसे मध्यवर्ती मात्रा या अंतिम पूर" decoding="async" loading="lazy" src="../assets/img/hi/Fig03.png"/>
+<figcaption>कृत्रिम न्यूरॉन की योजनात्मक कार्यप्रणाली। प्रत्येक इनपुट <span class="math inline">\(x_i\)</span> को भार <span class="math inline">\(w_i\)</span> से गुणा किया जाता है; गुणनफलों को बायस <span class="math inline">\(b\)</span> के साथ जोड़कर स्कोर <span class="math inline">\(s\)</span> प्राप्त किया जाता है। सक्रियण फलन <span class="math inline">\(g\)</span> इस स्कोर को आउटपुट <span class="math inline">\(\widehat{y}=g(s)\)</span> में बदलता है, जिसे मध्यवर्ती मात्रा या अंतिम पूर्वानुमान के रूप में उपयोग किया जा सकता है।</figcaption>
+</figure>
+<p>भार यह निर्धारित करते हैं कि इनपुट में परिवर्तन से स्कोर किस प्रकार बदलता है। यदि <span class="math inline">\(x_2\)</span> और अन्य सभी राशियाँ स्थिर रखी जाएँ, तो <span class="math inline">\(x_1\)</span> में परिवर्तन <span class="math inline">\(\Delta x_1\)</span> स्कोर को <span class="math inline">\(w_1\Delta x_1\)</span> से बदलता है। इसी प्रकार <span class="math inline">\(x_2\)</span> में परिवर्तन <span class="math inline">\(\Delta x_2\)</span> स्कोर को <span class="math inline">\(w_2\Delta x_2\)</span> से बदलता है। चिन्ह भी महत्वपूर्ण है: धनात्मक भार पर इनपुट बढ़ने से स्कोर बढ़ता है, जबकि ऋणात्मक भार विपरीत प्रभाव देता है। अलग-अलग इकाइयों और मापनी वाले चरों के लिए इस व्याख्या का सावधानी से उपयोग करना चाहिए। इसी कारण व्यावहारिक कार्यान्वयन प्रशिक्षण से पहले इनपुट डेटा को प्रायः सामान्यीकृत या मानकीकृत करते हैं।</p>
+<p>बायस <span class="math inline">\(b\)</span> अफ़ाइन रूपांतरण का नियत पद है। ज्यामितीय रूप से यह निर्णय सीमा को स्थानांतरित करने देता है। यदि <span class="math inline">\(b=0\)</span> हो, तो <span class="math display">\[w_1x_1+w_2x_2=0\]</span> रेखा को मूलबिंदु से गुजरने के लिए बाध्य करता है। बायस होने पर सीमा अन्य स्थानों पर जा सकती है। समान रूप से, जब <span class="math inline">\(x_1=x_2=0\)</span> हो, तो स्कोर केवल <span class="math inline">\(s=b\)</span> होता है।</p>
+<p>स्कोर का ही अंतिम न्यूरॉन आउटपुट होना आवश्यक नहीं है। सामान्यतः उस पर एक <span>सक्रियण फलन</span> <span class="math inline">\(g\)</span> लगाया जाता है: <span class="math display">\[\widehat{y}=g(s)=g\left(w_1x_1+w_2x_2+b\right).\]</span> इस प्रकार गणना की दो अवस्थाएँ हैं, <span class="math display">\[\begin{aligned}
+s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
+\widehat{y} &amp;= g(s).
+\end{aligned}\]</span></p>
+<p>पिछले अनुभाग के पैरामीटर लेने पर <span class="math inline">\(s=1.6\)</span> मिलता है। यदि हम सोपान फलन चुनें <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0,
+\end{cases}\]</span> तो <span class="math inline">\(\widehat{y}=g(1.6)=1\)</span>। हमारी परंपरा के अनुसार फल को सेब वर्ग दिया जाएगा। इस सक्रियण में निर्णय <span class="math inline">\(s=0\)</span> पार करते समय बदलता है, इसलिए वर्ग सीमा ठीक <span class="math display">\[w_1x_1+w_2x_2+b=0\]</span> है।</p>
+<p>इस प्रकार एक न्यूरॉन समायोज्य पैरामीटरों वाला एक सरल गणितीय वस्तु है। उसका वास्तविक महत्व तब सामने आता है जब अनेक ऐसी इकाइयाँ जोड़ी जाती हैं। नेटवर्क बनाने से पहले हमें यह समझना होगा कि सक्रियण फलन क्यों आवश्यक है।</p>
+</section><section class="article-section" id="सकरयण-फलन-क-आवशयकत-कय-ह"><span class="section-no">05</span><h2>सक्रियण फलन की आवश्यकता क्यों है?</h2>
+<p>एक न्यूरॉन पहले अफ़ाइन रूपांतरण से स्कोर निकालता है और उसके बाद सक्रियण फलन लगाता है। यदि तंत्रिका नेटवर्क को जटिल संबंध निरूपित करने हैं तो यह दूसरी अवस्था आवश्यक है। इसे समझने के लिए ऐसा नेटवर्क सोचें जिसमें कोई सक्रियण फलन न हो। तब प्रत्येक इकाई का रूप होगा <span class="math display">\[y=w_1x_1+w_2x_2+b.\]</span></p>
+<p>एक आयामी उदाहरण में मान लें कि पहली इकाई <span class="math display">\[h=ax+b\]</span> देती है और दूसरी <span class="math display">\[y=ch+d\]</span> गणना करती है। प्रतिस्थापन करने पर <span class="math display">\[y=c(ax+b)+d=acx+(cb+d),\]</span> जो फिर भी <span class="math inline">\(x\)</span> का एक अफ़ाइन फलन है। कई आयामों में भी यही बात सत्य है: अफ़ाइन रूपांतरणों का संयोजन स्वयं अफ़ाइन ही रहता है। इसलिए गैर-रैखिक क्रिया के बिना अनेक परतें जोड़ने से नेटवर्क मूल रूप से अधिक अभिव्यंजक नहीं बनता; पूरे संयोजन को एक ही अफ़ाइन रूपांतरण से बदला जा सकता है।</p>
+<p>सक्रियण फलन इस सीमा को तोड़ता है। स्कोर <span class="math inline">\(s\)</span> प्राप्त करने के बाद न्यूरॉन सामान्यतः गैर-रैखिक मानचित्र <span class="math display">\[h=g(s)\]</span> लगाता है। जब कई ऐसी इकाइयाँ जोड़ी जाती हैं, तो परिणामी संयोजन को एक अफ़ाइन रूपांतरण में समेटा नहीं जा सकता। इससे नेटवर्क अधिक जटिल निर्णय सीमाएँ बना सकता है।</p>
+<p>सबसे सरल सक्रियण सोपान फलन है, <span class="math display">\[g(s)=
+\begin{cases}
+1, &amp; s\geq0,\\
+0, &amp; s&lt;0.
+\end{cases}\]</span> यह द्विआधारी निर्णय देता है और वर्गीकरण को समझने के लिए बहुत उपयोगी है। लेकिन इसका अवकलज <span class="math inline">\(s\neq0\)</span> के लिए शून्य है और <span class="math inline">\(s=0\)</span> पर परिभाषित नहीं है। चूँकि ग्रेडिएंट-आधारित प्रशिक्षण पैरामीटरों को किस दिशा में बदलना है यह तय करने के लिए अवकलजों का उपयोग करता है, इसलिए इस प्रशिक्षण विधि के लिए सोपान फलन उपयुक्त नहीं है।</p>
+<p>एक विकल्प सिग्मॉइड फलन है, <span class="math display">\[\sigma(s)=\frac{1}{1+e^{-s}}.\]</span> यह प्रत्येक वास्तविक संख्या को <span class="math inline">\(0\)</span> और <span class="math inline">\(1\)</span> के बीच के मान में बदलता है। बहुत ऋणात्मक <span class="math inline">\(s\)</span> के लिए आउटपुट <span class="math inline">\(0\)</span> के निकट और बहुत धनात्मक <span class="math inline">\(s\)</span> के लिए <span class="math inline">\(1\)</span> के निकट जाता है; बीच में संक्रमण मृदु है। सिग्मॉइड हर जगह अवकलनीय है और <span class="math display">\[\sigma'(s)=\sigma(s)\bigl(1-\sigma(s)\bigr).\]</span> चूँकि इसके आउटपुट <span class="math inline">\(0\)</span> और <span class="math inline">\(1\)</span> के बीच होते हैं, इसे द्विआधारी वर्गीकरण की आउटपुट परत में अक्सर उपयोग किया जाता है। उचित हानि फलन वाली संभाव्य व्याख्या में आउटपुट को वर्ग <span class="math inline">\(1\)</span> की प्रायिकता के अनुमान के रूप में समझा जा सकता है। लेकिन छिपी परतों में सिग्मॉइड कठिनाई पैदा कर सकता है: बड़े परिमाण वाले इनपुट पर इसका अवकलज बहुत छोटा हो जाता है, जो गहरे नेटवर्क में <span>लुप्त होते ग्रेडिएंट</span> की समस्या में योगदान देता है।</p>
+<p>छिपी परतों में व्यापक रूप से प्रयुक्त सक्रियण ReLU (<em>Rectified Linear Unit</em>) है, <span class="math display">\[\operatorname{ReLU}(s)=\max(0,s)
+=
+\begin{cases}
+0, &amp; s&lt;0,\\
+s, &amp; s\geq0.
+\end{cases}\]</span> यद्यपि यह दो रैखिक टुकड़ों से बना है, ReLU वैश्विक रूप से रैखिक नहीं है। इसका अवकलज <span class="math inline">\(s&lt;0\)</span> पर <span class="math inline">\(0\)</span> और <span class="math inline">\(s&gt;0\)</span> पर <span class="math inline">\(1\)</span> है। <span class="math inline">\(s=0\)</span> पर सामान्य अवकलज मौजूद नहीं होता और सॉफ्टवेयर कार्यान्वयन ग्रेडिएंट के लिए एक परंपरा अपनाते हैं। धनात्मक इनपुट के लिए <span class="math inline">\(s\)</span> बढ़ने पर अवकलज छोटा नहीं होता, जिससे सिग्मॉइड की एक संतृप्ति-समस्या से बचा जा सकता है।</p>
+<p>चित्र <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> इन तीन सक्रियणों की तुलना दिखाता है: सोपान फलन की अचानक छलाँग, सिग्मॉइड का मृदु संक्रमण और ReLU की ढाल में परिवर्तन।</p>
+<figure id="fig:activation_functions">
+<img alt="तंत्रिका नेटवर्क के परिचय में प्रायः प्रयुक्त तीन सक्रियण फलनों की तुलना। सोपान फलन अचानक निर्णय देता है; सिग्मॉइड \(0\) और \(1\) के बीच मृदु संक्रमण देता है; और ReLU ऋणात्मक इनपुट को शून्य करता है जबकि धनात्मक इनपुट को बनाए रखता है। गैर-रैखिक सक्रियण अनेक परतों को एक ही अफ़ाइन र" decoding="async" loading="lazy" src="../assets/img/hi/Fig04.png"/>
+<figcaption>तंत्रिका नेटवर्क के परिचय में प्रायः प्रयुक्त तीन सक्रियण फलनों की तुलना। सोपान फलन अचानक निर्णय देता है; सिग्मॉइड <span class="math inline">\(0\)</span> और <span class="math inline">\(1\)</span> के बीच मृदु संक्रमण देता है; और ReLU ऋणात्मक इनपुट को शून्य करता है जबकि धनात्मक इनपुट को बनाए रखता है। गैर-रैखिक सक्रियण अनेक परतों को एक ही अफ़ाइन रूपांतरण में सिमटने से रोकते हैं।</figcaption>
+</figure>
+<p>इनके मुख्य गुण नीचे संक्षेप में दिए गए हैं।</p>
+<div class="center">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">फलन</th>
+<th style="text-align: center;">आउटपुट</th>
+<th style="text-align: left;">अवकलज</th>
+<th style="text-align: left;">सामान्य उपयोग</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">सोपान</td>
+<td style="text-align: center;"><span class="math inline">\(\{0,1\}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(s\neq0\)</span> पर शून्य; <span class="math inline">\(s=0\)</span> पर अपरिभाषित</td>
+<td style="text-align: left;">ऐतिहासिक मॉडल और शिक्षण उदाहरण</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">सिग्मॉइड</td>
+<td style="text-align: center;"><span class="math inline">\((0,1)\)</span></td>
+<td style="text-align: left;">प्रत्येक <span class="math inline">\(s\)</span> के लिए मौजूद</td>
+<td style="text-align: left;">द्विआधारी वर्गीकरण की आउटपुट परत</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ReLU</td>
+<td style="text-align: center;"><span class="math inline">\([0,\infty)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(s&lt;0\)</span> पर <span class="math inline">\(0\)</span> और <span class="math inline">\(s&gt;0\)</span> पर <span class="math inline">\(1\)</span></td>
+<td style="text-align: left;">छिपी परतें</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>इन फलनों के विवरण अलग हैं, पर उनकी साझा वैचारिक भूमिका गैर-रैखिकता जोड़ना है। यही गैर-रैखिकता अगले अनुभाग के छोटे नेटवर्क को ऐसे संबंध निरूपित करने देती है जिन्हें एक सीधी रेखा नहीं पकड़ सकती।</p>
+<p>आगे पढ़ने के इच्छुक पाठकों के लिए Haykin  तंत्रिका नेटवर्क का एक शास्त्रीय विवेचन देते हैं, जबकि Goodfellow, Bengio और Courville  सक्रियण फलनों और गहरे नेटवर्क के प्रशिक्षण पर विस्तृत चर्चा करते हैं। Nielsen का मुक्त रूप से उपलब्ध पाठ  न्यूरॉन, सक्रियण और सीखने की सहज समझ विकसित करने के लिए विशेष रूप से उपयोगी है।</p>
+</section><section class="article-section" id="एक-छट-ततरक-नटवरक-बनन"><span class="section-no">06</span><h2>एक छोटा तंत्रिका नेटवर्क बनाना</h2>
+<p>अब हम दो इनपुट, तीन न्यूरॉन वाली एक छिपी परत और एक आउटपुट न्यूरॉन वाले नेटवर्क पर विचार करते हैं। इनपुट अभी भी <span class="math display">\[x_1=\text{द्रव्यमान},
+\qquad
+x_2=\text{व्यास},\]</span> हैं और दोनों को प्रत्येक छिपे न्यूरॉन में भेजा जाता है, जैसा कि चित्र <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a> में दिखाया गया है।</p>
+<figure id="fig:small_network">
+<img alt="तंत्रिका नेटवर्क की गणना समझाने के लिए प्रयुक्त शिक्षणात्मक \(2\) – \(3\) – \(1\) संरचना। दो इनपुट — द्रव्यमान और व्यास — छिपी परत के तीन न्यूरॉनों को दिए जाते हैं। उनकी सक्रियताएँ \(h_1,h_2,h_3\) फिर आउटपुट न्यूरॉन द्वारा संयोजित होकर पूर्वानुमान \(\widehat{y}\) बनाती हैं। प्रत्" decoding="async" loading="lazy" src="../assets/img/hi/Fig05.png"/>
+<figcaption>तंत्रिका नेटवर्क की गणना समझाने के लिए प्रयुक्त शिक्षणात्मक <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> संरचना। दो इनपुट — द्रव्यमान और व्यास — छिपी परत के तीन न्यूरॉनों को दिए जाते हैं। उनकी सक्रियताएँ <span class="math inline">\(h_1,h_2,h_3\)</span> फिर आउटपुट न्यूरॉन द्वारा संयोजित होकर पूर्वानुमान <span class="math inline">\(\widehat{y}\)</span> बनाती हैं। प्रत्येक संयोजन का एक समायोज्य भार है और प्रत्येक न्यूरॉन का एक बायस है।</figcaption>
+</figure>
+<p>मान लें छिपी परत के आउटपुट <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> और <span class="math inline">\(h_3\)</span> हैं। प्रत्येक न्यूरॉन को वही दो इनपुट मिलते हैं, किंतु उसके अपने भार और बायस होते हैं: <span class="math display">\[\begin{aligned}
+h_1&amp;=g\left(w_{11}x_1+w_{12}x_2+b_1\right),\\[4pt]
+h_2&amp;=g\left(w_{21}x_1+w_{22}x_2+b_2\right),\\[4pt]
+h_3&amp;=g\left(w_{31}x_1+w_{32}x_2+b_3\right).
+\end{aligned}\]</span></p>
+<p>यद्यपि तीनों न्यूरॉन एक ही द्रव्यमान और व्यास प्राप्त करते हैं, उनके पैरामीटर अलग होने से उनके उत्तर अलग हो सकते हैं। प्रशिक्षण के दौरान इन पैरामीटरों को इस प्रकार समायोजित किया जाता है कि मध्यवर्ती सक्रियताएँ वर्गीकरण के लिए उपयोगी बनें।</p>
+<p>फिर <span class="math inline">\(h_1\)</span>, <span class="math inline">\(h_2\)</span> और <span class="math inline">\(h_3\)</span> को आउटपुट न्यूरॉन में भेजा जाता है, जो <span class="math display">\[s_{\mathrm{out}}=v_1h_1+v_2h_2+v_3h_3+c\]</span> गणना करता है और <span class="math display">\[\widehat{y}=g_{\mathrm{out}}\left(s_{\mathrm{out}}\right)\]</span> देता है। हमारी द्विआधारी समस्या के लिए हम सिग्मॉइड आउटपुट लेते हैं: <span class="math display">\[\widehat{y}=\sigma\left(v_1h_1+v_2h_2+v_3h_3+c\right),
+\qquad
+0&lt;\widehat{y}&lt;1.\]</span></p>
+<p>सेब के लिए <span class="math inline">\(y=1\)</span> और संतरे के लिए <span class="math inline">\(y=0\)</span> लेते हुए, <span class="math inline">\(0.5\)</span> की सीमा से वर्ग निर्णय होगा <span class="math display">\[\widehat{y}\geq0.5
+\Longrightarrow
+\text{सेब},
+\qquad
+\widehat{y}&lt;0.5
+\Longrightarrow
+\text{संतरा}.\]</span> इसलिए <span class="math inline">\(1\)</span> के निकट मान सेब से और <span class="math inline">\(0\)</span> के निकट मान संतरे से दृढ़ता से जुड़े हैं। जैसा पहले कहा गया, <span class="math inline">\(\widehat{y}\)</span> को संख्यात्मक रूप से प्रायिकता मानने के लिए मॉडल और प्रशिक्षण के बारे में अतिरिक्त मान्यताएँ आवश्यक हैं। यहाँ प्रयुक्त वर्गीकरण नियम के लिए इसे केवल नेटवर्क का सतत आउटपुट मानना पर्याप्त है।</p>
+<p>इस संरचना की केंद्रीय विशेषता मध्यवर्ती निरूपण है <span class="math display">\[(x_1,x_2)
+\longrightarrow
+(h_1,h_2,h_3)
+\longrightarrow
+\widehat{y}.\]</span> नेटवर्क दो विशेषताएँ प्राप्त करता है और अंतिम उत्तर देने से पहले तीन नई राशियाँ बनाता है। ये सक्रियताएँ हाथ से नहीं चुनी जातीं; वे भार और बायस पर निर्भर हैं और इसलिए प्रशिक्षण के साथ बदलती हैं।</p>
+<p>छोटा होने पर भी इस नेटवर्क में तेरह समायोज्य पैरामीटर हैं। तीन छिपे न्यूरॉनों में <span class="math display">\[3(2+1)=9\]</span> पैरामीटर हैं और आउटपुट न्यूरॉन <span class="math display">\[3+1=4\]</span> और जोड़ता है। अतः <span class="math display">\[9+4=13.\]</span></p>
+<p>मैट्रिक्स संकेत में यही गिनती और स्पष्ट हो जाती है। परिभाषित करें <span class="math display">\[\mathbf{x}=
+\begin{bmatrix}
+x_1\\x_2
+\end{bmatrix},
+\qquad
+W^{(1)}=
+\begin{bmatrix}
+w_{11}&amp;w_{12}\\
+w_{21}&amp;w_{22}\\
+w_{31}&amp;w_{32}
+\end{bmatrix},
+\qquad
+\mathbf{b}^{(1)}=
+\begin{bmatrix}
+b_1\\b_2\\b_3
+\end{bmatrix}.\]</span> तब छिपी परत को संक्षेप में लिखा जा सकता है <span class="math display">\[\mathbf{h}=g\left(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)}\right),\]</span> जहाँ <span class="math inline">\(g\)</span> प्रत्येक अवयव पर अलग-अलग लागू होता है। आउटपुट के लिए <span class="math display">\[\widehat{y}
+=
+\sigma\left(W^{(2)}\mathbf{h}+b^{(2)}\right),\]</span> जहाँ <span class="math display">\[W^{(2)}=
+\begin{bmatrix}
+v_1&amp;v_2&amp;v_3
+\end{bmatrix}.\]</span></p>
+<p>यह संकेत उस संरचना का पूर्वाभास देता है जो Python प्रोग्राम में दिखाई देगी। जब किसी फल को इनपुट पर दिया जाता है और हम क्रमिक सक्रियताएँ निकालते हुए <span class="math inline">\(\widehat{y}\)</span> तक पहुँचते हैं, तो इसे <span>अग्र प्रसार</span> या <em>forward pass</em> कहते हैं। अब मुख्य प्रश्न यह है: इन तेरह पैरामीटरों को स्वचालित रूप से कैसे निर्धारित किया जाए ताकि पूर्वानुमान डेटा के अनुरूप हों?</p>
+</section><section class="article-section" id="ततरक-नटवरक-कस-सखत-ह"><span class="section-no">07</span><h2>तंत्रिका नेटवर्क कैसे सीखता है?</h2>
+<p>भार और बायस पहले से ज्ञात नहीं होते। उन्हें ऐसे उदाहरणों से समायोजित करना पड़ता है जिनके सही उत्तर उपलब्ध हों। इस प्रक्रिया को <span>प्रशिक्षण</span> कहते हैं और इसे इस चक्र से संक्षेपित किया जा सकता है <span class="math display">\[\boxed{\text{पूर्वानुमान}}
+\longrightarrow
+\boxed{\text{त्रुटि मापें}}
+\longrightarrow
+\boxed{\text{पैरामीटर समायोजित करें}}
+\longrightarrow
+\boxed{\text{दोहराएँ}}.\]</span></p>
+<p>मान लें किसी फल का द्रव्यमान <span class="math inline">\(140\)</span> g और व्यास <span class="math inline">\(7.0\)</span> cm है तथा उसका सही वर्ग संतरा है, इसलिए <span class="math inline">\(y=0\)</span>। मान लें प्रशिक्षण के किसी चरण पर नेटवर्क <span class="math inline">\(\widehat{y}=0.80\)</span> देता है। पूर्वानुमान और लक्ष्य के अंतर का एक सरल माप वर्ग त्रुटि है <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> इस उदाहरण में <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
+<p>यह एक उदाहरण के लिए <span>हानि फलन</span> है। चूँकि यह वर्ग है, <span class="math inline">\(E\geq0\)</span> और लक्ष्य से दूर पूर्वानुमानों को बड़ी दंड राशि मिलती है। गुणक <span class="math inline">\(1/2\)</span> न्यूनतम का स्थान नहीं बदलता, पर अवकलज सरल कर देता है। द्विआधारी वर्गीकरण में अन्य हानि फलन, विशेषकर क्रॉस-एंट्रॉपी, भी बहुत प्रयुक्त होते हैं। यहाँ हम वर्ग त्रुटि का उपयोग इसलिए करते हैं क्योंकि उसका बीजगणित स्पष्ट है और वह अनुकूलन तथा प्रतिप्रसारण समझाने के लिए पर्याप्त है ।</p>
+<p>यदि प्रशिक्षण समुच्चय में <span class="math inline">\(N\)</span> उदाहरण हों, तो एक वैश्विक माप औसत हानि है <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> हर पूर्वानुमान नेटवर्क के भार और बायस पर निर्भर करता है, इसलिए <span class="math inline">\(J\)</span> भी सभी पैरामीटरों पर निर्भर है। प्रशिक्षण का अर्थ ऐसे पैरामीटर खोजना है जिनसे <span class="math inline">\(J\)</span> छोटा हो।</p>
+<p>समायोजन की क्रिया समझने के लिए पहले कल्पना करें कि एक भार <span class="math inline">\(w\)</span> को छोड़कर बाकी सभी पैरामीटर स्थिर हैं। तब हानि को <span class="math inline">\(J=J(w)\)</span> के रूप में देखा जा सकता है। चित्र <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> प्रशिक्षण के उन मूल चरणों को संक्षेपित करता है जिनकी अब हम चर्चा करेंगे।</p>
+<figure id="fig:training_cycle">
+<img alt="तंत्रिका नेटवर्क का मूल प्रशिक्षण चक्र। अग्र प्रसार इनपुट को पूर्वानुमान में बदलता है; हानि फलन पूर्वानुमान और लक्ष्य के अंतर को मापता है; प्रतिप्रसारण श्रृंखला नियम का उपयोग करके ग्रेडिएंट निकालता है; और ग्रेडिएंट अवरोह इन ग्रेडिएंटों से भार तथा बायस अद्यतन करता है। अनेक युगों त" decoding="async" loading="lazy" src="../assets/img/hi/Fig06.png"/>
+<figcaption>तंत्रिका नेटवर्क का मूल प्रशिक्षण चक्र। अग्र प्रसार इनपुट को पूर्वानुमान में बदलता है; हानि फलन पूर्वानुमान और लक्ष्य के अंतर को मापता है; प्रतिप्रसारण श्रृंखला नियम का उपयोग करके ग्रेडिएंट निकालता है; और ग्रेडिएंट अवरोह इन ग्रेडिएंटों से भार तथा बायस अद्यतन करता है। अनेक युगों तक इस चक्र की पुनरावृत्ति को ही हम सीखना कहते हैं।</figcaption>
+</figure>
+<p>जिन पाठकों की कलन की पृष्ठभूमि सीमित है, उनके लिए यहाँ अवकलज को <span>स्थानीय संवेदनशीलता</span> के माप के रूप में समझा जा सकता है: यह बताता है कि किसी पैरामीटर में छोटा परिवर्तन हानि को किस प्रकार बदलने की प्रवृत्ति रखता है। उसका चिन्ह बताता है कि किस दिशा में फलन स्थानीय रूप से बढ़ता या घटता है, जबकि परिमाण उस स्थानीय परिवर्तन की तीव्रता बताता है।</p>
+<p>अवकलज <span class="math display">\[\frac{\partial J}{\partial w}\]</span> स्थानीय ढाल देता है। यदि यह धनात्मक है, तो <span class="math inline">\(w\)</span> में छोटा बढ़ाव <span class="math inline">\(J\)</span> बढ़ाने की प्रवृत्ति रखता है, इसलिए भार को विपरीत दिशा में ले जाना चाहिए। यदि यह ऋणात्मक है, तो <span class="math inline">\(w\)</span> बढ़ाने से <span class="math inline">\(J\)</span> स्थानीय रूप से घटता है। दोनों स्थितियाँ इस नियम से व्यक्त होती हैं <span class="math display">\[w_{\mathrm{new}}
+=
+w_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial w},\]</span> जो <span>ग्रेडिएंट अवरोह</span> का मूल विचार है। धनात्मक संख्या <span class="math inline">\(\eta\)</span> <span>अधिगम दर</span> है; यह कदम का आकार नियंत्रित करती है। बहुत छोटा मान प्रशिक्षण को धीमा कर सकता है, जबकि बहुत बड़ा मान दोलन या अस्थिरता पैदा कर सकता है।</p>
+<p>कई पैरामीटर वाले नेटवर्क में <span class="math inline">\(\theta\)</span> किसी भी भार या बायस को दर्शाए। तब अद्यतन होगा <span class="math display">\[\theta_{\mathrm{new}}
+=
+\theta_{\mathrm{old}}
+-
+\eta\frac{\partial J}{\partial\theta}.\]</span> सभी आंशिक अवकलजों का संग्रह हानि का <span>ग्रेडिएंट</span> कहलाता है। ज्यामितीय रूप से ग्रेडिएंट स्थानीय रूप से सबसे तेज़ वृद्धि की दिशा में इंगित करता है, इसलिए ऋणात्मक ग्रेडिएंट कमी की स्थानीय दिशा देता है।</p>
+<p>अब भी यह निकालना बाकी है कि जब नेटवर्क कई फलनों का संयोजन हो तो ये अवकलज कैसे गणना किए जाएँ। अग्र प्रसार में सूचना इस प्रकार चलती है <span class="math display">\[\text{इनपुट}
+\longrightarrow
+\text{छिपी परत}
+\longrightarrow
+\text{आउटपुट}.\]</span> प्रारंभिक परत के किसी पैरामीटर का हानि पर प्रभाव जानने के लिए हम निर्भरताओं की श्रृंखला को गणितीय रूप से उल्टी दिशा में अनुसरण करते हैं। इस प्रक्रिया को <span>प्रतिप्रसारण</span> (backpropagation) कहते हैं। मूलतः यह श्रृंखला नियम का व्यवस्थित और कुशल अनुप्रयोग है। Rumelhart, Hinton और Williams  ने छिपी परतों वाले नेटवर्क में इस प्रक्रिया के लोकप्रियकरण के लिए एक शास्त्रीय संदर्भ दिया, जबकि Nielsen  इसका विस्तृत और विशेष रूप से शिक्षणात्मक व्युत्पादन प्रस्तुत करते हैं।</p>
+<p>यदि किसी सरल निर्भरता श्रृंखला में <span class="math inline">\(E\)</span> निर्भर है <span class="math inline">\(\widehat{y}\)</span> पर, <span class="math inline">\(\widehat{y}\)</span> निर्भर है सक्रियता <span class="math inline">\(h\)</span> पर, और <span class="math inline">\(h\)</span> निर्भर है भार <span class="math inline">\(w\)</span> पर, तो श्रृंखला नियम देता है <span class="math display">\[\frac{\partial E}{\partial w}
+=
+\frac{\partial E}{\partial\widehat{y}} \,
+\frac{\partial\widehat{y}}{\partial h} \,
+\frac{\partial h}{\partial w}.\]</span> प्रत्येक गुणक अंतिम हानि पर <span class="math inline">\(w\)</span> के प्रभाव की एक अवस्था को दर्शाता है। बड़े नेटवर्क में ऐसी अनेक श्रृंखलाएँ होती हैं और प्रतिप्रसारण गणना को इस प्रकार व्यवस्थित करता है कि मध्यवर्ती अवकलजों का पुनः उपयोग किया जा सके, न कि प्रत्येक पैरामीटर के लिए उन्हें अलग से फिर गणना करना पड़े।</p>
+<p>व्यवहार में प्रशिक्षण अनेक उदाहरणों पर किया जाता है। पूरे प्रशिक्षण समुच्चय पर एक पूर्ण चक्र को <span>युग</span> (epoch) कहते हैं। पैरामीटर प्रत्येक उदाहरण के बाद अद्यतन किए जा सकते हैं, जैसा इस लेख के आगे आने वाले शिक्षणात्मक प्रोग्राम में है, या छोटे उदाहरण-समूहों, अर्थात <em>mini-batches</em>, के बाद; बड़े नेटवर्कों में दूसरा तरीका सामान्य है। दोनों ही स्थितियों में पूर्वानुमान, हानि, ग्रेडिएंट और अद्यतन का चक्र अनेक युगों तक दोहराया जाता है।</p>
+<p>इस विकास को ठोस रूप से देखने के लिए किसी एक निश्चित उदाहरण के पूर्वानुमान को प्रशिक्षण के अलग-अलग चरणों पर देखा जा सकता है। फिर उसी फल पर विचार करें जिसका द्रव्यमान <span class="math inline">\(140\)</span> g और व्यास <span class="math inline">\(7.0\)</span> cm है और जिसका सही वर्ग संतरा है। तालिका <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> एक काल्पनिक प्रगति दिखाती है। ये मान किसी विशिष्ट निष्पादन के परिणाम नहीं हैं; वे केवल प्रक्रिया समझाने के लिए हैं।</p>
+<div id="tab:learning">
+<table>
+<caption>प्रशिक्षण के दौरान उसी फल के लिए नेटवर्क पूर्वानुमान का काल्पनिक विकास। बार-बार पैरामीटर अद्यतन करने से प्रारंभिक रूप से गलत आउटपुट लक्ष्य वर्ग के अनुरूप वर्गीकरण की ओर जा सकता है।</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;">युग</th>
+<th style="text-align: center;">पूर्वानुमान <span class="math inline">\(\widehat{y}\)</span></th>
+<th style="text-align: center;">हानि <span class="math inline">\(E\)</span></th>
+<th style="text-align: center;">वर्गीकरण</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.37</td>
+<td style="text-align: center;">सेब</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">सेब</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">सेब</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0.31</td>
+<td style="text-align: center;">0.05</td>
+<td style="text-align: center;">संतरा</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">संतरा</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>आरंभ में आउटपुट <span class="math inline">\(1\)</span> के निकट है और फल को गलत रूप से सेब कहा जाता है। जैसे-जैसे पैरामीटर समायोजित होते हैं, पूर्वानुमान घटता है और अंततः <span class="math inline">\(0.5\)</span> की सीमा पार कर सही वर्ग देता है। इस प्रक्रिया में भार और बायस के संख्यात्मक मान बदलते हैं; नेटवर्क की संरचना स्थिर रहती है।</p>
+<p>प्रशिक्षण डेटा पर हानि घटाना अंतिम उद्देश्य नहीं है। उपयोगी नेटवर्क को उन उदाहरणों पर भी अच्छे पूर्वानुमान देने चाहिए जिनसे पैरामीटर नहीं फिट किए गए थे। इस क्षमता को <span>सामान्यीकरण</span> कहते हैं। जब कोई मॉडल प्रशिक्षण समुच्चय की विशिष्टताओं के साथ अत्यधिक अनुकूलित हो जाता है और नए डेटा पर खराब प्रदर्शन करता है, तो इसे <span>ओवरफिटिंग</span> कहते हैं। अधिक सावधान मूल्यांकन में डेटा को प्रायः प्रशिक्षण, सत्यापन और परीक्षण समुच्चयों में बाँटा जाता है: पहला पैरामीटर फिट करता है, दूसरा मॉडल विकसित करते समय किए गए चुनावों में सहायता करता है और तीसरा अंतिम मूल्यांकन के लिए सुरक्षित रखा जाता है। सामान्यीकरण और मॉडल मूल्यांकन की विस्तृत चर्चा Faceli et al.  तथा Goodfellow, Bengio और Courville  में मिलती है।</p>
+<p>अब हम तंत्रिका नेटवर्क में सीखने के गणितीय अर्थ तक पहुँच चुके हैं। इस संदर्भ में सीखना एक संयुक्त फलन के पैरामीटरों को इस प्रकार समायोजित करना है कि डेटा पर त्रुटि का कोई माप घटे और आदर्श रूप से मॉडल नए उदाहरणों पर भी सामान्यीकृत करे। नेटवर्क पूर्वानुमान करता है, हानि निकालता है, अवकलजों से यह निर्धारित करता है कि उसके पैरामीटर उस हानि को कैसे प्रभावित करते हैं और फिर छोटे-छोटे सुधार करता है।</p>
+</section><section class="article-section" id="गणत-स-python-तक"><span class="section-no">08</span><h2>गणित से Python तक</h2>
+<p>अब हम समीकरणों से एक चलने योग्य प्रोग्राम की ओर बढ़ते हैं। उद्देश्य किसी विशेष तंत्रिका-नेटवर्क लाइब्रेरी का उपयोग करना नहीं, बल्कि <code>NumPy</code> के साथ लेख में विकसित गणितीय क्रियाओं को सीधे लागू करना है । इससे पंक्ति-दर-पंक्ति देखा जा सकता है कि रैखिक संयोजन, सक्रियण फलन, हानि की गणना, प्रतिप्रसारण और ग्रेडिएंट अवरोह कोड में कैसे दिखाई देते हैं।</p>
+<p>अंतिम उदाहरण को अधिक विश्वसनीय बनाने के लिए हम द्रव्यमान–व्यास के बड़े क्षेत्र में फैला एक कृत्रिम डेटा समुच्चय उपयोग करते हैं। हम अभी भी केवल दो भौतिक विशेषताओं — ग्राम में द्रव्यमान और सेंटीमीटर में व्यास — के साथ काम करते हैं, लेकिन अब <span class="math inline">\(64\)</span> प्रशिक्षण उदाहरणों को तल के बड़े क्षेत्र में वितरित करते हैं और आठ अतिरिक्त उदाहरणों को एक उदाहरणात्मक परीक्षण के लिए अलग रखते हैं। डेटा कृत्रिम हैं, पर सेब और संतरे के लिए यथार्थवादी सीमाओं में रहते हैं। इन्हें इस प्रकार बनाया गया है कि निर्णय सीमा गैर-रैखिक हो और सभी बिंदु कुछ अत्यधिक कृत्रिम समूहों में केंद्रित न हों।</p>
+<p>ज्यामितीय विचार सरल है। हम द्रव्यमान–व्यास तल में एक संदर्भ वक्र परिभाषित करते हैं, उसके ऊपर की दो पट्टियों में सेब और नीचे की दो पट्टियों में संतरे रखते हैं। द्रव्यमान और व्यास दोनों में छोटे नियत व्यवधान जोड़े जाते हैं ताकि अवलोकन बड़े क्षेत्र में फैलें। परिणामी उदाहरण पहले के चित्रों की तुलना में समृद्ध है: इसमें अधिक बिंदु हैं, डेटा पूरे क्षेत्र में फैले हैं और उचित निर्णय सीमा स्पष्ट रूप से सीधी रेखा की तुलना में अधिक वक्र है।</p>
+<p>इस अंतिम संगणकीय प्रयोग में हम छिपी परत को बारह ReLU न्यूरॉनों तक बढ़ाते हैं। इससे पिछले अनुभागों में पढ़ी गई वैचारिक संरचना नहीं बदलती; केवल अधिक जटिल सीमा निरूपित करने की नेटवर्क की क्षमता बढ़ती है। तीन-न्यूरॉन वाले शिक्षण नेटवर्क के <span class="math inline">\(13\)</span> पैरामीटरों के स्थान पर अब <span class="math inline">\(49\)</span> समायोज्य पैरामीटर हैं: पहली परत में <span class="math inline">\(24\)</span> भार और <span class="math inline">\(12\)</span> बायस, फिर आउटपुट परत में <span class="math inline">\(12\)</span> भार और एक बायस। समीकरणों का रूप ठीक वही रहता है; केवल सदिश और मैट्रिक्स बड़े हो जाते हैं।</p>
+<p>पूरा प्रोग्राम नीचे दिया गया है।</p>
+<pre style="pythonterminal"><code>import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+
+
+def relu(s):
+    return np.maximum(0, s)
+
+
+def relu_derivative(s):
+    return (s &gt; 0).astype(float)
+
+
+def sigmoid(s):
+    return 1 / (1 + np.exp(-s))
+
+
+def base_boundary(m):
+    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
+           + 1.50/(1 + np.exp(-(m-202)/5))
+
+
+def build_data():
+    masses_1 = np.linspace(118, 212, 16)
+    masses_2 = masses_1 + np.array([
+        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+    ])
+    k = np.arange(16)
+
+    a1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+    ])
+    a2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+    ])
+
+    o1 = np.column_stack([
+        masses_1,
+        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+    ])
+    o2 = np.column_stack([
+        masses_2,
+        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+    ])
+
+    X_train = np.vstack([a1, a2, o1, o2])
+    y_train = np.array([1.0]*32 + [0.0]*32)
+
+    X_test = np.array([
+        [121.0, 7.20], [135.0, 7.45],
+        [152.0, 7.75], [171.0, 7.32],
+        [121.0, 6.28], [152.0, 6.86],
+        [189.0, 6.48], [208.0, 7.55]
+    ])
+    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
+
+    return X_train, y_train, X_test, y_test
+
+
+def predict(X, mean, std, W1, b1, W2, b2):
+    Xn = (X - mean) / std
+    outputs = []
+    for x in Xn:
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        outputs.append(y_hat)
+    return np.array(outputs)
+
+
+X_train, y_train, X_test, y_test = build_data()
+
+mean = X_train.mean(axis=0)
+std = X_train.std(axis=0)
+Xn = (X_train - mean) / std
+
+rng = np.random.default_rng(42)
+W1 = 0.1 * rng.standard_normal((12, 2))
+b1 = np.zeros(12)
+W2 = 0.1 * rng.standard_normal(12)
+b2 = 0.0
+eta = 0.05
+n_epochs = 6000
+history = []
+
+for epoch in range(n_epochs):
+    for i in rng.permutation(len(Xn)):
+        x = Xn[i]
+        target = y_train[i]
+
+        z1 = W1 @ x + b1
+        h = relu(z1)
+        z2 = W2 @ h + b2
+        y_hat = sigmoid(z2)
+
+        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+        dW2 = delta2 * h
+        db2 = delta2
+        delta1 = (delta2 * W2) * relu_derivative(z1)
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        W1 -= eta * dW1
+        b1 -= eta * db1
+        W2 -= eta * dW2
+        b2 -= eta * db2
+
+    errors = []
+    for x, target in zip(Xn, y_train):
+        h = relu(W1 @ x + b1)
+        y_hat = sigmoid(W2 @ h + b2)
+        errors.append(0.5 * (target - y_hat)**2)
+    history.append(np.mean(errors))
+
+
+def make_figure():
+    masses = np.linspace(116, 214, 500)
+    diameters = np.linspace(6.0, 8.85, 500)
+    M, D = np.meshgrid(masses, diameters)
+    grid = np.column_stack([M.ravel(), D.ravel()])
+    P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
+
+    fig, ax = plt.subplots(figsize=(9.2, 6.3))
+    ax.contourf(
+        M, D, P,
+        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
+        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
+        alpha=0.95
+    )
+    ax.contour(M, D, P, levels=[0.5],
+               colors=["#5a1a8a"], linewidths=2.2)
+
+    mask = y_train == 1.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Apple - training")
+    mask = y_train == 0.0
+    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
+               s=48, facecolors="white", edgecolors="black",
+               linewidths=1.1, label="Orange - training")
+    mask = y_test == 1.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
+               s=92, color="#1f77b4", label="Apple - test")
+    mask = y_test == 0.0
+    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
+               s=110, color="#ff7f0e", linewidths=2.0,
+               label="Orange - test")
+
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Diameter (cm)")
+    ax.set_title("Neural-network output after training")
+
+    handles = [
+        Line2D([0],[0], marker='o', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Apple - training'),
+        Line2D([0],[0], marker='s', markersize=9,
+               markerfacecolor='white', markeredgecolor='black',
+               linestyle='None', label='Orange - training'),
+        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0],[0], color='#5a1a8a', lw=2.2,
+               label='Neural-network decision boundary')
+    ]
+    ax.legend(handles=handles, loc='center left',
+              bbox_to_anchor=(1.02, 0.5), frameon=True)
+
+    fig.tight_layout()
+    plt.show()</code></pre>
+<p>यद्यपि कोड लेख के आरंभिक समीकरणों से लंबा है, उसकी संरचना स्पष्ट रहती है। <code>build_data()</code> फलन <span class="math inline">\(64\)</span> प्रशिक्षण उदाहरण और आठ उदाहरणात्मक परीक्षण उदाहरण स्वतः बनाता है। इसके बाद हम दोनों चरों का मानकीकरण करते हैं <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> जहाँ <span class="math inline">\(\mu_j\)</span> और <span class="math inline">\(\sigma_j\)</span> केवल प्रशिक्षण समुच्चय से निकाले जाते हैं। इससे परीक्षण समुच्चय पैरामीटर फिटिंग को प्रभावित नहीं करता और द्रव्यमान तथा व्यास तुलनीय संख्यात्मक मापनी पर आ जाते हैं।</p>
+<p>अग्र प्रसार का सार नहीं बदलता। अंतर केवल इतना है कि पहली परत अब बारह छिपी सक्रियताओं का सदिश देती है। मैट्रिक्स रूप में, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
+\qquad
+\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
+\qquad
+\widehat{y}=\sigma(z^{(2)}).\]</span> इन चार पंक्तियों में अभी भी एल्गोरिथ्म का गणितीय मूल समाहित है। प्रशिक्षण भी वही तर्क बनाए रखता है: पूर्वानुमान निकालें, उसकी त्रुटि मापें, अवकलजों की सहायता से संवेदनशीलता की जानकारी पीछे की ओर प्रसारित करें और ग्रेडिएंट अवरोह के छोटे कदमों से पैरामीटर अद्यतन करें।</p>
+<p>कोड में आउटपुट परत का प्रतिप्रसारण इस पंक्ति में दिखाई देता है</p>
+<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
+<p>और छिपी परत की ओर प्रसारण इस पंक्ति में</p>
+<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
+<p>दिखाई देता है, जिसके बाद सभी भार और बायस अद्यतन किए जाते हैं। चूँकि प्रत्येक युग में उदाहरणों का क्रम बदल दिया जाता है और प्रत्येक अवलोकन के बाद पैरामीटर अद्यतन होते हैं, यह कार्यान्वयन <em>stochastic gradient descent</em> का एक प्रारंभिक रूप है।</p>
+<p>यहाँ प्रयुक्त यादृच्छिक बीज और हाइपरपैरामीटरों के साथ अंतिम औसत हानि लगभग <span class="math inline">\(10^{-5}\)</span> से <span class="math inline">\(10^{-4}\)</span> के क्रम में होती है, और सभी <span class="math inline">\(64\)</span> प्रशिक्षण उदाहरण तथा आठ उदाहरणात्मक परीक्षण उदाहरण अपेक्षित वर्गीकरण प्राप्त करते हैं। इसे कठोर सांख्यिकीय प्रदर्शन मूल्यांकन नहीं समझना चाहिए: डेटा कृत्रिम हैं और शिक्षण उद्देश्य से बनाए गए हैं। उनका उद्देश्य कम तुच्छ परिस्थिति में यह दिखाना है कि एक छोटा तंत्रिका नेटवर्क स्पष्ट रूप से गैर-रैखिक निर्णय सीमा सीख सकता है।</p>
+<p>चित्र <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> द्रव्यमान–व्यास तल में प्रोग्राम का अंतिम आउटपुट दिखाता है। सभी प्रशिक्षण बिंदु प्रदर्शित हैं। उभरा हुआ वक्र स्तर <span class="math inline">\(\widehat{y}=0.5\)</span> है और नेटवर्क द्वारा सीखी गई निर्णय सीमा को दर्शाता है; छायांकित क्षेत्र दो पूर्वानुमानित वर्ग दर्शाते हैं। वृत्त प्रशिक्षण सेब, वर्ग प्रशिक्षण संतरे, त्रिभुज परीक्षण सेब और क्रॉस परीक्षण संतरे दर्शाते हैं। किसी डेटा बिंदु को न ढकने के लिए संकेतक मुख्य आलेख क्षेत्र के बाहर रखा गया है।</p>
+<figure id="fig:python_output">
+<img alt="तंत्रिका नेटवर्क के प्रशिक्षण के बाद Python आउटपुट। कृत्रिम डेटा समुच्चय में द्रव्यमान–व्यास तल के बड़े क्षेत्र में फैले \(64\) प्रशिक्षण उदाहरण और उदाहरणात्मक परीक्षण के लिए अलग रखे गए आठ अतिरिक्त उदाहरण हैं। उभरा वक्र \(\widehat{y}=0.5\) स्तर है और सीखी गई निर्णय सीमा को दर्शात" decoding="async" loading="lazy" src="../assets/img/hi/Fig07.png"/>
+<figcaption>तंत्रिका नेटवर्क के प्रशिक्षण के बाद Python आउटपुट। कृत्रिम डेटा समुच्चय में द्रव्यमान–व्यास तल के बड़े क्षेत्र में फैले <span class="math inline">\(64\)</span> प्रशिक्षण उदाहरण और उदाहरणात्मक परीक्षण के लिए अलग रखे गए आठ अतिरिक्त उदाहरण हैं। उभरा वक्र <span class="math inline">\(\widehat{y}=0.5\)</span> स्तर है और सीखी गई निर्णय सीमा को दर्शाता है; छायांकित क्षेत्र नेटवर्क द्वारा पूर्वानुमानित वर्ग दिखाते हैं। वृत्त प्रशिक्षण सेब, वर्ग प्रशिक्षण संतरे, त्रिभुज परीक्षण सेब और क्रॉस परीक्षण संतरे दर्शाते हैं।</figcaption>
+</figure>
+<p>हमने दो सरल बिंदु-समूहों को अलग करने वाली सीधी रेखा से शुरुआत की और एक अधिक समृद्ध संगणकीय उदाहरण तक पहुँचे, जिसमें नेटवर्क के पैरामीटरों के स्वचालित समायोजन से एक वक्र सीमा उभरती है। गणित में कोई रहस्यमय तत्व नहीं जोड़ा गया है: कार्यान्वयन केवल अफ़ाइन संयोजन, सक्रियण फलन, अवकलज, मैट्रिक्स गुणन और ग्रेडिएंट-अवरोह अद्यतनों को बड़े पैमाने पर और तेज़ी से व्यवस्थित तथा दोहराता है ।</p>
+<p>इस लेख से संबंधित सभी संगणकीय सामग्री — कोड और एक चलने योग्य Google Colab नोटबुक सहित — <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> पर उपलब्ध है, जहाँ पाठक उदाहरणों को देख, पुनरुत्पादित या अनुकूलित कर सकते हैं।</p>
+<h4 id="कतरम-बदधमतत-क-उपयग-पर-वकतवय">कृत्रिम बुद्धिमत्ता के उपयोग पर वक्तव्य।</h4>
+<p>लेखक ने प्रारूप तैयार करने, भाषा-संशोधन, व्याख्यात्मक संगठन और शिक्षणात्मक चित्र बनाने में सहायता के लिए OpenAI द्वारा विकसित ChatGPT का उपयोग किया। गणितीय सामग्री की अवधारणा और विकास, कोड तथा प्रयुक्त संदर्भों सहित कार्य की अंतिम सामग्री की पूर्ण जिम्मेदारी लेखक की है।</p>
+</section></div>
+<section class="article-section references"><span class="section-no">संदर्भ</span><h2>संदर्भ</h2><div class="thebibliography">
+<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
+<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
+<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+</div></section>
+<section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>संसाधन</h2><div class="resource-grid">
+<a class="resource-card" href="../pdf/hi/Article_PMO2026_NN_HI.pdf"><strong>PDF</strong><span>तंत्रिका नेटवर्क की गणितीय संरचना</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_HI.ipynb"><strong>Google Colab</strong><span>Notebook · हिन्दी</span></a>
+</div></section>
+<section><h2>NeuralMath के बारे में</h2><p class="bio">NeuralMath Dr. Americo Cunha Jr. द्वारा विकसित एक मुक्त शैक्षणिक परियोजना है। इसका उद्देश्य एक छोटे तंत्रिका नेटवर्क के भीतर होने वाली गणितीय क्रियाओं को ऐसे व्यापक पाठक-वर्ग के लिए दृश्य, निरीक्षणयोग्य और पुनरुत्पाद्य बनाना है जिसकी कलन और सांख्यिकी में अपेक्षाकृत प्रारंभिक गणितीय तैयारी हो।</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>शैक्षणिक पाठ का उद्धरण कैसे दें</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>प्रकाशन के बाद ग्रंथसूची प्रविष्टि में खंड, पृष्ठ और DOI जोड़े जाएँगे। कृपया इस वेबसाइट के बजाय शैक्षणिक पाठ को उद्धृत करें।</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></section>
+<section><h2>लाइसेंस</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>वेबसाइट का व्याख्यात्मक पाठ और मूल सामग्री CC BY 4.0 के अंतर्गत उपलब्ध है, जब तक अन्यथा न कहा गया हो। लेख का PDF प्रकाशन स्थल के लाइसेंस के अधीन हो सकता है।</p></div></section>
+<div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
+</main><script defer="" src="../assets/js/site.js"></script></body></html>
