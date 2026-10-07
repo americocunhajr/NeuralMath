@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use NeuralMath, please cite the original pedagogical text in Portuguese. The multilingual editions are archived under the Zenodo DOI below."
+message: "If you use NeuralMath, please cite the original pedagogical text in Portuguese."
 title: "NeuralMath"
 type: software
 version: "1.0"
@@ -11,10 +11,6 @@ authors:
 repository-code: "https://github.com/americocunhajr/NeuralMath"
 url: "https://neuralmath.org"
 license: "CC-BY-4.0"
-identifiers:
-  - type: doi
-    value: "10.5281/zenodo.23212380"
-    description: "NeuralMath multilingual editions archive"
 preferred-citation:
   type: article
   title: "A anatomia matemática de uma rede neural"

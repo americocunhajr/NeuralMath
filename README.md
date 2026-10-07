@@ -6,7 +6,6 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python](https://img.shields.io/badge/Python-NumPy-7b8cff)](https://www.python.org/)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--8342--0363-A6CE39)](https://orcid.org/0000-0002-8342-0363)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23212380.svg)](https://doi.org/10.5281/zenodo.23212380)
 
 **NeuralMath** is an open educational project developed by Dr. Americo Cunha Jr. Its goal is to make the mathematical operations inside a small neural network visible, inspectable, and reproducible for a large audience with relatively low mathematical training in calculus and statistics. The equations, geometry, learning algorithm, and Python implementation are designed to be read together.
 
@@ -36,7 +35,6 @@ Please cite the original pedagogical text in Portuguese rather than the website 
 
 The bibliographic entry will be updated with volume, pages and DOI after publication.
 
-**Multilingual editions archive:** https://doi.org/10.5281/zenodo.23212380
 
 ---
 
@@ -152,7 +150,7 @@ NeuralMath/
     └── assets/               # CSS, figures, code and site assets
 ```
 
-The 26 archival PDF editions are stored on **Zenodo**, not duplicated in Git. Each language page links to its corresponding `NeuralMath_<CODE>.pdf` file under DOI **10.5281/zenodo.23212380**.
+The 26 draft PDF editions are stored in `docs/pdf/` and served directly from **https://neuralmath.org/pdf/**. Each language page links to its corresponding `NeuralMath_<CODE>.pdf` file.
 
 The `docs/` directory is published directly by GitHub Pages at
 **https://neuralmath.org**; no frontend build step is required.
@@ -313,7 +311,7 @@ also welcome.
 
 ## Multilingual web edition
 
-NeuralMath.org now provides the full pedagogical exposition, Zenodo-archived PDF edition, Figures 1–7, and a language-specific Google Colab notebook in **26 languages**. The Portuguese original remains the bibliographic text cited by every page.
+NeuralMath.org now provides the full pedagogical exposition, locally hosted draft PDF edition, Figures 1–7, and a language-specific Google Colab notebook in **26 languages**. The Portuguese original remains the bibliographic text cited by every page.
 
 - 🇧🇷 **Português** — `/pt/`
 - 🇬🇧 **English** — `/`
