@@ -6,11 +6,12 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Python](https://img.shields.io/badge/Python-NumPy-7b8cff)](https://www.python.org/)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0002--8342--0363-A6CE39)](https://orcid.org/0000-0002-8342-0363)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23212380.svg)](https://doi.org/10.5281/zenodo.23212380)
 
 **NeuralMath** is an open educational project developed by Dr. Americo Cunha Jr. Its goal is to make the mathematical operations inside a small neural network visible, inspectable, and reproducible for a large audience with relatively low mathematical training in calculus and statistics. The equations, geometry, learning algorithm, and Python implementation are designed to be read together.
 
 The project combines a rich multilingual web narrative, the complete pedagogical
-texts in PDF, reproducible Python/NumPy code, six language-specific executable notebooks, and all
+texts in PDF, reproducible Python/NumPy code, 26 language-specific executable notebooks, and all
 article figures integrated into the website.
 
 **Website:** https://neuralmath.org
@@ -34,6 +35,8 @@ Please cite the original pedagogical text in Portuguese rather than the website 
 ```
 
 The bibliographic entry will be updated with volume, pages and DOI after publication.
+
+**Multilingual editions archive:** https://doi.org/10.5281/zenodo.23212380
 
 ---
 
@@ -139,30 +142,17 @@ the mathematics.
 ```text
 NeuralMath/
 ├── README.md
-├── LICENSE
-├── WEBSITE_UPDATE_PROMPT.md
-├── requirements.txt
+├── CITATION.cff
+├── LICENSE.txt
 ├── PythonCodes/
-│   ├── rede_neural_do_zero.py
-│   └── neural_network_from_scratch.py
-├── ColabCodes/
-│   ├── NeuralMath_Colab_PT.ipynb
-│   ├── NeuralMath_Colab_EN.ipynb
-│   ├── NeuralMath_Colab_ES.ipynb
-│   ├── NeuralMath_Colab_FR.ipynb
-│   ├── NeuralMath_Colab_IT.ipynb
-│   ├── NeuralMath_Colab_DE.ipynb
-│   └── NeuralMath_Colab.ipynb  # English compatibility alias
+├── ColabCodes/              # one notebook per language (26 total)
 └── docs/
-    ├── index.html
-    ├── pt/  es/  fr/  it/  de/
-    ├── assets/
-    │   ├── css/
-    │   ├── js/
-    │   ├── code/
-    │   └── img/{en,pt,es,fr,it,de}/
-    └── pdf/{en,pt,es,fr,it,de}/
+    ├── index.html            # English web edition
+    ├── <language>/index.html # 25 additional localized editions
+    └── assets/               # CSS, figures, code and site assets
 ```
+
+The 26 archival PDF editions are stored on **Zenodo**, not duplicated in Git. Each language page links to its corresponding `NeuralMath_<CODE>.pdf` file under DOI **10.5281/zenodo.23212380**.
 
 The `docs/` directory is published directly by GitHub Pages at
 **https://neuralmath.org**; no frontend build step is required.
@@ -171,7 +161,7 @@ The `docs/` directory is published directly by GitHub Pages at
 
 ## Website and languages
 
-The website is a **rich continuous pedagogical edition in six languages**. Each
+The website is a **rich continuous pedagogical edition in 26 languages**. Each
 language page follows the complete conceptual path of the article rather than
 showing isolated code excerpts:
 
@@ -183,7 +173,7 @@ All seven article figures are embedded in the corresponding translated web
 edition. Every language page also provides direct access to its PDF, the GitHub
 repository, and the executable Google Colab notebook.
 
-Language selector order: **Português · English · Español · Français · Italiano · Deutsch**.
+The language selector exposes all 26 localized editions; Portuguese is the original reference text and English is the default root page.
 
 The mathematical model and computational experiment are shared across languages;
 theory, captions, and exposition follow the corresponding manuscript translation.
@@ -233,16 +223,9 @@ decision-region figure.
 
 ## Google Colab
 
-Each language page links to a notebook with instructions in the same language. The Portuguese notebook uses Portuguese identifiers; the other notebooks use English variable and function names while localizing explanations, printed text, and plot labels.
+Each of the 26 language pages links to a language-specific notebook. The Portuguese notebook uses Portuguese identifiers; all other notebooks keep variable and function identifiers in English while localizing explanations, printed text, and plot labels.
 
-- **Português:** `ColabCodes/NeuralMath_Colab_PT.ipynb`
-- **English:** `ColabCodes/NeuralMath_Colab_EN.ipynb`
-- **Español:** `ColabCodes/NeuralMath_Colab_ES.ipynb`
-- **Français:** `ColabCodes/NeuralMath_Colab_FR.ipynb`
-- **Italiano:** `ColabCodes/NeuralMath_Colab_IT.ipynb`
-- **Deutsch:** `ColabCodes/NeuralMath_Colab_DE.ipynb`
-
-`ColabCodes/NeuralMath_Colab.ipynb` is retained as a backwards-compatible alias of the English notebook.
+The notebooks follow the stable naming convention `ColabCodes/NeuralMath_Colab_<CODE>.ipynb`, with codes AR, BN, CS, DE, EL, EN, ES, FA, FR, HI, HU, ID, IT, JA, KO, NL, PL, PT, RO, RU, SV, TR, UK, UR, VI and ZH. `ColabCodes/NeuralMath_Colab.ipynb` is retained as a backwards-compatible alias of the English notebook.
 
 ---
 
@@ -330,7 +313,7 @@ also welcome.
 
 ## Multilingual web edition
 
-NeuralMath.org now provides the full pedagogical exposition, translated article PDF, Figures 1–7, and a language-specific Google Colab notebook in **26 languages**. The Portuguese original remains the bibliographic text cited by every page.
+NeuralMath.org now provides the full pedagogical exposition, Zenodo-archived PDF edition, Figures 1–7, and a language-specific Google Colab notebook in **26 languages**. The Portuguese original remains the bibliographic text cited by every page.
 
 - 🇧🇷 **Português** — `/pt/`
 - 🇬🇧 **English** — `/`

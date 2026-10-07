@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>NeuralMath — L'anatomia matematica di una rete neurale</title>
-<meta content="Introduzione ricca e multilingue alla matematica delle reti neurali, dalla geometria analitica e dal neurone artificiale alla retropropagazione e NumPy." name="description"/><meta content="#090d12" name="theme-color"/>
+<meta content="Introduzione ricca e multilingue alla matematica delle reti neurali, dalla geometria analitica e dal neurone artificiale alla retropropagazione e NumPy." name="description"/><meta content="#090d12" name="theme-color"/><meta name="citation_title" content="L'anatomia matematica di una rete neurale"/><meta name="citation_author" content="Cunha Jr., Americo"/><meta name="citation_publication_date" content="2026/10"/><meta name="citation_language" content="it"/><meta name="citation_pdf_url" content="https://zenodo.org/records/23212380/files/NeuralMath_IT.pdf?download=1"/><meta name="citation_doi" content="10.5281/zenodo.23212380"/>
 <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
 <link href="https://neuralmath.org/it/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
 <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
@@ -18,15 +18,15 @@
 <h1><span>NeuralMath</span></h1>
 <p class="subtitle">Un percorso trasparente dalla geometria analitica alla retropropagazione.</p>
 <p>NeuralMath è un’edizione web pedagogica dell’articolo associato al progetto. Invece di presentare una rete neurale come una scatola nera, sviluppa la matematica passo dopo passo: rappresentazione numerica dei dati, frontiere decisionali lineari, neuroni artificiali, funzioni di attivazione, reti multistrato, funzione di perdita, gradienti, retropropagazione e un’implementazione completa in NumPy.</p>
-<div class="resource-bar"><a href="../pdf/it/Article_PMO2026_NN_IT.pdf">Leggi l’articolo completo (PDF)</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_IT.ipynb">Apri in Colab</a></div>
+<div class="resource-bar"><a href="https://zenodo.org/records/23212380/files/NeuralMath_IT.pdf?download=1" target="_blank" rel="noopener noreferrer">Leggi l’articolo completo (PDF)</a><a href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_IT.ipynb" target="_blank" rel="noopener noreferrer">Apri in Colab</a></div>
 </div>
 <div class="citation"><h2>Testo pedagogico originale</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">Questa edizione web e le sue traduzioni si basano sul manoscritto originale in portoghese.</p></div>
-<nav aria-label="Contenuti" class="toc"><h2>Contenuti</h2><ol><li><a href="#quando-può-imparare-un-computer">Quando può imparare un
-computer?</a></li><li><a href="#rappresentazione-matematica-del-problema">Rappresentazione
-matematica del problema</a></li><li><a href="#una-retta-come-classificatore">Una retta come
-classificatore</a></li><li><a href="#il-neurone-artificiale">Il neurone artificiale</a></li><li><a href="#perché-abbiamo-bisogno-di-una-funzione-di-attivazione">Perché
-abbiamo bisogno di una funzione di attivazione?</a></li><li><a href="#costruzione-di-una-piccola-rete-neurale">Costruzione di una
-piccola rete neurale</a></li><li><a href="#come-impara-una-rete-neurale">Come impara una rete neurale?</a></li><li><a href="#dalla-matematica-a-python">Dalla matematica a Python</a></li></ol></nav>
+<nav aria-label="Contenuti" class="toc"><h2>Contenuti</h2><ol><li><a href="#quando-può-imparare-un-computer" target="_blank" rel="noopener noreferrer">Quando può imparare un
+computer?</a></li><li><a href="#rappresentazione-matematica-del-problema" target="_blank" rel="noopener noreferrer">Rappresentazione
+matematica del problema</a></li><li><a href="#una-retta-come-classificatore" target="_blank" rel="noopener noreferrer">Una retta come
+classificatore</a></li><li><a href="#il-neurone-artificiale" target="_blank" rel="noopener noreferrer">Il neurone artificiale</a></li><li><a href="#perché-abbiamo-bisogno-di-una-funzione-di-attivazione" target="_blank" rel="noopener noreferrer">Perché
+abbiamo bisogno di una funzione di attivazione?</a></li><li><a href="#costruzione-di-una-piccola-rete-neurale" target="_blank" rel="noopener noreferrer">Costruzione di una
+piccola rete neurale</a></li><li><a href="#come-impara-una-rete-neurale" target="_blank" rel="noopener noreferrer">Come impara una rete neurale?</a></li><li><a href="#dalla-matematica-a-python" target="_blank" rel="noopener noreferrer">Dalla matematica a Python</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="quando-può-imparare-un-computer"><span class="section-no">01</span><h2>Quando può imparare un
 computer?</h2><p>Nella vita quotidiana prendiamo decisioni di classificazione quasi
 senza rendercene conto. Osservando un frutto, lo identifichiamo
@@ -88,7 +88,7 @@ x_2=\text{diametro}.\]</span></p><p>Così, la coppia <span class="math inline">\
 rappresenta un frutto con massa di <span class="math inline">\(155\)</span> g e diametro di <span class="math inline">\(7.2\)</span> cm. Sostituendo l’oggetto fisico con
 due misure numeriche, associamo ogni frutto a un punto del piano
 cartesiano: la prima coordinata indica la massa e la seconda il
-diametro. La Figura <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> illustra questa rappresentazione per
+diametro. La Figura <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits" target="_blank" rel="noopener noreferrer">1</a> illustra questa rappresentazione per
 un insieme ipotetico di mele e arance.</p><figure id="fig:fruits">
 <img alt="Dall’osservazione fisica alla modellizzazione matematica." decoding="async" loading="lazy" src="../assets/img/it/Fig01.png"/>
 <figcaption>Dall’osservazione fisica alla modellizzazione matematica.
@@ -116,7 +116,7 @@ cartesiano, la classificazione diventa un problema geometrico: può una
 retta separare le mele dalle arance? Questa domanda esprime l’idea
 fondamentale di un’importante famiglia di metodi di apprendimento
 automatico noti come <em>classificatori lineari</em>.</p><p>Consideriamo una retta che attraversa la nuvola di dati, come
-illustrato nella Figura <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a>.
+illustrato nella Figura <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier" target="_blank" rel="noopener noreferrer">2</a>.
 La retta divide il piano in due semipiani. Se la maggior parte dei punti
 corrispondenti alle mele si trova da un lato e la maggior parte dei
 punti corrispondenti alle arance dall’altro, la posizione di un nuovo
@@ -181,7 +181,7 @@ numerici, li combina usando pesi e un bias, quindi applica una funzione
 matematica per ottenere la propria uscita.</p><p>Nel nostro esempio, gli ingressi sono la massa <span class="math inline">\(x_1\)</span> e il diametro <span class="math inline">\(x_2\)</span>. Ogni ingresso viene moltiplicato per
 un parametro chiamato <em>peso</em>; i prodotti vengono sommati insieme
 a un termine costante <span class="math inline">\(b\)</span>, chiamato
-<em>bias</em>. La Figura <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a>
+<em>bias</em>. La Figura <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron" target="_blank" rel="noopener noreferrer">3</a>
 mostra schematicamente questo calcolo.</p><figure id="fig:artificial_neuron">
 <img alt="Funzionamento schematico di un neurone artificiale." decoding="async" loading="lazy" src="../assets/img/it/Fig03.png"/>
 <figcaption>Funzionamento schematico di un neurone artificiale. Ogni
@@ -276,7 +276,7 @@ s, &amp; s\geq0.
 non è globalmente lineare. La sua derivata è <span class="math inline">\(0\)</span> per <span class="math inline">\(s&lt;0\)</span> e <span class="math inline">\(1\)</span> per <span class="math inline">\(s&gt;0\)</span>. In <span class="math inline">\(s=0\)</span> la derivata usuale non esiste e le
 implementazioni software adottano una convenzione per il gradiente. Per
 ingressi positivi, la derivata non diminuisce al crescere di <span class="math inline">\(s\)</span>, evitando uno dei meccanismi di
-saturazione della sigmoide.</p><p>La Figura <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> confronta visivamente
+saturazione della sigmoide.</p><p>La Figura <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> confronta visivamente
 queste tre attivazioni: il salto brusco della funzione a gradino, la
 transizione regolare della sigmoide e il cambiamento di pendenza di
 ReLU.</p><figure id="fig:activation_functions">
@@ -336,7 +336,7 @@ contenente tre neuroni e un neurone di uscita. Gli ingressi rimangono
 <span class="math display">\[x_1=\text{massa},
 \qquad
 x_2=\text{diametro},\]</span> e vengono entrambi forniti a ciascun
-neurone nascosto, come mostrato nella Figura <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a>.</p><figure id="fig:small_network">
+neurone nascosto, come mostrato nella Figura <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a>.</p><figure id="fig:small_network">
 <img alt="Architettura didattica \(2\) – \(3\) – \(1\) utilizzata per introdurre il calcolo in una rete neurale." decoding="async" loading="lazy" src="../assets/img/it/Fig05.png"/>
 <figcaption>Architettura didattica <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span>
 utilizzata per introdurre il calcolo in una rete neurale. I due ingressi
@@ -443,7 +443,7 @@ previsione dipende dai pesi e dai bias della rete, quindi <span class="math inli
 parametri. Addestrare significa cercare valori dei parametri che rendano
 piccola <span class="math inline">\(J\)</span>.</p><p>Per comprendere il meccanismo di regolazione, immaginiamo dapprima
 che tutti i parametri, tranne un singolo peso <span class="math inline">\(w\)</span>, rimangano fissi. Possiamo allora
-considerare la perdita come una funzione <span class="math inline">\(J=J(w)\)</span>. La Figura <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> riassume le fasi fondamentali
+considerare la perdita come una funzione <span class="math inline">\(J=J(w)\)</span>. La Figura <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> riassume le fasi fondamentali
 dell’addestramento che esamineremo di seguito.</p><figure id="fig:training_cycle">
 <img alt="Ciclo fondamentale di addestramento di una rete neurale." decoding="async" loading="lazy" src="../assets/img/it/Fig06.png"/>
 <figcaption>Ciclo fondamentale di addestramento di una rete neurale. Il
@@ -518,7 +518,7 @@ entrambi i casi, il ciclo di previsioni, perdite, gradienti e
 aggiornamenti viene ripetuto per molte epoche.</p><p>Un modo concreto per visualizzare questa evoluzione consiste nel
 seguire la previsione per uno stesso esempio fisso in diverse fasi
 dell’addestramento. Consideriamo di nuovo il frutto con massa di <span class="math inline">\(140\)</span> g e diametro di <span class="math inline">\(7.0\)</span> cm, la cui classe corretta è arancia.
-La Tabella <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> mostra una progressione ipotetica.
+La Tabella <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> mostra una progressione ipotetica.
 Questi valori non corrispondono a una particolare esecuzione; servono
 soltanto a illustrare il meccanismo.</p><div id="tab:learning">
 <table>
@@ -812,7 +812,7 @@ non deve essere interpretato come una valutazione statistica rigorosa
 delle prestazioni: i dati sono sintetici e sono stati costruiti a fini
 didattici. Il loro ruolo è mostrare, in uno scenario meno banale, come
 una piccola rete neurale possa apprendere una frontiera di decisione
-chiaramente non lineare.</p><p>La Figura <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> mostra l’uscita finale del
+chiaramente non lineare.</p><p>La Figura <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> mostra l’uscita finale del
 programma nel piano massa–diametro. Sono rappresentati tutti i punti di
 addestramento. La curva evidenziata corrisponde al livello <span class="math inline">\(\widehat{y}=0.5\)</span> e rappresenta la
 frontiera di decisione appresa dalla rete; le regioni ombreggiate
@@ -840,7 +840,7 @@ ad alta velocità, combinazioni affini, funzioni di attivazione,
 derivate, prodotti matriciali e aggiornamenti mediante discesa del
 gradiente .</p><p>Tutto il materiale computazionale associato a questo articolo —
 compresi il codice e un notebook Google Colab eseguibile — è disponibile
-all’indirizzo <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>, che fornisce un unico punto di
+all’indirizzo <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>, che fornisce un unico punto di
 accesso ai lettori che desiderino esplorare, riprodurre o adattare gli
 esempi.</p></section></div>
 <section class="article-section references"><span class="section-no">Riferimenti</span><h2>Riferimenti</h2><div class="thebibliography">
@@ -851,7 +851,7 @@ doi: 10.21711/2319023x2022/pmo1032</p>
 de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado
 de Máquina</em>. 2ª ed. Rio de Janeiro: LTC, 2021.</p>
 <p>I. Goodfellow, Y. Bengio, e A. Courville. <em>Deep Learning</em>.
-Cambridge, MA: MIT Press, 2016. Disponibile all’indirizzo: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+Cambridge, MA: MIT Press, 2016. Disponibile all’indirizzo: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
 <p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
 programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
 10.1038/s41586-020-2649-2</p>
@@ -860,23 +860,23 @@ di Paulo Martins Engel. 2ª ed. Porto Alegre: Bookman, 2000.</p>
 <p>Y. LeCun, Y. Bengio, e G. Hinton. “Deep learning”. <em>Nature</em>,
 v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
 <p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
-Determination Press, 2015. Disponibile all’indirizzo: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+Determination Press, 2015. Disponibile all’indirizzo: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
 <p>D. E. Rumelhart, G. E. Hinton, e R. J. Williams. “Learning
 representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
 533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">Edizione web</span><h2>Risorse</h2><p>Usa il PDF tradotto per consultare l’articolo completo, il repository per i file sorgente e il codice, e il notebook eseguibile per riprodurre l’esempio computazionale.</p><div class="resource-grid">
-<a class="resource-card" href="../pdf/it/Article_PMO2026_NN_IT.pdf"><strong>PDF</strong><span>L'anatomia matematica di una rete neurale</span></a>
-<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
-<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_IT.ipynb"><strong>Google Colab</strong><span>Notebook · Italiano</span></a>
+<a class="resource-card" href="https://zenodo.org/records/23212380/files/NeuralMath_IT.pdf?download=1" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>L'anatomia matematica di una rete neurale</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_IT.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · Italiano</span></a>
 </div></section>
-<section><h2>Informazioni su NeuralMath</h2><p class="bio">NeuralMath è un progetto educativo aperto sviluppato dal Dr. Americo Cunha Jr. Il suo obiettivo è rendere visibili, ispezionabili e riproducibili le operazioni matematiche all’interno di una piccola rete neurale per un pubblico ampio con una preparazione matematica relativamente elementare in calcolo e statistica.</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
-<section class="citation-detail"><h2>Come citare il testo pedagogico</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>La voce bibliografica sarà aggiornata con volume, pagine e DOI dopo la pubblicazione. Si prega di citare il testo pedagogico, non questo sito web.</p><pre><code>@unpublished{cunha2026anatomia,
+<section><h2>Informazioni su NeuralMath</h2><p class="bio">NeuralMath è un progetto educativo aperto sviluppato dal Dr. Americo Cunha Jr. Il suo obiettivo è rendere visibili, ispezionabili e riproducibili le operazioni matematiche all’interno di una piccola rete neurale per un pubblico ampio con una preparazione matematica relativamente elementare in calcolo e statistica.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>Come citare il testo pedagogico</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">NeuralMath · DOI: <a href="https://doi.org/10.5281/zenodo.23212380" target="_blank" rel="noopener noreferrer">doi:10.5281/zenodo.23212380</a>.</p><p>La voce bibliografica sarà aggiornata con volume, pagine e DOI dopo la pubblicazione. Si prega di citare il testo pedagogico, non questo sito web.</p><pre><code>@unpublished{cunha2026anatomia,
   author = {Cunha Jr, Americo},
   title  = {A anatomia matemática de uma rede neural},
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></section>
-<section><h2>Licenza</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Il testo esplicativo del sito e il materiale originale del sito sono disponibili con licenza CC BY 4.0, salvo diversa indicazione. Il PDF dell’articolo può essere soggetto alla licenza della sede di pubblicazione.</p></div></section>
+<section><h2>Licenza</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Il testo esplicativo del sito e il materiale originale del sito sono disponibili con licenza CC BY 4.0, salvo diversa indicazione. Il PDF dell’articolo può essere soggetto alla licenza della sede di pubblicazione.</p></div></section>
 <div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
 </main><script defer="" src="../assets/js/site.js"></script></body></html>
