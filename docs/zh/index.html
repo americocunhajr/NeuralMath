@@ -18,10 +18,10 @@
 <h1><span>NeuralMath</span></h1>
 <p class="subtitle">神经网络的数学剖析</p>
 <p>本文通过一个简单的分类问题，对人工神经网络作数学层面的入门介绍。线性分类器自然地引出人工神经元的概念；随后我们讨论权重、偏置、激活函数，以及如何把多个神经元组合成一个小型网络。训练过程通过损失函数、导数、梯度下降和反向传播来说明。最后，我们直接用 Python 实现该模型，使方程与算法之间的对应关系清晰可见。本文的目标是说明：解析几何、线性代数和微积分中的熟悉概念，可以为理解神经网络的基本机制提供一个易于进入的数学基础。</p>
-<div class="resource-bar"><a href="https://zenodo.org/records/23212380/files/NeuralMath_ZH.pdf?download=1">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ZH.ipynb">Google Colab</a></div>
+<div class="resource-bar"><a href="https://zenodo.org/records/23212380/files/NeuralMath_ZH.pdf?download=1" target="_blank" rel="noopener noreferrer">PDF</a><a href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ZH.ipynb" target="_blank" rel="noopener noreferrer">Google Colab</a></div>
 </div>
 <div class="citation"><h2>原始教学文本</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">本网页版本及其翻译均基于葡萄牙语原始手稿。</p></div>
-<nav aria-label="目录" class="toc"><h2>目录</h2><ol><li><a href="#计算机何时能够学习">计算机何时能够学习？</a></li><li><a href="#问题的数学表示">问题的数学表示</a></li><li><a href="#用一条直线进行分类">用一条直线进行分类</a></li><li><a href="#人工神经元">人工神经元</a></li><li><a href="#为什么需要激活函数">为什么需要激活函数？</a></li><li><a href="#构建一个小型神经网络">构建一个小型神经网络</a></li><li><a href="#神经网络如何学习">神经网络如何学习？</a></li><li><a href="#从数学到-python">从数学到 Python</a></li></ol></nav>
+<nav aria-label="目录" class="toc"><h2>目录</h2><ol><li><a href="#计算机何时能够学习" target="_blank" rel="noopener noreferrer">计算机何时能够学习？</a></li><li><a href="#问题的数学表示" target="_blank" rel="noopener noreferrer">问题的数学表示</a></li><li><a href="#用一条直线进行分类" target="_blank" rel="noopener noreferrer">用一条直线进行分类</a></li><li><a href="#人工神经元" target="_blank" rel="noopener noreferrer">人工神经元</a></li><li><a href="#为什么需要激活函数" target="_blank" rel="noopener noreferrer">为什么需要激活函数？</a></li><li><a href="#构建一个小型神经网络" target="_blank" rel="noopener noreferrer">构建一个小型神经网络</a></li><li><a href="#神经网络如何学习" target="_blank" rel="noopener noreferrer">神经网络如何学习？</a></li><li><a href="#从数学到-python" target="_blank" rel="noopener noreferrer">从数学到 Python</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="计算机何时能够学习"><span class="section-no">01</span><h2>计算机何时能够学习？</h2>
 <p>在日常生活中，我们几乎在不知不觉中不断作出分类判断。看到一个水果时，我们很快就能判断它是苹果还是橙子；手机收到一条消息时，我们会区分正常对话和不受欢迎的广告；在医学分析中，可以把多项测量结果结合起来辅助决策；在金融机构中，发放信贷之前也会综合评估多种信息。在这些例子里，都是把若干特征放在一起考虑，以得到一个回答。</p>
 <p>在许多传统计算机程序中，产生这个回答的规则由程序员明确写出。当规则已知并且能够清楚表述时，这种方法非常有效。然而，当数据变化很大，或者难以事先列出作出良好决策所需的每一个条件时，这种方法就会变得不那么有效。于是自然产生一个问题：</p>
@@ -37,7 +37,7 @@
 <p>因此，每个水果用一个有序对表示， <span class="math display">\[(x_1,x_2),\]</span> 其中 <span class="math display">\[x_1=\text{质量}
 \qquad\text{且}\qquad
 x_2=\text{直径}.\]</span></p>
-<p>于是，有序对 <span class="math inline">\((155,\;7.2)\)</span> 表示一个质量为 <span class="math inline">\(155\)</span> g、直径为 <span class="math inline">\(7.2\)</span> cm 的水果。把真实物体替换为两个数值测量后，我们就把每个水果对应到笛卡尔平面中的一个点：第一坐标表示质量，第二坐标表示直径。图 <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> 用一组假想的苹果和橙子说明了这种表示。</p>
+<p>于是，有序对 <span class="math inline">\((155,\;7.2)\)</span> 表示一个质量为 <span class="math inline">\(155\)</span> g、直径为 <span class="math inline">\(7.2\)</span> cm 的水果。把真实物体替换为两个数值测量后，我们就把每个水果对应到笛卡尔平面中的一个点：第一坐标表示质量，第二坐标表示直径。图 <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits" target="_blank" rel="noopener noreferrer">1</a> 用一组假想的苹果和橙子说明了这种表示。</p>
 <figure id="fig:fruits">
 <img alt="从物理观察到数学建模。首先用两个可测量的量—质量和直径—描述每个水果，然后用有序对 \((x_1,x_2)\) 表示它。在质量–直径平面中，每个观测都变成一个点，因此区分苹果和橙子可以重新表述为一个将两类点分开的几何问题。" decoding="async" loading="lazy" src="../assets/img/zh/Fig01.png">
 <figcaption>从物理观察到数学建模。首先用两个可测量的量—质量和直径—描述每个水果，然后用有序对 <span class="math inline">\((x_1,x_2)\)</span> 表示它。在质量–直径平面中，每个观测都变成一个点，因此区分苹果和橙子可以重新表述为一个将两类点分开的几何问题。</figcaption>
@@ -46,7 +46,7 @@ x_2=\text{直径}.\]</span></p>
 <p>我们从最简单的几何规则开始，考察是否只用一条直线就能把苹果点和橙子点充分分开。</p>
 </section><section class="article-section" id="用一条直线进行分类"><span class="section-no">03</span><h2>用一条直线进行分类</h2>
 <p>当每个水果都已经表示成笛卡尔平面中的一个点之后，分类就变成了一个几何问题：一条直线能否把苹果和橙子分开？这个问题体现了机器学习中一类重要方法的基本思想，这类方法称为<em>线性分类器</em>。</p>
-<p>考虑一条穿过数据点云的直线，如图 <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a> 所示。这条直线把平面分成两个半平面。如果大多数苹果点位于一侧，而大多数橙子点位于另一侧，那么一个新水果相对于这条直线的位置就可以用作分类规则。测量其质量和直径后，我们把水果表示成一个点，然后判断该点位于直线的哪一侧。</p>
+<p>考虑一条穿过数据点云的直线，如图 <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier" target="_blank" rel="noopener noreferrer">2</a> 所示。这条直线把平面分成两个半平面。如果大多数苹果点位于一侧，而大多数橙子点位于另一侧，那么一个新水果相对于这条直线的位置就可以用作分类规则。测量其质量和直径后，我们把水果表示成一个点，然后判断该点位于直线的哪一侧。</p>
 <figure id="fig:linear_classifier">
 <img alt="质量–直径平面中的线性分类器示例。直线充当决策边界：一个半平面中的点被赋予一类，而另一个半平面中的点被赋予另一类。因此，分类决定只取决于点位于直线的哪一侧。" decoding="async" loading="lazy" src="../assets/img/zh/Fig02.png"/>
 <figcaption>质量–直径平面中的线性分类器示例。直线充当决策边界：一个半平面中的点被赋予一类，而另一个半平面中的点被赋予另一类。因此，分类决定只取决于点位于直线的哪一侧。</figcaption>
@@ -74,7 +74,7 @@ s
 <p>当两类数据近似线性可分时，一条直线可能已经足够有效。更复杂的数据集则可能需要非线性边界。在讨论这一限制之前，我们先把刚才构造的分类器重新解释为一个基本计算单元：人工神经元。</p>
 </section><section class="article-section" id="人工神经元"><span class="section-no">04</span><h2>人工神经元</h2>
 <p>上一节中，我们使用表达式 <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> 来判断一个水果位于直线的哪一侧。同一个表达式也可以看作<em>人工神经元</em>计算过程的第一阶段。神经元接收数值输入，利用权重和偏置把它们组合起来，然后应用一个数学函数得到输出。</p>
-<p>在我们的例子中，输入是质量 <span class="math inline">\(x_1\)</span> 和直径 <span class="math inline">\(x_2\)</span>。每个输入都乘以一个称为<em>权重</em>的参数；这些乘积再与常数项 <span class="math inline">\(b\)</span> 相加。这个常数项称为<em>偏置</em>。图 <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> 示意了这一计算过程。</p>
+<p>在我们的例子中，输入是质量 <span class="math inline">\(x_1\)</span> 和直径 <span class="math inline">\(x_2\)</span>。每个输入都乘以一个称为<em>权重</em>的参数；这些乘积再与常数项 <span class="math inline">\(b\)</span> 相加。这个常数项称为<em>偏置</em>。图 <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron" target="_blank" rel="noopener noreferrer">3</a> 示意了这一计算过程。</p>
 <figure id="fig:artificial_neuron">
 <img alt="人工神经元的示意计算。每个输入 \(x_i\) 乘以一个权重 \(w_i\) ；所有乘积与偏置 \(b\) 相加，得到得分 \(s\) 。随后激活函数 \(g\) 把该得分变换成输出 \(\widehat{y}=g(s)\) 。这个输出既可以作为网络中的中间量，也可以作为最终预测。" decoding="async" loading="lazy" src="../assets/img/zh/Fig03.png"/>
 <figcaption>人工神经元的示意计算。每个输入 <span class="math inline">\(x_i\)</span> 乘以一个权重 <span class="math inline">\(w_i\)</span>；所有乘积与偏置 <span class="math inline">\(b\)</span> 相加，得到得分 <span class="math inline">\(s\)</span>。随后激活函数 <span class="math inline">\(g\)</span> 把该得分变换成输出 <span class="math inline">\(\widehat{y}=g(s)\)</span>。这个输出既可以作为网络中的中间量，也可以作为最终预测。</figcaption>
@@ -107,7 +107,7 @@ s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
 0, &amp; s&lt;0,\\
 s, &amp; s\geq0.
 \end{cases}\]</span> 虽然它由两个线性片段构成，但 ReLU 并不是全局线性的。其导数在 <span class="math inline">\(s&lt;0\)</span> 时为 <span class="math inline">\(0\)</span>，在 <span class="math inline">\(s&gt;0\)</span> 时为 <span class="math inline">\(1\)</span>。在 <span class="math inline">\(s=0\)</span> 处通常意义下的导数不存在，软件实现会为梯度采用某种约定。对于正输入，导数不会随着 <span class="math inline">\(s\)</span> 增大而缩小，因此可以避免 sigmoid 的一种饱和机制。</p>
-<p>图 <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> 直观比较了这三种激活函数：阶跃函数的突然跳变、sigmoid 的平滑过渡，以及 ReLU 在零点处斜率的变化。</p>
+<p>图 <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> 直观比较了这三种激活函数：阶跃函数的突然跳变、sigmoid 的平滑过渡，以及 ReLU 在零点处斜率的变化。</p>
 <figure id="fig:activation_functions">
 <img alt="神经网络入门讨论中常见的三种激活函数。阶跃函数作出突变式决策；sigmoid 在 \(0\) 与 \(1\) 之间提供平滑过渡；ReLU 抑制负输入并保留正输入。非线性激活函数可以防止多层网络退化为单个仿射变换。" decoding="async" loading="lazy" src="../assets/img/zh/Fig04.png"/>
 <figcaption>神经网络入门讨论中常见的三种激活函数。阶跃函数作出突变式决策；sigmoid 在 <span class="math inline">\(0\)</span> 与 <span class="math inline">\(1\)</span> 之间提供平滑过渡；ReLU 抑制负输入并保留正输入。非线性激活函数可以防止多层网络退化为单个仿射变换。</figcaption>
@@ -150,7 +150,7 @@ s, &amp; s\geq0.
 </section><section class="article-section" id="构建一个小型神经网络"><span class="section-no">06</span><h2>构建一个小型神经网络</h2>
 <p>现在考虑一个具有两个输入、一个包含三个神经元的隐藏层以及一个输出神经元的网络。输入仍然是 <span class="math display">\[x_1=\text{质量},
 \qquad
-x_2=\text{直径},\]</span> 并且这两个输入都连接到每一个隐藏层神经元，如图 <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a> 所示。</p>
+x_2=\text{直径},\]</span> 并且这两个输入都连接到每一个隐藏层神经元，如图 <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a> 所示。</p>
 <figure id="fig:small_network">
 <img alt="用于介绍神经网络计算的教学型 \(2\) – \(3\) – \(1\) 结构。两个输入—质量和直径—连接到隐藏层中的三个神经元。三个激活值 \(h_1,h_2,h_3\) 随后由输出神经元组合，得到预测 \(\widehat{y}\) 。每条连接都具有可调权重，每个神经元都具有偏置。" decoding="async" loading="lazy" src="../assets/img/zh/Fig05.png"/>
 <figcaption>用于介绍神经网络计算的教学型 <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> 结构。两个输入—质量和直径—连接到隐藏层中的三个神经元。三个激活值 <span class="math inline">\(h_1,h_2,h_3\)</span> 随后由输出神经元组合，得到预测 <span class="math inline">\(\widehat{y}\)</span>。每条连接都具有可调权重，每个神经元都具有偏置。</figcaption>
@@ -210,7 +210,7 @@ v_1&amp;v_2&amp;v_3
 <p>考虑一个质量为 <span class="math inline">\(140\)</span> g、直径为 <span class="math inline">\(7.0\)</span> cm 的水果，其正确类别是橙子，因此 <span class="math inline">\(y=0\)</span>。假设在训练的某个阶段，网络输出 <span class="math inline">\(\widehat{y}=0.80\)</span>。衡量预测与目标之间差异的一种简单方法是平方误差 <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> 对于这个例子， <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
 <p>这个表达式就是单个样本的一个<em>损失函数</em>。由于是平方，<span class="math inline">\(E\geq0\)</span>，而离目标越远的预测受到越大的惩罚。因子 <span class="math inline">\(1/2\)</span> 不会改变最小值的位置，但会使导数更简洁。二分类中经常使用其他损失函数，尤其是交叉熵。这里采用平方误差，是因为其代数形式透明，并且足以用于介绍优化和反向传播 。</p>
 <p>如果训练集包含 <span class="math inline">\(N\)</span> 个样本，一个整体误差度量可以取为平均损失 <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> 每个预测都依赖于网络的权重和偏置，因此 <span class="math inline">\(J\)</span> 也依赖于所有这些参数。训练的含义就是寻找使 <span class="math inline">\(J\)</span> 尽可能小的参数值。</p>
-<p>为了理解参数调整机制，先设想除一个权重 <span class="math inline">\(w\)</span> 之外的所有参数都固定。于是可以把损失看作函数 <span class="math inline">\(J=J(w)\)</span>。图 <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> 总结了训练的基本阶段，下面逐一解释。</p>
+<p>为了理解参数调整机制，先设想除一个权重 <span class="math inline">\(w\)</span> 之外的所有参数都固定。于是可以把损失看作函数 <span class="math inline">\(J=J(w)\)</span>。图 <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> 总结了训练的基本阶段，下面逐一解释。</p>
 <figure id="fig:training_cycle">
 <img alt="神经网络训练的基本循环。前向传播把输入变换成预测；损失函数衡量预测与目标之间的差异；反向传播利用链式法则计算梯度；梯度下降再利用这些梯度更新权重和偏置。经过许多个训练轮次反复执行这个循环，就是所谓的学习。" decoding="async" loading="lazy" src="../assets/img/zh/Fig06.png"/>
 <figcaption>神经网络训练的基本循环。前向传播把输入变换成预测；损失函数衡量预测与目标之间的差异；反向传播利用链式法则计算梯度；梯度下降再利用这些梯度更新权重和偏置。经过许多个训练轮次反复执行这个循环，就是所谓的学习。</figcaption>
@@ -237,7 +237,7 @@ w_{\mathrm{old}}
 \frac{\partial\widehat{y}}{\partial h} \,
 \frac{\partial h}{\partial w}.\]</span> 每个因子描述 <span class="math inline">\(w\)</span> 对最终损失影响过程中的一个阶段。更大的网络中包含许多这样的依赖链，反向传播把计算组织起来，使中间导数可以重复利用，而不必为每一个参数分别从头计算。</p>
 <p>在实际训练中，我们会使用很多样本。完整地遍历一次训练集称为一个<em>训练轮次（epoch）</em>。参数可以像本文后面的教学程序那样在处理每个样本后更新，也可以在处理一小组样本后更新；这种小组称为<em>小批量（mini-batch）</em>，在更大规模网络中十分常见。无论哪种情况，都需要在多个训练轮次中反复执行预测、计算损失、求梯度和更新参数的循环。</p>
-<p>一种具体的可视化方式，是跟踪同一个固定样本在训练不同阶段的预测。再次考虑质量为 <span class="math inline">\(140\)</span> g、直径为 <span class="math inline">\(7.0\)</span> cm、正确类别为橙子的水果。表 <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> 给出一个假想的变化过程。这些数值并不对应某一次特定程序运行，只用于说明机制。</p>
+<p>一种具体的可视化方式，是跟踪同一个固定样本在训练不同阶段的预测。再次考虑质量为 <span class="math inline">\(140\)</span> g、直径为 <span class="math inline">\(7.0\)</span> cm、正确类别为橙子的水果。表 <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> 给出一个假想的变化过程。这些数值并不对应某一次特定程序运行，只用于说明机制。</p>
 <div id="tab:learning">
 <table>
 <caption>同一个水果在训练过程中的假想预测变化。反复更新参数，可以使最初错误的输出逐渐移动到与目标标签一致的分类。</caption>
@@ -477,38 +477,38 @@ def make_figure():
 <pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
 <p>随后更新所有权重和偏置。由于每个训练轮次都重新打乱样本顺序，并且在处理每个观测后立即更新参数，这个实现属于一种基本的<em>随机梯度下降</em>。</p>
 <p>采用这里给定的随机种子和超参数时，最终平均损失通常在 <span class="math inline">\(10^{-5}\)</span> 到 <span class="math inline">\(10^{-4}\)</span> 的数量级，全部 <span class="math inline">\(64\)</span> 个训练样本以及八个示意性测试样本都会得到预期分类。这个结果不应被解释为严格的统计性能评估：数据是为教学目的构造的合成数据。它的作用是在一个不那么平凡的情形中说明，小型神经网络如何学习一条明显非线性的决策边界。</p>
-<p>图 <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> 显示了程序训练结束后在质量–直径平面中的输出。所有训练点都被画出。加粗曲线是等值线 <span class="math inline">\(\widehat{y}=0.5\)</span>，表示网络学得的决策边界；阴影区域表示网络预测的两类。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。图例放在主绘图区之外，以免遮挡任何数据点。</p>
+<p>图 <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> 显示了程序训练结束后在质量–直径平面中的输出。所有训练点都被画出。加粗曲线是等值线 <span class="math inline">\(\widehat{y}=0.5\)</span>，表示网络学得的决策边界；阴影区域表示网络预测的两类。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。图例放在主绘图区之外，以免遮挡任何数据点。</p>
 <figure id="fig:python_output">
 <img alt="神经网络训练后的 Python 输出。合成数据集包含 \(64\) 个训练样本，它们分布在质量–直径平面的较大区域中，另外还有八个样本保留用于示意性测试。加粗曲线是等值线 \(\widehat{y}=0.5\) ，表示学得的决策边界；阴影区域表示网络预测的类别。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。" decoding="async" loading="lazy" src="../assets/img/zh/Fig07.png"/>
 <figcaption>神经网络训练后的 Python 输出。合成数据集包含 <span class="math inline">\(64\)</span> 个训练样本，它们分布在质量–直径平面的较大区域中，另外还有八个样本保留用于示意性测试。加粗曲线是等值线 <span class="math inline">\(\widehat{y}=0.5\)</span>，表示学得的决策边界；阴影区域表示网络预测的类别。圆圈表示训练苹果，方块表示训练橙子，三角形表示测试苹果，叉号表示测试橙子。</figcaption>
 </figure>
 <p>我们从一条分隔两组简单点集的直线出发，最后得到一个更丰富的计算例子：通过自动调整网络参数，一条弯曲的边界从数据中形成。数学中并没有加入任何神秘的成分；实现只是把仿射组合、激活函数、导数、矩阵乘法和梯度下降更新这些基本运算，以更大的规模和更高的速度组织起来并反复执行 。</p>
-<p>与本文相关的全部计算材料—包括代码以及可直接运行的 Google Colab 笔记本—均可在 <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> 获取。该网站为希望探索、复现实例或在此基础上改编材料的读者提供统一入口。</p>
+<p>与本文相关的全部计算材料—包括代码以及可直接运行的 Google Colab 笔记本—均可在 <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> 获取。该网站为希望探索、复现实例或在此基础上改编材料的读者提供统一入口。</p>
 <h4 id="关于人工智能使用的说明">关于人工智能使用的说明。</h4>
 <p>作者使用 OpenAI 开发的 ChatGPT，辅助进行文本起草、语言修订、讲解结构组织以及教学图形生成。作者对作品的最终内容承担全部责任，包括数学材料的构思与发展、代码以及所使用的参考文献。</p>
 </section></div>
 <section class="article-section references"><span class="section-no">参考文献</span><h2>参考文献</h2><div class="thebibliography">
 <p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
 <p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
 <p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
 <p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
 <p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
 <p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>资源</h2><div class="resource-grid">
-<a class="resource-card" href="https://zenodo.org/records/23212380/files/NeuralMath_ZH.pdf?download=1"><strong>PDF</strong><span>神经网络的数学剖析</span></a>
-<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
-<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ZH.ipynb"><strong>Google Colab</strong><span>Notebook · 中文</span></a>
+<a class="resource-card" href="https://zenodo.org/records/23212380/files/NeuralMath_ZH.pdf?download=1" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>神经网络的数学剖析</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ZH.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · 中文</span></a>
 </div></section>
-<section><h2>关于 NeuralMath</h2><p class="bio">NeuralMath 是由 Dr. Americo Cunha Jr. 开发的开放教育项目。其目标是让一个小型神经网络内部的数学运算对具有较基础微积分和统计知识的广大读者可见、可检查并可复现。</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
-<section class="citation-detail"><h2>如何引用教学文本</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">NeuralMath · DOI: <a href="https://doi.org/10.5281/zenodo.23212380">doi:10.5281/zenodo.23212380</a>.</p><p>正式发表后，书目信息将补充卷号、页码和 DOI。请引用教学文本，而不是本网站。</p><pre><code>@unpublished{cunha2026anatomia,
+<section><h2>关于 NeuralMath</h2><p class="bio">NeuralMath 是由 Dr. Americo Cunha Jr. 开发的开放教育项目。其目标是让一个小型神经网络内部的数学运算对具有较基础微积分和统计知识的广大读者可见、可检查并可复现。</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>如何引用教学文本</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">NeuralMath · DOI: <a href="https://doi.org/10.5281/zenodo.23212380" target="_blank" rel="noopener noreferrer">doi:10.5281/zenodo.23212380</a>.</p><p>正式发表后，书目信息将补充卷号、页码和 DOI。请引用教学文本，而不是本网站。</p><pre><code>@unpublished{cunha2026anatomia,
   author = {Cunha Jr, Americo},
   title  = {A anatomia matemática de uma rede neural},
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></section>
-<section><h2>许可</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>除非另有说明，本网站的说明文字和原创网站材料采用 CC BY 4.0 许可。文章 PDF 可能受出版机构许可约束。</p></div></section>
+<section><h2>许可</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>除非另有说明，本网站的说明文字和原创网站材料采用 CC BY 4.0 许可。文章 PDF 可能受出版机构许可约束。</p></div></section>
 <div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
 </main><script defer="" src="../assets/js/site.js"></script></body></html>

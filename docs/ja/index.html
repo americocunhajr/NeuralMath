@@ -18,10 +18,10 @@
 <h1><span>NeuralMath</span></h1>
 <p class="subtitle">ニューラルネットワークの数学的解剖</p>
 <p>本稿では，単純な分類問題を通して人工ニューラルネットワークを数学的に導入する。線形分類器から人工ニューロンの概念を自然に導き，続いて重み，バイアス，活性化関数，および複数のニューロンを小さなネットワークへ組み合わせる方法を説明する。学習については，損失関数，導関数，勾配降下法，逆伝播を用いて導入する。最後にモデルを Python で直接実装し，数式とアルゴリズムの対応を明示する。本稿の目的は，解析幾何，線形代数，微積分で馴染みのある考え方が，ニューラルネットワークの基本的な仕組みを理解するための親しみやすい基礎になることを示すことである。</p>
-<div class="resource-bar"><a href="https://zenodo.org/records/23212380/files/NeuralMath_JA.pdf?download=1">PDF</a><a href="https://github.com/americocunhajr/NeuralMath">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_JA.ipynb">Google Colab</a></div>
+<div class="resource-bar"><a href="https://zenodo.org/records/23212380/files/NeuralMath_JA.pdf?download=1" target="_blank" rel="noopener noreferrer">PDF</a><a href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_JA.ipynb" target="_blank" rel="noopener noreferrer">Google Colab</a></div>
 </div>
 <div class="citation"><h2>原典の教育用テキスト</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">このウェブ版と各翻訳は，ポルトガル語の原稿を原典としています。</p></div>
-<nav aria-label="目次" class="toc"><h2>目次</h2><ol><li><a href="#コンピュータはいつ学習できるのか">コンピュータはいつ学習できるのか？</a></li><li><a href="#問題を数学的に表現する">問題を数学的に表現する</a></li><li><a href="#分類器としての直線">分類器としての直線</a></li><li><a href="#人工ニューロン">人工ニューロン</a></li><li><a href="#なぜ活性化関数が必要なのか">なぜ活性化関数が必要なのか？</a></li><li><a href="#小さなニューラルネットワークを構成する">小さなニューラルネットワークを構成する</a></li><li><a href="#ニューラルネットワークはどのように学習するのか">ニューラルネットワークはどのように学習するのか？</a></li><li><a href="#数学から-python-へ">数学から Python へ</a></li></ol></nav>
+<nav aria-label="目次" class="toc"><h2>目次</h2><ol><li><a href="#コンピュータはいつ学習できるのか" target="_blank" rel="noopener noreferrer">コンピュータはいつ学習できるのか？</a></li><li><a href="#問題を数学的に表現する" target="_blank" rel="noopener noreferrer">問題を数学的に表現する</a></li><li><a href="#分類器としての直線" target="_blank" rel="noopener noreferrer">分類器としての直線</a></li><li><a href="#人工ニューロン" target="_blank" rel="noopener noreferrer">人工ニューロン</a></li><li><a href="#なぜ活性化関数が必要なのか" target="_blank" rel="noopener noreferrer">なぜ活性化関数が必要なのか？</a></li><li><a href="#小さなニューラルネットワークを構成する" target="_blank" rel="noopener noreferrer">小さなニューラルネットワークを構成する</a></li><li><a href="#ニューラルネットワークはどのように学習するのか" target="_blank" rel="noopener noreferrer">ニューラルネットワークはどのように学習するのか？</a></li><li><a href="#数学から-python-へ" target="_blank" rel="noopener noreferrer">数学から Python へ</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="コンピュータはいつ学習できるのか"><span class="section-no">01</span><h2>コンピュータはいつ学習できるのか？</h2>
 <p>日常生活では，私たちはほとんど意識することなく分類の判断を行っている。果物を見ればすぐにリンゴかオレンジかを見分け，携帯電話にメッセージが届けば通常の会話と不要な広告を区別する。医療分析では複数の測定値を組み合わせて判断を支援でき，金融機関では信用供与の前にさまざまな情報が評価される。これらの例ではいずれも，複数の特徴を同時に考慮して一つの答えを得ている。</p>
 <p>多くの従来型コンピュータプログラムでは，その答えを生み出す規則をプログラマが明示的に記述する。この方法は，規則が既知で明確に表現できる場合には有効である。しかし，データの変動が大きい場合や，良い判断に必要な条件をすべて事前に記述することが難しい場合には，この方法は十分に機能しなくなる。そこで自然に次の問いが生じる。</p>
@@ -36,7 +36,7 @@
 <p>したがって，各果物を順序対 <span class="math display">\[(x_1,x_2),\]</span> で表し， <span class="math display">\[x_1=\text{質量}
 \qquad\text{および}\qquad
 x_2=\text{直径}\]</span> とする。</p>
-<p>たとえば <span class="math inline">\((155,\;7.2)\)</span> は，質量 <span class="math inline">\(155\)</span> g，直径 <span class="math inline">\(7.2\)</span> cm の果物を表す。物理的な物体を二つの数値測定値に置き換えることで，各果物をデカルト平面上の点に対応させる。第1座標が質量，第2座標が直径である。図 <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits">1</a> は，仮想的なリンゴとオレンジの集合についてこの表現を示している。</p>
+<p>たとえば <span class="math inline">\((155,\;7.2)\)</span> は，質量 <span class="math inline">\(155\)</span> g，直径 <span class="math inline">\(7.2\)</span> cm の果物を表す。物理的な物体を二つの数値測定値に置き換えることで，各果物をデカルト平面上の点に対応させる。第1座標が質量，第2座標が直径である。図 <a data-reference="fig:fruits" data-reference-type="ref" href="#fig:fruits" target="_blank" rel="noopener noreferrer">1</a> は，仮想的なリンゴとオレンジの集合についてこの表現を示している。</p>
 <figure id="fig:fruits">
 <img alt="物理的観察から数学的モデル化へ。各果物はまず，質量と直径という二つの測定可能な量によって記述され，その後，順序対 \((x_1,x_2)\) で表される。質量–直径平面では各観測が一つの点となるため，リンゴとオレンジの識別は二つのクラスを分離する幾何学的問題として捉え直すことができる。" decoding="async" loading="lazy" src="../assets/img/ja/Fig01.png">
 <figcaption>物理的観察から数学的モデル化へ。各果物はまず，質量と直径という二つの測定可能な量によって記述され，その後，順序対 <span class="math inline">\((x_1,x_2)\)</span> で表される。質量–直径平面では各観測が一つの点となるため，リンゴとオレンジの識別は二つのクラスを分離する幾何学的問題として捉え直すことができる。</figcaption>
@@ -45,7 +45,7 @@ x_2=\text{直径}\]</span> とする。</p>
 <p>まず最も単純な幾何学的規則から始め，一本の直線だけでリンゴの点とオレンジの点を十分に分離できるかを考える。</p>
 </section><section class="article-section" id="分類器としての直線"><span class="section-no">03</span><h2>分類器としての直線</h2>
 <p>各果物をデカルト平面上の点として表すと，分類は幾何学的問題になる。一本の直線でリンゴとオレンジを分けられるだろうか。この問いは，<em>線形分類器</em>と呼ばれる重要な機械学習手法の基本的な考え方を表している。</p>
-<p>図 <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier">2</a> のように，データ点の集まりを横切る一本の直線を考える。この直線は平面を二つの半平面に分ける。リンゴの点の大部分が一方に，オレンジの点の大部分が他方にあるなら，新しい果物が直線のどちら側に位置するかを分類規則として使える。質量と直径を測り，果物を点として表し，その点がどちらの半平面にあるかを調べればよい。</p>
+<p>図 <a data-reference="fig:linear_classifier" data-reference-type="ref" href="#fig:linear_classifier" target="_blank" rel="noopener noreferrer">2</a> のように，データ点の集まりを横切る一本の直線を考える。この直線は平面を二つの半平面に分ける。リンゴの点の大部分が一方に，オレンジの点の大部分が他方にあるなら，新しい果物が直線のどちら側に位置するかを分類規則として使える。質量と直径を測り，果物を点として表し，その点がどちらの半平面にあるかを調べればよい。</p>
 <figure id="fig:linear_classifier">
 <img alt="質量–直径平面における線形分類器の例。直線は決定境界として働き，一方の半平面にある点には一つのクラスが，他方の半平面にある点には別のクラスが割り当てられる。したがって判断は，点が直線のどちら側にあるかだけで決まる。" decoding="async" loading="lazy" src="../assets/img/ja/Fig02.png"/>
 <figcaption>質量–直径平面における線形分類器の例。直線は決定境界として働き，一方の半平面にある点には一つのクラスが，他方の半平面にある点には別のクラスが割り当てられる。したがって判断は，点が直線のどちら側にあるかだけで決まる。</figcaption>
@@ -73,7 +73,7 @@ s
 <p>クラスがおおよそ線形分離可能なら，一本の直線で十分に機能する場合がある。しかし，より複雑なデータ集合では非線形な境界が必要になる。その限界を扱う前に，いま構成した分類器を基本的な計算単位，すなわち人工ニューロンとして捉え直す。</p>
 </section><section class="article-section" id="人工ニューロン"><span class="section-no">04</span><h2>人工ニューロン</h2>
 <p>前節では， <span class="math display">\[s=w_1x_1+w_2x_2+b\]</span> という式を使って，果物が直線のどちら側にあるかを決めた。同じ式は，<em>人工ニューロン</em>が行う計算の最初の段階とみなすことができる。ニューロンは数値入力を受け取り，重みとバイアスを用いてそれらを組み合わせ，その後，数学的な関数を適用して出力を得る。</p>
-<p>本例では入力は質量 <span class="math inline">\(x_1\)</span> と直径 <span class="math inline">\(x_2\)</span> である。各入力には<em>重み</em>と呼ばれるパラメータが掛けられ，その積を，<em>バイアス</em>と呼ばれる定数項 <span class="math inline">\(b\)</span> とともに加える。図 <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron">3</a> にこの計算を模式的に示す。</p>
+<p>本例では入力は質量 <span class="math inline">\(x_1\)</span> と直径 <span class="math inline">\(x_2\)</span> である。各入力には<em>重み</em>と呼ばれるパラメータが掛けられ，その積を，<em>バイアス</em>と呼ばれる定数項 <span class="math inline">\(b\)</span> とともに加える。図 <a data-reference="fig:artificial_neuron" data-reference-type="ref" href="#fig:artificial_neuron" target="_blank" rel="noopener noreferrer">3</a> にこの計算を模式的に示す。</p>
 <figure id="fig:artificial_neuron">
 <img alt="人工ニューロンの模式的な動作。各入力 \(x_i\) に重み \(w_i\) を掛け，それらの積をバイアス \(b\) と加えてスコア \(s\) を得る。次に活性化関数 \(g\) がこのスコアを出力 \(\widehat{y}=g(s)\) に変換する。この出力は中間量としても最終予測としても利用できる。" decoding="async" loading="lazy" src="../assets/img/ja/Fig03.png"/>
 <figcaption>人工ニューロンの模式的な動作。各入力 <span class="math inline">\(x_i\)</span> に重み <span class="math inline">\(w_i\)</span> を掛け，それらの積をバイアス <span class="math inline">\(b\)</span> と加えてスコア <span class="math inline">\(s\)</span> を得る。次に活性化関数 <span class="math inline">\(g\)</span> がこのスコアを出力 <span class="math inline">\(\widehat{y}=g(s)\)</span> に変換する。この出力は中間量としても最終予測としても利用できる。</figcaption>
@@ -106,7 +106,7 @@ s &amp;= w_1x_1+w_2x_2+b,\\[4pt]
 0, &amp; s&lt;0,\\
 s, &amp; s\geq0.
 \end{cases}\]</span> ReLU は二つの線形部分から構成されているが，全体としては線形ではない。その導関数は <span class="math inline">\(s&lt;0\)</span> で <span class="math inline">\(0\)</span>，<span class="math inline">\(s&gt;0\)</span> で <span class="math inline">\(1\)</span> である。<span class="math inline">\(s=0\)</span> では通常の導関数は存在しないため，ソフトウェア実装では勾配に対して何らかの約束を採用する。正の入力に対しては，<span class="math inline">\(s\)</span> が大きくなっても導関数は小さくならないため，シグモイドに見られる飽和の一つを避けられる。</p>
-<p>図 <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions">4</a> は，これら三つの活性化関数を視覚的に比較している。ステップ関数の急激な跳び，シグモイドの滑らかな遷移，ReLU の傾きの変化が確認できる。</p>
+<p>図 <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> は，これら三つの活性化関数を視覚的に比較している。ステップ関数の急激な跳び，シグモイドの滑らかな遷移，ReLU の傾きの変化が確認できる。</p>
 <figure id="fig:activation_functions">
 <img alt="ニューラルネットワークの導入でよく扱われる三つの活性化関数の比較。ステップ関数は急激な二値判断を行い，シグモイドは \(0\) と \(1\) の間を滑らかに遷移し，ReLU は負の入力を抑えつつ正の入力をそのまま通す。非線形な活性化関数があることで，多層のネットワークが一つのアフィン変換に縮約されることを防げる。" decoding="async" loading="lazy" src="../assets/img/ja/Fig04.png"/>
 <figcaption>ニューラルネットワークの導入でよく扱われる三つの活性化関数の比較。ステップ関数は急激な二値判断を行い，シグモイドは <span class="math inline">\(0\)</span> と <span class="math inline">\(1\)</span> の間を滑らかに遷移し，ReLU は負の入力を抑えつつ正の入力をそのまま通す。非線形な活性化関数があることで，多層のネットワークが一つのアフィン変換に縮約されることを防げる。</figcaption>
@@ -149,7 +149,7 @@ s, &amp; s\geq0.
 </section><section class="article-section" id="小さなニューラルネットワークを構成する"><span class="section-no">06</span><h2>小さなニューラルネットワークを構成する</h2>
 <p>ここでは，二つの入力，三つのニューロンを含む一つの隠れ層，そして一つの出力ニューロンからなるネットワークを考える。入力は引き続き <span class="math display">\[x_1=\text{質量},
 \qquad
-x_2=\text{直径}\]</span> であり，図 <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network">5</a> に示すように，どちらも各隠れニューロンへ入力される。</p>
+x_2=\text{直径}\]</span> であり，図 <a data-reference="fig:small_network" data-reference-type="ref" href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a> に示すように，どちらも各隠れニューロンへ入力される。</p>
 <figure id="fig:small_network">
 <img alt="ニューラルネットワークの計算を導入するための教育的な \(2\) – \(3\) – \(1\) 構成。二つの入力，すなわち質量と直径が，隠れ層の三つのニューロンへ入力される。そこで得られた活性 \(h_1,h_2,h_3\) を出力ニューロンが組み合わせ，予測 \(\widehat{y}\) を生成する。すべての接続には調整可能な重みがあり，各ニューロンにはバイアスがある。" decoding="async" loading="lazy" src="../assets/img/ja/Fig05.png"/>
 <figcaption>ニューラルネットワークの計算を導入するための教育的な <span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span> 構成。二つの入力，すなわち質量と直径が，隠れ層の三つのニューロンへ入力される。そこで得られた活性 <span class="math inline">\(h_1,h_2,h_3\)</span> を出力ニューロンが組み合わせ，予測 <span class="math inline">\(\widehat{y}\)</span> を生成する。すべての接続には調整可能な重みがあり，各ニューロンにはバイアスがある。</figcaption>
@@ -209,7 +209,7 @@ v_1&amp;v_2&amp;v_3
 <p>質量 <span class="math inline">\(140\)</span> g，直径 <span class="math inline">\(7.0\)</span> cm の果物を考え，正しいクラスはオレンジ，すなわち <span class="math inline">\(y=0\)</span> とする。学習のある時点でネットワークが <span class="math inline">\(\widehat{y}=0.80\)</span> を出力したとしよう。予測と目標値のずれを測る単純な方法の一つが二乗誤差 <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2\]</span> である。この例では <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32\]</span> となる。</p>
 <p>この式は，一つの例に対する<em>損失関数</em>である。二乗なので <span class="math inline">\(E\geq0\)</span> であり，目標値から遠い予測ほど大きな罰を受ける。係数 <span class="math inline">\(1/2\)</span> は最小値の位置を変えないが，微分を簡単にする。二値分類では，特に交差エントロピーなど別の損失もよく使われる。ここでは代数が透明であり，最適化と逆伝播を導入するのに十分であるため，二乗誤差を用いる 。</p>
 <p>学習データが <span class="math inline">\(N\)</span> 個の例を含むなら，全体の尺度として平均損失 <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i\]</span> を使える。各予測はネットワークの重みとバイアスに依存するので，<span class="math inline">\(J\)</span> もそれらすべてのパラメータに依存する。学習とは，<span class="math inline">\(J\)</span> を小さくするパラメータ値を探索することである。</p>
-<p>調整の仕組みを理解するため，まず一つの重み <span class="math inline">\(w\)</span> 以外のすべてのパラメータを固定して考える。このとき損失を <span class="math inline">\(J=J(w)\)</span> という一変数関数として見られる。図 <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle">6</a> は，これから説明する学習の基本段階をまとめたものである。</p>
+<p>調整の仕組みを理解するため，まず一つの重み <span class="math inline">\(w\)</span> 以外のすべてのパラメータを固定して考える。このとき損失を <span class="math inline">\(J=J(w)\)</span> という一変数関数として見られる。図 <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> は，これから説明する学習の基本段階をまとめたものである。</p>
 <figure id="fig:training_cycle">
 <img alt="ニューラルネットワークの基本的な学習サイクル。順伝播によって入力から予測を得て，損失関数で予測と目標値のずれを測る。逆伝播では連鎖律を用いて勾配を計算し，勾配降下法によってその勾配を使い重みとバイアスを更新する。このサイクルを多数のエポックにわたって繰り返すことが学習である。" decoding="async" loading="lazy" src="../assets/img/ja/Fig06.png"/>
 <figcaption>ニューラルネットワークの基本的な学習サイクル。順伝播によって入力から予測を得て，損失関数で予測と目標値のずれを測る。逆伝播では連鎖律を用いて勾配を計算し，勾配降下法によってその勾配を使い重みとバイアスを更新する。このサイクルを多数のエポックにわたって繰り返すことが学習である。</figcaption>
@@ -236,7 +236,7 @@ w_{\mathrm{old}}
 \frac{\partial\widehat{y}}{\partial h} \,
 \frac{\partial h}{\partial w}\]</span> を得る。各因子は，<span class="math inline">\(w\)</span> が最終的な損失に影響する過程の一段階を表す。より大きなネットワークにはこのような連鎖が多数存在し，逆伝播は中間的な導関数を再利用することで，各パラメータごとに別々に再計算することを避ける。</p>
 <p>実際の学習では多数の例を用いる。学習集合全体を一度通過することを一つの<em>エポック</em>と呼ぶ。後で示す教育用プログラムのように各例の後にパラメータを更新することもできるし，大規模なネットワークで一般的なように，<em>ミニバッチ</em>と呼ばれる小さな例の集合ごとに更新することもできる。いずれの場合も，予測，損失，勾配，更新のサイクルを多くのエポックにわたって繰り返す。</p>
-<p>この変化を具体的に見る方法として，一つの固定された例に対する予測が学習の各段階でどう変わるかを追うことができる。再び，質量 <span class="math inline">\(140\)</span> g，直径 <span class="math inline">\(7.0\)</span> cm で正しいクラスがオレンジである果物を考える。表 <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning">1</a> は仮想的な推移を示す。これらの値は特定の実行結果ではなく，仕組みを説明するための例にすぎない。</p>
+<p>この変化を具体的に見る方法として，一つの固定された例に対する予測が学習の各段階でどう変わるかを追うことができる。再び，質量 <span class="math inline">\(140\)</span> g，直径 <span class="math inline">\(7.0\)</span> cm で正しいクラスがオレンジである果物を考える。表 <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> は仮想的な推移を示す。これらの値は特定の実行結果ではなく，仕組みを説明するための例にすぎない。</p>
 <div id="tab:learning">
 <table>
 <caption>学習中，同じ果物に対するネットワークの予測が変化する仮想的な例。パラメータ更新を繰り返すことで，初めは誤っていた出力が目標ラベルと整合する分類へ近づいていく。</caption>
@@ -477,38 +477,38 @@ def make_figure():
 <pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
 <p>に現れる。その後，すべての重みとバイアスが更新される。各エポックで例の順序を入れ替え，観測ごとにパラメータを更新しているので，この実装は基本的な<em>確率的勾配降下法</em>の一例である。</p>
 <p>ここで用いた乱数シードとハイパーパラメータでは，最終的な平均損失はおおよそ <span class="math inline">\(10^{-5}\)</span> から <span class="math inline">\(10^{-4}\)</span> の程度となり，64個の学習例と8個の説明用テスト例はすべて期待された分類を受ける。ただし，これは厳密な統計的性能評価と解釈してはならない。データは合成であり，教育目的で構成されたものである。その役割は，比較的単純すぎない設定において，小さなニューラルネットワークが明確に非線形な決定境界を学べることを示すことにある。</p>
-<p>図 <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output">7</a> は，学習後の最終的なプログラム出力を質量–直径平面上に示している。すべての学習点を表示している。強調された曲線は <span class="math inline">\(\widehat{y}=0.5\)</span> の等値線であり，ネットワークが学習した決定境界を表す。色付きの領域はネットワークが予測する二つのクラスを示す。円は学習用リンゴ，四角は学習用オレンジ，三角はテスト用リンゴ，×印はテスト用オレンジを表す。凡例はデータ点を隠さないよう主たる描画領域の外側に配置している。</p>
+<p>図 <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> は，学習後の最終的なプログラム出力を質量–直径平面上に示している。すべての学習点を表示している。強調された曲線は <span class="math inline">\(\widehat{y}=0.5\)</span> の等値線であり，ネットワークが学習した決定境界を表す。色付きの領域はネットワークが予測する二つのクラスを示す。円は学習用リンゴ，四角は学習用オレンジ，三角はテスト用リンゴ，×印はテスト用オレンジを表す。凡例はデータ点を隠さないよう主たる描画領域の外側に配置している。</p>
 <figure id="fig:python_output">
 <img alt="ニューラルネットワークの学習後に得られた Python の出力。合成データ集合には，質量–直径平面の広い領域に分布する64個の学習例と，説明用テストとして別に確保した8個の例が含まれる。強調された曲線は \(\widehat{y}=0.5\) の等値線であり，学習された決定境界を表す。色付きの領域はネットワークが予測するクラスを示す。円は学習用リンゴ，四角は学習用オレンジ，三角はテスト用リンゴ，×印はテスト用オレンジを表す。" decoding="async" loading="lazy" src="../assets/img/ja/Fig07.png"/>
 <figcaption>ニューラルネットワークの学習後に得られた Python の出力。合成データ集合には，質量–直径平面の広い領域に分布する64個の学習例と，説明用テストとして別に確保した8個の例が含まれる。強調された曲線は <span class="math inline">\(\widehat{y}=0.5\)</span> の等値線であり，学習された決定境界を表す。色付きの領域はネットワークが予測するクラスを示す。円は学習用リンゴ，四角は学習用オレンジ，三角はテスト用リンゴ，×印はテスト用オレンジを表す。</figcaption>
 </figure>
 <p>本稿は，二つの単純な点群を分ける一本の直線から始まり，ネットワークのパラメータを自動調整することで曲線状の境界が生じる，より豊かな計算例へ進んだ。数学的には何も神秘的なものを追加していない。実装は，アフィン結合，活性化関数，導関数，行列積，勾配降下法による更新を，より大きな規模で高速に整理して繰り返しているだけである 。</p>
-<p>本稿に関連するすべての計算資料 — コードおよび実行可能な Google Colab ノートブックを含む — は <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> で公開している。読者はそこから例を調べ，再現し，改変するための資料へ一括してアクセスできる。</p>
+<p>本稿に関連するすべての計算資料 — コードおよび実行可能な Google Colab ノートブックを含む — は <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> で公開している。読者はそこから例を調べ，再現し，改変するための資料へ一括してアクセスできる。</p>
 <h4 id="ai-利用に関する声明">AI 利用に関する声明。</h4>
 <p>著者は，原稿作成，言語上の推敲，説明構成の整理，および教育用図の作成を支援するツールとして，OpenAI が開発した ChatGPT を使用した。本稿の最終的な内容，数学的素材の構想と展開，コード，使用した参考文献を含め，最終成果に対する責任はすべて著者が負う。</p>
 </section></div>
 <section class="article-section references"><span class="section-no">参考文献</span><h2>参考文献</h2><div class="thebibliography">
 <p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
 <p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org">http://www.deeplearningbook.org</a></p>
+<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
 <p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
 <p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
 <p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com">https://neuralnetworksanddeeplearning.com</a></p>
+<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
 <p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>リソース</h2><div class="resource-grid">
-<a class="resource-card" href="https://zenodo.org/records/23212380/files/NeuralMath_JA.pdf?download=1"><strong>PDF</strong><span>ニューラルネットワークの数学的解剖</span></a>
-<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
-<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_JA.ipynb"><strong>Google Colab</strong><span>Notebook · 日本語</span></a>
+<a class="resource-card" href="https://zenodo.org/records/23212380/files/NeuralMath_JA.pdf?download=1" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>ニューラルネットワークの数学的解剖</span></a>
+<a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
+<a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_JA.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · 日本語</span></a>
 </div></section>
-<section><h2>NeuralMathについて</h2><p class="bio">NeuralMath は Dr. Americo Cunha Jr. が開発したオープンな教育プロジェクトです。微積分と統計の基礎的な数学知識を持つ幅広い読者に向けて，小規模なニューラルネットワーク内部の数学的演算を可視化し，検証可能かつ再現可能にすることを目的としています。</p><p class="linksline"><a href="https://americocunha.org">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en">Google Scholar</a></p></section>
-<section class="citation-detail"><h2>教育用テキストの引用方法</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">NeuralMath · DOI: <a href="https://doi.org/10.5281/zenodo.23212380">doi:10.5281/zenodo.23212380</a>.</p><p>出版後に巻・ページ・DOIを加えて書誌情報を更新します。このウェブサイトではなく，教育用テキストを引用してください。</p><pre><code>@unpublished{cunha2026anatomia,
+<section><h2>NeuralMathについて</h2><p class="bio">NeuralMath は Dr. Americo Cunha Jr. が開発したオープンな教育プロジェクトです。微積分と統計の基礎的な数学知識を持つ幅広い読者に向けて，小規模なニューラルネットワーク内部の数学的演算を可視化し，検証可能かつ再現可能にすることを目的としています。</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
+<section class="citation-detail"><h2>教育用テキストの引用方法</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">NeuralMath · DOI: <a href="https://doi.org/10.5281/zenodo.23212380" target="_blank" rel="noopener noreferrer">doi:10.5281/zenodo.23212380</a>.</p><p>出版後に巻・ページ・DOIを加えて書誌情報を更新します。このウェブサイトではなく，教育用テキストを引用してください。</p><pre><code>@unpublished{cunha2026anatomia,
   author = {Cunha Jr, Americo},
   title  = {A anatomia matemática de uma rede neural},
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></section>
-<section><h2>ライセンス</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" rel="license"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>ウェブサイトの解説文と独自コンテンツは，特記のない限り CC BY 4.0 で利用できます。論文PDFには掲載媒体のライセンスが適用される場合があります。</p></div></section>
+<section><h2>ライセンス</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>ウェブサイトの解説文と独自コンテンツは，特記のない限り CC BY 4.0 で利用できます。論文PDFには掲載媒体のライセンスが適用される場合があります。</p></div></section>
 <div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
 </main><script defer="" src="../assets/js/site.js"></script></body></html>
