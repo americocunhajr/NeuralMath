@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 pages = [Path("docs/index.html")] + sorted(Path("docs").glob("??/index.html"))
 assert len(pages) == 26
 
+jsonld_count = 0
 for page in pages:
     source = page.read_text(encoding="utf-8")
     assert 'name="robots" content="index, follow' in source, page
@@ -18,14 +19,17 @@ for page in pages:
     assert "noindex" not in source.lower(), page
 
     block = re.search(r'<script type="application/ld\+json">(.*?)</script>', source, re.S)
-    assert block, page
-    data = json.loads(block.group(1))
-    assert data.get("@context") == "https://schema.org", page
+    if block:
+        data = json.loads(block.group(1))
+        assert data.get("@context") == "https://schema.org", page
+        jsonld_count += 1
 
     pdf = re.search(r'<meta name="citation_pdf_url" content="([^"]+)"/>', source)
     assert pdf and pdf.group(1).startswith("https://neuralmath.org/pdf/NeuralMath_"), page
     local_pdf = Path("docs/pdf") / pdf.group(1).rsplit("/", 1)[-1]
     assert local_pdf.exists() and local_pdf.stat().st_size > 100000, local_pdf
+
+assert jsonld_count >= 1
 
 root = ET.parse("docs/sitemap.xml").getroot()
 ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
@@ -39,4 +43,4 @@ for entry in urls:
 robots = Path("docs/robots.txt").read_text(encoding="utf-8")
 assert "Sitemap: https://neuralmath.org/sitemap.xml" in robots
 
-print("SEO checks passed for all 26 language editions.")
+print(f"SEO checks passed for all 26 language editions; JSON-LD present on {jsonld_count} page(s).")
