@@ -1,0 +1,51 @@
+name: Apply technical SEO
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/apply-technical-seo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply configuration
+        run: python scripts/apply_technical_seo.py
+      - name: Validate no pedagogical content changed
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, xml.etree.ElementTree as ET
+          pages=[Path("docs/index.html")]+sorted(Path("docs").glob("??/index.html"))
+          assert len(pages)==26
+          for p in pages:
+              s=p.read_text(encoding="utf-8")
+              assert s.count("<!-- SEO-META-START -->")==1
+              assert s.count("<!-- SEO-META-END -->")==1
+              assert 'name="robots" content="index, follow' in s
+              assert 'property="og:title"' in s
+              assert 'property="og:image"' in s
+              assert 'name="twitter:card"' in s
+              assert s.count('hreflang=')==27
+              assert "noindex" not in s.lower()
+          root=ET.parse("docs/sitemap.xml").getroot()
+          ns={"s":"http://www.sitemaps.org/schemas/sitemap/0.9"}
+          urls=root.findall("s:url",ns)
+          assert len(urls)==26
+          assert all(u.find("s:lastmod",ns) is not None for u in urls)
+          PY
+      - name: Commit configuration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs scripts/apply_technical_seo.py
+          git diff --cached --quiet || git commit -m "Apply technical SEO metadata"
+          git push origin main
