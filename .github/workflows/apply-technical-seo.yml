@@ -34,7 +34,7 @@ jobs:
               assert 'property="og:title"' in s
               assert 'property="og:image"' in s
               assert 'name="twitter:card"' in s
-              assert s.count('hreflang=')==27
+              assert s.count('rel="alternate"')==27
               assert "noindex" not in s.lower()
           root=ET.parse("docs/sitemap.xml").getroot()
           ns={"s":"http://www.sitemaps.org/schemas/sitemap/0.9"}
