@@ -5,6 +5,22 @@
 <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>NeuralMath — 神经网络的数学剖析</title>
 <meta content="本文通过一个简单的分类问题，对人工神经网络作数学层面的入门介绍。线性分类器自然地引出人工神经元的概念；随后我们讨论权重、偏置、激活函数，以及如何把多个神经元组合成一个小型网络。训练过程通过损失函数、导数、梯度下降和反向传播来说明。最后，我们直接用 Python 实现该模型，使方程与算法之间的对应关系清晰可见。本文的目标是说明：解析几何、线性代数和微积分中的熟悉概念，可以为理解神经网络的基本机制提供一个易于进入的数学基础。" name="description"/><meta content="#090d12" name="theme-color"/><meta name="citation_title" content="神经网络的数学剖析"/><meta name="citation_author" content="Cunha Jr., Americo"/><meta name="citation_publication_date" content="2026/10"/><meta name="citation_language" content="zh-Hans"/><meta name="citation_pdf_url" content="https://neuralmath.org/pdf/NeuralMath_ZH.pdf"/>
+<!-- SEO-META-START -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="NeuralMath"/>
+<meta property="og:title" content="神经网络的数学剖析"/>
+<meta property="og:description" content="本文通过一个简单的分类问题，对人工神经网络作数学层面的入门介绍。线性分类器自然地引出人工神经元的概念；随后我们讨论权重、偏置、激活函数，以及如何把多个神经元组合成一个小型网络。训练过程通过损失函数、导数、梯度下降和反向传播来说明。最后，我们直接用 Python 实现该模型，使方程与算法之间的对应关系清晰可见。本文的目标是说明：解析几何、线性代数和微积分中的熟悉概念，可以为理解神经网络的基本机制提供一个易于进入的数学基础。"/>
+<meta property="og:url" content="https://neuralmath.org/zh/"/>
+<meta property="og:image" content="https://neuralmath.org/assets/img/zh/Fig07.png"/>
+<meta property="og:image:alt" content="神经网络的数学剖析"/>
+<meta property="article:published_time" content="2026-10-07"/>
+<meta property="article:modified_time" content="2026-10-07"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="神经网络的数学剖析"/>
+<meta name="twitter:description" content="本文通过一个简单的分类问题，对人工神经网络作数学层面的入门介绍。线性分类器自然地引出人工神经元的概念；随后我们讨论权重、偏置、激活函数，以及如何把多个神经元组合成一个小型网络。训练过程通过损失函数、导数、梯度下降和反向传播来说明。最后，我们直接用 Python 实现该模型，使方程与算法之间的对应关系清晰可见。本文的目标是说明：解析几何、线性代数和微积分中的熟悉概念，可以为理解神经网络的基本机制提供一个易于进入的数学基础。"/>
+<meta name="twitter:image" content="https://neuralmath.org/assets/img/zh/Fig07.png"/>
+<!-- SEO-META-END -->
 <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/css/site.css" rel="stylesheet"/>
 <link href="https://neuralmath.org/zh/" rel="canonical"/><link href="https://neuralmath.org/pt/" hreflang="pt-BR" rel="alternate"/><link href="https://neuralmath.org/" hreflang="en" rel="alternate"/><link href="https://neuralmath.org/es/" hreflang="es" rel="alternate"/><link href="https://neuralmath.org/fr/" hreflang="fr" rel="alternate"/><link href="https://neuralmath.org/it/" hreflang="it" rel="alternate"/><link href="https://neuralmath.org/de/" hreflang="de" rel="alternate"/><link href="https://neuralmath.org/ar/" hreflang="ar" rel="alternate"/><link href="https://neuralmath.org/bn/" hreflang="bn" rel="alternate"/><link href="https://neuralmath.org/cs/" hreflang="cs" rel="alternate"/><link href="https://neuralmath.org/el/" hreflang="el" rel="alternate"/><link href="https://neuralmath.org/fa/" hreflang="fa" rel="alternate"/><link href="https://neuralmath.org/hi/" hreflang="hi" rel="alternate"/><link href="https://neuralmath.org/hu/" hreflang="hu" rel="alternate"/><link href="https://neuralmath.org/id/" hreflang="id" rel="alternate"/><link href="https://neuralmath.org/ja/" hreflang="ja" rel="alternate"/><link href="https://neuralmath.org/ko/" hreflang="ko" rel="alternate"/><link href="https://neuralmath.org/nl/" hreflang="nl" rel="alternate"/><link href="https://neuralmath.org/pl/" hreflang="pl" rel="alternate"/><link href="https://neuralmath.org/ro/" hreflang="ro" rel="alternate"/><link href="https://neuralmath.org/ru/" hreflang="ru" rel="alternate"/><link href="https://neuralmath.org/sv/" hreflang="sv" rel="alternate"/><link href="https://neuralmath.org/tr/" hreflang="tr" rel="alternate"/><link href="https://neuralmath.org/uk/" hreflang="uk" rel="alternate"/><link href="https://neuralmath.org/ur/" hreflang="ur" rel="alternate"/><link href="https://neuralmath.org/vi/" hreflang="vi" rel="alternate"/><link href="https://neuralmath.org/zh/" hreflang="zh-Hans" rel="alternate"/><link href="https://neuralmath.org/" hreflang="x-default" rel="alternate"/>
 <script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']] },svg:{fontCache:'global'}};</script>
