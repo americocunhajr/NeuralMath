@@ -95,7 +95,7 @@ for code, bcp47, filename, canonical in LANGUAGES:
         })
     structured = {"@context": "https://schema.org", "@graph": graph}
 
-    block = f"""<!-- SEO-CONFIG-START -->
+    block = f"""<!-- SEO-META-START -->\n<!-- SEO-CONFIG-START -->
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="NeuralMath"/>
