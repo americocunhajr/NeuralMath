@@ -44,13 +44,14 @@ def esc(value):
 for code, bcp47, filename, canonical in LANGUAGES:
     path = Path(filename)
     source = path.read_text(encoding="utf-8")
+    original = source
     body = source[source.index("<body>"):]
     source = re.sub(r"<!-- SEO-CONFIG-START -->.*?<!-- SEO-CONFIG-END -->\s*", "", source, flags=re.S)
     source = re.sub(r"<!-- SEO-META-START -->.*?<!-- SEO-META-END -->\s*", "", source, flags=re.S)
 
     title = re.search(r"<title>(.*?)</title>", source, flags=re.S).group(1)
-    headline = title.split("—", 1)[1].strip() if "—" in title else title.strip()
-    description = re.search(r'<meta content="([^"]*)" name="description"/>', source, flags=re.S).group(1)
+    headline = html.unescape(title.split("—", 1)[1].strip() if "—" in title else title.strip())
+    description = html.unescape(re.search(r'<meta content="([^"]*)" name="description"/>', source, flags=re.S).group(1))
     pdf_url = re.search(r'<meta name="citation_pdf_url" content="([^"]*)"/>', source).group(1)
     image = f"https://neuralmath.org/assets/img/{code}/Fig07.png"
 
@@ -95,7 +96,7 @@ for code, bcp47, filename, canonical in LANGUAGES:
         })
     structured = {"@context": "https://schema.org", "@graph": graph}
 
-    block = f"""<!-- SEO-META-START -->\n<!-- SEO-CONFIG-START -->
+    block = f"""<!-- SEO-CONFIG-START -->
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
 <meta property="og:type" content="article"/>
 <meta property="og:site_name" content="NeuralMath"/>
@@ -116,7 +117,8 @@ for code, bcp47, filename, canonical in LANGUAGES:
     insert_at = source.index("<link ")
     source = source[:insert_at] + block + source[insert_at:]
     assert source[source.index("<body>"):] == body, f"body changed: {filename}"
-    path.write_text(source, encoding="utf-8")
+    if source != original:
+        path.write_text(source, encoding="utf-8")
 
 sitemap = [
     '<?xml version="1.0" encoding="UTF-8"?>',
