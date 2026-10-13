@@ -37,7 +37,12 @@
 <p>본 논문은 간단한 분류 문제를 통해 인공 신경망을 수학적으로 소개한다. 선형 분류기에서 인공 뉴런의 개념을 자연스럽게 도출한 뒤, 가중치, 편향, 활성화 함수, 그리고 여러 뉴런을 작은 네트워크로 결합하는 방법을 설명한다. 학습은 손실 함수, 도함수, 경사하강법, 역전파를 통해 소개한다. 마지막으로 모델을 Python으로 직접 구현하여 수식과 알고리즘의 대응을 명확히 보인다. 목적은 해석기하, 선형대수, 미적분에서 익숙한 개념들이 신경망의 기본 작동 원리를 이해하는 데 접근하기 쉬운 기초가 됨을 보여 주는 것이다.</p>
 <div class="resource-bar"><a href="../pdf/NeuralMath_KO.pdf" target="_blank" rel="noopener noreferrer">PDF</a><a href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_KO.ipynb" target="_blank" rel="noopener noreferrer">Google Colab</a></div>
 </div>
-<div class="citation"><h2>원문 교육 텍스트</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">이 웹판과 번역본은 포르투갈어 원고를 바탕으로 합니다.</p></div>
+<div class="citation citation-detail"><h2>교육용 텍스트 인용 방법</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>출판 후 권, 페이지, DOI를 포함하도록 서지 정보를 갱신합니다. 이 웹사이트가 아니라 교육용 텍스트를 인용해 주십시오.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></div>
 <nav aria-label="목차" class="toc"><h2>목차</h2><ol><li><a href="#컴퓨터는-언제-학습할-수-있는가" target="_blank" rel="noopener noreferrer">컴퓨터는 언제 학습할 수 있는가?</a></li><li><a href="#문제를-수학적으로-표현하기" target="_blank" rel="noopener noreferrer">문제를 수학적으로 표현하기</a></li><li><a href="#분류기로서의-직선" target="_blank" rel="noopener noreferrer">분류기로서의 직선</a></li><li><a href="#인공-뉴런" target="_blank" rel="noopener noreferrer">인공 뉴런</a></li><li><a href="#왜-활성화-함수가-필요한가" target="_blank" rel="noopener noreferrer">왜 활성화 함수가 필요한가?</a></li><li><a href="#작은-신경망-구성하기" target="_blank" rel="noopener noreferrer">작은 신경망 구성하기</a></li><li><a href="#신경망은-어떻게-학습하는가" target="_blank" rel="noopener noreferrer">신경망은 어떻게 학습하는가?</a></li><li><a href="#수학에서-python으로" target="_blank" rel="noopener noreferrer">수학에서 Python으로</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="컴퓨터는-언제-학습할-수-있는가"><span class="section-no">01</span><h2>컴퓨터는 언제 학습할 수 있는가?</h2>
 <p>일상에서 우리는 거의 의식하지 않은 채 분류 판단을 내린다. 과일을 보면 사과인지 오렌지인지 빠르게 구별하고, 휴대전화에 메시지가 도착하면 정상적인 대화와 원치 않는 광고를 구분한다. 의료 분석에서는 여러 측정값을 결합하여 판단을 지원할 수 있고, 금융기관에서는 신용을 제공하기 전에 여러 정보를 평가한다. 이 모든 예에서는 여러 특성을 함께 고려하여 하나의 답을 만든다.</p>
@@ -520,12 +525,7 @@ def make_figure():
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_KO.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · 한국어</span></a>
 </div></section>
 <section><h2>NeuralMath 소개</h2><p class="bio">NeuralMath는 Dr. Americo Cunha Jr.가 개발한 공개 교육 프로젝트입니다. 미적분과 통계에 대한 비교적 기초적인 수학 배경을 가진 폭넓은 독자가 작은 신경망 내부의 수학 연산을 보고, 검사하고, 재현할 수 있도록 하는 것이 목표입니다.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
-<section class="citation-detail"><h2>교육용 텍스트 인용 방법</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>출판 후 권, 페이지, DOI를 포함하도록 서지 정보를 갱신합니다. 이 웹사이트가 아니라 교육용 텍스트를 인용해 주십시오.</p><pre><code>@unpublished{cunha2026anatomia,
-  author = {Cunha Jr, Americo},
-  title  = {A anatomia matemática de uma rede neural},
-  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
-  year   = {2026}
-}</code></pre></section>
+
 <section><h2>라이선스</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>웹사이트의 설명 텍스트와 원본 웹 자료는 별도 표시가 없는 한 CC BY 4.0으로 제공됩니다. 논문 PDF에는 출판처의 라이선스가 적용될 수 있습니다.</p></div></section>
 <div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
 </main><script defer="" src="../assets/js/site.js"></script></body></html>
