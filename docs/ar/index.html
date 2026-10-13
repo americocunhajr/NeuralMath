@@ -37,7 +37,12 @@
 <p>نقدم مدخلًا رياضيًا إلى الشبكات العصبية الاصطناعية من خلال مسألة تصنيف بسيطة. يقود المُصنِّف الخطي بصورة طبيعية إلى مفهوم العصبون الاصطناعي؛ ثم نناقش الأوزان والانحيازات ودوال التنشيط وكيفية تركيب العصبونات في شبكة صغيرة. ونقدم التدريب من خلال دوال الخسارة والمشتقات والانحدار المتدرج والانتشار العكسي. وأخيرًا ننفذ النموذج مباشرة بلغة بايثون، بحيث تصبح المطابقة بين المعادلات والخوارزمية واضحة. والهدف هو إظهار كيف توفر مفاهيم مألوفة من الهندسة التحليلية والجبر الخطي وحساب التفاضل أساسًا ميسرًا لفهم الآليات الأساسية للشبكات العصبية.</p>
 <div class="resource-bar"><a href="../pdf/NeuralMath_AR.pdf" target="_blank" rel="noopener noreferrer">PDF</a><a href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_AR.ipynb" target="_blank" rel="noopener noreferrer">Google Colab</a></div>
 </div>
-<div class="citation"><h2>النص التعليمي الأصلي</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p class="small">تعتمد هذه النسخة على الويب وترجماتها على المخطوط الأصلي باللغة البرتغالية.</p></div>
+<div class="citation citation-detail"><h2>كيفية الاستشهاد بالنص التعليمي</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>سيُحدَّث المرجع الببليوغرافي بالمجلد والصفحات ومعرّف DOI بعد النشر. يُرجى الاستشهاد بالنص التعليمي، لا بهذا الموقع.</p><pre><code>@unpublished{cunha2026anatomia,
+  author = {Cunha Jr, Americo},
+  title  = {A anatomia matemática de uma rede neural},
+  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
+  year   = {2026}
+}</code></pre></div>
 <nav aria-label="المحتويات" class="toc"><h2>المحتويات</h2><ol><li><a href="#متى-يستطيع-الحاسوب-أن-يتعلم" target="_blank" rel="noopener noreferrer">متى يستطيع الحاسوب أن يتعلم؟</a></li><li><a href="#تمثيل-المشكلة-رياضيا" target="_blank" rel="noopener noreferrer">تمثيل المشكلة رياضيًا</a></li><li><a href="#خط-مستقيم-كمصنف" target="_blank" rel="noopener noreferrer">خط مستقيم كمُصنِّف</a></li><li><a href="#العصبون-الاصطناعي" target="_blank" rel="noopener noreferrer">العصبون الاصطناعي</a></li><li><a href="#لماذا-نحتاج-إلى-دالة-تنشيط" target="_blank" rel="noopener noreferrer">لماذا نحتاج إلى دالة تنشيط؟</a></li><li><a href="#بناء-شبكة-عصبية-صغيرة" target="_blank" rel="noopener noreferrer">بناء شبكة عصبية صغيرة</a></li><li><a href="#كيف-تتعلم-الشبكة-العصبية" target="_blank" rel="noopener noreferrer">كيف تتعلم الشبكة العصبية؟</a></li><li><a href="#من-الرياضيات-إلى-بايثون" target="_blank" rel="noopener noreferrer">من الرياضيات إلى بايثون</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="متى-يستطيع-الحاسوب-أن-يتعلم"><span class="section-no">01</span><h2>متى يستطيع الحاسوب أن يتعلم؟</h2>
 <p>في حياتنا اليومية نتخذ قرارات تصنيفية من دون أن نشعر بذلك تقريبًا. فعندما ننظر إلى ثمرة نتعرف سريعًا إلى كونها تفاحة أو برتقالة؛ وعندما تصل رسالة إلى الهاتف نميز بين محادثة حقيقية وإعلان غير مرغوب فيه؛ وفي التحليل الطبي يمكن دمج عدة قياسات لدعم قرار؛ وفي المؤسسات المالية تُقيَّم معلومات متعددة قبل منح الائتمان. وفي جميع هذه الأمثلة تُؤخذ عدة خصائص معًا لإنتاج إجابة.</p>
@@ -527,12 +532,7 @@ def make_figure():
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_AR.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · العربية</span></a>
 </div></section>
 <section><h2>حول NeuralMath</h2><p class="bio">NeuralMath مشروع تعليمي مفتوح طوّره Dr. Americo Cunha Jr. ويهدف إلى جعل العمليات الرياضية داخل شبكة عصبية صغيرة مرئية وقابلة للفحص وإعادة الإنتاج لجمهور واسع ذي خلفية رياضية محدودة نسبيًا في حساب التفاضل والتكامل والإحصاء.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
-<section class="citation-detail"><h2>كيفية الاستشهاد بالنص التعليمي</h2><p class="paper-title">Americo Cunha Jr. “A anatomia matemática de uma rede neural.” Manuscript submitted to Professor de Matemática Online (PMO), 2026.</p><p>سيُحدَّث المرجع الببليوغرافي بالمجلد والصفحات ومعرّف DOI بعد النشر. يُرجى الاستشهاد بالنص التعليمي، لا بهذا الموقع.</p><pre><code>@unpublished{cunha2026anatomia,
-  author = {Cunha Jr, Americo},
-  title  = {A anatomia matemática de uma rede neural},
-  note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
-  year   = {2026}
-}</code></pre></section>
+
 <section><h2>الترخيص</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>النصوص التوضيحية والمادة الأصلية للموقع متاحة بترخيص CC BY 4.0 ما لم يُذكر خلاف ذلك. وقد يخضع ملف PDF للمقال لترخيص جهة النشر.</p></div></section>
 <div class="footer">NeuralMath · Americo Cunha Jr · 2026</div>
 </main><script defer="" src="../assets/js/site.js"></script></body></html>
