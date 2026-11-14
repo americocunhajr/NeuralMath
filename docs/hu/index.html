@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Tartalom" class="toc"><h2>Tartalom</h2><ol><li><a href="#mikor-képes-tanulni-egy-számítógép" target="_blank" rel="noopener noreferrer">Mikor képes tanulni egy számítógép?</a></li><li><a href="#a-probléma-matematikai-reprezentációja" target="_blank" rel="noopener noreferrer">A probléma matematikai reprezentációja</a></li><li><a href="#az-egyenes-mint-osztályozó" target="_blank" rel="noopener noreferrer">Az egyenes mint osztályozó</a></li><li><a href="#a-mesterséges-neuron" target="_blank" rel="noopener noreferrer">A mesterséges neuron</a></li><li><a href="#miért-van-szükség-aktivációs-függvényre" target="_blank" rel="noopener noreferrer">Miért van szükség aktivációs függvényre?</a></li><li><a href="#egy-kis-neurális-hálózat-felépítése" target="_blank" rel="noopener noreferrer">Egy kis neurális hálózat felépítése</a></li><li><a href="#hogyan-tanul-egy-neurális-hálózat" target="_blank" rel="noopener noreferrer">Hogyan tanul egy neurális hálózat?</a></li><li><a href="#a-matematikától-a-pythonig" target="_blank" rel="noopener noreferrer">A matematikától a Pythonig</a></li></ol></nav>
+<nav aria-label="Tartalom" class="toc"><h2>Tartalom</h2><ol><li><a href="#mikor-képes-tanulni-egy-számítógép" target="_blank" rel="noopener noreferrer">Mikor képes tanulni egy számítógép?</a></li><li><a href="#a-probléma-matematikai-reprezentációja" target="_blank" rel="noopener noreferrer">A probléma matematikai reprezentációja</a></li><li><a href="#az-egyenes-mint-osztályozó" target="_blank" rel="noopener noreferrer">Az egyenes mint osztályozó</a></li><li><a href="#a-mesterséges-neuron" target="_blank" rel="noopener noreferrer">A mesterséges neuron</a></li><li><a href="#miért-van-szükség-aktivációs-függvényre" target="_blank" rel="noopener noreferrer">Miért van szükség aktivációs függvényre?</a></li><li><a href="#egy-kis-neurális-hálózat-felépítése" target="_blank" rel="noopener noreferrer">Egy kis neurális hálózat felépítése</a></li><li><a href="#hogyan-tanul-egy-neurális-hálózat" target="_blank" rel="noopener noreferrer">Hogyan tanul egy neurális hálózat?</a></li><li><a href="#a-matematikától-a-pythonig" target="_blank" rel="noopener noreferrer">A matematikától a Pythonig</a></li><li><a href="#appendix-synthetic-data">A szintetikus adathalmaz előállítása</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="mikor-képes-tanulni-egy-számítógép"><span class="section-no">01</span><h2>Mikor képes tanulni egy számítógép?</h2>
 <p>A mindennapi életben szinte észrevétlenül hozunk osztályozási döntéseket. Ha ránézünk egy gyümölcsre, gyorsan felismerjük, hogy alma vagy narancs; amikor üzenet érkezik a telefonunkra, megkülönböztetjük a valódi kommunikációt a kéretlen reklámtól; orvosi elemzésben több mérés együtt támogathat egy döntést; pénzügyi intézményekben pedig számos információt értékelnek a hitelnyújtás előtt. Mindezekben a példákban egyszerre több jellemzőt veszünk figyelembe egy válasz előállításához.</p>
 <p>Sok hagyományos számítógépes programban az ilyen válaszhoz vezető szabályokat a programozó kifejezetten megadja. Ez a megközelítés jól működik, ha a szabályok ismertek és világosan megfogalmazhatók. Kevésbé hatékony azonban akkor, amikor az adatok nagyon változatosak, vagy amikor nehéz előre felsorolni egy jó döntéshez szükséges összes feltételt. Ez természetes kérdéshez vezet:</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> Bár két lineáris szakaszból áll, a ReLU globálisan nem lineáris. Deriváltja <span class="math inline">\(0\)</span> <span class="math inline">\(s&lt;0\)</span> esetén és <span class="math inline">\(1\)</span> <span class="math inline">\(s&gt;0\)</span> esetén. <span class="math inline">\(s=0\)</span>-nál a szokásos derivált nem létezik, ezért a szoftveres megvalósítások valamilyen konvenciót használnak a gradiensre. Pozitív bemeneteknél a derivált nem csökken <span class="math inline">\(s\)</span> növekedésével, így elkerülhető a szigmoid egyik telítődési mechanizmusa.</p>
 <p>A <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a>. ábra vizuálisan hasonlítja össze ezt a három aktivációt: a lépcsőfüggvény hirtelen ugrását, a szigmoid sima átmenetét és a ReLU meredekségváltozását.</p>
 <figure id="fig:activation_functions">
-<img alt="A neurális hálózatok bevezető tárgyalásaiban gyakran szereplő három aktivációs függvény összehasonlítása. A lépcsőfüggvény hirtelen döntést hoz; a szigmoid sima átmenetet biztosít \(0\) és \(1\) között; a ReLU pedig lenullázza a negatív bemeneteket, miközben megtartja a pozitívak" decoding="async" loading="lazy" src="../assets/img/hu/Fig04.png"/>
+<img alt="A neurális hálózatok bevezető tárgyalásaiban gyakran szereplő három aktivációs függvény összehasonlítása. A lépcsőfüggvény hirtelen döntést hoz; a szigmoid sima átmenetet biztosít \(0\) és \(1\) között; a ReLU pedig lenullázza a negatív bemeneteket, miközben megtartja a pozitívak" decoding="async" loading="lazy" src="../assets/img/hu/Fig04.webp"/>
 <figcaption>A neurális hálózatok bevezető tárgyalásaiban gyakran szereplő három aktivációs függvény összehasonlítása. A lépcsőfüggvény hirtelen döntést hoz; a szigmoid sima átmenetet biztosít <span class="math inline">\(0\)</span> és <span class="math inline">\(1\)</span> között; a ReLU pedig lenullázza a negatív bemeneteket, miközben megtartja a pozitívakat. A nemlineáris aktivációk megakadályozzák, hogy több réteg egymásra építése egyetlen affin transzformációra egyszerűsödjön.</figcaption>
 </figure>
 <p>Fő tulajdonságaikat az alábbi táblázat foglalja össze.</p>
@@ -221,216 +221,502 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>Ez a jelölés előrevetíti a Python-program szerkezetét. Amikor egy gyümölcsöt a bemenetre adunk, és egymás után kiszámítjuk az aktivációkat egészen <span class="math inline">\(\widehat{y}\)</span>-ig, <em>előreterjesztést</em> (<em>forward pass</em>) végzünk. A központi kérdés továbbra is az: hogyan határozható meg automatikusan a tizenhárom paraméter úgy, hogy az előrejelzések illeszkedjenek az adatokhoz?</p>
 </section><section class="article-section" id="hogyan-tanul-egy-neurális-hálózat"><span class="section-no">07</span><h2>Hogyan tanul egy neurális hálózat?</h2>
-<p>A súlyok és biasok előre nem ismertek. Olyan példák segítségével kell őket beállítani, amelyeknél a helyes válasz rendelkezésre áll. Ezt a folyamatot <em>tanításnak</em> nevezzük, és az alábbi ciklussal foglalhatjuk össze: <span class="math display">\[\boxed{\text{előrejelzés}}
-\longrightarrow
-\boxed{\text{hiba mérése}}
-\longrightarrow
-\boxed{\text{paraméterek módosítása}}
-\longrightarrow
-\boxed{\text{ismétlés}}.\]</span></p>
-<p>Tekintsünk egy <span class="math inline">\(140\)</span> g tömegű és <span class="math inline">\(7.0\)</span> cm átmérőjű gyümölcsöt, amelynek helyes osztálya narancs, tehát <span class="math inline">\(y=0\)</span>. Tegyük fel, hogy a tanítás egy pontján a hálózat <span class="math inline">\(\widehat{y}=0.80\)</span> kimenetet ad. Az előrejelzés és a cél közötti eltérés egyik egyszerű mértéke a négyzetes hiba: <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Ebben a példában <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
-<p>Ez a kifejezés egyetlen példához tartozó <em>veszteségfüggvény</em>. Mivel négyzet, <span class="math inline">\(E\geq0\)</span>, és a céltól távolabb eső előrejelzések nagyobb büntetést kapnak. Az <span class="math inline">\(1/2\)</span> tényező nem változtatja meg a minimum helyét, de egyszerűsíti a deriváltakat. Bináris osztályozásban gyakran más veszteségeket, különösen keresztentrópiát használnak. Itt a négyzetes hibát választjuk, mert algebrája átlátható és elegendő az optimalizálás és a visszaterjesztés bevezetéséhez .</p>
-<p>Ha a tanítóhalmaz <span class="math inline">\(N\)</span> példát tartalmaz, egy globális mérték az átlagos veszteség: <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Minden előrejelzés függ a hálózat súlyaitól és biasaitól, így <span class="math inline">\(J\)</span> is függ valamennyi paramétertől. A tanítás azt jelenti, hogy olyan paraméterértékeket keresünk, amelyek mellett <span class="math inline">\(J\)</span> kicsi.</p>
-<p>A módosítás mechanizmusának megértéséhez először képzeljük el, hogy egyetlen <span class="math inline">\(w\)</span> súly kivételével minden paramétert rögzítünk. Ekkor a veszteséget <span class="math inline">\(J=J(w)\)</span> függvényként tekinthetjük. Az <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a>. ábra összefoglalja a tanítás alaplépéseit, amelyeket most megvizsgálunk.</p>
-<figure id="fig:training_cycle">
-<img alt="A neurális hálózat tanításának alapciklusa. Az előreterjesztés a bemeneteket előrejelzéssé alakítja; a veszteségfüggvény méri az előrejelzés és a cél közötti eltérést; a visszaterjesztés a láncszabály segítségével kiszámítja a gradienseket; a gradiensmódszer pedig ezeket használj" decoding="async" loading="lazy" src="../assets/img/hu/Fig06.png"/>
-<figcaption>A neurális hálózat tanításának alapciklusa. Az előreterjesztés a bemeneteket előrejelzéssé alakítja; a veszteségfüggvény méri az előrejelzés és a cél közötti eltérést; a visszaterjesztés a láncszabály segítségével kiszámítja a gradienseket; a gradiensmódszer pedig ezeket használja a súlyok és biasok frissítésére. E ciklus sok epochon át történő ismétlését nevezzük tanulásnak.</figcaption>
+<p>A súlyok és eltolások nem ismertek előre: ismert osztálycímkéjű
+példákból határozzuk meg őket. A tanulás az előrehaladó számítás, a
+veszteség kiszámítása, a gradiensek meghatározása és a
+paraméterfrissítés ismétlése (<a href="#fig:ciclo_treinamento">6</a>.
+ábra). A láncszabály megmutatja, hogyan befolyásolja egy-egy súly és
+eltolás a veszteséget. A paraméterek módosításához először mérni kell az
+előrejelzés és a várt válasz különbségét. A <em>veszteségfüggvény</em>
+minden előrejelzéshez büntetést rendel, így összehasonlíthatók a
+paraméterválasztások. A folytonos veszteség a hibás osztályozások
+egyszerű számlálásával szemben a céltól való távolságot is jelzi, és a
+tanulást irányító deriváltakat szolgáltatja. Tekintsünk egy <span class="math inline">\(140\)</span> g tömegű, <span class="math inline">\(7.0\)</span> cm átmérőjű narancsot (<span class="math inline">\(y=0\)</span>). Ha a hálózat kimenete <span class="math inline">\(\widehat y\in(0,1)\)</span>, az egyetlen példára
+vonatkozó négyzetes veszteség:</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>Itt <span class="math inline">\(y\)</span> a valódi osztály, <span class="math inline">\(\widehat y\)</span> az előrejelzés. A veszteség
+nemnegatív, és nulla, ha a két érték egyezik. Narancs esetén a <span class="math inline">\(0.80\)</span> és <span class="math inline">\(0.60\)</span> előrejelzéshez <span class="math inline">\(E=0.32\)</span>, illetve <span class="math inline">\(E=0.18\)</span> tartozik. Az <span class="math inline">\(0.5\)</span> küszöbnél mindkettő hibás, de a
+veszteség megkülönbözteti őket. Az <span class="math inline">\(1/2\)</span> tényező nem változtatja meg a
+minimumot, viszont egyszerűsíti a deriválást. Több megfigyelésből kell
+tanulnunk: <span class="math inline">\(N\)</span> példára az átlagos
+veszteséget így definiáljuk:</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>Ez az átlag a tanítóhalmazon elért illeszkedést jellemzi; a
+paramétereket a <span class="math inline">\(J\)</span> csökkentése
+érdekében frissítjük. A tanítási veszteség minimalizálása önmagában nem
+garantál jó előrejelzéseket új megfigyelésekre. A négyzetes veszteséget
+az egyszerű algebra miatt használjuk, majd összehasonlítjuk a bináris
+keresztentrópia gradiensével a kísérlet megváltoztatása nélkül <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="A tanítás lépései: előrehaladó számítás, a veszteség
+kiértékelése, az érzékenységek visszaterjesztése és a paraméterek
+frissítése." decoding="async" loading="lazy" src="../assets/img/hu/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. A tanítás lépései: előrehaladó számítás, a veszteség
+kiértékelése, az érzékenységek visszaterjesztése és a paraméterek
+frissítése.</figcaption>
 </figure>
-<p>A differenciálszámításban kevésbé jártas olvasók számára a derivált itt a <em>lokális érzékenység</em> mértékeként értelmezhető: megmutatja, hogyan hajlamos megváltozni a veszteség, ha egy paramétert kicsit módosítunk. Előjele jelzi, melyik irány növeli vagy csökkenti lokálisan a függvényt, abszolútértéke pedig e helyi változás erősségét méri.</p>
-<p>A <span class="math display">\[\frac{\partial J}{\partial w}\]</span> derivált a lokális meredekséget adja. Ha pozitív, akkor <span class="math inline">\(w\)</span> kis növelése várhatóan növeli <span class="math inline">\(J\)</span>-t, ezért a súlyt az ellenkező irányba kell mozdítani. Ha negatív, <span class="math inline">\(w\)</span> növelése lokálisan csökkenti <span class="math inline">\(J\)</span>-t. Mindkét esetet leírja <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w},\]</span> ami a <em>gradienscsökkenés</em> alapötlete. A pozitív <span class="math inline">\(\eta\)</span> szám a <em>tanulási ráta</em>; a lépés nagyságát szabályozza. Túl kicsi érték lassú tanítást, túl nagy érték pedig oszcillációt vagy instabilitást okozhat.</p>
-<p>Sokparaméteres hálózatban jelölje <span class="math inline">\(\theta\)</span> bármely súlyt vagy biast. Ekkor a frissítés <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}.\]</span> Az összes parciális derivált együtt alkotja a veszteség <em>gradiensét</em>. Geometriailag a gradiens a leggyorsabb lokális növekedés irányába mutat, ezért a negatív gradiens lokális csökkenési irányt ad.</p>
-<p>Még ki kell számítanunk ezeket a deriváltakat akkor is, amikor a hálózat több függvény kompozíciója. Az előreterjesztés során az információ útja <span class="math display">\[\text{bemenetek}
-\longrightarrow
-\text{rejtett réteg}
-\longrightarrow
-\text{kimenet}.\]</span> Annak meghatározásához, hogy egy korai réteg paramétere hogyan befolyásolja a veszteséget, matematikailag fordított irányban követjük a függőségi láncot. Ezt az eljárást <em>visszaterjesztésnek</em> (<em>backpropagation</em>) nevezzük. Lényegében a láncszabály szisztematikus és hatékony alkalmazásáról van szó. Rumelhart, Hinton és Williams  klasszikus hivatkozást adnak az eljárás rejtett rétegeket tartalmazó hálózatokban való elterjedéséhez; Nielsen  részletes és különösen didaktikus levezetést közöl.</p>
-<p>Egy egyszerű függőségi láncban, ahol <span class="math inline">\(E\)</span> függ <span class="math inline">\(\widehat{y}\)</span>-tól, <span class="math inline">\(\widehat{y}\)</span> függ egy <span class="math inline">\(h\)</span> aktivációtól, az pedig egy <span class="math inline">\(w\)</span> súlytól, a láncszabály szerint <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}.\]</span> Minden tényező a <span class="math inline">\(w\)</span> súlynak a végső veszteségre gyakorolt hatásának egy-egy szakaszát írja le. Nagyobb hálózatok sok ilyen láncot tartalmaznak, és a visszaterjesztés úgy szervezi a számítást, hogy a köztes deriváltak újra felhasználhatók legyenek, ahelyett hogy minden paraméterhez külön újraszámolnánk őket.</p>
-<p>A gyakorlatban a tanítás sok példát használ. A tanítóhalmazon való egy teljes áthaladást <em>epochnak</em> nevezzük. A paraméterek frissíthetők minden egyes példa után, ahogy a cikk későbbi didaktikai programjában, vagy kis példacsoportok, úgynevezett <em>mini-batchek</em> után, ami nagyobb hálózatoknál elterjedt. Mindkét esetben az előrejelzések, veszteségek, gradiensek és frissítések ciklusa sok epochon át ismétlődik.</p>
-<p>E fejlődés konkrét szemléltetésére követhetjük ugyanannak a rögzített példának az előrejelzését a tanítás különböző szakaszaiban. Tekintsük ismét a <span class="math inline">\(140\)</span> g tömegű és <span class="math inline">\(7.0\)</span> cm átmérőjű gyümölcsöt, amelynek helyes osztálya narancs. A <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a>. táblázat egy hipotetikus fejlődést mutat. Ezek az értékek nem egy konkrét futtatáshoz tartoznak; csupán a mechanizmust szemléltetik.</p>
-<div id="tab:learning">
+<p>Ha <span class="math inline">\(\theta\)</span> súlyt vagy eltolást
+jelöl, a <span class="math inline">\(\partial J/\partial\theta\)</span>
+derivált az átlagos veszteség erre vonatkozó helyi érzékenysége. Egy
+gradienscsökkenési lépés:</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>Az <span class="math inline">\(\eta\)</span> tanulási ráta határozza
+meg a lépés nagyságát: kis értéknél lassú lehet a konvergencia, túl nagy
+értéknél oszcilláció vagy divergencia fordulhat elő. Ha a frissítés
+minden megfigyelés után történik (<a href="#a-matematikától-a-pythonig">8</a>. szakasz),
+<span class="math inline">\(\partial J/\partial\theta\)</span> helyett
+<span class="math inline">\(\partial E_i/\partial\theta\)</span>
+szerepel. Ez a sztochasztikus gradienscsökkenés (SGD).</p>
+<h3 id="a-láncszabály-a-231-hálózatban">A láncszabály a 2–3–1
+hálózatban</h3>
+<p>A <a href="#fig:small_network">[fig:pequena_rede]</a>. ábra hálózatát
+használjuk három ReLU rejtett neuronnal és szigmoid kimenettel. A tömeg
+(gramm) és az átmérő (centiméter) skálái eltérnek. A jobb
+kondicionáltság érdekében minden jellemzőt <span class="math inline">\(x_j^\ast=(x_j-\mu_j)/\sigma_j\)</span> alakra
+alakítunk, ahol <span class="math inline">\(\mu_j\)</span> és <span class="math inline">\(\sigma_j&gt;0\)</span> a referenciaátlag és
+-szórás. Így a bemenetek dimenziótlanok és összehasonlítható skálájúak.
+A tényleges kísérletben e statisztikák kizárólag a tanítóhalmazból
+származnak, megakadályozva a tesztadatokból eredő információszivárgást.
+A következő számpéldában az egyszerűség kedvéért előre megadott
+középértékeket és skálákat használunk. A <span class="math inline">\(\mathbf{x}^\ast=(x_1^\ast,x_2^\ast)^{\mathsf
+T}\)</span> bemenetre az előrehaladó számítás:</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>Itt <span class="math inline">\(c=b^{(2)}\)</span> a kimeneti eltolás
+és <span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>. A
+visszaterjesztés a kimeneti neuronnál indul, a láncszabály ismételt
+alkalmazásával:</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>Mivel minden <span class="math inline">\(h_j\)</span> aktiváció a
+megfelelő súlyoktól és eltolástól is függ, meghatározzuk a rejtett
+neuronok érzékenységeit:</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>A ReLU a nullában nem differenciálható; számítási konvencióként <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span>-t
+választunk. A <span class="math inline">\(\delta^{(2)}\)</span> és <span class="math inline">\(\delta_j^{(1)}\)</span> mennyiségek a veszteség
+helyi <em>érzékenységei</em>, nem a hálózaton áthaladó fizikai
+hibajelek. Újrafelhasználásukkal mind a tizenhárom gradiens kiszámítható
+anélkül, hogy minden súlyhoz újra elvégeznénk a deriválást.</p>
+<h3 id="teljes-numerikus-paraméterfrissítés">Teljes numerikus
+paraméterfrissítés</h3>
+<p><em>Csak ebben a számpéldában</em> a tömeg középértéke <span class="math inline">\(160\)</span> g, skálája <span class="math inline">\(20\)</span> g, az átmérőé pedig <span class="math inline">\(7.5\)</span> cm és <span class="math inline">\(0.5\)</span> cm. A <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span>
+gyümölcs dimenziótlan bemenete:</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>Ezeket az értékeket a bemutató kedvéért rögzítettük; a <a href="#a-matematikától-a-pythonig">8</a>. szakasz számításában az átlag és a
+szórás a tanítóhalmazból származik. Válasszuk a tizenhárom kezdeti
+paramétert:</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>A <a href="#eq:forward">forward</a> egyenlet egymás után a
+következőket adja:</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>A kezdeti előrejelzés hibás osztályt ad. A <a href="#eq:delta_saida">delta_saida</a> és <a href="#eq:delta_oculta">delta_oculta</a>
+egyenletekből:</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>A harmadik rejtett neuron inaktív (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), ezért bejövő súlyainak
+és eltolásának gradiense ebben a lépésben nulla. <span class="math inline">\(\eta=0.05\)</span> mellett mind a tizenhárom
+paramétert egyszerre frissítjük a <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span> szabály szerint. A <a href="#tab:passo_sgd">1</a>. táblázat
+válogatott frissítéseket mutat.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>A hálózat ugyanarra a gyümölcsre adott előrejelzésének hipotetikus alakulása a tanítás során. Az ismételt paraméterfrissítések egy kezdetben hibás kimenetet a célcímkével összhangban lévő osztályozás felé mozdíthatnak.</caption>
+<caption>Kiválasztott paraméterek az <span class="math inline">\(\eta=0.05\)</span> értékkel végzett SGD-lépés
+előtt és után.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Epoch</th>
-<th style="text-align: center;">Előrejelzés <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">Veszteség <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">Osztályozás</th>
+<th style="text-align: left;">Paraméter <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">Kezdeti</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">Frissített</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">Alma</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">Alma</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">Alma</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">Narancs</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">Narancs</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Kezdetben a kimenet közel van <span class="math inline">\(1\)</span>-hez, ezért a gyümölcsöt tévesen almának osztályozza a hálózat. A paraméterek módosításával az előrejelzés csökken, és végül átlépi a <span class="math inline">\(0.5\)</span> küszöböt, így a helyes osztályt adja. A folyamat során a súlyok és biasok számszerű értékei változnak; a hálózat architektúrája változatlan marad.</p>
-<p>A tanítóadatokon mért veszteség csökkentése nem végső cél. Egy hasznos hálózatnak olyan példákra is jó előrejelzéseket kell adnia, amelyeket nem használtunk a paraméterek illesztéséhez. Ezt a képességet <em>általánosításnak</em> nevezzük. Ha a modell túl szorosan alkalmazkodik a tanítóhalmaz sajátosságaihoz és új adatokon rosszabbul teljesít, <em>túltanulásról</em> beszélünk. Gondosabb értékelésnél az adatokat gyakran tanító-, validációs és teszthalmazra osztják: az első a paraméterek illesztésére szolgál, a második a modellfejlesztés közbeni döntéseket támogatja, a harmadikat pedig a végső értékelésre tartják fenn. Az általánosításról és a modellértékelésről bővebben Faceli és munkatársai , valamint Goodfellow, Bengio és Courville  írnak.</p>
-<p>Ezzel eljutottunk a neurális hálózatban történő tanulás matematikai jelentéséhez. Ebben az összefüggésben a tanulás azt jelenti, hogy egy összetett függvény paramétereit úgy módosítjuk, hogy az adatokon mért hibát csökkentsük, és ideális esetben új példákra is jól általánosítsunk. A hálózat előrejelzést készít, veszteséget számít, deriváltakkal meghatározza, hogyan hatnak paraméterei erre a veszteségre, majd kis korrekciók sorozatát hajtja végre.</p>
+<p>Az <em>összes</em> frissített paraméterrel elvégzett új előrehaladó
+számítás <span class="math inline">\(\widehat
+y_{\mathrm{new}}\simeq0.723717\)</span> és <span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span> értéket
+ad: a veszteség már egy lépés után csökken, bár az osztályozás még nem
+változik. A tanulás sok példa és korszak ismétlésével valósul meg.</p>
+<h3 id="négyzetes-hiba-és-keresztentrópia">Négyzetes hiba és
+keresztentrópia</h3>
+<p>A négyzetes veszteség alkalmas a láncszabály szemléltetésére, bináris
+osztályozásnál szigmoid kimenettel azonban gyakran <em>bináris
+keresztentrópiát</em> is használunk. <span class="math inline">\(y\in\{0,1\}\)</span> és <span class="math inline">\(\widehat y=\sigma(z)\)</span> esetén az egyetlen
+megfigyelésre jutó veszteség:</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>A négyzetes veszteség az előrejelzés és a címke numerikus különbségét
+bünteti, a keresztentrópia pedig azt, ha a megfigyelt osztályhoz kicsi
+valószínűséget rendelünk, <span class="math inline">\(\widehat
+y\)</span>-t az <span class="math inline">\(1\)</span> osztály
+valószínűségeként értelmezve. A tanulás szempontjából fontos különbség a
+kimeneti neuron <span class="math inline">\(z\)</span> pontszáma
+szerinti deriválásnál jelenik meg. A láncszabály és <span class="math inline">\(\sigma'(z)=\widehat y(1-\widehat y)\)</span>
+alapján:</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>A különbség szemléltetésére tegyük fel, hogy egy narancsra (<span class="math inline">\(y=0\)</span>) <span class="math inline">\(\widehat
+y=0.80\)</span> az előrejelzés. Ekkor <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span>, míg <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span>;
+a <span class="math inline">\(z\)</span> szerinti deriváltak <span class="math inline">\(0.128\)</span>, illetve <span class="math inline">\(0.80\)</span>. <span class="math inline">\(\eta=0.05\)</span> esetén a kimeneti eltolás
+önálló frissítése <span class="math inline">\(\Delta c=-0.0064\)</span>
+négyzetes hiba, illetve <span class="math inline">\(-0.0400\)</span>
+keresztentrópia esetén. Ez a <span class="math inline">\(0.80\)</span>
+érték külön szemléltető feltevés, nem helyettesíti az előző teljes
+számpélda eredményét. Keresztentrópiánál a <span class="math inline">\(\widehat y(1-\widehat y)\)</span> tényező nem
+szorozza a kimeneti réteg érzékenységét. Így <em>ebben a rétegben</em>
+csökken a szigmoid telítődése miatti további gradienscsillapítás erősen
+hibás előrejelzéseknél. Ez nem szünteti meg más rétegek kis gradienseit,
+és nem garantál minden esetben gyorsabb tanulást. A veszteségek
+különböző skálájú számait nem lehet közvetlenül minőségi mérőszámként
+összevetni. A főprogram megtartja a négyzetes veszteséget, hogy a
+korábbi számítás megismételhető legyen.</p>
+<h3 id="korszakok-és-általánosítás">Korszakok és általánosítás</h3>
+<p>A tanítóhalmazon egyszer végighaladni egy <em>korszak</em> (epoch). A
+program minden korszakban keveri a minták sorrendjét, és minden gyümölcs
+után frissít. A hálózat szerkezete rögzített, de súlyai, eltolásai és
+döntési határa változik. A kis tanítási veszteség nem feltétlenül jelent
+jó előrejelzést új adatokra; ez az <em>általánosítás</em> kérdése. Ha a
+tanítóadatok túlzott illesztése rontja az új mintákon elért eredményt,
+<em>túltanulásról</em> beszélünk. Szélesebb vizsgálatokban külön
+tanító-, validációs és teszthalmaz szolgál a hiperparaméterek
+kiválasztására és a kevésbé torzított értékelésre <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
 </section><section class="article-section" id="a-matematikától-a-pythonig"><span class="section-no">08</span><h2>A matematikától a Pythonig</h2>
-<p>Most az egyenletektől egy futtatható program felé lépünk. Nem speciális neurális hálózati könyvtárat használunk, hanem a cikkben felépített matematikai műveleteket közvetlenül, <code>NumPy</code> segítségével valósítjuk meg . Így sorról sorra láthatóvá válik, hogyan jelennek meg a kódban a lineáris kombinációk, az aktivációs függvények, a veszteség számítása, a visszaterjesztés és a gradienscsökkenés.</p>
-<p>A meggyőzőbb végső példához szintetikus adathalmazt használunk a tömeg–átmérő tartomány szélesebb részén. Továbbra is csak két fizikai jellemzővel dolgozunk — tömeg grammban és átmérő centiméterben —, de most <span class="math inline">\(64\)</span> tanítópéldát osztunk el a sík egy tág tartományában, és további nyolc példát tartunk fenn szemléltető tesztként. Az adatok szintetikusak maradnak, és almákra, illetve narancsokra ésszerű tartományokban helyezkednek el. Úgy konstruáljuk őket, hogy nemlineáris döntési határt eredményezzenek anélkül, hogy minden pont néhány túlságosan mesterséges klaszterbe tömörülne.</p>
-<p>A geometriai ötlet egyszerű. Referenciagörbét definiálunk a tömeg–átmérő síkban, az almákat e görbe feletti két sávba, a narancsokat pedig alatta lévő két sávba helyezzük. A tömeghez és az átmérőhöz kis determinisztikus perturbációkat adunk, hogy a megfigyelések szélesebb tartományt töltsenek ki. Az így kapott példa gazdagabb a korábbi szemléltetéseknél: több pontot tartalmaz, az adatok a tartomány nagy részén eloszlanak, és a megfelelő döntési határ egyértelműen görbültebb egy egyenesnél.</p>
-<p>Ehhez a végső számítási kísérlethez a rejtett réteget tizenkét ReLU-neuronra bővítjük. Ez nem változtatja meg a korábbi részekben vizsgált fogalmi szerkezetet; csupán növeli a hálózat képességét egy összetettebb határ reprezentálására. A háromneuronos didaktikai hálózat <span class="math inline">\(13\)</span> paramétere helyett most <span class="math inline">\(49\)</span> állítható paraméterünk van: az első rétegben <span class="math inline">\(24\)</span> súly és <span class="math inline">\(12\)</span> bias, majd a kimeneti rétegben <span class="math inline">\(12\)</span> súly és egy bias. Az egyenletek alakja pontosan ugyanaz marad; csak a vektorok és mátrixok lesznek nagyobbak.</p>
-<p>A teljes program az alábbi.</p>
-<pre style="pythonterminal"><code>import numpy as np
+<p>Most kizárólag <code>NumPy</code>-val valósítjuk meg a <a href="#hogyan-tanul-egy-neurális-hálózat">7</a>. szakasz előrehaladó számítását,
+láncszabályát és sztochasztikus frissítéseit <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. A nemlineáris döntési határhoz a
+rejtett réteg neuronjainak számát háromról tizenkettőre növeljük. A
+<span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+hálózatnak <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
+tanítható paramétere van, de ugyanazok az egyenletek érvényesek.</p>
+<h3 id="szintetikus-adatok-a-bemutatóhoz">Szintetikus adatok a
+bemutatóhoz</h3>
+<p>A kísérlet <span class="math inline">\(64\)</span> szintetikus
+tanítópéldát használ négy, egyenként <span class="math inline">\(16\)</span> pontból álló sávban a tömeg–átmérő
+síkon, és nyolc további szemléltető tesztpéldát. Két alma-sáv a
+referenciagörbe fölött, két narancs-sáv alatta található; kis
+determinisztikus eltolások teszik a sávokat nem tökéletesen szabályossá.
+Az értékeket csupán szemléletes, nemlineáris adateloszlás létrehozására
+választottuk: <em>nem kísérleti mérések és nem gyümölcsök fizikai
+modelljei</em>. A referenciagörbe <em>csak a pontok előállítására</em>
+szolgál, nincs megadva a hálózatnak, nem szerepel a veszteségben vagy a
+visszaterjesztésben. A tanítás kizárólag a tömeg–átmérő párokat és
+címkéiket használja. A pontos generáló képletek a <a href="#appendix-synthetic-data">A</a>. függelékben
+találhatók.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="A \(64\) szintetikus példa
+négy sávban helyezkedik el: kettő az almákhoz a segédgörbe fölött, kettő
+a narancsokhoz alatta. A szaggatott görbét nem használjuk a tanítás
+során." decoding="async" loading="lazy" src="../assets/img/hu/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. A <span class="math inline">\(64\)</span> szintetikus példa
+négy sávban helyezkedik el: kettő az almákhoz a segédgörbe fölött, kettő
+a narancsokhoz alatta. A szaggatott görbét nem használjuk a tanítás
+során.</figcaption>
+</figure>
+<p>A <a href="#fig:faixas_sinteticas">7</a>. ábra a
+<code>construct_data()</code> által generált pontokat mutatja. A
+szaggatott görbe az adatok előállításának segédeszköze, nem megtanult
+döntési határ. A nyolc további minta csak a végső szemléltetésben
+szerepel, a standardizálás statisztikáját nem befolyásolja.</p>
+<h3 id="standardizálás-és-tanítási-döntések">Standardizálás és tanítási
+döntések</h3>
+<p>A tömeg és átmérő eltérő mértékegysége miatt minden jellemzőt
+dimenziótlan változóvá alakítunk:</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p>A <span class="math inline">\(\mu_j\)</span> átlag középre igazítja,
+a <span class="math inline">\(\sigma_j\)</span> szórás újraskálázza a
+<span class="math inline">\(j\)</span> jellemzőt; itt <span class="math inline">\(N=64\)</span>. Mindkettőt <em>csak</em> a
+tanítóhalmazból határozzuk meg, és a tesztadatokra változtatás nélkül
+alkalmazzuk. Feltételezzük, hogy <span class="math inline">\(\sigma_j&gt;0\)</span>, és ugyanezt a
+transzformációt használjuk a predikciós rácson. A súlyok kezdetben nulla
+várható értékű, <span class="math inline">\(0.1\)</span> szórású
+normális eloszlásból származnak, véletlen mag: <span class="math inline">\(42\)</span>. A kis véletlen értékek megtörik a
+rejtett neuronok szimmetriáját; a választás nem általános optimalitási
+szabály. Nagyobb hálózatnál az inicializálást az architektúrához és az
+aktivációhoz kell igazítani. Az eltolások kezdetben nullák. A ReLU a
+<span class="math inline">\(0\)</span> pontban nem differenciálható; a
+<code>relu_derivative()</code> függvény ott konvenció szerint nullát
+vesz fel, ami önmagában nem garantál konvergenciát. <span class="math inline">\(\eta=0.05\)</span> konzervatív választás, nem
+bizonyítottan optimális. A <a href="#tab:eta">2</a>. táblázat rögzített adatokkal és maggal
+<span class="math inline">\(1000\)</span> korszak után mutatja a
+tanulási ráta érzékenységét. A legnagyobb vizsgált ráta ezen az
+adathalmazon gyorsabban konvergált, ami nem igazolja általános
+alkalmazhatóságát. A <span class="math inline">\(0.05\)</span> értéket
+stabil tanulása és átlátható veszteségtörténete miatt tartjuk meg.</p>
+<div id="tab:eta">
+<table>
+<caption>Tanulási ráta szerinti érzékenység: átlagos veszteség és helyes
+tanítási osztályozások <span class="math inline">\(1000\)</span> korszak
+után (mag: <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">Átlagos veszteség <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">Helyes a <span class="math inline">\(64\)</span>-ből</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="a-teljes-python-megvalósítás">A teljes Python-megvalósítás</h3>
+<p>A teljes programot a <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a> kódblokkok mutatják
+be, a függvények és a futtatás sorrendjében. A tíz egymást követő blokk
+együttesen a mellékelt <code>neural_network.py</code> állományt
+alkotja.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Környezet előkészítése</p><pre class="nm-python-code" dir="ltr"><code>"""Oktatási példa: gyümölcsosztályozás 2-12-1 hálózattal.
+Függőségek: numpy és matplotlib. Futtatás: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — ReLU-aktiváció</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """A rejtett réteg aktivációja: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — A ReLU számítási deriváltja</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # A ReLU s=0 esetén nem differenciálható; a számítási deriváltat 0-nak választjuk.
+    # Ez a konvenció csak a visszaterjesztési lépést definiálja ezen a ponton.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — Szigmoid aktiváció</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Kimeneti aktiváció 0 és 1 közötti értékekkel."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — Segédgörbe az adatok előállításához</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Mesterséges görbe (cm): eltolás, Gauss-domb és logisztikus emelkedés.
+    # Az állandókat nemlineáris referenciagörbe létrehozásához választottuk;
+    # nem kísérleti mérések és nem illesztett paraméterek.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — Szintetikus tanító- és szemléltető tesztadatok</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # Mind a négy sávban 16 tömegérték: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Kis determinisztikus eltolások akadályozzák meg az azonos tömegeket.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Almák: két sáv a görbe fölött, kis centiméteres eltérésekkel.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Narancsok: két sáv a referenciagörbe alatt.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Nyolc szemléltető példa, nem átfogó statisztikai teszt.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — Előrehaladó számítás és előrejelzés</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, a tanítóadatok statisztikáival.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Előrehaladó számítás mátrixjelöléssel (gyümölcsönként egy sor).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — Tanítás visszaterjesztéssel és gradiensmódszerrel</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # A kis véletlen súlyok megtörik a neuronok szimmetriáját;
+    # a kezdeti eltolások nullák. A 0.1 skála oktatási döntés.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: gyümölcsönként egy frissítés, korszakonként véletlen sorrendben.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # Előrehaladó számítás: a rejtett és kimeneti réteg egyenletei.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Visszaterjesztés: delta2 = dE/dz2 (négyzetes hiba).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Sztochasztikus gradienslépés: theta &lt;- theta - eta*dE/dtheta.
+            # Minden gradiens a KORÁBBI paraméterértékeket használja.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: átlagos tanítási veszteség minden korszak végén.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — A megtanult döntési határ ábrázolása</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # Az y_hat=0.5 szintvonal a MEGTANULT döntési határ.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -438,91 +724,165 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Alma - tanítás")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Narancs - tanítás")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="Alma - teszt")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="Narancs - teszt")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("Tömeg (g)")
-    ax.set_ylabel("Átmérő (cm)")
-    ax.set_title("A neurális hálózat kimenete tanítás után")
-
+    ax.set_xlabel('Tömeg (g)')
+    ax.set_ylabel('Átmérő (cm)')
+    ax.set_title('A neurális hálózat kimenete tanítás után')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Alma - tanítás'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Narancs - tanítás'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Alma - tanítás'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Narancs - tanítás'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
                linestyle='None', label='Alma - teszt'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
                linestyle='None', label='Narancs - teszt'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='A neurális hálózat döntési határa')
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Megtanult döntési határ')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-<p>Bár a kód hosszabb, mint a cikk elején vizsgált első egyenletek, szerkezete továbbra is átlátható. A <code>build_data()</code> függvény automatikusan létrehozza a <span class="math inline">\(64\)</span> tanítópéldát és a nyolc szemléltető tesztpéldát. Ezután mindkét változót standardizáljuk: <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> ahol <span class="math inline">\(\mu_j\)</span> és <span class="math inline">\(\sigma_j\)</span> kizárólag a tanítóhalmazból számítódik. Ez megakadályozza, hogy a teszthalmaz befolyásolja a paraméterillesztést, és a tömeget meg az átmérőt összehasonlítható számszerű skálára hozza.</p>
-<p>Az előreterjesztés lényegében nem változik. Az egyetlen különbség, hogy az első réteg most tizenkét rejtett aktivációból álló vektort állít elő. Mátrixos jelölésben <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\text{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> Ez a négy sor továbbra is az algoritmus matematikai magját tartalmazza. A tanítás is megőrzi a korábban bemutatott logikát: előrejelzés számítása, hiba mérése, az érzékenységi információ visszaterjesztése deriváltakkal, majd a paraméterek frissítése kis gradienslépésekkel.</p>
-<p>A kódban a kimeneti réteg visszaterjesztése itt jelenik meg:</p>
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-<p>a rejtett réteg felé történő terjesztés pedig itt:</p>
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-<p>majd minden súly és bias frissítése következik. Mivel a példákat minden epochban megkeverjük, és a paramétereket minden megfigyelés után frissítjük, ez a megvalósítás a <em>sztochasztikus gradienscsökkenés</em> elemi formája.</p>
-<p>Az itt használt véletlen maggal és hiperparaméterekkel a végső átlagos veszteség nagyságrendje <span class="math inline">\(10^{-5}\)</span>–<span class="math inline">\(10^{-4}\)</span>, és mind a <span class="math inline">\(64\)</span> tanítópélda, mind a nyolc szemléltető tesztpélda a várt osztályozást kapja. Ezt nem szabad szigorú statisztikai teljesítményértékelésként értelmezni: az adatok szintetikusak és didaktikai célból készültek. Feladatuk annak bemutatása, hogy kevésbé triviális környezetben miként tanulhat meg egy kis neurális hálózat egyértelműen nemlineáris döntési határt.</p>
-<p>A <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a>. ábra mutatja a program végső kimenetét a tömeg–átmérő síkban. Minden tanítópont látható. A kiemelt görbe a <span class="math inline">\(\widehat{y}=0.5\)</span> szint, és a hálózat által megtanult döntési határt jelenti; az árnyékolt tartományok a két előre jelzett osztályt mutatják. A körök tanító almákat, a négyzetek tanító narancsokat, a háromszögek tesztalmákat, a keresztek tesztnarancsokat jelölnek. A jelmagyarázat a fő rajzterületen kívül helyezkedik el, így egyetlen adatpontot sem takar el.</p>
-<figure id="fig:python_output">
-<img alt="A Python kimenete a neurális hálózat tanítása után. A szintetikus adathalmaz \(64\) tanítópéldát tartalmaz a tömeg–átmérő sík széles tartományában, valamint nyolc további példát szemléltető teszthez. A kiemelt görbe a \(\widehat{y}=0.5\) szint, és a megtanult döntési határt jelen" decoding="async" loading="lazy" src="../assets/img/hu/Fig07.png"/>
-<figcaption>A Python kimenete a neurális hálózat tanítása után. A szintetikus adathalmaz <span class="math inline">\(64\)</span> tanítópéldát tartalmaz a tömeg–átmérő sík széles tartományában, valamint nyolc további példát szemléltető teszthez. A kiemelt görbe a <span class="math inline">\(\widehat{y}=0.5\)</span> szint, és a megtanult döntési határt jelenti; az árnyékolt tartományok a hálózat által előre jelzett osztályokat mutatják. A körök tanító almákat, a négyzetek tanító narancsokat, a háromszögek tesztalmákat, a keresztek tesztnarancsokat jelölnek.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — A kísérlet futtatása</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Végső átlagos veszteség:', history[-1])
+    print('Helyes tanítási osztályozások:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Helyes szemléltető tesztosztályozások:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p>A <code>construct_data()</code> (<a href="#cod:dados">6</a>.
+kód) kizárólag a <a href="#appendix-synthetic-data">A</a>. függelék szintetikus adatépítését
+valósítja meg; a segédgörbe nem része az optimalizálásnak. A
+<code>train()</code> (<a href="#cod:treinamento">8</a>. kód) az
+előrehaladó számítást, a <span class="math inline">\(\delta^{(2)}\)</span> és <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>
+érzékenységeket, a gradienseket és négy paraméterfrissítést számítja ki
+a <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> és <a href="#eq:descida">descida</a> egyenletek alapján. Minden
+gradiens meghatározása megelőzi bármely paraméter módosítását. A
+<code>plot_results()</code> a megtanult határt mutatja, nem az
+adatgeneráló görbét. A futtatható Python-fájl és notebook segíti a
+reprodukálhatóságot. <span class="math inline">\(6000\)</span> korszak,
+<span class="math inline">\(42\)</span> mag és <span class="math inline">\(\eta=0.05\)</span> mellett a végső átlagos
+veszteség <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>; mind a <span class="math inline">\(64\)</span> tanítópéldát és a nyolc további
+szemléltető példát helyesen osztályozza a hálózat. Ez a szintetikus
+példán végzett számítás ellenőrzése, nem az általánosítás statisztikai
+becslése. A <a href="#fig:saida_python">8</a>. ábrán a megtanult <span class="math inline">\(\widehat y=0.5\)</span> határ és a tanító (körök,
+négyzetek), illetve tesztpontok (háromszögek, keresztek) láthatók.</p>
+<figure id="fig:saida_python">
+<img alt="A \(2\) – \(12\) – \(1\) hálózat által tanult \(\widehat y=0.5\) döntési határ a tanítási és szemléltető tesztadatokkal." decoding="async" loading="lazy" src="../assets/img/hu/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. A <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+hálózat által tanult <span class="math inline">\(\widehat y=0.5\)</span>
+döntési határ a tanítási és szemléltető tesztadatokkal.</figcaption>
 </figure>
-<p>Egy két egyszerű pontcsoportot elválasztó egyenessel kezdtünk, és egy gazdagabb számítási példáig jutottunk, amelyben görbült határ jelenik meg a hálózati paraméterek automatikus módosításának eredményeként. A matematikához semmi rejtélyeset nem adtunk hozzá: a megvalósítás csupán nagyobb léptékben és nagy sebességgel szervezi és ismétli az affin kombinációkat, aktivációs függvényeket, deriváltakat, mátrixszorzásokat és gradiensalapú frissítéseket .</p>
-<p>A cikkhez kapcsolódó minden számítási anyag — beleértve a kódot és egy futtatható Google Colab jegyzetfüzetet — elérhető a <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> címen, egységes hozzáférési pontot biztosítva azoknak az olvasóknak, akik szeretnék felfedezni, reprodukálni vagy módosítani a példákat.</p>
-<h4 id="nyilatkozat-a-mesterséges-intelligencia-használatáról.">Nyilatkozat a mesterséges intelligencia használatáról.</h4>
-<p>A szerző az OpenAI által fejlesztett ChatGPT-t támogató eszközként használta a szöveg megfogalmazásához, nyelvi ellenőrzéséhez, a kifejtés megszervezéséhez és didaktikai ábrák létrehozásához. A szerző teljes felelősséget vállal a munka végső tartalmáért, beleértve a matematikai anyag kidolgozását, a kódot és a felhasznált hivatkozásokat.</p>
+<p>A példát a két ponthalmazt elválasztó egyenesből indítottuk, és a
+hálózat által illesztett görbe döntési határral zárjuk. A megvalósítás a
+korábban ismertetett lineáris kombinációkat, aktivációkat, deriváltakat,
+mátrixműveleteket és gradienslépéseket szervezi ismételhető eljárássá
+<span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.
+A Python-program és a végrehajtható notebook kiegészítő anyagként
+elérhető; további oktatási források: <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>A szintetikus adathalmaz előállítása</h2>
+<p>Az itt megadott képletek csupán az oktatási számításhoz választott
+<em>ad hoc</em> adatgenerálást írják le. Nem részei a hálózati
+architektúrának, a veszteségnek vagy a tanulási algoritmusnak; a
+segédgörbéről semmilyen információ nem kerül a súlyok és eltolások
+frissítésébe. Ha a tömeget <span class="math inline">\(m\)</span>-mel,
+grammokban adjuk meg, a segédgörbe centiméterben mért átmérőjét így
+definiáljuk:</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>Az első tag függőlegesen eltolja a görbét, a második <span class="math inline">\(155\)</span> g körül dombot hoz létre, a harmadik
+<span class="math inline">\(202\)</span> g közelében sima emelkedést ad.
+Az állandókat szemléltetés céljából választottuk, nem mért
+gyümölcsadatokból illesztettük. <span class="math inline">\(k=0,\ldots,15\)</span> esetén legyen <span class="math inline">\(m_k=118+(212-118)k/15\)</span> (grammban). Egy
+második tömegsor <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span>, ahol a grammban megadott eltérések:</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>A négy sáv átmérői:</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>A függőleges eltolások centiméterben értendők. A trigonometrikus
+tagok megakadályozzák a túl szabályos sorokat, de <em>nem</em> fizikai
+periodicitást, sztochasztikus zajt vagy tanult generatív modellt
+jelentenek. A <code>construct_data()</code> pontosan megvalósítja a
+képleteket; a nyolc szemléltető tesztpár a kódban szerepel. A
+<code>reference_curve()</code> és a <code>construct_data()</code> (<a href="#cod:curva">5</a> és <a href="#cod:dados">6</a>
+kódok) a <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> egyenleteket követik anélkül,
+hogy a segédgörbét tanítási információként használnák. A teljes program
+a 8. szakasz tíz blokkjában és külön futtatható állományként is
+rendelkezésre áll.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">Hivatkozások</span><h2>Hivatkozások</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2. kiadás. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Elérhető: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Fordította: Paulo Martins Engel. 2. kiadás. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Elérhető: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L.
+F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de
+Aprendizado de Máquina</em>. 2. kiadás. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Elérhető: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Fordította:
+Paulo Martins Engel. 2. kiadás. Porto Alegre: Bookman, 2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham y D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, vol. 61, núm. 4, pp.
+860–891, 2019. doi: 10.1137/18M1165748</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>,
+v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Elérhető: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Források</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_HU.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>Egy neurális hálózat matematikai anatómiája</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_HU.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · Magyar</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">A webes változat frissült; a jelenlegi PDF változatlan.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_HU.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>A NeuralMath-ról</h2><p class="bio">A NeuralMath egy nyílt oktatási projekt, amelyet Dr. Americo Cunha Jr. fejlesztett. Célja, hogy egy kis neurális hálózat belső matematikai műveleteit láthatóvá, ellenőrizhetővé és reprodukálhatóvá tegye széles közönség számára, viszonylag alapvető analízis- és statisztikai előismeretek mellett.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>Licenc</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>A weboldal magyarázó szövege és eredeti anyaga CC BY 4.0 licenc alatt érhető el, hacsak nincs másként jelezve. A cikk PDF-je a kiadó licencének hatálya alá eshet.</p></div></section>

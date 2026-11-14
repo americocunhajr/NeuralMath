@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Obsah" class="toc"><h2>Obsah</h2><ol><li><a href="#kdy-se-může-počítač-učit" target="_blank" rel="noopener noreferrer">Kdy se může počítač učit?</a></li><li><a href="#matematická-reprezentace-problému" target="_blank" rel="noopener noreferrer">Matematická reprezentace problému</a></li><li><a href="#přímka-jako-klasifikátor" target="_blank" rel="noopener noreferrer">Přímka jako klasifikátor</a></li><li><a href="#umělý-neuron" target="_blank" rel="noopener noreferrer">Umělý neuron</a></li><li><a href="#proč-potřebujeme-aktivační-funkci" target="_blank" rel="noopener noreferrer">Proč potřebujeme aktivační funkci?</a></li><li><a href="#stavba-malé-neuronové-sítě" target="_blank" rel="noopener noreferrer">Stavba malé neuronové sítě</a></li><li><a href="#jak-se-neuronová-síť-učí" target="_blank" rel="noopener noreferrer">Jak se neuronová síť učí?</a></li><li><a href="#od-matematiky-k-pythonu" target="_blank" rel="noopener noreferrer">Od matematiky k Pythonu</a></li></ol></nav>
+<nav aria-label="Obsah" class="toc"><h2>Obsah</h2><ol><li><a href="#kdy-se-může-počítač-učit" target="_blank" rel="noopener noreferrer">Kdy se může počítač učit?</a></li><li><a href="#matematická-reprezentace-problému" target="_blank" rel="noopener noreferrer">Matematická reprezentace problému</a></li><li><a href="#přímka-jako-klasifikátor" target="_blank" rel="noopener noreferrer">Přímka jako klasifikátor</a></li><li><a href="#umělý-neuron" target="_blank" rel="noopener noreferrer">Umělý neuron</a></li><li><a href="#proč-potřebujeme-aktivační-funkci" target="_blank" rel="noopener noreferrer">Proč potřebujeme aktivační funkci?</a></li><li><a href="#stavba-malé-neuronové-sítě" target="_blank" rel="noopener noreferrer">Stavba malé neuronové sítě</a></li><li><a href="#jak-se-neuronová-síť-učí" target="_blank" rel="noopener noreferrer">Jak se neuronová síť učí?</a></li><li><a href="#od-matematiky-k-pythonu" target="_blank" rel="noopener noreferrer">Od matematiky k Pythonu</a></li><li><a href="#appendix-synthetic-data">Konstrukce syntetického souboru dat</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="kdy-se-může-počítač-učit"><span class="section-no">01</span><h2>Kdy se může počítač učit?</h2>
 <p>V každodenním životě téměř bezděčně činíme klasifikační rozhodnutí. Když se podíváme na ovoce, rychle rozpoznáme, zda jde o jablko nebo pomeranč; když nám přijde zpráva do telefonu, odlišujeme běžnou komunikaci od nevyžádané reklamy; v lékařské analýze lze několik měření kombinovat jako podporu rozhodnutí; a ve finančních institucích se před poskytnutím úvěru vyhodnocuje mnoho informací. Ve všech těchto příkladech se současně posuzuje několik vlastností, aby bylo možné získat odpověď.</p>
 <p>V mnoha tradičních počítačových programech jsou pravidla vedoucí k takové odpovědi explicitně zapsána programátorem. Tento přístup funguje dobře, pokud jsou pravidla známá a lze je jasně formulovat. Je však méně účinný, jsou-li data velmi rozmanitá nebo je-li obtížné předem stanovit všechny podmínky potřebné pro dobré rozhodnutí. To vede k přirozené otázce:</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> Ačkoli se skládá ze dvou lineárních úseků, ReLU není globálně lineární. Její derivace je rovna <span class="math inline">\(0\)</span> pro <span class="math inline">\(s&lt;0\)</span> a <span class="math inline">\(1\)</span> pro <span class="math inline">\(s&gt;0\)</span>. V bodě <span class="math inline">\(s=0\)</span> běžná derivace neexistuje, proto programové implementace volí určitou konvenci pro gradient. Pro kladné vstupy derivace s růstem <span class="math inline">\(s\)</span> neklesá, což pomáhá vyhnout se jednomu z mechanismů saturace sigmoidní funkce.</p>
 <p>Obrázek <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> vizuálně porovnává tyto tři aktivační funkce: prudký skok skokové funkce, plynulý přechod sigmoidy a změnu sklonu ReLU.</p>
 <figure id="fig:activation_functions">
-<img alt="Porovnání tří aktivačních funkcí často používaných v úvodních výkladech neuronových sítí. Skoková funkce provádí náhlé rozhodnutí; sigmoida poskytuje plynulý přechod mezi \(0\) a \(1\) ; ReLU nuluje záporné vstupy a zachovává kladné. Nelineární aktivační funkce zabraňují redukci " decoding="async" loading="lazy" src="../assets/img/cs/Fig04.png"/>
+<img alt="Porovnání tří aktivačních funkcí často používaných v úvodních výkladech neuronových sítí. Skoková funkce provádí náhlé rozhodnutí; sigmoida poskytuje plynulý přechod mezi \(0\) a \(1\) ; ReLU nuluje záporné vstupy a zachovává kladné. Nelineární aktivační funkce zabraňují redukci " decoding="async" loading="lazy" src="../assets/img/cs/Fig04.webp"/>
 <figcaption>Porovnání tří aktivačních funkcí často používaných v úvodních výkladech neuronových sítí. Skoková funkce provádí náhlé rozhodnutí; sigmoida poskytuje plynulý přechod mezi <span class="math inline">\(0\)</span> a <span class="math inline">\(1\)</span>; ReLU nuluje záporné vstupy a zachovává kladné. Nelineární aktivační funkce zabraňují redukci posloupnosti vrstev na jedinou afinní transformaci.</figcaption>
 </figure>
 <p>Jejich nejdůležitější vlastnosti jsou shrnuty níže.</p>
@@ -221,216 +221,511 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>Tento zápis předznamenává strukturu, která se objeví v programu v Pythonu. Když plod přivedeme na vstup a postupně počítáme aktivace až k <span class="math inline">\(\widehat{y}\)</span>, provádíme <em>dopředné šíření</em> (angl. <em>forward pass</em>). Zůstává klíčová otázka: jak automaticky určit třináct parametrů tak, aby predikce odpovídaly datům?</p>
 </section><section class="article-section" id="jak-se-neuronová-síť-učí"><span class="section-no">07</span><h2>Jak se neuronová síť učí?</h2>
-<p>Váhy a biasy nejsou předem známy. Musí být nastaveny pomocí příkladů, pro které známe správnou odpověď. Tento proces se nazývá <em>trénink</em> a lze jej shrnout cyklem <span class="math display">\[\boxed{\text{predikce}}
-\longrightarrow
-\boxed{\text{měření chyby}}
-\longrightarrow
-\boxed{\text{aktualizace parametrů}}
-\longrightarrow
-\boxed{\text{opakování}}.\]</span></p>
-<p>Uvažujme plod o hmotnosti <span class="math inline">\(140\)</span> g a průměru <span class="math inline">\(7.0\)</span> cm, jehož správnou třídou je pomeranč, tedy <span class="math inline">\(y=0\)</span>. Předpokládejme, že v určitém okamžiku tréninku síť dává výstup <span class="math inline">\(\widehat{y}=0.80\)</span>. Jednoduchou mírou rozdílu mezi predikcí a cílovou hodnotou je kvadratická chyba <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> V tomto příkladu <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
-<p>Tento výraz je <em>ztrátovou funkcí</em> pro jeden příklad. Protože jde o druhou mocninu, platí <span class="math inline">\(E\geq0\)</span> a predikce vzdálenější od cílové hodnoty dostávají větší penalizaci. Faktor <span class="math inline">\(1/2\)</span> nemění polohu minima, ale zjednodušuje derivace. V binární klasifikaci se často používají jiné ztrátové funkce, zejména křížová entropie. Zde používáme kvadratickou chybu, protože její algebra je přehledná a postačuje k zavedení optimalizace a zpětného šíření .</p>
-<p>Obsahuje-li trénovací množina <span class="math inline">\(N\)</span> příkladů, jednou z globálních měr je průměrná ztráta <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Každá predikce závisí na vahách a biasech sítě, proto <span class="math inline">\(J\)</span> závisí také na všech těchto parametrech. Trénink znamená hledání takových hodnot parametrů, pro které je <span class="math inline">\(J\)</span> malé.</p>
-<p>Abychom pochopili mechanismus nastavování, představme si nejprve, že všechny parametry kromě jedné váhy <span class="math inline">\(w\)</span> jsou pevné. Ztrátu pak můžeme chápat jako funkci <span class="math inline">\(J=J(w)\)</span>. Obrázek <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> shrnuje základní kroky tréninku, které nyní probereme.</p>
-<figure id="fig:training_cycle">
-<img alt="Základní cyklus tréninku neuronové sítě. Dopředné šíření převádí vstupy na predikci; ztrátová funkce měří rozdíl mezi predikcí a cílovou hodnotou; zpětné šíření počítá gradienty pomocí řetězového pravidla; a gradientní sestup tyto gradienty používá k aktualizaci vah a biasů. Opak" decoding="async" loading="lazy" src="../assets/img/cs/Fig06.png"/>
-<figcaption>Základní cyklus tréninku neuronové sítě. Dopředné šíření převádí vstupy na predikci; ztrátová funkce měří rozdíl mezi predikcí a cílovou hodnotou; zpětné šíření počítá gradienty pomocí řetězového pravidla; a gradientní sestup tyto gradienty používá k aktualizaci vah a biasů. Opakování tohoto cyklu po mnoho epoch nazýváme učením.</figcaption>
+<p>Váhy a posuny (biasy) sítě nejsou předem známé: upravují se podle
+příkladů se známými třídami. Učení spočívá v opakování dopředného
+průchodu, výpočtu ztráty, určení gradientů a aktualizace parametrů
+(Obrázek <a href="#fig:ciclo_treinamento">6</a>). Řetězové pravidlo
+umožňuje zjistit, jak je ztráta lokálně citlivá na každou váhu a každý
+posun.</p>
+<p>K úpravě parametrů potřebujeme nejprve číselnou míru rozdílu mezi
+předpovědí a očekávanou odpovědí. <em>Ztrátová funkce</em> přiřazuje
+každé předpovědi penalizaci a umožňuje porovnávat různé volby vah a
+posunů. Na rozdíl od pouhého počítání chybných klasifikací spojitá
+ztrátová funkce rozlišuje předpovědi bližší a vzdálenější skutečné třídě
+a poskytuje derivace pro řízení trénování.</p>
+<p>Uvažujme plod s hmotností <span class="math inline">\(140\)</span> g
+a průměrem <span class="math inline">\(7.0\)</span> cm, označený jako
+pomeranč (<span class="math inline">\(y=0\)</span>). Označíme-li výstup
+sítě jako <span class="math inline">\(\widehat y\in(0,1)\)</span>, pro
+jedno pozorování použijeme kvadratickou ztrátu:</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>Zde <span class="math inline">\(y\)</span> představuje skutečnou
+třídu a <span class="math inline">\(\widehat y\)</span> předpověď.
+Ztráta je nezáporná a blíží se nule, jestliže se předpověď blíží správné
+hodnotě; větší rozdíl <span class="math inline">\(|\widehat
+y-y|\)</span> znamená větší penalizaci. Pro pomeranč dávají předpovědi
+<span class="math inline">\(0.80\)</span> a <span class="math inline">\(0.60\)</span> hodnoty <span class="math inline">\(E=0.32\)</span> a <span class="math inline">\(E=0.18\)</span>. Při prahu <span class="math inline">\(0.5\)</span> obě chybně označují plod za jablko,
+avšak ztráta rozlišuje, která je blíže cíli. Faktor <span class="math inline">\(1/2\)</span> nemění minimum a zjednodušuje
+derivování.</p>
+<p>Síť se musí učit z mnoha příkladů, nikoli z jediného plodu. Pro <span class="math inline">\(N\)</span> pozorování definujeme průměrnou
+ztrátu</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>Tento průměr shrnuje přizpůsobení trénovacím datům a jeho hodnotu
+chceme úpravou parametrů snižovat. Minimalizace <span class="math inline">\(J\)</span> sama o sobě nezaručuje dobré předpovědi
+pro nová data; vrátíme se k tomu při diskusi generalizace. Kvadratickou
+ztrátu z rovnice <a href="#eq:perda">perda</a> používáme pro algebraickou
+jednoduchost a později její gradient porovnáme s gradientem binární
+křížové entropie bez změny numerického experimentu <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="Fáze učení: dopředný průchod, výpočet ztráty, zpětné šíření
+gradientů a aktualizace parametrů." decoding="async" loading="lazy" src="../assets/img/cs/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. Fáze učení: dopředný průchod, výpočet ztráty, zpětné šíření
+gradientů a aktualizace parametrů.</figcaption>
 </figure>
-<p>Pro čtenáře s menší zkušeností s diferenciálním počtem lze derivaci interpretovat jako míru <em>lokální citlivosti</em>: říká, jak malá změna jednoho parametru ovlivní ztrátu. Její znaménko ukazuje směr, ve kterém funkce lokálně roste nebo klesá, a absolutní hodnota měří sílu této lokální změny.</p>
-<p>Derivace <span class="math display">\[\frac{\partial J}{\partial w}\]</span> určuje lokální sklon. Je-li kladná, malý růst <span class="math inline">\(w\)</span> obvykle způsobí růst <span class="math inline">\(J\)</span>, proto je třeba váhu posunout opačným směrem. Je-li záporná, zvětšení <span class="math inline">\(w\)</span> lokálně snižuje <span class="math inline">\(J\)</span>. Oba případy popisuje rovnice <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w},\]</span> která vyjadřuje základní myšlenku <em>gradientního sestupu</em>. Kladné číslo <span class="math inline">\(\eta\)</span> je <em>rychlost učení</em>; řídí délku kroku. Velmi malá hodnota může trénink zpomalit, zatímco příliš velká může vést k oscilacím nebo nestabilitě.</p>
-<p>Pro síť s mnoha parametry nechť <span class="math inline">\(\theta\)</span> označuje libovolnou váhu nebo bias. Aktualizace má tvar <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}.\]</span> Soubor všech parciálních derivací tvoří <em>gradient</em> ztrátové funkce. Geometricky gradient ukazuje směr nejrychlejšího lokálního růstu, takže jeho opačný směr určuje lokální směr poklesu.</p>
-<p>Zbývá tyto derivace vypočítat, když je síť složením mnoha funkcí. Při dopředném šíření informace prochází jako <span class="math display">\[\text{vstupy}
-\longrightarrow
-\text{skrytá vrstva}
-\longrightarrow
-\text{výstup}.\]</span> Abychom určili, jak parametr v dřívější vrstvě ovlivňuje ztrátu, matematicky sledujeme řetězec závislostí v opačném směru. Tento postup se nazývá <em>zpětné šíření</em> (angl. <em>backpropagation</em>). Jde v podstatě o systematické a efektivní použití řetězového pravidla. Rumelhart, Hinton a Williams  představují klasický zdroj k rozšíření tohoto postupu v sítích se skrytými vrstvami; Nielsen  nabízí podrobné a zvláště didaktické odvození.</p>
-<p>Pro jednoduchý řetězec závislostí, v němž <span class="math inline">\(E\)</span> závisí na <span class="math inline">\(\widehat{y}\)</span>, tato veličina závisí na aktivaci <span class="math inline">\(h\)</span> a <span class="math inline">\(h\)</span> zase na váze <span class="math inline">\(w\)</span>, dává řetězové pravidlo <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}.\]</span> Každý faktor popisuje jednu fázi vlivu <span class="math inline">\(w\)</span> na konečnou ztrátu. Větší sítě obsahují mnoho takových řetězců a zpětné šíření organizuje výpočty tak, aby bylo možné mezilehlé derivace znovu použít namísto jejich samostatného výpočtu pro každý parametr.</p>
-<p>V praxi trénink využívá mnoho příkladů. Jeden úplný průchod trénovací množinou se nazývá <em>epocha</em>. Parametry lze aktualizovat po každém příkladu, jako v didaktickém programu použitém dále v článku, nebo po malých skupinách příkladů nazývaných <em>mini-batche</em>, což je typické pro větší sítě. V obou případech se cyklus predikce, ztráty, gradientů a aktualizací opakuje po mnoho epoch.</p>
-<p>Konkrétním způsobem vizualizace tohoto vývoje je sledovat predikci pro jeden pevný příklad v různých fázích tréninku. Uvažujme znovu plod o hmotnosti <span class="math inline">\(140\)</span> g a průměru <span class="math inline">\(7.0\)</span> cm, jehož správnou třídou je pomeranč. Tabulka <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> ukazuje hypotetický průběh. Tyto hodnoty nepocházejí z konkrétního běhu programu; slouží pouze k ilustraci mechanismu.</p>
-<div id="tab:learning">
+<p>Je-li <span class="math inline">\(\theta\)</span> váha nebo posun,
+derivace <span class="math inline">\(\partial J/\partial\theta\)</span>
+vyjadřuje lokální citlivost průměrné ztráty na tento parametr. Krok
+gradientního sestupu má tvar</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>Rychlost učení <span class="math inline">\(\eta\)</span> řídí
+velikost kroku: příliš malé hodnoty mohou zpomalit konvergenci, příliš
+velké mohou vyvolat oscilace nebo divergenci. Aktualizujeme-li parametry
+po každém pozorování, jako v kódu v Oddílu <a href="#od-matematiky-k-pythonu">8</a>, nahradíme
+<span class="math inline">\(\partial J/\partial\theta\)</span> výrazem
+<span class="math inline">\(\partial E_i/\partial\theta\)</span>. Jde o
+zde použitou formu stochastického gradientního sestupu (SGD).</p>
+<h3 id="řetězové-pravidlo-v-síti-231">Řetězové pravidlo v síti
+2–3–1</h3>
+<p>Použijeme síť z Obrázku <a href="#fig:small_network">[fig:pequena_rede]</a> se třemi
+skrytými neurony ReLU a sigmoidálním výstupem. Vstupy představují
+hmotnost (v gramech) a průměr (v centimetrech), tedy veličiny s různými
+číselnými škálami. Aby tento rozdíl nezhoršoval podmíněnost
+optimalizace, transformujeme každou charakteristiku jako <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span>, kde
+<span class="math inline">\(\mu_j\)</span> a <span class="math inline">\(\sigma_j&gt;0\)</span> jsou referenční průměr a
+směrodatná odchylka. Vzniknou bezrozměrné vstupy srovnatelné škály, což
+usnadňuje volbu optimalizačního kroku. Ve výpočetním experimentu se tyto
+statistiky počítají pouze z trénovacích dat, aby nedocházelo k úniku
+informace z testovací množiny. V následujícím číselném příkladu jsou
+středy a škály pevně dány jen pro zjednodušení výpočtů.</p>
+<p>Pro standardizovaný vstup <span class="math inline">\(\mathbf{x}^{\ast}=(x_1^{\ast},x_2^{\ast})^{\mathsf
+T}\)</span> má dopředná propagace tvar</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>Zde <span class="math inline">\(c=b^{(2)}\)</span> je posun
+výstupního neuronu a <span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>. Zpětné šíření
+začíná u výstupu postupným použitím řetězového pravidla:</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>Protože každá aktivace <span class="math inline">\(h_j\)</span>
+závisí také na vahách a posunu daného neuronu, určíme citlivosti
+skrytých neuronů:</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>ReLU není diferencovatelná v nule; kde je třeba, používáme výpočetní
+konvenci <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span>. Veličiny
+<span class="math inline">\(\delta^{(2)}\)</span> a <span class="math inline">\(\delta_j^{(1)}\)</span> jsou lokální citlivosti
+ztráty, nikoli „fyzické chyby“ putující sítí. Jejich opětovné použití
+umožňuje spočítat všech třináct gradientů bez opakování úplného
+derivování pro jednotlivé váhy.</p>
+<h3 id="úplná-numerická-aktualizace-parametrů">Úplná numerická
+aktualizace parametrů</h3>
+<p>Pro přehlednost výpočtů zvolíme <em>pouze v tomto příkladu</em> střed
+<span class="math inline">\(160\)</span> g a škálu <span class="math inline">\(20\)</span> g pro hmotnost, střed <span class="math inline">\(7.5\)</span> cm a škálu <span class="math inline">\(0.5\)</span> cm pro průměr. Plod <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span> má pak
+bezrozměrný vstup</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>Tyto referenční hodnoty slouží jen k demonstraci; v Oddílu <a href="#od-matematiky-k-pythonu">8</a> se průměr a směrodatná odchylka
+vypočítají přímo z trénovacích dat.</p>
+<p>Zvolme třináct počátečních parametrů</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>Rovnice <a href="#eq:forward">forward</a> postupně dává</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>Původní předpověď odpovídá nesprávné třídě. Z rovnic <a href="#eq:delta_saida">delta_saida</a> a <a href="#eq:delta_oculta">delta_oculta</a> dostáváme</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>Třetí skrytý neuron je neaktivní (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), takže gradienty jeho
+vstupních vah a posunu jsou v tomto kroku nulové. Při <span class="math inline">\(\eta=0.05\)</span> použijeme <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span> současně na všechny parametry. Tabulka <a href="#tab:passo_sgd">1</a> ukazuje několik ze třinácti
+aktualizací; ostatní vyplývají ze stejných vzorců.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>Hypotetický vývoj predikce sítě pro tentýž plod během tréninku. Opakované aktualizace parametrů mohou posunout zpočátku chybný výstup směrem ke klasifikaci odpovídající cílovému štítku.</caption>
+<caption>Vybrané parametry před jedním krokem SGD a po něm při <span class="math inline">\(\eta=0.05\)</span>.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Epocha</th>
-<th style="text-align: center;">Predikce <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">Ztráta <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">Klasifikace</th>
+<th style="text-align: left;">Parametr <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">Počáteční</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">Aktualizovaný</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">Jablko</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">Jablko</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">Jablko</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">Pomeranč</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">Pomeranč</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Na začátku je výstup blízko <span class="math inline">\(1\)</span> a plod je chybně klasifikován jako jablko. Jak se parametry nastavují, predikce klesá a nakonec překročí práh <span class="math inline">\(0.5\)</span>, což vede ke správné třídě. Během tohoto procesu se mění číselné hodnoty vah a biasů; architektura sítě zůstává nezměněna.</p>
-<p>Snížení ztráty na trénovacích datech není konečným cílem. Užitečná síť by měla dobře predikovat také příklady, které nebyly použity k nastavení parametrů. Tato schopnost se nazývá <em>generalizace</em>. Když se model příliš přizpůsobí zvláštnostem trénovací množiny a na nových datech funguje hůře, mluvíme o <em>přeučení</em> (angl. <em>overfitting</em>). Při pečlivějším hodnocení se data obvykle dělí na trénovací, validační a testovací množinu: první slouží k nastavení parametrů, druhá podporuje volby při vývoji modelu a třetí se ponechává pro závěrečné hodnocení. Širší diskusi generalizace a hodnocení modelů lze nalézt u Faceliho a kol.  a u Goodfellowa, Bengia a Courvilla .</p>
-<p>Došli jsme tedy k matematickému významu učení v neuronové síti. V tomto kontextu znamená učení nastavování parametrů složené funkce tak, aby se snižovala míra chyby na datech a v ideálním případě aby model generalizoval na nové příklady. Síť vytvoří predikci, vypočítá ztrátu, pomocí derivací určí vliv parametrů na tuto ztrátu a provede posloupnost malých úprav.</p>
+<p>Další dopředný průchod s <em>veškerými</em> aktualizovanými parametry
+dává <span class="math inline">\(\widehat
+y_{\mathrm{new}}\simeq0.723717\)</span> a <span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span>: ztráta po
+jediném kroku klesla. Předpovídaná třída se dosud nezměnila, což je
+očekávané; učení vyžaduje opakování na mnoha příkladech a epochách.</p>
+<h3 id="kvadratická-ztráta-a-křížová-entropie">Kvadratická ztráta a
+křížová entropie</h3>
+<p>Kvadratická ztráta je vhodná pro vysvětlení řetězového pravidla,
+avšak v binární klasifikaci se sigmoidálním výstupem se běžně používá
+také <em>binární křížová entropie</em>. Pro <span class="math inline">\(y\in\{0,1\}\)</span> a <span class="math inline">\(\widehat y=\sigma(z)\)</span> je ztráta jedné
+ukázky</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>Zatímco kvadratická ztráta penalizuje číselný rozdíl mezi předpovědí
+a třídou, křížová entropie penalizuje předpovědi, které skutečné třídě
+přiřazují malou pravděpodobnost, interpretujeme-li <span class="math inline">\(\widehat y\)</span> jako pravděpodobnost třídy
+<span class="math inline">\(1\)</span>. Nejdůležitější rozdíl pro
+trénování se projeví při derivování podle skóre <span class="math inline">\(z\)</span> výstupního neuronu. Pomocí řetězového
+pravidla a <span class="math inline">\(\sigma'(z)=\widehat
+y(1-\widehat y)\)</span> získáme</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>Pro ilustraci pouze tohoto rozdílu předpokládejme předpověď <span class="math inline">\(\widehat y=0.80\)</span> pro pomeranč (<span class="math inline">\(y=0\)</span>). Pak <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span> a <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span>,
+zatímco derivace podle <span class="math inline">\(z\)</span> jsou <span class="math inline">\(0.128\)</span> a <span class="math inline">\(0.80\)</span>. Při <span class="math inline">\(\eta=0.05\)</span> by izolovaná změna výstupního
+posunu, kde <span class="math inline">\(\partial E/\partial c=\partial
+E/\partial z\)</span>, byla <span class="math inline">\(\Delta
+c=-0.0064\)</span> pro kvadratickou ztrátu a <span class="math inline">\(\Delta c=-0.0400\)</span> pro křížovou entropii.
+Tato ilustrativní předpověď <span class="math inline">\(0.80\)</span>
+nenahrazuje hodnoty úplného numerického příkladu výše.</p>
+<p>Při křížové entropii přestává faktor <span class="math inline">\(\widehat y(1-\widehat y)\)</span> násobit
+citlivost výstupní vrstvy. <em>V této vrstvě</em> tak odpadá dodatečné
+tlumení gradientu způsobené saturací sigmoidální funkce při velmi
+chybných předpovědích. Neodstraňuje to malé gradienty v jiných vrstvách
+ani nezaručuje vždy rychlejší trénování. Obě ztráty mají jiné numerické
+škály; jejich hodnoty nelze přímo srovnávat jako míry kvality. Hlavní
+kód zachovává kvadratickou ztrátu pro úplnou reprodukovatelnost
+předchozí aktualizace; doplňkový notebook uvádí porovnání bez změny
+trénování.</p>
+<h3 id="epochy-a-generalizace">Epochy a generalizace</h3>
+<p>Úplný průchod všemi trénovacími příklady nazýváme <em>epochou</em>.
+Program v následujícím oddílu v každé epoše míchá příklady a aktualizuje
+parametry po každém plodu. Architektura zůstává stejná, ale váhy, posuny
+a rozhodovací hranice se mění. Snížení trénovací ztráty nezaručuje dobré
+předpovědi pro nová pozorování. Tato schopnost se nazývá
+<em>generalizace</em>; jestliže přílišné přizpůsobení trénovacím datům
+zhoršuje nové předpovědi, jde o <em>přeučení</em>. V rozsáhlejších
+studiích umožňují oddělené trénovací, validační a testovací množiny
+volit hyperparametry a hodnotit model s menším zkreslením <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
 </section><section class="article-section" id="od-matematiky-k-pythonu"><span class="section-no">08</span><h2>Od matematiky k Pythonu</h2>
-<p>Nyní přecházíme od rovnic ke spustitelnému programu. Cílem není použít specializovanou knihovnu neuronových sítí, ale přímo pomocí <code>NumPy</code> implementovat matematické operace rozvíjené v celém článku . Díky tomu můžeme řádek po řádku vidět, jak se v kódu objevují lineární kombinace, aktivační funkce, výpočet ztráty, zpětné šíření a gradientní sestup.</p>
-<p>V přesvědčivějším závěrečném příkladu používáme syntetický datový soubor rozprostřený ve větší oblasti roviny hmotnost–průměr. Stále pracujeme pouze se dvěma fyzikálními vlastnostmi — hmotností v gramech a průměrem v centimetrech — tentokrát však rozmístíme <span class="math inline">\(64\)</span> trénovacích příkladů po rozsáhlé oblasti roviny a dalších osm příkladů vyhradíme pro ilustrační test. Data zůstávají syntetická a leží v realistických rozsazích pro jablka a pomeranče. Byla vytvořena tak, aby vedla k nelineární rozhodovací hranici, aniž by byly všechny body soustředěny do několika příliš umělých shluků.</p>
-<p>Geometrická myšlenka je jednoduchá. V rovině hmotnost–průměr definujeme referenční křivku, jablka umístíme do dvou pásů nad touto křivkou a pomeranče do dvou pásů pod ní. K hmotnosti a průměru přidáme malé deterministické perturbace, takže pozorování zabírají širší oblast. Výsledný příklad je bohatší než předchozí ilustrace: obsahuje více bodů, data jsou rozložena po celé oblasti a vhodná rozhodovací hranice je zřetelně zakřivenější než přímka.</p>
-<p>V tomto závěrečném výpočetním experimentu zvětšíme skrytou vrstvu na dvanáct neuronů ReLU. Pojmová struktura analyzovaná v předchozích částech se tím nemění; pouze se zvyšuje schopnost sítě reprezentovat složitější hranici. Namísto <span class="math inline">\(13\)</span> parametrů didaktické sítě se třemi neurony máme nyní <span class="math inline">\(49\)</span> nastavitelných parametrů: <span class="math inline">\(24\)</span> vah a <span class="math inline">\(12\)</span> biasů v první vrstvě, poté <span class="math inline">\(12\)</span> vah a jeden bias ve výstupní vrstvě. Rovnice mají přesně stejný tvar; větší jsou pouze vektory a matice.</p>
-<p>Úplný program je uveden níže.</p>
-<pre style="pythonterminal"><code>import numpy as np
+<p>Nyní pouze s <code>NumPy</code> implementujeme dopřednou propagaci,
+řetězové pravidlo a stochastické aktualizace odvozené v Oddílu <a href="#jak-se-neuronová-síť-učí">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Abychom ukázali nelineární
+hranici, rozšíříme skrytou vrstvu ze tří na dvanáct neuronů ReLU.
+Výsledná síť <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+obsahuje <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
+parametrů, ale používá stejné rovnice.</p>
+<h3 id="syntetická-data-pro-demonstraci">Syntetická data pro
+demonstraci</h3>
+<p>Experiment používá <span class="math inline">\(64\)</span>
+syntetických trénovacích příkladů rozdělených do čtyř pásů po <span class="math inline">\(16\)</span> bodech v rovině hmotnost–průměr a
+dalších osm pozorování pro čistě ilustrační test. Dva pásy jablek se
+nacházejí nad referenční křivkou a dva pásy pomerančů pod ní. Malé
+deterministické posuny zabraňují dokonale pravidelnému uspořádání.
+Hodnoty byly zvoleny pouze pro vizuálně věrohodné rozdělení a nelineární
+rozhodovací hranici; <em>nejde o experimentální měření ani fyzikální
+model ovoce</em>.</p>
+<p>Referenční křivka se používá <em>výhradně ke generování
+příkladů</em>. Síť ji nedostává, nevyskytuje se ve ztrátové funkci a
+nepodílí se na zpětném šíření. Trénování využívá pouze dvojice
+hmotnost–průměr a jejich štítky. Generující vzorec a posuny jsou uvedeny
+v Dodatku <a href="#appendix-synthetic-data">A</a>, takže body z Obrázku <a href="#fig:faixas_sinteticas">7</a> lze přesně
+reprodukovat.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="Rozložení \(64\) syntetických příkladů do čtyř pásů: dva nad (jablka) a dva pod
+(pomeranče) pomocnou křivkou zvolenou pro generování bodů. Přerušovaná
+křivka se při trénování nepou" decoding="async" loading="lazy" src="../assets/img/cs/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. Rozložení <span class="math inline">\(64\)</span>
+syntetických příkladů do čtyř pásů: dva nad (jablka) a dva pod
+(pomeranče) pomocnou křivkou zvolenou pro generování bodů. Přerušovaná
+křivka se při trénování nepoužívá.</figcaption>
+</figure>
+<p>Obrázek <a href="#fig:faixas_sinteticas">7</a> ukazuje body vytvořené
+funkcí <code>construct_data()</code>; přerušovaná křivka je pouze
+pomůckou pro syntetickou konstrukci a není naučenou rozhodovací hranicí.
+Osm dalších příkladů slouží jen pro konečnou ilustraci a neovlivňuje
+výpočet statistik standardizace.</p>
+<h3 id="standardizace-a-volba-trénování">Standardizace a volba
+trénování</h3>
+<p>Protože hmotnost a průměr mají různé jednotky a měřítka, každou
+vstupní charakteristiku převádíme na bezrozměrnou veličinu:</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p>Průměr <span class="math inline">\(\mu_j\)</span> centruje
+charakteristiku <span class="math inline">\(j\)</span> a směrodatná
+odchylka <span class="math inline">\(\sigma_j\)</span> ji přepočítává;
+zde je <span class="math inline">\(N=64\)</span>. Obě statistiky se
+vypočítají <em>pouze</em> z trénovacích dat a pak se beze změny použijí
+na testovací pozorování. Předpokládáme <span class="math inline">\(\sigma_j&gt;0\)</span>. Stejná transformace se
+používá pro vstupy sítě i pro síť bodů, v nichž se počítají
+předpovědi.</p>
+<p>Váhy inicializujeme z normálního rozdělení se střední hodnotou nula a
+směrodatnou odchylkou <span class="math inline">\(0.1\)</span>, s pevným
+semenem generátoru <span class="math inline">\(42\)</span>. Malé náhodné
+váhy narušují symetrii mezi skrytými neurony; normální rozdělení je
+jednoduchá volba, nikoli univerzální doporučení. U větších sítí musí
+počáteční škála zohlednit architekturu a aktivace. Posuny začínají
+nulou. V <span class="math inline">\(s=0\)</span> nemá ReLU derivaci;
+funkce <code>relu_derivative()</code> tam konvenčně používá nulu, aniž
+by měnila matematickou definici nebo zaručovala konvergenci.</p>
+<p>Volíme <span class="math inline">\(\eta=0.05\)</span> jako opatrnou
+hodnotu, nikoli jako optimální rychlost učení. Jednoduchá analýza
+citlivosti se stejnými daty a semenem generátoru vede po <span class="math inline">\(1000\)</span> epochách k Tabulce <a href="#tab:eta">2</a>. Nejvyšší zkoušená rychlost konverguje na
+těchto datech rychleji, z toho však neplyne její obecná vhodnost.
+Hodnotu <span class="math inline">\(0.05\)</span> ponecháváme pro
+stabilní trénování a přehledný vývoj ztráty.</p>
+<div id="tab:eta">
+<table>
+<caption>Citlivost na rychlost učení: průměrná ztráta a správné
+klasifikace trénovacích dat po <span class="math inline">\(1000\)</span>
+epochách (seed <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">Průměrná ztráta <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">Správně z <span class="math inline">\(64\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="úplná-implementace-v-pythonu">Úplná implementace v Pythonu</h3>
+<p>Celý program je v Kódech <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, uspořádaných podle
+funkcí a pořadí provádění. Deset po sobě jdoucích bloků tvoří soubor
+<code>neural_network.py</code>, který je také přiložen samostatně.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Příprava prostředí</p><pre class="nm-python-code" dir="ltr"><code>"""Didaktický příklad: klasifikace ovoce pomocí sítě 2-12-1.
+Závislosti: numpy a matplotlib. Spuštění: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — Aktivace ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """Aktivace skryté vrstvy: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — Výpočetní derivace ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # ReLU v s=0 nemá derivaci; výpočetní derivaci zde volíme nulovou.
+    # Tato konvence určuje pouze krok zpětného šíření v daném bodě.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — Sigmoidální aktivace</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Výstupní aktivace, hodnoty mezi 0 a 1."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — Pomocná křivka pro generování dat</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Umělá křivka (cm): posun, Gaussův vrchol, logistický nárůst.
+    # Konstanty vytvářejí nelineární referenční křivku;
+    # nejsou to měření ani odhadnuté parametry.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — Syntetická trénovací a ilustrační testovací data</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # 16 hmotností v každém ze čtyř pásů: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Malé deterministické posuny brání shodným hmotnostem.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Jablka: dva pásy nad křivkou s drobnými odchylkami v cm.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Pomeranče: dva pásy pod referenční křivkou.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Osm ilustračních příkladů, nikoli rozsáhlý statistický test.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — Predikce dopředným průchodem</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, se statistikami pouze z trénovací množiny.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Dopředný průchod v maticovém zápisu (řádek pro každý plod).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — Trénování zpětným šířením a sestupem gradientu</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # Malé náhodné váhy narušují symetrii neuronů;
+    # posuny jsou na počátku nulové; škála 0.1 je didaktická.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: jedna aktualizace na plod, míchání v každé epoše.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # Dopředný průchod: rovnice skryté a výstupní vrstvy.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Zpětné šíření: delta2 = dE/dz2 (kvadratická ztráta).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Stochastický sestup: theta &lt;- theta - eta*dE/dtheta.
+            # Všechny gradienty používají PŮVODNÍ hodnoty parametrů.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: průměrná trénovací ztráta na konci každé epochy.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — Znázornění naučené hranice</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # Hladina y_hat=0.5: NAUČENÁ rozhodovací hranice.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -438,91 +733,172 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Jablko - trénink")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Pomeranč - trénink")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="Jablko - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="Pomeranč - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("Hmotnost (g)")
-    ax.set_ylabel("Průměr (cm)")
-    ax.set_title("Výstup neuronové sítě po tréninku")
-
+    ax.set_xlabel('Hmotnost (g)')
+    ax.set_ylabel('Průměr (cm)')
+    ax.set_title('Výstup sítě po trénování')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Jablko - trénink'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Pomeranč - trénink'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Jablko - trénování'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Pomeranč - trénování'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
                linestyle='None', label='Jablko - test'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
                linestyle='None', label='Pomeranč - test'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='Rozhodovací hranice neuronové sítě')
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Naučená rozhodovací hranice')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-<p>Ačkoli je kód delší než první rovnice analyzované v článku, jeho struktura zůstává přehledná. Funkce <code>build_data()</code> automaticky generuje <span class="math inline">\(64\)</span> trénovacích příkladů a osm ilustračních testovacích příkladů. Poté obě proměnné standardizujeme podle vztahu <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> kde <span class="math inline">\(\mu_j\)</span> a <span class="math inline">\(\sigma_j\)</span> jsou počítány výhradně z trénovací množiny. Tím se zabrání vlivu testovací množiny na nastavení parametrů a současně se hmotnost a průměr převedou na srovnatelné číselné škály.</p>
-<p>Dopředné šíření se ve své podstatě nemění. Jediným rozdílem je, že první vrstva nyní vytváří vektor dvanácti skrytých aktivací. V maticovém zápisu platí <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\mathrm{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> Tyto čtyři řádky stále obsahují matematické jádro algoritmu. Trénink rovněž zachovává dříve zavedenou logiku: vypočítat predikci, změřit její chybu, pomocí derivací šířit informaci o citlivosti zpět a aktualizovat parametry malými kroky gradientního sestupu.</p>
-<p>V kódu se zpětné šíření ve výstupní vrstvě objevuje v příkazu</p>
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-<p>a šíření do skryté vrstvy v příkazu</p>
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-<p>po němž následuje aktualizace všech vah a biasů. Protože se příklady v každé epoše promíchávají a parametry se aktualizují po každém pozorování, je tato implementace elementární formou <em>stochastického gradientního sestupu</em>.</p>
-<p>Pro zde použité semeno generátoru náhodných čísel a hyperparametry je konečná průměrná ztráta řádu <span class="math inline">\(10^{-5}\)</span> až <span class="math inline">\(10^{-4}\)</span> a všech <span class="math inline">\(64\)</span> trénovacích příkladů spolu s osmi ilustračními testovacími příklady dostane očekávanou klasifikaci. To nelze interpretovat jako rigorózní statistické hodnocení kvality: data jsou syntetická a byla vytvořena pro didaktické účely. Jejich úlohou je v méně triviálním prostředí ukázat, jak se malá neuronová síť může naučit zřetelně nelineární rozhodovací hranici.</p>
-<p>Obrázek <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> ukazuje konečný výsledek programu v rovině hmotnost–průměr. Jsou zobrazeny všechny trénovací body. Zvýrazněná křivka je vrstevnice <span class="math inline">\(\widehat{y}=0.5\)</span> a představuje rozhodovací hranici naučenou sítí; stínované oblasti označují dvě predikované třídy. Kružnice označují trénovací jablka, čtverce trénovací pomeranče, trojúhelníky testovací jablka a křížky testovací pomeranče. Legenda je umístěna mimo hlavní oblast grafu, aby nezakrývala žádný datový bod.</p>
-<figure id="fig:python_output">
-<img alt="Výsledek programu v Pythonu po tréninku neuronové sítě. Syntetický datový soubor obsahuje \(64\) trénovacích příkladů rozmístěných v široké oblasti roviny hmotnost–průměr a osm dalších příkladů určených k ilustračnímu testu. Zvýrazněná křivka je vrstevnice \(\widehat{y}=0.5\) a p" decoding="async" loading="lazy" src="../assets/img/cs/Fig07.png"/>
-<figcaption>Výsledek programu v Pythonu po tréninku neuronové sítě. Syntetický datový soubor obsahuje <span class="math inline">\(64\)</span> trénovacích příkladů rozmístěných v široké oblasti roviny hmotnost–průměr a osm dalších příkladů určených k ilustračnímu testu. Zvýrazněná křivka je vrstevnice <span class="math inline">\(\widehat{y}=0.5\)</span> a představuje naučenou rozhodovací hranici; stínované oblasti ukazují třídy predikované sítí. Kružnice označují trénovací jablka, čtverce trénovací pomeranče, trojúhelníky testovací jablka a křížky testovací pomeranče.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — Spuštění experimentu</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Konečná průměrná ztráta:', history[-1])
+    print('Správné trénovací předpovědi:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Správné ilustrační testovací předpovědi:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p>Funkce <code>construct_data()</code> (Kód <a href="#cod:dados">6</a>)
+realizuje výhradně syntetické generování dat popsané v Dodatku <a href="#appendix-synthetic-data">A</a>; pomocná křivka do optimalizace
+nevstupuje. Funkce <code>train()</code> (Kód <a href="#cod:treinamento">8</a>) provádí dopředný
+průchod, výpočet <span class="math inline">\(\delta^{(2)}\)</span> a
+<span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>,
+gradientů a čtyř aktualizací parametrů podle rovnic <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> a <a href="#eq:descida">descida</a>. Všechny gradienty se
+vypočítají před změnou kteréhokoli parametru. Funkce
+<code>plot_results()</code> (Kód <a href="#cod:visualizacao">9</a>) znázorňuje
+naučenou hranici, nikoli křivku použitou pro generování dat.</p>
+<p>Program je dostupný také jako samostatný soubor Pythonu a jako
+spustitelný notebook pro snadnou reprodukci a úpravy.</p>
+<p>Po <span class="math inline">\(6000\)</span> epochách se semenem
+<span class="math inline">\(42\)</span> a <span class="math inline">\(\eta=0.05\)</span> získáme konečnou průměrnou
+ztrátu <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span> a
+správně klasifikujeme všech <span class="math inline">\(64\)</span>
+trénovacích pozorování i osm dalších příkladů. Tento výsledek potvrzuje
+numerické chování programu na syntetických datech, ale není statistickým
+odhadem generalizační výkonnosti. Obrázek <a href="#fig:saida_python">8</a>
+ukazuje naučenou hranici <span class="math inline">\(\widehat
+y=0.5\)</span>; kruhy a čtverce označují trénovací data, trojúhelníky a
+křížky ilustrační test.</p>
+<figure id="fig:saida_python">
+<img alt="Rozhodovací hranice \(\widehat
+y=0.5\) naučená sítí \(2\) – \(12\) – \(1\) , včetně trénovacích a ilustračních
+testovacích příkladů." decoding="async" loading="lazy" src="../assets/img/cs/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. Rozhodovací hranice <span class="math inline">\(\widehat
+y=0.5\)</span> naučená sítí <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>, včetně trénovacích a ilustračních
+testovacích příkladů.</figcaption>
 </figure>
-<p>Začali jsme přímkou oddělující dvě jednoduché skupiny bodů a skončili bohatším výpočetním příkladem, v němž zakřivená hranice vzniká automatickým nastavováním parametrů sítě. Do matematiky nebylo přidáno nic tajemného: implementace pouze organizuje a opakuje, ve větším měřítku a vysokou rychlostí, afinní kombinace, aktivační funkce, derivace, maticové součiny a aktualizace metodou gradientního sestupu .</p>
-<p>Veškeré výpočetní materiály související s tímto článkem — včetně kódu a spustitelného notebooku Google Colab — jsou dostupné na adrese <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>, která slouží jako jednotný přístupový bod pro čtenáře, kteří chtějí příklady analyzovat, reprodukovat nebo upravovat.</p>
-<h4 id="prohlášení-o-využití-ai.">Prohlášení o využití AI.</h4>
-<p>Autor používal ChatGPT, vyvinutý společností OpenAI, jako nástroj podporující redakci textu, jazykovou korekturu, organizaci výkladu a tvorbu didaktických ilustrací. Autor nese plnou odpovědnost za konečný obsah práce, včetně koncepce a zpracování matematického materiálu, kódu a použitých zdrojů.</p>
+<p>Článek jsme začali přímkou oddělující dvě jednoduché množiny bodů a
+zakončili bohatším výpočetním příkladem, kde automatická úprava
+parametrů vytvoří zakřivenou hranici. Implementace nepřidává k
+vysvětlené matematice nic tajemného: ve velkém měřítku a rychle opakuje
+lineární kombinace, aktivační funkce, derivace, maticové součiny a kroky
+gradientního sestupu <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+<p>Program Pythonu a spustitelný notebook jsou přiloženy v doplňkových
+souborech této verze. Web <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> nabízí další výukové
+materiály.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Konstrukce syntetického souboru dat</h2>
+<p>Výrazy v tomto dodatku dokumentují pouze volbu <em>ad hoc</em> pro
+generování dat výpočetního cvičení. Nejsou součástí architektury sítě,
+ztrátové funkce ani trénovacího algoritmu. Žádná informace o pomocné
+křivce se nepoužívá při aktualizaci vah a posunů.</p>
+<p>Pro hmotnost <span class="math inline">\(m\)</span> číselně zadanou v
+gramech definujeme pomocnou křivku průměru v centimetrech vztahem</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>První člen křivku svisle posouvá, druhý vytváří vyvýšení poblíž <span class="math inline">\(155\)</span> g a třetí mírný nárůst okolo <span class="math inline">\(202\)</span> g. Koeficienty byly zvoleny pro
+názornou vizualizaci, nikoli odhadnuty z měření ovoce.</p>
+<p>Pro <span class="math inline">\(k=0,\ldots,15\)</span> položíme <span class="math inline">\(m_k=118+(212-118)k/15\)</span> v gramech. Druhou
+množinu hmotností získáme jako <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span>, přičemž posuny v gramech jsou</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>Průměry čtyř pásů vypočítáme podle vztahů</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>Svislé odchylky jsou v centimetrech. Goniometrické funkce zabraňují
+příliš pravidelnému uspořádání; <em>nepředstavují</em> fyzikální
+periodicitu, stochastický šum ani naučený generativní model. Doplňková
+funkce <code>construct_data()</code> přesně implementuje uvedené výrazy.
+Osm dalších dvojic pro ilustrační test je uvedeno přímo v kódu.</p>
+<p>Funkce <code>reference_curve()</code> a <code>construct_data()</code>
+(Kódy <a href="#cod:curva">5</a> a <a href="#cod:dados">6</a>)
+přesně implementují rovnice <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>, aniž by síti poskytovaly
+pomocnou křivku jako informaci při trénování. Úplný program je v
+Oddílu 8 uveden v po sobě jdoucích blocích a je rovněž přiložen k
+přímému spuštění.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">Literatura</span><h2>Literatura</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L.
+F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de
+Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation
+by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham y D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, vol. 61, núm. 4, pp.
+860–891, 2019. doi: 10.1137/18M1165748</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>,
+v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Zdroje</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_CS.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>Matematická anatomie neuronové sítě</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_CS.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · Čeština</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">Webová verze byla aktualizována; stávající PDF zůstává beze změny.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_CS.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>O NeuralMath</h2><p class="bio">NeuralMath je otevřený vzdělávací projekt vytvořený Dr. Americo Cunha Jr. Jeho cílem je zpřístupnit matematické operace uvnitř malé neuronové sítě tak, aby byly viditelné, kontrolovatelné a reprodukovatelné pro široké publikum s relativně základní průpravou v matematické analýze a statistice.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>Licence</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Vysvětlující text webu a původní materiál webu jsou dostupné pod licencí CC BY 4.0, není-li uvedeno jinak. PDF článku může podléhat licenci vydavatele.</p></div></section>

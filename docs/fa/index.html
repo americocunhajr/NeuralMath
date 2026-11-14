@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="فهرست مطالب" class="toc"><h2>فهرست مطالب</h2><ol><li><a href="#یک-رایانه-چه-زمانی-میتواند-یاد-بگیرد" target="_blank" rel="noopener noreferrer">یک رایانه چه زمانی می‌تواند یاد بگیرد؟</a></li><li><a href="#نمایش-ریاضی-مسئله" target="_blank" rel="noopener noreferrer">نمایش ریاضی مسئله</a></li><li><a href="#یک-خط-راست-بهعنوان-طبقهبند" target="_blank" rel="noopener noreferrer">یک خط راست به‌عنوان طبقه‌بند</a></li><li><a href="#نورون-مصنوعی" target="_blank" rel="noopener noreferrer">نورون مصنوعی</a></li><li><a href="#چرا-به-تابع-فعالسازی-نیاز-داریم" target="_blank" rel="noopener noreferrer">چرا به تابع فعال‌سازی نیاز داریم؟</a></li><li><a href="#ساخت-یک-شبکه-عصبی-کوچک" target="_blank" rel="noopener noreferrer">ساخت یک شبکه عصبی کوچک</a></li><li><a href="#شبکه-عصبی-چگونه-یاد-میگیرد" target="_blank" rel="noopener noreferrer">شبکه عصبی چگونه یاد می‌گیرد؟</a></li><li><a href="#از-ریاضیات-تا-python" target="_blank" rel="noopener noreferrer">از ریاضیات تا Python</a></li></ol></nav>
+<nav aria-label="فهرست مطالب" class="toc"><h2>فهرست مطالب</h2><ol><li><a href="#یک-رایانه-چه-زمانی-میتواند-یاد-بگیرد" target="_blank" rel="noopener noreferrer">یک رایانه چه زمانی می‌تواند یاد بگیرد؟</a></li><li><a href="#نمایش-ریاضی-مسئله" target="_blank" rel="noopener noreferrer">نمایش ریاضی مسئله</a></li><li><a href="#یک-خط-راست-بهعنوان-طبقهبند" target="_blank" rel="noopener noreferrer">یک خط راست به‌عنوان طبقه‌بند</a></li><li><a href="#نورون-مصنوعی" target="_blank" rel="noopener noreferrer">نورون مصنوعی</a></li><li><a href="#چرا-به-تابع-فعالسازی-نیاز-داریم" target="_blank" rel="noopener noreferrer">چرا به تابع فعال‌سازی نیاز داریم؟</a></li><li><a href="#ساخت-یک-شبکه-عصبی-کوچک" target="_blank" rel="noopener noreferrer">ساخت یک شبکه عصبی کوچک</a></li><li><a href="#شبکه-عصبی-چگونه-یاد-میگیرد" target="_blank" rel="noopener noreferrer">شبکه عصبی چگونه یاد می‌گیرد؟</a></li><li><a href="#از-ریاضیات-تا-python" target="_blank" rel="noopener noreferrer">از ریاضیات تا Python</a></li><li><a href="#appendix-synthetic-data">ساخت مجموعهٔ داده‌های مصنوعی</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="یک-رایانه-چه-زمانی-میتواند-یاد-بگیرد"><span class="section-no">01</span><h2>یک رایانه چه زمانی می‌تواند یاد بگیرد؟</h2>
 <p>در زندگی روزمره تقریباً بدون آنکه متوجه باشیم تصمیم‌های طبقه‌بندی می‌گیریم. با نگاه کردن به یک میوه، خیلی سریع تشخیص می‌دهیم که سیب است یا پرتقال؛ وقتی پیامی به تلفن همراه می‌رسد، گفت‌وگویی واقعی را از تبلیغ ناخواسته جدا می‌کنیم؛ در تحلیل‌های پزشکی چند اندازه‌گیری ممکن است برای پشتیبانی از یک تصمیم با هم ترکیب شوند؛ و در مؤسسات مالی پیش از اعطای اعتبار، اطلاعات گوناگونی ارزیابی می‌شود. در همه این نمونه‌ها چند ویژگی به‌طور هم‌زمان در نظر گرفته می‌شوند تا یک پاسخ تولید شود.</p>
 <p>در بسیاری از برنامه‌های رایانه‌ای سنتی، قواعدی که این پاسخ را تولید می‌کنند به‌صراحت توسط برنامه‌نویس نوشته می‌شوند. این روش هنگامی مناسب است که قواعد شناخته‌شده باشند و بتوان آن‌ها را روشن بیان کرد. اما وقتی داده‌ها بسیار متغیرند یا بیان همه شرایط لازم برای یک تصمیم خوب از پیش دشوار است، این رویکرد کارایی کمتری دارد. در اینجا پرسشی طبیعی مطرح می‌شود:</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> اگرچه ReLU از دو قطعه خطی ساخته شده است، در کل یک تابع خطی نیست. مشتق آن برای <span class="math inline">\(s&lt;0\)</span> برابر <span class="math inline">\(0\)</span> و برای <span class="math inline">\(s&gt;0\)</span> برابر <span class="math inline">\(1\)</span> است. در <span class="math inline">\(s=0\)</span> مشتق معمول وجود ندارد و پیاده‌سازی‌های نرم‌افزاری یک قرارداد برای گرادیان در نظر می‌گیرند. برای ورودی‌های مثبت، مشتق با افزایش <span class="math inline">\(s\)</span> کوچک نمی‌شود و یکی از سازوکارهای اشباع سیگموید را ندارد.</p>
 <p>شکل <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> این سه تابع فعال‌سازی را به‌صورت بصری مقایسه می‌کند: جهش ناگهانی تابع پله‌ای، گذار نرم سیگموید و تغییر شیب ReLU.</p>
 <figure id="fig:activation_functions">
-<img alt="مقایسه سه تابع فعال‌سازی که معمولاً در معرفی مقدماتی شبکه‌های عصبی استفاده می‌شوند. تابع پله‌ای تصمیمی ناگهانی می‌گیرد؛ سیگموید گذار نرمی میان \(0\) و \(1\) ایجاد می‌کند؛ و ReLU ورودی‌های منفی را حذف و ورودی‌های مثبت را حفظ می‌کند. فعال‌سازی‌های غیرخطی مانع از آن می‌شوند که چندین" decoding="async" loading="lazy" src="../assets/img/fa/Fig04.png"/>
+<img alt="مقایسه سه تابع فعال‌سازی که معمولاً در معرفی مقدماتی شبکه‌های عصبی استفاده می‌شوند. تابع پله‌ای تصمیمی ناگهانی می‌گیرد؛ سیگموید گذار نرمی میان \(0\) و \(1\) ایجاد می‌کند؛ و ReLU ورودی‌های منفی را حذف و ورودی‌های مثبت را حفظ می‌کند. فعال‌سازی‌های غیرخطی مانع از آن می‌شوند که چندین" decoding="async" loading="lazy" src="../assets/img/fa/Fig04.webp"/>
 <figcaption>مقایسه سه تابع فعال‌سازی که معمولاً در معرفی مقدماتی شبکه‌های عصبی استفاده می‌شوند. تابع پله‌ای تصمیمی ناگهانی می‌گیرد؛ سیگموید گذار نرمی میان <span class="math inline">\(0\)</span> و <span class="math inline">\(1\)</span> ایجاد می‌کند؛ و ReLU ورودی‌های منفی را حذف و ورودی‌های مثبت را حفظ می‌کند. فعال‌سازی‌های غیرخطی مانع از آن می‌شوند که چندین لایه به یک تبدیل آفین منفرد فروبکاهند.</figcaption>
 </figure>
 <p>ویژگی‌های اصلی این توابع در جدول زیر خلاصه شده‌اند.</p>
@@ -220,218 +220,482 @@ b_1\\b_2\\b_3
 v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>این نمادگذاری ساختاری را پیشاپیش نشان می‌دهد که در برنامه Python خواهیم دید. وقتی یک میوه در ورودی قرار می‌گیرد و فعال‌سازی‌های پیاپی را تا رسیدن به <span class="math inline">\(\widehat{y}\)</span> محاسبه می‌کنیم، <em>انتشار رو به جلو</em> یا یک <em>گذر رو به جلو</em> انجام می‌دهیم. پرسش اصلی همچنان باقی است: سیزده پارامتر چگونه می‌توانند به‌طور خودکار تعیین شوند تا پیش‌بینی‌ها با داده‌ها سازگار شوند؟</p>
-</section><section class="article-section" id="شبکه-عصبی-چگونه-یاد-میگیرد"><span class="section-no">07</span><h2>شبکه عصبی چگونه یاد می‌گیرد؟</h2>
-<p>وزن‌ها و بایاس‌ها از پیش معلوم نیستند. باید آن‌ها را با استفاده از مثال‌هایی که پاسخ صحیحشان مشخص است تنظیم کرد. این فرایند <em>آموزش</em> نام دارد و می‌توان آن را با چرخه زیر خلاصه کرد: <span class="math display">\[\boxed{\text{پیش‌بینی}}
-\longrightarrow
-\boxed{\text{اندازه‌گیری خطا}}
-\longrightarrow
-\boxed{\text{تنظیم پارامترها}}
-\longrightarrow
-\boxed{\text{تکرار}}.\]</span></p>
-<p>میوه‌ای با جرم <span class="math inline">\(140\)</span> g و قطر <span class="math inline">\(7.0\)</span> cm را در نظر بگیرید که کلاس صحیح آن پرتقال است، بنابراین <span class="math inline">\(y=0\)</span>. فرض کنید در مرحله‌ای از آموزش، شبکه مقدار <span class="math inline">\(\widehat{y}=0.80\)</span> را تولید کند. یک معیار ساده برای اختلاف میان پیش‌بینی و هدف، خطای مربعی است: <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> برای این مثال <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
-<p>این عبارت برای یک مثال یک <em>تابع زیان</em> است. چون مربع است، <span class="math inline">\(E\geq0\)</span> و پیش‌بینی‌های دورتر از هدف جریمه بیشتری می‌گیرند. ضریب <span class="math inline">\(1/2\)</span> محل کمینه را تغییر نمی‌دهد، اما مشتق‌گیری را ساده می‌کند. در طبقه‌بندی دودویی اغلب از زیان‌های دیگری، به‌ویژه آنتروپی متقاطع، استفاده می‌شود. ما در اینجا خطای مربعی را به کار می‌بریم زیرا جبر آن شفاف است و برای معرفی بهینه‌سازی و پس‌انتشار کفایت می‌کند .</p>
-<p>اگر مجموعه آموزش شامل <span class="math inline">\(N\)</span> مثال باشد، یک معیار کلی، میانگین زیان است: <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> هر پیش‌بینی به وزن‌ها و بایاس‌های شبکه وابسته است، پس <span class="math inline">\(J\)</span> نیز به همه این پارامترها وابسته است. آموزش یعنی جست‌وجوی مقادیر پارامترهایی که <span class="math inline">\(J\)</span> را کوچک کنند.</p>
-<p>برای فهم سازوکار تنظیم، ابتدا تصور کنید همه پارامترها جز یک وزن <span class="math inline">\(w\)</span> ثابت نگه داشته شوند. در این صورت می‌توان زیان را تابعی به صورت <span class="math inline">\(J=J(w)\)</span> در نظر گرفت. شکل <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> مراحل اصلی آموزش را که اکنون بررسی می‌کنیم خلاصه می‌کند.</p>
-<figure id="fig:training_cycle">
-<img alt="چرخه پایه آموزش یک شبکه عصبی. گذر رو به جلو ورودی‌ها را به پیش‌بینی تبدیل می‌کند؛ تابع زیان اختلاف میان پیش‌بینی و هدف را اندازه می‌گیرد؛ پس‌انتشار با استفاده از قاعده زنجیره‌ای گرادیان‌ها را محاسبه می‌کند؛ و نزول گرادیان از این گرادیان‌ها برای به‌روزرسانی وزن‌ها و بایاس‌ها استفا" decoding="async" loading="lazy" src="../assets/img/fa/Fig06.png"/>
-<figcaption>چرخه پایه آموزش یک شبکه عصبی. گذر رو به جلو ورودی‌ها را به پیش‌بینی تبدیل می‌کند؛ تابع زیان اختلاف میان پیش‌بینی و هدف را اندازه می‌گیرد؛ پس‌انتشار با استفاده از قاعده زنجیره‌ای گرادیان‌ها را محاسبه می‌کند؛ و نزول گرادیان از این گرادیان‌ها برای به‌روزرسانی وزن‌ها و بایاس‌ها استفاده می‌کند. تکرار این چرخه در دوره‌های متعدد همان چیزی است که یادگیری می‌نامیم.</figcaption>
+</section><section class="article-section" id="شبکه-عصبی-چگونه-یاد-میگیرد"><span class="section-no">07</span><h2>شبکهٔ عصبی چگونه یاد می‌گیرد؟</h2>
+<p>وزن‌ها و بایاس‌های شبکه از پیش معلوم نیستند؛ این پارامترها با استفاده
+از نمونه‌هایی که برچسب درست آن‌ها مشخص است تنظیم می‌شوند. یادگیری با تکرار
+گذر پیشرو، محاسبهٔ تابع زیان، محاسبهٔ گرادیان و به‌روزرسانی پارامترها انجام
+می‌شود (شکل <a href="#fig:ciclo_treinamento">6</a>). قاعدهٔ زنجیره‌ای امکان
+محاسبهٔ تأثیر تغییرات کوچک هر وزن یا بایاس بر زیان را فراهم می‌کند.</p>
+<p>برای تنظیم پارامترها ابتدا باید اختلاف پیش‌بینی و پاسخ مورد انتظار را
+به صورت عددی اندازه گرفت. <em>تابع زیان</em> به هر پیش‌بینی جریمه‌ای نسبت
+می‌دهد و امکان مقایسهٔ مقادیر مختلف وزن‌ها و بایاس‌ها را می‌دهد. برخلاف شمارش
+صرف خطاهای طبقه‌بندی، یک زیان پیوسته تفاوت پیش‌بینی‌های نزدیک و دور از هدف
+را نشان می‌دهد و مشتق آن جهت اصلاح پارامترها را مشخص می‌کند.</p>
+<p>میوه‌ای با جرم <span class="math inline">\(140\)</span> g و قطر <span class="math inline">\(7.0\)</span> cm را در نظر بگیرید که پرتقال است
+(<span class="math inline">\(y=0\)</span>). با نمایش خروجی شبکه به صورت
+<span class="math inline">\(\widehat y\in(0,1)\)</span>، زیان مربعی یک
+نمونه را چنین تعریف می‌کنیم:</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>در این‌جا <span class="math inline">\(y\)</span> برچسب واقعی و <span class="math inline">\(\widehat y\)</span> پیش‌بینی است. زیان نامنفی است و
+با نزدیک شدن <span class="math inline">\(\widehat y\)</span> به <span class="math inline">\(y\)</span> به صفر نزدیک می‌شود. برای یک پرتقال،
+پیش‌بینی‌های <span class="math inline">\(0.80\)</span> و <span class="math inline">\(0.60\)</span> به‌ترتیب <span class="math inline">\(E=0.32\)</span> و <span class="math inline">\(E=0.18\)</span> می‌دهند. با آستانهٔ <span class="math inline">\(0.5\)</span> هر دو اشتباهاً سیب تشخیص داده می‌شوند،
+اما تابع زیان پیش‌بینی نزدیک‌تر را متمایز می‌کند. ضریب <span class="math inline">\(1/2\)</span> نقطهٔ کمینه را تغییر نمی‌دهد و فقط
+مشتق‌گیری را ساده می‌کند.</p>
+<p>چون شبکه باید از نمونه‌های بسیار یاد بگیرد، زیان‌های تک‌نمونه‌ای را ترکیب
+می‌کنیم. برای <span class="math inline">\(N\)</span> مشاهده، میانگین زیان
+را تعریف می‌کنیم:</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>این میانگین عملکرد روی مجموعهٔ آموزش را خلاصه می‌کند و هدف، کاهش آن با
+تنظیم پارامترهاست. با این حال کمینه کردن <span class="math inline">\(J\)</span> به‌تنهایی عملکرد خوب روی داده‌های تازه را
+تضمین نمی‌کند. برای سادگی محاسبات، زیان مربعی را نگه می‌داریم و سپس مشتق
+آن را با آنتروپی متقاطع دودویی مقایسه می‌کنیم، بی‌آنکه آزمایش عددی اصلی
+تغییر کند <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="مراحل آموزش: گذر پیشرو، محاسبهٔ زیان، پس‌انتشار حساسیت‌ها و
+به‌روزرسانی پارامترها." decoding="async" loading="lazy" src="../assets/img/fa/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. مراحل آموزش: گذر پیشرو، محاسبهٔ زیان، پس‌انتشار حساسیت‌ها و
+به‌روزرسانی پارامترها.</figcaption>
 </figure>
-<p>برای خوانندگانی که با حساب دیفرانسیل آشنایی کمی دارند، مشتق را می‌توان در اینجا معیاری از <em>حساسیت موضعی</em> دانست: مشتق نشان می‌دهد یک تغییر کوچک در یک پارامتر چگونه تمایل دارد مقدار زیان را تغییر دهد. علامت مشتق جهت افزایش یا کاهش موضعی تابع را نشان می‌دهد و قدر مطلق آن شدت این تغییر موضعی را بیان می‌کند.</p>
-<p>مشتق <span class="math display">\[\frac{\partial J}{\partial w}\]</span> شیب موضعی را می‌دهد. اگر مثبت باشد، افزایش کوچک <span class="math inline">\(w\)</span> معمولاً <span class="math inline">\(J\)</span> را افزایش می‌دهد و بنابراین وزن باید در جهت مخالف حرکت کند. اگر منفی باشد، افزایش <span class="math inline">\(w\)</span> به‌طور موضعی <span class="math inline">\(J\)</span> را کاهش می‌دهد. هر دو حالت با رابطه <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w}\]</span> توصیف می‌شوند که ایده پایه <em>نزول گرادیان</em> است. عدد مثبت <span class="math inline">\(\eta\)</span> <em>نرخ یادگیری</em> نام دارد و اندازه گام را کنترل می‌کند. مقدار بسیار کوچک ممکن است آموزش را کند کند و مقدار بیش از اندازه بزرگ می‌تواند باعث نوسان یا ناپایداری شود.</p>
-<p>برای شبکه‌ای با پارامترهای بسیار، <span class="math inline">\(\theta\)</span> را هر وزن یا بایاس در نظر می‌گیریم. قاعده به‌روزرسانی به شکل <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}\]</span> درمی‌آید. مجموعه همه مشتق‌های جزئی، <em>گرادیان</em> زیان را تشکیل می‌دهد. از نظر هندسی، گرادیان در جهت سریع‌ترین افزایش موضعی اشاره می‌کند؛ بنابراین منفی گرادیان یک جهت موضعی کاهش را فراهم می‌کند.</p>
-<p>اکنون باید این مشتق‌ها را زمانی محاسبه کنیم که شبکه ترکیبی از چند تابع است. در گذر رو به جلو، اطلاعات در مسیر <span class="math display">\[\text{ورودی‌ها}
-\longrightarrow
-\text{لایه پنهان}
-\longrightarrow
-\text{خروجی}\]</span> حرکت می‌کند. برای تعیین اینکه یک پارامتر در لایه‌ای ابتدایی چگونه بر زیان اثر می‌گذارد، زنجیره وابستگی‌ها را از نظر ریاضی در جهت معکوس دنبال می‌کنیم. این روش <em>پس‌انتشار</em> نام دارد و در اصل کاربردی نظام‌مند و کارآمد از قاعده زنجیره‌ای است. Rumelhart، Hinton و Williams  مرجع کلاسیکی برای رواج این روش در شبکه‌های دارای لایه پنهان فراهم کرده‌اند و Nielsen  استنتاجی جزئی و بسیار آموزشی ارائه می‌کند.</p>
-<p>برای یک زنجیره ساده وابستگی که در آن <span class="math inline">\(E\)</span> به <span class="math inline">\(\widehat{y}\)</span>، <span class="math inline">\(\widehat{y}\)</span> به فعال‌سازی <span class="math inline">\(h\)</span> و <span class="math inline">\(h\)</span> به وزن <span class="math inline">\(w\)</span> وابسته است، قاعده زنجیره‌ای می‌دهد: <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}.\]</span> هر عامل یکی از مراحل تأثیر <span class="math inline">\(w\)</span> بر زیان نهایی را توصیف می‌کند. شبکه‌های بزرگ‌تر شامل تعداد زیادی از این زنجیره‌ها هستند و پس‌انتشار محاسبه را طوری سازمان می‌دهد که مشتق‌های میانی دوباره استفاده شوند و لازم نباشد برای هر پارامتر از ابتدا محاسبه شوند.</p>
-<p>در عمل، آموزش از مثال‌های فراوان استفاده می‌کند. یک عبور کامل از مجموعه آموزش یک <em>دوره</em> یا <em>epoch</em> نامیده می‌شود. پارامترها می‌توانند پس از هر مثال، همانند برنامه آموزشی بخش بعد، یا پس از گروه‌های کوچکی از مثال‌ها که <em>mini-batch</em> نامیده می‌شوند به‌روزرسانی شوند. حالت دوم در شبکه‌های بزرگ‌تر رایج است. در هر دو صورت، چرخه پیش‌بینی، زیان، گرادیان و به‌روزرسانی در دوره‌های متعدد تکرار می‌شود.</p>
-<p>راه ملموسی برای دیدن این تحول، دنبال کردن پیش‌بینی یک مثال ثابت در مراحل مختلف آموزش است. دوباره میوه‌ای با جرم <span class="math inline">\(140\)</span> g و قطر <span class="math inline">\(7.0\)</span> cm را در نظر بگیرید که کلاس صحیح آن پرتقال است. جدول <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> یک روند فرضی را نشان می‌دهد. این مقادیر مربوط به اجرای خاصی نیستند و فقط برای نمایش سازوکار ارائه شده‌اند.</p>
-<div id="tab:learning">
+<p>اگر <span class="math inline">\(\theta\)</span> یک وزن یا بایاس باشد،
+مشتق <span class="math inline">\(\partial J/\partial\theta\)</span>
+حساسیت موضعی میانگین زیان نسبت به آن پارامتر را اندازه می‌گیرد. یک گام
+نزول گرادیان عبارت است از:</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>نرخ یادگیری <span class="math inline">\(\eta\)</span> اندازهٔ گام را
+تعیین می‌کند: مقدار بسیار کوچک می‌تواند همگرایی را کند کند و مقدار بسیار
+بزرگ ممکن است باعث نوسان یا واگرایی شود. هنگامی که پس از هر مشاهده
+پارامترها را به‌روزرسانی می‌کنیم، مانند کد بخش بعدی، به‌جای <span class="math inline">\(\partial J/\partial\theta\)</span> از <span class="math inline">\(\partial E_i/\partial\theta\)</span> استفاده
+می‌شود. این همان نزول گرادیان تصادفی (SGD) در این مقاله است.</p>
+<h3 id="قاعده-زنجیرهای-در-شبکه-231">قاعدهٔ زنجیره‌ای در شبکهٔ <span lang="en"><span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span></span></h3>
+<p>شبکهٔ شکل <a href="#fig:small_network">5</a> را با سه
+نورون پنهان ReLU و خروجی سیگموید در نظر می‌گیریم. جرم بر حسب گرم و قطر بر
+حسب سانتی‌متر مقیاس‌های عددی متفاوتی دارند. برای بهبود شرطی‌بودن عددی،
+ویژگی <span class="math inline">\(j\)</span> را به <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span> تبدیل
+می‌کنیم؛ در این‌جا <span class="math inline">\(\mu_j\)</span> میانگین مرجع
+و <span class="math inline">\(\sigma_j&gt;0\)</span> انحراف معیار مرجع
+است. ورودی‌ها در نتیجه بی‌بُعد و هم‌مقیاس می‌شوند. در آزمایش رایانه‌ای، این
+آماره‌ها تنها از داده‌های آموزش محاسبه می‌شوند تا اطلاعات آزمون به آموزش
+نشت نکند. در مثال دستی بعدی مرکز و مقیاس را فقط برای ساده شدن اعداد ثابت
+می‌گیریم. برای <span class="math inline">\(\mathbf{x}^{\ast}=(x_1^{\ast},x_2^{\ast})^{\mathsf
+T}\)</span> گذر پیشرو چنین است:</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>در این‌جا <span class="math inline">\(c=b^{(2)}\)</span> بایاس خروجی و
+<span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span> است. پس‌انتشار
+از نورون خروجی آغاز می‌شود و قاعدهٔ زنجیره‌ای را پیاپی به کار می‌برد:</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>از آن‌جا که فعال‌سازی <span class="math inline">\(h_j\)</span> نیز به
+وزن‌ها و بایاس مربوط وابسته است، حساسیت نورون‌های پنهان را محاسبه
+می‌کنیم:</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>ReLU در صفر مشتق‌پذیر نیست و در صورت نیاز قرارداد محاسباتی <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span> را به کار
+می‌بریم. کمیت‌های <span class="math inline">\(\delta^{(2)}\)</span> و
+<span class="math inline">\(\delta_j^{(1)}\)</span> <em>حساسیت‌های موضعی
+زیان</em> هستند، نه خطاهای فیزیکی که در شبکه حرکت کنند. استفادهٔ مجدد از
+آن‌ها سیزده گرادیان را بدون تکرار مشتق‌گیری مستقل برای هر وزن به دست
+می‌دهد.</p>
+<h3 id="یک-گام-عددی-کامل-برای-بهروزرسانی-پارامترها">یک گام عددی کامل
+برای به‌روزرسانی پارامترها</h3>
+<p>برای شفاف ماندن محاسبات، <em>تنها در این مثال</em> مرکز و مقیاس مرجع
+جرم را <span class="math inline">\(160\)</span> g و <span class="math inline">\(20\)</span> g و برای قطر <span class="math inline">\(7.5\)</span> cm و <span class="math inline">\(0.5\)</span> cm می‌گیریم. در نتیجه میوهٔ <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span> ورودی
+بی‌بُعد زیر را دارد:</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>این مقادیر تنها برای نمایش عددی ثابت شده‌اند؛ در بخش <a href="#از-ریاضیات-تا-python">8</a> میانگین و انحراف معیار مستقیماً از
+داده‌های آموزش به دست می‌آیند.</p>
+<p>سیزده پارامتر آغازین را چنین انتخاب می‌کنیم:</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>معادلهٔ <a href="#eq:forward">forward</a> به ترتیب می‌دهد:</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>پیش‌بینی اولیه متعلق به کلاس نادرست است. از معادلات <a href="#eq:delta_saida">delta_saida</a> و <a href="#eq:delta_oculta">delta_oculta</a> داریم:</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>نورون پنهان سوم غیرفعال است (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>)، بنابراین گرادیان وزن‌های
+ورودی و بایاس آن در این گام صفر است. با <span class="math inline">\(\eta=0.05\)</span>، قانون <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span> را هم‌زمان بر تمام پارامترها اعمال می‌کنیم.
+جدول <a href="#tab:passo_sgd">1</a> چند مورد از سیزده به‌روزرسانی را
+نشان می‌دهد.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>روند فرضی پیش‌بینی شبکه برای همان میوه در طول آموزش. به‌روزرسانی‌های پیاپی پارامترها می‌توانند خروجی اولیه نادرست را به طبقه‌بندی سازگار با برچسب هدف نزدیک کنند.</caption>
+<caption>پارامترهای برگزیده پیش و پس از یک گام SGD با <span class="math inline">\(\eta=0.05\)</span>.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">دوره</th>
-<th style="text-align: center;">پیش‌بینی <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">زیان <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">طبقه‌بندی</th>
+<th style="text-align: left;">پارامتر <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">مقدار اولیه</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">مقدار جدید</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">سیب</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">سیب</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">سیب</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">پرتقال</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">پرتقال</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>در آغاز، خروجی به <span class="math inline">\(1\)</span> نزدیک است و میوه به‌اشتباه سیب طبقه‌بندی می‌شود. با تنظیم پارامترها، پیش‌بینی کاهش می‌یابد و سرانجام از آستانه <span class="math inline">\(0.5\)</span> عبور می‌کند و کلاس درست را تولید می‌کند. آنچه در این فرایند تغییر می‌کند مقادیر عددی وزن‌ها و بایاس‌هاست؛ معماری شبکه ثابت می‌ماند.</p>
-<p>کاهش زیان روی داده‌های آموزش هدف نهایی نیست. یک شبکه مفید باید برای مثال‌هایی که در برازش پارامترها استفاده نشده‌اند نیز پیش‌بینی‌های خوبی انجام دهد. این توانایی <em>تعمیم</em> نامیده می‌شود. اگر مدل بیش از حد با ویژگی‌های خاص مجموعه آموزش سازگار شود و روی داده‌های جدید بدتر عمل کند، با <em>بیش‌برازش</em> روبه‌رو هستیم. در ارزیابی‌های دقیق‌تر، داده‌ها معمولاً به مجموعه‌های آموزش، اعتبارسنجی و آزمون تقسیم می‌شوند: اولی پارامترها را برازش می‌کند، دومی برای انتخاب‌های انجام‌شده هنگام توسعه مدل به کار می‌رود و سومی برای ارزیابی نهایی کنار گذاشته می‌شود. بحث گسترده‌تر درباره تعمیم و ارزیابی مدل را می‌توان در Faceli et al.  و Goodfellow، Bengio و Courville  یافت.</p>
-<p>بنابراین به معنای ریاضی یادگیری در یک شبکه عصبی رسیده‌ایم. در این چارچوب، یادگیری یعنی تنظیم پارامترهای یک تابع مرکب به‌منظور کاهش یک معیار خطا روی داده‌ها و، در حالت ایده‌آل، تعمیم به مثال‌های جدید. شبکه پیش‌بینی می‌کند، زیان را محاسبه می‌کند، با مشتق‌ها تعیین می‌کند پارامترها چگونه بر آن زیان اثر دارند و سپس دنباله‌ای از اصلاح‌های کوچک انجام می‌دهد.</p>
-</section><section class="article-section" id="از-ریاضیات-تا-python"><span class="section-no">08</span><h2>از ریاضیات تا Python</h2>
-<p>اکنون از معادلات به یک برنامه اجرایی می‌رویم. هدف استفاده از کتابخانه تخصصی شبکه عصبی نیست، بلکه می‌خواهیم با <code>NumPy</code> همان عملیات ریاضی را که در مقاله توسعه داده‌ایم مستقیماً پیاده‌سازی کنیم . به این ترتیب می‌توان خط‌به‌خط دید که ترکیب‌های خطی، توابع فعال‌سازی، محاسبه زیان، پس‌انتشار و نزول گرادیان چگونه در کد ظاهر می‌شوند.</p>
-<p>برای یک مثال نهایی قانع‌کننده‌تر، از مجموعه‌داده مصنوعی‌ای استفاده می‌کنیم که در ناحیه گسترده‌تری از صفحه جرم–قطر پخش شده است. همچنان فقط دو ویژگی فیزیکی داریم — جرم بر حسب گرم و قطر بر حسب سانتی‌متر — اما اکنون <span class="math inline">\(64\)</span> مثال آموزشی را در بخش بزرگی از صفحه توزیع می‌کنیم و هشت مثال دیگر را برای یک آزمون نمایشی کنار می‌گذاریم. داده‌ها همچنان مصنوعی‌اند و در بازه‌های معقول برای سیب و پرتقال قرار دارند. آن‌ها طوری ساخته شده‌اند که مرز تصمیم غیرخطی ایجاد کنند، بدون آنکه همه نقاط در چند خوشه بیش از حد مصنوعی متمرکز شوند.</p>
-<p>ایده هندسی ساده است. یک منحنی مرجع در صفحه جرم–قطر تعریف می‌کنیم، سیب‌ها را در دو نوار بالای آن و پرتقال‌ها را در دو نوار پایین آن قرار می‌دهیم. آشفتگی‌های کوچک و قطعی به جرم و قطر افزوده می‌شوند تا مشاهدات ناحیه وسیع‌تری را اشغال کنند. مثال حاصل از شکل‌های قبلی غنی‌تر است: نقاط بیشتری دارد، داده‌ها در سراسر دامنه پخش شده‌اند و مرز تصمیم مناسب به‌وضوح خمیده‌تر از یک خط راست است.</p>
-<p>برای این آزمایش محاسباتی نهایی، لایه پنهان را به دوازده نورون ReLU افزایش می‌دهیم. این تغییر ساختار مفهومی بخش‌های قبلی را عوض نمی‌کند؛ تنها ظرفیت شبکه برای نمایش مرزی پیچیده‌تر را افزایش می‌دهد. به‌جای <span class="math inline">\(13\)</span> پارامتر شبکه آموزشی سه‌نورونی، اکنون <span class="math inline">\(49\)</span> پارامتر قابل تنظیم داریم: <span class="math inline">\(24\)</span> وزن و <span class="math inline">\(12\)</span> بایاس در لایه نخست، سپس <span class="math inline">\(12\)</span> وزن و یک بایاس در لایه خروجی. معادلات دقیقاً همان شکل را دارند؛ فقط بردارها و ماتریس‌ها بزرگ‌تر می‌شوند.</p>
-<p>برنامه کامل در ادامه آمده است.</p>
-<div lang="en">
-<pre style="pythonterminal"><code>import numpy as np
+<p>گذر پیشروی جدید با <em>همهٔ</em> پارامترهای به‌روز شده، <span class="math inline">\(\widehat y_{\mathrm{new}}\simeq0.723717\)</span> و
+<span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span>
+می‌دهد؛ زیان پس از یک گام کاهش یافته است. همان‌گونه که انتظار می‌رود، کلاس
+هنوز عوض نشده و یادگیری نیازمند تکرار این روند در نمونه‌ها و دوره‌های
+فراوان است.</p>
+<h3 id="خطای-مربعی-و-آنتروپی-متقاطع">خطای مربعی و آنتروپی متقاطع</h3>
+<p>خطای مربعی برای نمایش صریح قاعدهٔ زنجیره‌ای مناسب است، اما در طبقه‌بندی
+دودویی با خروجی سیگموید معمولاً از <em>آنتروپی متقاطع دودویی</em> نیز
+استفاده می‌شود. برای <span class="math inline">\(y\in\{0,1\}\)</span> و
+<span class="math inline">\(\widehat y=\sigma(z)\)</span> زیان یک مشاهده
+چنین است:</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>زیان مربعی اختلاف عددی پیش‌بینی و برچسب را جریمه می‌کند؛ آنتروپی متقاطع
+پیش‌بینی‌هایی را جریمه می‌کند که احتمال اندکی به برچسب مشاهده‌شده می‌دهند، با
+تعبیر <span class="math inline">\(\widehat y\)</span> به صورت احتمال
+کلاس <span class="math inline">\(1\)</span>. تفاوت مهم آموزشی در
+مشتق‌گیری نسبت به امتیاز خروجی <span class="math inline">\(z\)</span>
+ظاهر می‌شود. با <span class="math inline">\(\sigma'(z)=\widehat
+y(1-\widehat y)\)</span> می‌یابیم:</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>برای نمایش مستقل این تفاوت فرض کنید پرتقالی (<span class="math inline">\(y=0\)</span>) پیش‌بینی <span class="math inline">\(\widehat y=0.80\)</span> بگیرد. در این حالت <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span> و <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span> و
+مشتق‌ها نسبت به <span class="math inline">\(z\)</span> به‌ترتیب <span class="math inline">\(0.128\)</span> و <span class="math inline">\(0.80\)</span> هستند. با <span class="math inline">\(\eta=0.05\)</span>، تغییر بایاس خروجی به‌تنهایی
+<span class="math inline">\(\Delta c=-0.0064\)</span> یا <span class="math inline">\(\Delta c=-0.0400\)</span> است. این پیش‌بینی فرضی
+جایگزین محاسبهٔ کامل قبلی نیست.</p>
+<p>در آنتروپی متقاطع، عامل <span class="math inline">\(\widehat
+y(1-\widehat y)\)</span> دیگر در حساسیت <em>لایهٔ خروجی</em> ضرب نمی‌شود.
+این امر تضعیف اضافهٔ گرادیان ناشی از اشباع سیگموید در پیش‌بینی‌های بسیار
+نادرست را در همان لایه برطرف می‌کند؛ اما گرادیان‌های کوچک سایر لایه‌ها را
+حذف نمی‌کند و سرعت بیشتر را هم در همهٔ مسائل تضمین نمی‌کند. چون دو زیان
+مقیاس‌های متفاوت دارند، نباید مقادیرشان را مستقیماً معیار کیفیت یکسان
+دانست. برای بازتولید کامل محاسبات، کد اصلی همچنان خطای مربعی را به کار
+می‌گیرد و دفتر تکمیلی مقایسه‌ای جداگانه دارد.</p>
+<h3 id="دورههای-آموزش-و-تعمیم">دوره‌های آموزش و تعمیم</h3>
+<p>یک بار عبور کامل از داده‌های آموزش را <em>دوره</em> (epoch) می‌نامیم.
+برنامه در هر دوره ترتیب مثال‌ها را برمی‌زند و پس از هر میوه پارامترها را
+به‌روزرسانی می‌کند. معماری ثابت می‌ماند اما وزن‌ها، بایاس‌ها و مرز تصمیم
+تغییر می‌کنند. کاهش زیان آموزش عملکرد مطلوب روی داده‌های جدید را تضمین
+نمی‌کند؛ این توانایی <em>تعمیم</em> نام دارد و تنظیم بیش‌ازحد روی آموزش
+ممکن است به <em>بیش‌برازش</em> بینجامد. در پژوهش‌های گسترده‌تر، مجموعه‌های
+جداگانهٔ آموزش، اعتبارسنجی و آزمون انتخاب ابرپارامترها و ارزیابی
+کم‌سوگیرانه را ممکن می‌کنند <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+</section><section class="article-section" id="از-ریاضیات-تا-python"><span class="section-no">08</span><h2>از ریاضیات تا پایتون</h2>
+<p>اکنون فقط با NumPy گذر پیشرو، قاعدهٔ زنجیره‌ای و به‌روزرسانی تصادفی
+بخش <a href="#شبکه-عصبی-چگونه-یاد-میگیرد">7</a> را پیاده‌سازی می‌کنیم <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. برای نشان دادن
+مرز تصمیم غیرخطی لایهٔ پنهان را از سه به دوازده نورون ReLU گسترش می‌دهیم.
+شبکهٔ <span lang="en"><span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span></span> دارای <span class="math inline">\(12(2+1)+(12+1)=49\)</span> پارامتر است، ولی همان
+معادلات را به کار می‌گیرد.</p>
+<h3 id="دادههای-مصنوعی-برای-نمایش">داده‌های مصنوعی برای نمایش</h3>
+<p>در آزمایش از <span class="math inline">\(64\)</span> نمونهٔ آموزش
+مصنوعی در چهار نوار <span class="math inline">\(16\)</span> نقطه‌ای صفحهٔ
+جرم–قطر و هشت مشاهدهٔ اضافی صرفاً برای آزمون نمایشی استفاده می‌شود. دو نوار
+سیب بالای منحنی مرجع و دو نوار پرتقال پایین آن قرار می‌گیرند. جابه‌جایی‌های
+کوچک قطعی نظم کامل نوارها را از بین می‌برند. اعداد تنها برای ایجاد
+پراکندگی ظاهراً معقول و مرز تصمیم غیرخطی انتخاب شده‌اند؛ <em>اندازه‌گیری
+تجربی یا مدل فیزیکی میوه نیستند</em>.</p>
+<p>منحنی مرجع <em>فقط برای ساخت داده‌ها</em> به کار می‌رود. نه به شبکه
+ارائه می‌شود، نه در زیان ظاهر می‌شود و نه در پس‌انتشار مشارکت دارد. آموزش
+تنها از زوج‌های جرم–قطر و برچسب‌های آن‌ها استفاده می‌کند. فرمول و
+جابه‌جایی‌های لازم برای بازتولید دقیق شکل <a href="#fig:faixas_sinteticas">7</a>
+در پیوست <a href="#appendix-synthetic-data">A</a> آمده است.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="\(64\) نمونهٔ مصنوعی در چهار
+نوار؛ دو نوار سیب بالای منحنی کمکی و دو نوار پرتقال پایین آن هستند.
+منحنی خط‌چین در آموزش به کار نمی‌رود." decoding="async" loading="lazy" src="../assets/img/fa/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. <span class="math inline">\(64\)</span> نمونهٔ مصنوعی در چهار
+نوار؛ دو نوار سیب بالای منحنی کمکی و دو نوار پرتقال پایین آن هستند.
+منحنی خط‌چین در آموزش به کار نمی‌رود.</figcaption>
+</figure>
+<p>شکل <a href="#fig:faixas_sinteticas">7</a> نقاط تولید شده با
+<code>construct_data()</code> را نشان می‌دهد. منحنی خط‌چین صرفاً جزء ساخت
+داده‌های مصنوعی است و مرز تصمیم یادگرفته‌شده نیست. هشت نمونهٔ دیگر تنها در
+نمایش نهایی استفاده می‌شوند و در آمار استانداردسازی نقشی ندارند.</p>
+<h3 id="استانداردسازی-و-انتخابهای-آموزش">استانداردسازی و انتخاب‌های
+آموزش</h3>
+<p>چون جرم و قطر واحد و مقیاس متفاوتی دارند، هر ورودی را به یک متغیر
+بی‌بُعد تبدیل می‌کنیم:</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p>میانگین <span class="math inline">\(\mu_j\)</span> ویژگی <span class="math inline">\(j\)</span> را مرکز می‌کند و انحراف معیار <span class="math inline">\(\sigma_j\)</span> مقیاسش را تغییر می‌دهد؛ در این
+آزمایش <span class="math inline">\(N=64\)</span> است. هر دو آماره
+<em>فقط از مجموعهٔ آموزش</em> محاسبه و سپس بدون تغییر بر داده‌های آزمون
+اعمال می‌شوند. فرض می‌شود <span class="math inline">\(\sigma_j&gt;0\)</span> و شبکهٔ نقاط پیش‌بینی نیز به
+همین روش تبدیل می‌شود.</p>
+<p>وزن‌ها از توزیع نرمال با میانگین صفر و انحراف معیار <span class="math inline">\(0.1\)</span>، با بذر تصادفی <span class="math inline">\(42\)</span>، مقداردهی اولیه می‌شوند. مقادیر کوچک
+تقارن نورون‌های پنهان را می‌شکنند، اما این نسخه‌ای همگانی نیست؛ مقیاس مناسب
+در شبکه‌های بزرگ به معماری و تابع فعال‌سازی بستگی دارد. بایاس‌ها از صفر
+آغاز می‌شوند. تابع <code>relu_derivative()</code> قرارداد <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span> را اعمال
+می‌کند؛ این قرارداد به‌تنهایی همگرایی را تضمین نمی‌کند.</p>
+<p>نرخ <span class="math inline">\(\eta=0.05\)</span> را محافظه‌کارانه
+انتخاب کرده‌ایم، نه به‌عنوان نرخ بهینه. جدول <a href="#tab:eta">2</a> یک آزمون حساسیت
+با داده‌ها و بذر یکسان پس از <span class="math inline">\(1000\)</span>
+دوره نشان می‌دهد. بزرگ‌ترین نرخ آزمایش‌شده روی این داده‌ها سریع‌تر همگرا شد،
+ولی برتری عمومی آن را ثابت نمی‌کند. نرخ <span class="math inline">\(0.05\)</span> برای آموزش پایدار و تاریخچهٔ زیان
+قابل بازرسی حفظ شده است.</p>
+<div id="tab:eta">
+<table>
+<caption>حساسیت به نرخ یادگیری: میانگین زیان و تعداد پیش‌بینی‌های درست پس
+از <span class="math inline">\(1000\)</span> دوره (بذر <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">میانگین زیان <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">درست از <span class="math inline">\(64\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="پیادهسازی-کامل-در-پایتون">پیاده‌سازی کامل در پایتون</h3>
+<p>برنامهٔ کامل به‌ترتیب اجرا و بر اساس وظیفه در قطعه‌کدهای <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a> آمده است.</p>
+<p>این ده بلوک پی‌درپی فایل را می‌سازند که به صورت مکمل نیز موجود است.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — آماده‌سازی محیط</p><pre class="nm-python-code" dir="ltr"><code>"""Pedagogical example: fruit classification using a 2-12-1 network.
+Dependencies: numpy and matplotlib. Run: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — تابع ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """Hidden-layer activation: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — مشتق محاسباتی ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # ReLU is not differentiable at s=0; its computational derivative is set to 0.
+    # This convention only defines the backpropagation step at that point.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — تابع سیگموید</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Output activation, with values between 0 and 1."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — منحنی کمکی مولد داده‌ها</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Artificial curve (cm): offset + Gaussian bump + logistic rise.
+    # The constants were chosen to construct a nonlinear reference curve;
+    # they are neither experimental measurements nor fitted parameters.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — نمونه‌های مصنوعی آموزش و آزمون نمایشی</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # 16 masses in each of four bands: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Small deterministic offsets avoid identical masses.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Apples: two bands above the curve, with small variations in cm.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Oranges: two bands below the reference curve.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Eight illustrative examples; not an extensive statistical test.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — پیش‌بینی با گذر پیشرو</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, using training-set statistics.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Forward pass in matrix notation (one row per fruit).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — آموزش با پس‌انتشار و نزول گرادیان</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # Small random weights break symmetry between neurons;
+    # initial biases are zero. Scale 0.1 is a pedagogical choice.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: one update per fruit, shuffled in every epoch.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # Forward pass: hidden- and output-layer equations.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Backpropagation: delta2 = dE/dz2 (squared error).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Stochastic descent: theta &lt;- theta - eta*dE/dtheta.
+            # All gradients use the PREVIOUS parameter values.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: mean training loss at the end of each epoch.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — ترسیم مرز تصمیم آموخته‌شده</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # Level set y_hat=0.5: LEARNED decision boundary.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -439,97 +703,169 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Apple - training")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Orange - training")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="Apple - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="Orange - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("Mass (g)")
-    ax.set_ylabel("Diameter (cm)")
-    ax.set_title("Neural-network output after training")
-
+    ax.set_xlabel('Mass (g)')
+    ax.set_ylabel('Diameter (cm)')
+    ax.set_title('Neural-network output after training')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Apple - training'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Orange - training'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Apple - training'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Orange - training'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
                linestyle='None', label='Apple - test'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
                linestyle='None', label='Orange - test'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='Neural-network decision boundary')
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Learned boundary')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-</div>
-<p>اگرچه کد از نخستین معادلات بررسی‌شده در مقاله طولانی‌تر است، ساختار آن همچنان روشن باقی می‌ماند. تابع <code>build_data()</code> به‌طور خودکار <span class="math inline">\(64\)</span> مثال آموزشی و هشت مثال آزمون نمایشی را می‌سازد. سپس هر دو متغیر را بر اساس رابطه <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> استاندارد می‌کنیم، که در آن <span class="math inline">\(\mu_j\)</span> و <span class="math inline">\(\sigma_j\)</span> فقط از مجموعه آموزش محاسبه می‌شوند. این کار مانع از آن می‌شود که مجموعه آزمون بر برازش پارامترها اثر بگذارد و همچنین جرم و قطر را از نظر مقیاس عددی قابل مقایسه می‌کند.</p>
-<p>گذر رو به جلو از نظر بنیادی تغییر نمی‌کند. تنها تفاوت این است که لایه نخست اکنون برداری از دوازده فعال‌سازی پنهان تولید می‌کند. در نمادگذاری ماتریسی <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> این چهار خط همچنان هسته ریاضی الگوریتم را در خود دارند. آموزش نیز همان منطق معرفی‌شده در بخش‌های قبل را حفظ می‌کند: پیش‌بینی را محاسبه کن، خطای آن را اندازه بگیر، اطلاعات حساسیت را با استفاده از مشتق‌ها به عقب منتشر کن و پارامترها را با گام‌های کوچک نزول گرادیان به‌روزرسانی کن.</p>
-<p>در کد، پس‌انتشار در لایه خروجی در عبارت زیر ظاهر می‌شود:</p>
-<div lang="en">
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-</div>
-<p>و انتشار به لایه پنهان در عبارت</p>
-<div lang="en">
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-</div>
-<p>دیده می‌شود و پس از آن همه وزن‌ها و بایاس‌ها به‌روزرسانی می‌شوند. چون مثال‌ها در هر دوره به‌صورت تصادفی مرتب می‌شوند و پارامترها پس از هر مشاهده به‌روزرسانی می‌شوند، این پیاده‌سازی شکلی ابتدایی از <em>نزول گرادیان تصادفی</em> است.</p>
-<p>با بذر تصادفی و ابرپارامترهای استفاده‌شده در اینجا، میانگین زیان نهایی در مرتبه <span class="math inline">\(10^{-5}\)</span> تا <span class="math inline">\(10^{-4}\)</span> قرار می‌گیرد و هر <span class="math inline">\(64\)</span> مثال آموزشی همراه با هشت مثال آزمون نمایشی، طبقه‌بندی مورد انتظار را دریافت می‌کنند. این نتیجه نباید به‌عنوان ارزیابی آماری دقیق عملکرد تعبیر شود: داده‌ها مصنوعی‌اند و با هدف آموزشی ساخته شده‌اند. نقش آن‌ها نشان دادن این است که چگونه یک شبکه عصبی کوچک می‌تواند در محیطی کمتر بدیهی، یک مرز تصمیم به‌وضوح غیرخطی را یاد بگیرد.</p>
-<p>شکل <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> خروجی نهایی برنامه را در صفحه جرم–قطر نشان می‌دهد. همه نقاط آموزش نمایش داده شده‌اند. منحنی برجسته تراز <span class="math inline">\(\widehat{y}=0.5\)</span> و مرز تصمیم آموخته‌شده توسط شبکه است؛ نواحی سایه‌دار دو کلاس پیش‌بینی‌شده را نشان می‌دهند. دایره‌ها سیب‌های آموزش، مربع‌ها پرتقال‌های آموزش، مثلث‌ها سیب‌های آزمون و ضربدرها پرتقال‌های آزمون را نشان می‌دهند. راهنما خارج از ناحیه اصلی نمودار قرار گرفته است تا هیچ نقطه‌ای پنهان نشود.</p>
-<figure id="fig:python_output">
-<img alt="خروجی Python پس از آموزش شبکه عصبی. مجموعه‌داده مصنوعی شامل \(64\) مثال آموزشی است که در ناحیه گسترده‌ای از صفحه جرم–قطر پخش شده‌اند و هشت مثال دیگر برای آزمونی نمایشی کنار گذاشته شده‌اند. منحنی برجسته تراز \(\widehat{y}=0.5\) و مرز تصمیم آموخته‌شده را نشان می‌دهد؛ نواحی سایه‌دار" decoding="async" loading="lazy" src="../assets/img/fa/Fig07.png"/>
-<figcaption>خروجی Python پس از آموزش شبکه عصبی. مجموعه‌داده مصنوعی شامل <span class="math inline">\(64\)</span> مثال آموزشی است که در ناحیه گسترده‌ای از صفحه جرم–قطر پخش شده‌اند و هشت مثال دیگر برای آزمونی نمایشی کنار گذاشته شده‌اند. منحنی برجسته تراز <span class="math inline">\(\widehat{y}=0.5\)</span> و مرز تصمیم آموخته‌شده را نشان می‌دهد؛ نواحی سایه‌دار کلاس‌های پیش‌بینی‌شده توسط شبکه را مشخص می‌کنند. دایره‌ها سیب‌های آموزش، مربع‌ها پرتقال‌های آموزش، مثلث‌ها سیب‌های آزمون و ضربدرها پرتقال‌های آزمون را نمایش می‌دهند.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — اجرای آزمایش</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Final mean loss:', history[-1])
+    print('Correct training predictions:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Correct illustrative test predictions:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p>تابع <code>construct_data()</code> (کد <a href="#cod:dados">6</a>)
+فقط ساخت دادهٔ مصنوعی پیوست <a href="#appendix-synthetic-data">A</a> را اجرا
+می‌کند و منحنی کمکی بخشی از بهینه‌سازی نیست. تابع <code>train()</code>
+(کد <a href="#cod:treinamento">8</a>) گذر پیشرو،
+حساسیت‌های <span class="math inline">\(\delta^{(2)}\)</span> و <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>، گرادیان‌ها و
+چهار به‌روزرسانی پارامتر را مطابق معادلات <a href="#eq:forward">forward</a>، <a href="#eq:delta_saida">delta_saida</a>، <a href="#eq:delta_oculta">delta_oculta</a> و <a href="#eq:descida">descida</a> اجرا می‌کند. همهٔ گرادیان‌ها
+پیش از تغییر هر پارامتر محاسبه می‌شوند. تابع <code>plot_results()</code>
+(کد <a href="#cod:visualizacao">9</a>) مرز تصمیم
+آموخته‌شده را ترسیم می‌کند، نه منحنی تولیدکنندهٔ داده‌ها را.</p>
+<p>برنامه در قالب فایل مستقل پایتون و دفتر اجرایی نیز عرضه شده است تا
+بازتولید و تغییر آن آسان باشد.</p>
+<p>پس از <span class="math inline">\(6000\)</span> دوره با بذر <span class="math inline">\(42\)</span> و <span class="math inline">\(\eta=0.05\)</span>، میانگین زیان نهایی <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span> می‌شود و شبکه هر
+<span class="math inline">\(64\)</span> نمونهٔ آموزش و هر هشت مثال نمایشی
+را درست طبقه‌بندی می‌کند. این نتیجه رفتار عددی آزمایش مصنوعی را تأیید
+می‌کند، <em>نه عملکرد تعمیم را از نظر آماری برآورد</em>. شکل <a href="#fig:saida_python">8</a> مرز تصمیم آموخته‌شده <span class="math inline">\(\widehat y=0.5\)</span> را نشان می‌دهد؛ دایره‌ها و
+مربع‌ها مخصوص آموزش و مثلث‌ها و ضربدرها مخصوص آزمون نمایشی‌اند.</p>
+<figure id="fig:saida_python">
+<img alt="مرز تصمیم \(\widehat
+y=0.5\) آموخته‌شده به‌وسیلهٔ شبکهٔ \(2\) – \(12\) – \(1\) ، همراه با نمونه‌های آموزش و آزمون
+نمایشی." decoding="async" loading="lazy" src="../assets/img/fa/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. مرز تصمیم <span class="math inline">\(\widehat
+y=0.5\)</span> آموخته‌شده به‌وسیلهٔ شبکهٔ <span lang="en"><span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span></span>، همراه با نمونه‌های آموزش و آزمون
+نمایشی.</figcaption>
 </figure>
-<p>کار را با یک خط راست برای جدا کردن دو گروه ساده از نقاط آغاز کردیم و به مثالی محاسباتی غنی‌تر رسیدیم که در آن یک مرز خمیده از تنظیم خودکار پارامترهای شبکه پدید می‌آید. هیچ عنصر رازآلودی به ریاضیات افزوده نشده است: پیاده‌سازی تنها ترکیب‌های آفین، توابع فعال‌سازی، مشتق‌ها، ضرب‌های ماتریسی و به‌روزرسانی‌های نزول گرادیان را در مقیاسی بزرگ‌تر و با سرعت بالا سازمان‌دهی و تکرار می‌کند .</p>
-<p>تمام مواد محاسباتی مرتبط با این مقاله — شامل کد و یک دفترچه اجرایی Google Colab — در <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> در دسترس است و نقطه دسترسی واحدی برای خوانندگانی فراهم می‌کند که می‌خواهند مثال‌ها را بررسی، بازتولید یا سازگار کنند.</p>
-<p>نویسنده از ChatGPT، توسعه‌یافته توسط OpenAI، به‌عنوان ابزاری کمکی برای نگارش اولیه، بازبینی زبانی، سازمان‌دهی توضیحات و تولید شکل‌های آموزشی استفاده کرده است. مسئولیت کامل محتوای نهایی اثر، از جمله طراحی و توسعه مطالب ریاضی، کد و منابع مورد استفاده، بر عهده نویسنده است.</p>
-<div lang="en">
-</div>
+<p>مقاله با خط راستی آغاز شد که دو مجموعه نقطهٔ ساده را جدا می‌کرد و با
+مثالی عددی غنی‌تر پایان می‌یابد که در آن مرز تصمیم خمیده‌ای از تنظیم خودکار
+پارامترها پدید می‌آید. پیاده‌سازی عنصر اسرارآمیزی به ریاضیات نمی‌افزاید؛
+تنها ترکیب‌های خطی، توابع فعال‌سازی، مشتق‌ها، ضرب‌های ماتریسی و
+به‌روزرسانی‌های گرادیان را بارها و سریع اجرا می‌کند <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+<p>برنامهٔ پایتون و دفتر قابل اجرا در فایل‌های مکمل این نسخه موجودند.
+منابع آموزشی مرتبط در <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> ارائه شده‌اند.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>ساخت مجموعهٔ داده‌های مصنوعی</h2>
+<p>عبارت‌های زیر فقط یک انتخاب <em>موردی و دلخواه (ad hoc)</em> برای
+تولید داده‌های تمرین محاسباتی را ثبت می‌کنند. این‌ها بخشی از معماری شبکه،
+تابع زیان یا الگوریتم آموزش نیستند و هیچ اطلاعاتی از منحنی کمکی در تغییر
+وزن‌ها و بایاس‌ها به کار نمی‌رود.</p>
+<p>برای جرم <span class="math inline">\(m\)</span> که مقدار عددی آن بر
+حسب گرم وارد می‌شود، منحنی قطر کمکی را بر حسب سانتی‌متر تعریف می‌کنیم:</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>جملهٔ نخست منحنی را عمودی جابه‌جا می‌کند؛ جملهٔ دوم نزدیک <span class="math inline">\(155\)</span> g برآمدگی ایجاد می‌کند و جملهٔ سوم
+نزدیک <span class="math inline">\(202\)</span> g افزایشی نرم پدید
+می‌آورد. ضرایب تنها برای نمایش انتخاب شده‌اند و از مشاهده‌های میوه برازش
+نشده‌اند.</p>
+<p>برای <span class="math inline">\(k=0,\ldots,15\)</span>، جرم‌ها را به
+صورت <span class="math inline">\(m_k=118+(212-118)k/15\)</span> بر حسب
+گرم می‌گیریم. مجموعهٔ دوم جرم‌ها با <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span> ساخته می‌شود که در آن جابه‌جایی‌ها بر حسب
+گرم عبارت‌اند از:</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>قطرهای چهار نوار از روابط زیر محاسبه می‌شوند:</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>دامنهٔ جابه‌جایی‌های عمودی بر حسب سانتی‌متر است. توابع مثلثاتی از چیدمان
+بیش‌ازحد منظم جلوگیری می‌کنند؛ این توابع <em>نشان‌دهندهٔ تناوب فیزیکی، نویز
+تصادفی یا مدل مولد آموخته‌شده نیستند</em>. تابع کمکی
+<code>construct_data()</code> همین روابط را دقیقاً اجرا می‌کند و هشت زوج
+آزمون در خود برنامه مشخص شده‌اند.</p>
+<p>توابع <code>reference_curve()</code> و <code>construct_data()</code>
+(کدهای <a href="#cod:curva">5</a> و <a href="#cod:dados">6</a>)
+معادلات <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> را دقیق پیاده می‌کنند، بدون
+آنکه منحنی کمکی را به‌عنوان اطلاعات آموزش وارد شبکه کنند. برنامهٔ کامل به
+شکل ده بلوک پیاپی در بخش هشتم و برای اجرای مستقیم در فایل‌های مکمل موجود
+است.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">منابع</span><h2>منابع</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida e A. C. P. L. F.
+de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado
+de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio e A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translated
+by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham e D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, v. 61, n. 4, p. 860–891,
+2019. doi: <a href="https://doi.org/10.1137/18M1165748" rel="noopener noreferrer" target="_blank">10.1137/18M1165748</a>.</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio e G. Hinton. “Deep learning”. <em>Nature</em>, v.
+521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton e R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>منابع و ابزارها</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_FA.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>کالبدشناسی ریاضی یک شبکه عصبی</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_FA.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · فارسی</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">نسخهٔ وب به‌روزرسانی شده است؛ فایل PDF فعلی بدون تغییر باقی مانده است.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_FA.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>درباره NeuralMath</h2><p class="bio">NeuralMath یک پروژه آموزشی باز است که توسط Dr. Americo Cunha Jr. توسعه یافته است. هدف آن این است که عملیات ریاضی درون یک شبکه عصبی کوچک را برای مخاطبانی گسترده با آموزش نسبتاً مقدماتی در حساب دیفرانسیل و انتگرال و آمار، قابل مشاهده، بررسی و بازتولید کند.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>مجوز</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>متن توضیحی وب‌سایت و محتوای اصلی آن، مگر آنکه خلافش ذکر شود، تحت مجوز CC BY 4.0 در دسترس است. فایل PDF مقاله ممکن است تابع مجوز محل انتشار باشد.</p></div></section>
