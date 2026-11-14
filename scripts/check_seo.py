@@ -9,9 +9,9 @@ import xml.etree.ElementTree as ET
 ROOT = Path("docs")
 DOMAIN = "https://neuralmath.org"
 DATE = "2026-10-07"
-MODIFIED = {"en": "2026-11-14", "pt": "2026-11-13"}
-SITEMAP_MODIFIED = {"en": "2026-11-14"}
 CODES = "ar bn cs de el en es fa fr hi hu id it ja ko nl pl pt ro ru sv tr uk ur vi zh".split()
+MODIFIED = {code: "2026-11-14" for code in CODES}
+SITEMAP_MODIFIED = MODIFIED
 KEY = "9b83762f5d4f4b36a7e2147c8d6a31e1"
 LANG = {code: code for code in CODES}
 LANG.update(pt="pt-BR", zh="zh-Hans")
