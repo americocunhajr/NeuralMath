@@ -25,3 +25,19 @@ html[dir="rtl"] body{text-align:right}html[dir="rtl"] .flags{direction:ltr}html[
 /* Final language-navigation behavior: wrap on larger screens, scroll on phones. */
 .flags{height:auto;min-height:54px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px;overflow-x:visible;white-space:normal}
 @media(max-width:640px){.flags{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap}}
+
+/* NeuralMath — Blocos Python do manuscrito PMO revisado (pt-BR) */
+.article-section section.nm-code-block { padding: 0; border: 0; margin: 1.25rem 0 1.6rem; min-width: 0; }
+.article-section .nm-code-heading { font-size: .95rem; font-weight: 600; margin: 0 0 .35rem; }
+.article-body pre.nm-python-code { background: #1e232d; color: #eceff5; padding: 1.0rem 1.05rem;
+  margin: 0; max-height: none; overflow-x: auto; overflow-y: visible; white-space: pre;
+  border: 0; border-radius: 0; box-shadow: none; font: 400 .82rem/1.5
+  ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
+.article-body pre.nm-python-code code { display: block; background: transparent; border: 0;
+  color: inherit; padding: 0; white-space: inherit; font: inherit; }
+.nm-numbered-equation { display: block; overflow-x: auto; max-width: 100%; }
+.nm-bib-label { font-weight: 600; margin-right: .2em; }
+@media(max-width: 600px) {
+  .article-body pre.nm-python-code { font-size: .73rem; padding: .75rem; }
+  .article-section .nm-code-heading { font-size: .88rem; }
+}
