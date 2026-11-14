@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="İçindekiler" class="toc"><h2>İçindekiler</h2><ol><li><a href="#bir-bilgisayar-ne-zaman-öğrenebilir" target="_blank" rel="noopener noreferrer">Bir bilgisayar ne zaman öğrenebilir?</a></li><li><a href="#problemin-matematiksel-olarak-temsil-edilmesi" target="_blank" rel="noopener noreferrer">Problemin matematiksel olarak temsil edilmesi</a></li><li><a href="#sınıflandırıcı-olarak-bir-doğru" target="_blank" rel="noopener noreferrer">Sınıflandırıcı olarak bir doğru</a></li><li><a href="#yapay-nöron" target="_blank" rel="noopener noreferrer">Yapay nöron</a></li><li><a href="#neden-bir-aktivasyon-fonksiyonuna-ihtiyaç-duyarız" target="_blank" rel="noopener noreferrer">Neden bir aktivasyon fonksiyonuna ihtiyaç duyarız?</a></li><li><a href="#küçük-bir-sinir-ağı-kurmak" target="_blank" rel="noopener noreferrer">Küçük bir sinir ağı kurmak</a></li><li><a href="#bir-sinir-ağı-nasıl-öğrenir" target="_blank" rel="noopener noreferrer">Bir sinir ağı nasıl öğrenir?</a></li><li><a href="#matematikten-pythona" target="_blank" rel="noopener noreferrer">Matematikten Python’a</a></li></ol></nav>
+<nav aria-label="İçindekiler" class="toc"><h2>İçindekiler</h2><ol><li><a href="#bir-bilgisayar-ne-zaman-öğrenebilir" target="_blank" rel="noopener noreferrer">Bir bilgisayar ne zaman öğrenebilir?</a></li><li><a href="#problemin-matematiksel-olarak-temsil-edilmesi" target="_blank" rel="noopener noreferrer">Problemin matematiksel olarak temsil edilmesi</a></li><li><a href="#sınıflandırıcı-olarak-bir-doğru" target="_blank" rel="noopener noreferrer">Sınıflandırıcı olarak bir doğru</a></li><li><a href="#yapay-nöron" target="_blank" rel="noopener noreferrer">Yapay nöron</a></li><li><a href="#neden-bir-aktivasyon-fonksiyonuna-ihtiyaç-duyarız" target="_blank" rel="noopener noreferrer">Neden bir aktivasyon fonksiyonuna ihtiyaç duyarız?</a></li><li><a href="#küçük-bir-sinir-ağı-kurmak" target="_blank" rel="noopener noreferrer">Küçük bir sinir ağı kurmak</a></li><li><a href="#bir-sinir-ağı-nasıl-öğrenir" target="_blank" rel="noopener noreferrer">Bir sinir ağı nasıl öğrenir?</a></li><li><a href="#matematikten-pythona" target="_blank" rel="noopener noreferrer">Matematikten Python’a</a></li><li><a href="#appendix-synthetic-data">Sentetik veri kümesinin oluşturulması</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="bir-bilgisayar-ne-zaman-öğrenebilir"><span class="section-no">01</span><h2>Bir bilgisayar ne zaman öğrenebilir?</h2>
 <p>Günlük yaşamda, çoğu zaman farkına bile varmadan sınıflandırma kararları veririz. Bir meyveye bakarak onun elma mı yoksa portakal mı olduğunu hızla ayırt ederiz; telefona bir mesaj geldiğinde gerçek bir konuşmayı istenmeyen reklamlardan ayırırız; tıbbi analizlerde bir kararı desteklemek için birden çok ölçüm birlikte değerlendirilebilir; finans kuruluşlarında ise kredi verilmeden önce çeşitli bilgiler incelenir. Tüm bu örneklerde bir yanıt üretmek için birden fazla özellik birlikte ele alınır.</p>
 <p>Birçok geleneksel bilgisayar programında bu yanıtı üreten kurallar programcı tarafından açıkça yazılır. Kurallar biliniyor ve açık bir biçimde ifade edilebiliyorsa bu yaklaşım iyi çalışır. Veriler çok değişkense ya da iyi bir karar için gerekli tüm koşulları önceden formüle etmek zorsa daha az etkili olur. Bu durum doğal bir soruya yol açar:</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> İki doğrusal parçadan oluşmasına rağmen ReLU genel olarak doğrusal değildir. Türevi <span class="math inline">\(s&lt;0\)</span> için <span class="math inline">\(0\)</span>, <span class="math inline">\(s&gt;0\)</span> için <span class="math inline">\(1\)</span>’dir. <span class="math inline">\(s=0\)</span> noktasında olağan türev yoktur ve yazılım uygulamaları gradyan için bir uzlaşım kullanır. Pozitif girdilerde <span class="math inline">\(s\)</span> büyüdükçe türev küçülmez; böylece sigmoidin doyum mekanizmalarından biri önlenir.</p>
 <p>Şekil <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a>, bu üç aktivasyonu görsel olarak karşılaştırır: basamak fonksiyonunun ani sıçraması, sigmoidin düzgün geçişi ve ReLU’nun eğim değişimi.</p>
 <figure id="fig:activation_functions">
-<img alt="Sinir ağlarına giriş anlatımlarında yaygın olarak kullanılan üç aktivasyon fonksiyonunun karşılaştırılması. Basamak fonksiyonu ani bir karar verir; sigmoid \(0\) ile \(1\) arasında düzgün bir geçiş sağlar; ReLU ise negatif girdileri bastırırken pozitifleri korur. Doğrusal olmayan" decoding="async" loading="lazy" src="../assets/img/tr/Fig04.png"/>
+<img alt="Sinir ağlarına giriş anlatımlarında yaygın olarak kullanılan üç aktivasyon fonksiyonunun karşılaştırılması. Basamak fonksiyonu ani bir karar verir; sigmoid \(0\) ile \(1\) arasında düzgün bir geçiş sağlar; ReLU ise negatif girdileri bastırırken pozitifleri korur. Doğrusal olmayan" decoding="async" loading="lazy" src="../assets/img/tr/Fig04.webp"/>
 <figcaption>Sinir ağlarına giriş anlatımlarında yaygın olarak kullanılan üç aktivasyon fonksiyonunun karşılaştırılması. Basamak fonksiyonu ani bir karar verir; sigmoid <span class="math inline">\(0\)</span> ile <span class="math inline">\(1\)</span> arasında düzgün bir geçiş sağlar; ReLU ise negatif girdileri bastırırken pozitifleri korur. Doğrusal olmayan aktivasyonlar, katman yığınının tek bir afin dönüşüme indirgenmesini engeller.</figcaption>
 </figure>
 <p>Temel özellikleri aşağıda özetlenmiştir.</p>
@@ -221,216 +221,489 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>Bu gösterim, Python programında karşımıza çıkacak yapıyı önceden haber verir. Girdiye bir meyve verildiğinde ve <span class="math inline">\(\widehat{y}\)</span> elde edilene kadar ardışık aktivasyonları hesapladığımızda <em>ileri yayılım</em> ya da <em>ileri geçiş</em> gerçekleştiririz. Temel soru hâlâ aynıdır: tahminlerin verilere uyması için on üç parametre otomatik olarak nasıl belirlenebilir?</p>
 </section><section class="article-section" id="bir-sinir-ağı-nasıl-öğrenir"><span class="section-no">07</span><h2>Bir sinir ağı nasıl öğrenir?</h2>
-<p>Ağırlıklar ve yanlılıklar önceden bilinmez. Doğru yanıtı bilinen örnekler kullanılarak ayarlanmaları gerekir. Bu sürece <em>eğitim</em> denir ve şu döngüyle özetlenebilir <span class="math display">\[\boxed{\text{tahmin et}}
-\longrightarrow
-\boxed{\text{hatayı ölç}}
-\longrightarrow
-\boxed{\text{parametreleri ayarla}}
-\longrightarrow
-\boxed{\text{tekrarla}}.\]</span></p>
-<p>Doğru sınıfı portakal olan, yani <span class="math inline">\(y=0\)</span> için kütlesi <span class="math inline">\(140\)</span> g ve çapı <span class="math inline">\(7.0\)</span> cm olan bir meyveyi ele alalım. Eğitimin bir aşamasında ağın <span class="math inline">\(\widehat{y}=0.80\)</span> çıktısı verdiğini varsayalım. Tahmin ile hedef arasındaki farkın basit bir ölçüsü karesel hatadır <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Bu örnek için, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
-<p>Bu ifade tek bir örnek için bir <em>kayıp fonksiyonudur</em>. Kare olduğu için <span class="math inline">\(E\geq0\)</span>’dır ve hedeften daha uzak tahminler daha büyük ceza alır. <span class="math inline">\(1/2\)</span> çarpanı minimumun konumunu değiştirmez, ancak türevleri basitleştirir. İkili sınıflandırmada özellikle çapraz entropi olmak üzere başka kayıp fonksiyonları da sıkça kullanılır. Burada karesel hatayı, cebiri açık olduğu ve optimizasyon ile geri yayılımı tanıtmak için yeterli olduğu için kullanıyoruz .</p>
-<p>Eğitim kümesi <span class="math inline">\(N\)</span> örnek içeriyorsa genel bir ölçü ortalama kayıptır <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Her tahmin ağın ağırlıklarına ve yanlılıklarına bağlıdır; dolayısıyla <span class="math inline">\(J\)</span> de bu parametrelerin tümüne bağlıdır. Eğitim, <span class="math inline">\(J\)</span> değerini küçülten parametre değerlerini aramak demektir.</p>
-<p>Ayarlama mekanizmasını anlamak için önce tek bir <span class="math inline">\(w\)</span> ağırlığı dışındaki tüm parametrelerin sabit tutulduğunu düşünelim. Bu durumda kaybı <span class="math inline">\(J=J(w)\)</span> fonksiyonu olarak görebiliriz. Şekil <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a>, şimdi inceleyeceğimiz eğitimin temel aşamalarını özetlemektedir.</p>
-<figure id="fig:training_cycle">
-<img alt="Bir sinir ağının temel eğitim döngüsü. İleri geçiş girdileri bir tahmine dönüştürür; kayıp fonksiyonu tahmin ile hedef arasındaki farkı ölçer; geri yayılım zincir kuralını kullanarak gradyanları hesaplar; gradyan inişi ise bu gradyanları ağırlıkları ve yanlılıkları güncellemek iç" decoding="async" loading="lazy" src="../assets/img/tr/Fig06.png"/>
-<figcaption>Bir sinir ağının temel eğitim döngüsü. İleri geçiş girdileri bir tahmine dönüştürür; kayıp fonksiyonu tahmin ile hedef arasındaki farkı ölçer; geri yayılım zincir kuralını kullanarak gradyanları hesaplar; gradyan inişi ise bu gradyanları ağırlıkları ve yanlılıkları güncellemek için kullanır. Bu döngünün çok sayıda epok boyunca tekrarlanmasına öğrenme diyoruz.</figcaption>
+<p>Ağın ağırlıkları ve yanlılıkları önceden bilinmez; sınıf etiketleri
+bilinen örneklerden ayarlanırlar. Eğitim, ileri yayılım, kayıp hesabı,
+gradyan hesabı ve parametre güncellemesinin tekrarlanmasına dayanır
+(Şekil <a href="#fig:ciclo_treinamento">6</a>). Zincir kuralı, her
+ağırlık ve yanlılığın kayıptaki küçük değişiklikleri nasıl etkilediğini
+belirler. Parametreleri ayarlamak için önce tahminle beklenen sonuç
+arasındaki farkın sayısal bir ölçüsü gerekir. Bir <em>kayıp
+fonksiyonu</em>, her tahmine bir ceza atar ve farklı parametre
+seçimlerini karşılaştırmamızı sağlar. Yalnızca yanlış sınıflandırmaları
+saymanın aksine sürekli bir kayıp, hedef etiketten uzaklığı da ayırt
+eder ve eğitimde kullanılacak türevleri sağlar. Kütlesi <span class="math inline">\(140\)</span> g, çapı <span class="math inline">\(7.0\)</span> cm olan bir portakalı ele alalım
+(<span class="math inline">\(y=0\)</span>). Ağ çıktısı <span class="math inline">\(\widehat y\in(0,1)\)</span> için tek örnekte
+karesel kayıp şöyledir:</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>Burada <span class="math inline">\(y\)</span> gerçek sınıf, <span class="math inline">\(\widehat y\)</span> tahmindir. Kayıp negatif
+değildir ve tahmin etiketle aynı olduğunda sıfır olur. Portakal için
+<span class="math inline">\(0.80\)</span> ve <span class="math inline">\(0.60\)</span> tahminleri sırasıyla <span class="math inline">\(E=0.32\)</span> ve <span class="math inline">\(E=0.18\)</span> verir. <span class="math inline">\(0.5\)</span> eşiğine göre ikisi de hatalıdır,
+fakat kayıp hangisinin hedefe daha yakın olduğunu gösterir. <span class="math inline">\(1/2\)</span> çarpanı minimumu değiştirmez, türevi
+kolaylaştırır. <span class="math inline">\(N\)</span> gözlem için
+ortalama kaybı tanımlayalım:</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>Bu ortalama eğitim verisine uyumu özetler; güncellemelerle <span class="math inline">\(J\)</span> değerini düşürmeyi amaçlarız. Eğitim
+kaybını en aza indirmek, yeni verilerde iyi tahminleri tek başına
+garanti etmez. Cebirsel sadeliği için karesel kaybı koruyup gradyanını
+ikili çapraz entropiyle karşılaştıracağız; bu karşılaştırma hesaplama
+deneyini değiştirmez <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="Eğitimin aşamaları: ileri yayılım, kayıp hesabı,
+duyarlılıkların geri yayılımı ve parametre güncellemesi." decoding="async" loading="lazy" src="../assets/img/tr/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. Eğitimin aşamaları: ileri yayılım, kayıp hesabı,
+duyarlılıkların geri yayılımı ve parametre güncellemesi.</figcaption>
 </figure>
-<p>Kalkülüs altyapısı sınırlı okuyucular için türev burada bir <em>yerel duyarlılık</em> ölçüsü olarak yorumlanabilir: bir parametredeki küçük bir değişikliğin kaybı nasıl değiştirme eğiliminde olduğunu söyler. İşareti fonksiyonu yerel olarak hangi yönün artırıp azalttığını, büyüklüğü ise bu yerel değişimin gücünü gösterir.</p>
-<p>Türev <span class="math display">\[\frac{\partial J}{\partial w}\]</span> yerel eğimi verir. Pozitifse <span class="math inline">\(w\)</span>’deki küçük bir artış <span class="math inline">\(J\)</span>’yi artırma eğilimindedir; bu nedenle ağırlık ters yönde hareket etmelidir. Negatifse <span class="math inline">\(w\)</span>’yi artırmak yerel olarak <span class="math inline">\(J\)</span>’yi azaltma eğilimindedir. Her iki durum da şu ifadeyle açıklanır <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w},\]</span> bu, <em>gradyan inişinin</em> temel fikridir. Pozitif <span class="math inline">\(\eta\)</span> sayısı <em>öğrenme oranıdır</em>; adım büyüklüğünü kontrol eder. Çok küçük bir değer eğitimi yavaşlatabilir, aşırı büyük bir değer ise salınıma ya da kararsızlığa neden olabilir.</p>
-<p>Çok sayıda parametre içeren bir ağ için <span class="math inline">\(\theta\)</span> herhangi bir ağırlık ya da yanlılığı göstersin. Güncelleme şu hâli alır <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}.\]</span> Tüm kısmi türevlerin oluşturduğu küme kaybın <em>gradyanını</em> oluşturur. Geometrik olarak gradyan en hızlı yerel artış yönünü gösterir; dolayısıyla negatif gradyan yerel azalma yönünü verir.</p>
-<p>Ağ birkaç fonksiyonun bileşimiyken bu türevleri yine de hesaplamamız gerekir. İleri geçiş sırasında bilgi şu şekilde ilerler <span class="math display">\[\text{girdiler}
-\longrightarrow
-\text{gizli katman}
-\longrightarrow
-\text{çıktı}.\]</span> Erken bir katmandaki parametrenin kaybı nasıl etkilediğini belirlemek için bağımlılıklar zincirini matematiksel olarak ters yönde izleriz. Bu işleme <em>geri yayılım</em> denir. Özünde zincir kuralının sistematik ve verimli bir uygulanışıdır. Rumelhart, Hinton ve Williams , bu yöntemin gizli katmanlı ağlarda yaygınlaşmasına ilişkin klasik bir kaynak sunarken; Nielsen  ayrıntılı ve özellikle öğretici bir türetim vermektedir.</p>
-<p><span class="math inline">\(E\)</span>’nin <span class="math inline">\(\widehat{y}\)</span>’ye, <span class="math inline">\(\widehat{y}\)</span>’nin <span class="math inline">\(h\)</span> aktivasyonuna ve onun da <span class="math inline">\(w\)</span> ağırlığına bağlı olduğu basit bir bağımlılık zinciri için zincir kuralı şunu verir <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}.\]</span> Her çarpan <span class="math inline">\(w\)</span>’nin son kayıp üzerindeki etkisinin bir aşamasını açıklar. Daha büyük ağlar bu tür çok sayıda zincir içerir ve geri yayılım hesabı, ara türevlerin her parametre için ayrı ayrı yeniden hesaplanması yerine tekrar kullanılmasını sağlayacak biçimde düzenler.</p>
-<p>Pratikte eğitim çok sayıda örnek kullanır. Eğitim kümesinin tamamından bir kez geçmeye <em>epok</em> denir. Parametreler, bu makalenin ilerleyen kısmındaki öğretici programda olduğu gibi her örnekten sonra ya da büyük ağlarda yaygın olan <em>mini-yığın</em> adı verilen küçük örnek gruplarından sonra güncellenebilir. Her iki durumda da tahmin, kayıp, gradyan ve güncelleme döngüsü çok sayıda epok boyunca tekrarlanır.</p>
-<p>Bu gelişimi somut biçimde görselleştirmenin bir yolu, sabit bir örneğe ilişkin tahmini eğitimin farklı aşamalarında izlemektir. Doğru sınıfı portakal olan, kütlesi <span class="math inline">\(140\)</span> g ve çapı <span class="math inline">\(7.0\)</span> cm olan meyveyi yeniden ele alalım. Tablo <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> varsayımsal bir ilerlemeyi göstermektedir. Bu değerler belirli bir çalıştırmaya ait değildir; yalnızca mekanizmayı açıklamak içindir.</p>
-<div id="tab:learning">
+<p><span class="math inline">\(\theta\)</span> bir ağırlık veya
+yanlılıksa <span class="math inline">\(\partial
+J/\partial\theta\)</span>, ortalama kaybın bu parametreye yerel
+duyarlılığını ölçer. Gradyan inişi adımı:</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>Öğrenme hızı <span class="math inline">\(\eta\)</span> adım
+büyüklüğünü belirler: çok küçük değerler yakınsamayı yavaşlatırken çok
+büyükleri salınıma veya ıraksamaya yol açabilir. Parametreler her
+örnekten sonra güncelleniyorsa (Bölüm <a href="#matematikten-pythona">8</a>), <span class="math inline">\(\partial J/\partial\theta\)</span> yerine <span class="math inline">\(\partial E_i/\partial\theta\)</span> kullanılır.
+Burada uygulanan stokastik gradyan inişi (SGD) budur.</p>
+<h3 id="ağında-zincir-kuralı">2–3–1 ağında zincir kuralı</h3>
+<p>Şekil <a href="#fig:small_network">[fig:pequena_rede]</a> içindeki ağı,
+üç gizli ReLU nöronu ve sigmoid çıktıyla ele alıyoruz. Kütle (gram) ile
+çapın (santimetre) ölçekleri farklıdır. Koşullandırmayı iyileştirmek
+için her niteliği <span class="math inline">\(x_j^\ast=(x_j-\mu_j)/\sigma_j\)</span> ile
+standartlaştırıyoruz; <span class="math inline">\(\mu_j\)</span> ve
+<span class="math inline">\(\sigma_j&gt;0\)</span> referans ortalama ve
+standart sapmadır. Böylece girdiler boyutsuz ve benzer ölçeklerde olur.
+Hesaplama deneyinde bu istatistikler sadece eğitim kümesinden
+belirlenir, test verisinin eğitime sızması önlenir. İzleyen sayısal
+örnekte ise aritmetiği kolaylaştırmak için sabit merkez ve ölçekler
+kullanacağız. Standartlaştırılmış <span class="math inline">\(\mathbf{x}^\ast=(x_1^\ast,x_2^\ast)^{\mathsf
+T}\)</span> için ileri yayılım:</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>Burada <span class="math inline">\(c=b^{(2)}\)</span> çıktı yanlılığı
+ve <span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>
+ağırlıklarıdır. Geri yayılım, zincir kuralını ardışık uygulayarak çıktı
+nöronunda başlar:</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>Her <span class="math inline">\(h_j\)</span> aktivasyonu kendi
+ağırlık ve yanlılığına da bağlı olduğundan gizli nöronların
+duyarlılıkları hesaplanır:</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>ReLU sıfırda türevlenebilir değildir; hesaplamada <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span> seçimini
+benimseriz. <span class="math inline">\(\delta^{(2)}\)</span> ve <span class="math inline">\(\delta_j^{(1)}\)</span> büyüklükleri ağ boyunca
+taşınan fiziksel hatalar değil, kaybın yerel <em>duyarlılıklarıdır</em>.
+Yeniden kullanıldıklarında on üç gradyanın tümü her ağırlığı baştan
+türetmeye gerek kalmadan elde edilir.</p>
+<h3 id="tam-bir-sayısal-parametre-güncellemesi">Tam bir sayısal
+parametre güncellemesi</h3>
+<p>Yalnızca bu örnekte, kütle için <span class="math inline">\(160\)</span> g merkez ve <span class="math inline">\(20\)</span> g ölçek; çap için <span class="math inline">\(7.5\)</span> cm merkez ve <span class="math inline">\(0.5\)</span> cm ölçek seçiyoruz. <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span>
+meyvesinin boyutsuz girdisi:</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>Bu referanslar sadece gösterim içindir; Bölüm <a href="#matematikten-pythona">8</a> içindeki
+ortalama ve standart sapma eğitim verisinden hesaplanır. Başlangıçtaki
+on üç parametreyi seçelim:</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>Denklem <a href="#eq:forward">forward</a> sırasıyla şunları
+verir:</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>Başlangıç tahmini yanlış sınıfı verir. Denklem <a href="#eq:delta_saida">delta_saida</a> ve <a href="#eq:delta_oculta">delta_oculta</a> kullanılarak:</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>Üçüncü gizli nöron etkin değildir (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), bu nedenle giriş
+ağırlıkları ile yanlılığının gradyanları bu adımda sıfırdır. <span class="math inline">\(\eta=0.05\)</span> için <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span> kuralını bütün parametrelere eşzamanlı
+uygularız. Tablo <a href="#tab:passo_sgd">1</a> on üç güncellemenin bazılarını
+gösterir.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>Eğitim sırasında aynı meyve için ağ tahmininin varsayımsal gelişimi. Yinelenen parametre güncellemeleri başlangıçta yanlış olan bir çıktıyı hedef etiketle uyumlu bir sınıflandırmaya doğru taşıyabilir.</caption>
+<caption><span class="math inline">\(\eta=0.05\)</span> ile bir SGD
+adımından önce ve sonra seçilmiş parametreler.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Epok</th>
-<th style="text-align: center;">Tahmin <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">Kayıp <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">Sınıflandırma</th>
+<th style="text-align: left;">Parametre <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">Başlangıç</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">Güncel</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">Elma</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">Elma</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">Elma</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">Portakal</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">Portakal</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Başlangıçta çıktı <span class="math inline">\(1\)</span>’e yakındır ve meyve yanlışlıkla elma olarak sınıflandırılır. Parametreler ayarlandıkça tahmin azalır ve sonunda <span class="math inline">\(0.5\)</span> eşiğini geçerek doğru sınıfı üretir. Bu süreçte değişen, ağırlıkların ve yanlılıkların sayısal değerleridir; ağ mimarisi sabit kalır.</p>
-<p>Eğitim verisindeki kaybı azaltmak nihai amaç değildir. Yararlı bir ağ, parametreleri uyarlamak için kullanılmamış örneklerde de iyi tahminler yapmalıdır. Bu yeteneğe <em>genelleme</em> denir. Bir model eğitim kümesinin kendine özgü ayrıntılarına aşırı uyum sağlayıp yeni verilerde daha kötü performans gösterdiğinde <em>aşırı öğrenme</em> ortaya çıkar. Daha dikkatli değerlendirmelerde veriler genellikle eğitim, doğrulama ve test kümelerine ayrılır: birincisi parametreleri uyarlar, ikincisi model geliştirme sırasında yapılan seçimleri destekler, üçüncüsü ise son değerlendirme için saklanır. Genelleme ve model değerlendirmesi hakkında daha geniş tartışmalar Faceli ve arkadaşlarında  ve Goodfellow, Bengio ve Courville’de  bulunabilir.</p>
-<p>Böylece bir sinir ağında öğrenmenin matematiksel anlamına ulaştık. Bu bağlamda öğrenmek, bileşik bir fonksiyonun parametrelerini verideki bir hata ölçüsünü azaltacak ve ideal olarak yeni örneklere genelleyecek biçimde ayarlamak demektir. Ağ tahmin yapar, kaybı hesaplar, parametrelerin bu kaybı nasıl etkilediğini belirlemek için türevleri kullanır ve art arda küçük düzeltmeler gerçekleştirir.</p>
+<p><em>Bütün</em> güncellenmiş parametrelerle yapılan ileri yayılım
+<span class="math inline">\(\widehat
+y_{\mathrm{new}}\simeq0.723717\)</span> ve <span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span> verir.
+Kayıp tek adımda azalmıştır; sınıf kararı henüz değişmemiştir. Öğrenme
+çok sayıda örnek ve epok üzerinde tekrarı gerektirir.</p>
+<h3 id="karesel-hata-ve-çapraz-entropi">Karesel hata ve çapraz
+entropi</h3>
+<p>Karesel hata zincir kuralını göstermek için elverişlidir. Ancak
+sigmoid çıkışlı ikili sınıflandırmada <em>ikili çapraz entropi</em> de
+yaygındır. <span class="math inline">\(y\in\{0,1\}\)</span> ve <span class="math inline">\(\widehat y=\sigma(z)\)</span> için tek gözlemin
+kaybı:</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>Karesel kayıp tahmin ile etiketin sayısal farkını cezalandırırken
+çapraz entropi, <span class="math inline">\(\widehat y\)</span> sınıf
+<span class="math inline">\(1\)</span> olasılığı olarak yorumlandığında
+gözlenen etikete düşük olasılık verilmesini cezalandırır. Eğitim
+açısından fark, çıktı nöronunun <span class="math inline">\(z\)</span>
+puanına göre türev alırken belirginleşir. Zincir kuralı ve <span class="math inline">\(\sigma'(z)=\widehat y(1-\widehat y)\)</span>
+kullanıldığında:</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>Bu farkı göstermek için bir portakalın (<span class="math inline">\(y=0\)</span>) <span class="math inline">\(\widehat
+y=0.80\)</span> tahminini aldığını varsayalım. Bu durumda <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span>, <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span>;
+<span class="math inline">\(z\)</span> türevleri sırasıyla <span class="math inline">\(0.128\)</span> ve <span class="math inline">\(0.80\)</span> olur. <span class="math inline">\(\eta=0.05\)</span> ile çıktı yanlılığının tek
+başına güncellemesi karesel kayıpta <span class="math inline">\(\Delta
+c=-0.0064\)</span>, çapraz entropide <span class="math inline">\(-0.0400\)</span> olur. Bu <span class="math inline">\(0.80\)</span> yalnızca ayrı bir gösterimdir,
+önceki tam hesaplamanın yerine geçmez. Çapraz entropi kullanıldığında
+<span class="math inline">\(\widehat y(1-\widehat y)\)</span> çarpanı
+çıktı katmanının duyarlılığını artık çarpmaz. Bu, çok yanlış tahminlerde
+sigmoid doygunluğundan kaynaklanan ek gradyan küçülmesini <em>bu
+katmanda</em> önler. Diğer katmanlarda küçük gradyanları ortadan
+kaldırmaz, her zaman daha hızlı eğitimi de garanti etmez. İki kaybın
+sayısal ölçekleri farklı olduğundan değerleri doğrudan kalite göstergesi
+olarak karşılaştırılmamalıdır. Ana kod, sayısal hesabın yeniden
+üretilebilmesi için karesel kaybı korur; ek defter karşılaştırmayı
+eğitimi değiştirmeden sunar.</p>
+<h3 id="epoklar-ve-genelleme">Epoklar ve genelleme</h3>
+<p>Eğitim örneklerinin bir kez tamamen işlenmesine <em>epok</em> denir.
+Program her epokta örnekleri karıştırır ve her meyveden sonra
+parametreleri günceller. Mimari sabit kalır; ağırlıklar, yanlılıklar ve
+karar sınırı değişir. Eğitim kaybının düşük olması yeni örneklerde
+başarıyı garanti etmez: bu, <em>genelleme</em> yeteneğidir. Eğitim
+verilerine aşırı uyum yeni verilerdeki tahminleri bozarsa <em>aşırı
+öğrenme</em> oluşur. Daha kapsamlı çalışmalarda ayrı eğitim, doğrulama
+ve test kümeleri hiperparametre seçimini ve daha az yanlı
+değerlendirmeyi sağlar <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
 </section><section class="article-section" id="matematikten-pythona"><span class="section-no">08</span><h2>Matematikten Python’a</h2>
-<p>Şimdi denklemlerden çalıştırılabilir bir programa geçiyoruz. Amaç özel bir sinir ağı kütüphanesi kullanmak değil, makale boyunca geliştirdiğimiz matematiksel işlemleri <code>NumPy</code> ile doğrudan uygulamaktır . Böylece doğrusal birleşimlerin, aktivasyon fonksiyonlarının, kayıp hesabının, geri yayılımın ve gradyan inişinin kodda nasıl göründüğünü satır satır görmek mümkün olur.</p>
-<p>Daha ikna edici bir son örnek için, daha geniş bir kütle–çap bölgesine yayılmış sentetik bir veri kümesi kullanıyoruz. Yine yalnızca iki fiziksel özellikle — gram cinsinden kütle ve santimetre cinsinden çap — çalışıyoruz; ancak bu kez <span class="math inline">\(64\)</span> eğitim örneğini düzlemin geniş bir bölgesine dağıtıyor ve ek sekiz örneği açıklayıcı bir test için ayırıyoruz. Veriler sentetiktir ve elma ile portakallar için makul aralıklarda tutulmuştur. Tüm noktaları aşırı yapay birkaç kümeye yoğunlaştırmadan doğrusal olmayan bir karar sınırı oluşturacak biçimde tasarlanmışlardır.</p>
-<p>Geometrik fikir basittir. Kütle–çap düzleminde bir referans eğrisi tanımlar, elmaları bu eğrinin üstündeki iki banda, portakalları ise altındaki iki banda yerleştiririz. Gözlemlerin daha geniş bir bölgeyi kaplaması için hem kütleye hem çapa küçük deterministik pertürbasyonlar eklenir. Ortaya çıkan örnek önceki çizimlerden daha zengindir: daha fazla nokta içerir, veriler bölgeye yayılmıştır ve uygun karar sınırı bir doğrudan belirgin biçimde daha eğridir.</p>
-<p>Bu son hesaplama deneyi için gizli katmanı on iki ReLU nöronuna genişletiyoruz. Bu, önceki bölümlerde incelenen kavramsal yapıyı değiştirmez; yalnızca ağın daha karmaşık bir sınırı temsil etme kapasitesini artırır. Üç nöronlu öğretici ağdaki <span class="math inline">\(13\)</span> parametre yerine artık <span class="math inline">\(49\)</span> ayarlanabilir parametremiz vardır: ilk katmanda <span class="math inline">\(24\)</span> ağırlık ve <span class="math inline">\(12\)</span> yanlılık, ardından çıktı katmanında <span class="math inline">\(12\)</span> ağırlık ve bir yanlılık. Denklemler tam olarak aynı biçimi korur; yalnızca vektörler ve matrisler büyür.</p>
-<p>Tam program aşağıda verilmiştir.</p>
-<pre style="pythonterminal"><code>import numpy as np
+<p>Şimdi Bölüm <a href="#bir-sinir-ağı-nasıl-öğrenir">7</a> içinde türetilen ileri yayılım,
+zincir kuralı ve stokastik adımları yalnızca <code>NumPy</code> ile
+kodlayacağız <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Doğrusal olmayan bir karar sınırı
+için gizli katmanı üçten on iki ReLU nöronuna büyütüyoruz. Sonuçtaki
+<span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+ağının <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
+parametresi vardır, fakat aynı denklemleri kullanır.</p>
+<h3 id="gösterim-için-sentetik-veriler">Gösterim için sentetik
+veriler</h3>
+<p>Deney, kütle–çap düzleminde dörder şerit ve her şeritte <span class="math inline">\(16\)</span> nokta olmak üzere <span class="math inline">\(64\)</span> sentetik eğitim örneği ile sekiz
+gösterim amaçlı test örneği içerir. İki elma şeridi referans eğrisinin
+üzerinde, iki portakal şeridi altındadır. Küçük belirlenimci kaydırmalar
+düzenli hizalanmayı önler. Değerler yalnızca görsel olarak makul bir
+dağılım ve doğrusal olmayan bir sınır oluşturmak için seçilmiştir;
+<em>deneysel ölçüm veya meyvenin fiziksel modeli değildir</em>. Yardımcı
+eğri <em>yalnızca veri üretir</em>; ağa sunulmaz, kayba ve geri yayılıma
+girmez. Eğitim sadece kütle–çap çiftleri ile etiketlerden yararlanır.
+Tam üretim formülleri Ek <a href="#appendix-synthetic-data">A</a> içinde verilmiştir.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="\(64\) sentetik gözlemin
+dört şeritte dağılımı: yardımcı eğrinin üstünde iki elma, altında iki
+portakal şeridi. Kesikli eğri eğitimde kullanılmaz." decoding="async" loading="lazy" src="../assets/img/tr/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. <span class="math inline">\(64\)</span> sentetik gözlemin
+dört şeritte dağılımı: yardımcı eğrinin üstünde iki elma, altında iki
+portakal şeridi. Kesikli eğri eğitimde kullanılmaz.</figcaption>
+</figure>
+<p>Şekil <a href="#fig:faixas_sinteticas">7</a>,
+<code>construct_data()</code> tarafından üretilen noktaları gösterir.
+Kesikli eğri yalnızca veri üretim aracıdır; öğrenilen sınır değildir.
+Sekiz ek örnek sadece son gösterimde kullanılır, standartlaştırma
+istatistiklerine girmez.</p>
+<h3 id="standartlaştırma-ve-eğitim-seçimleri">Standartlaştırma ve eğitim
+seçimleri</h3>
+<p>Kütle ve çapın birim ve ölçekleri farklı olduğu için her girdi
+boyutsuz değişkene dönüştürülür:</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p><span class="math inline">\(\mu_j\)</span> ortalaması <span class="math inline">\(j\)</span> niteliğini merkezler; <span class="math inline">\(\sigma_j\)</span> standart sapması yeniden
+ölçekler; bu örnekte <span class="math inline">\(N=64\)</span>. İkisi de
+<em>yalnızca</em> eğitim verisinden hesaplanır ve test verilerine
+değiştirilmeden uygulanır. <span class="math inline">\(\sigma_j&gt;0\)</span> varsayılır; aynı dönüşüm
+tahmin ızgarasında da kullanılır. Başlangıç ağırlıkları ortalaması
+sıfır, standart sapması <span class="math inline">\(0.1\)</span> olan
+normal dağılımdan ve <span class="math inline">\(42\)</span> tohumu ile
+üretilir. Küçük rastgele ağırlıklar gizli nöronların simetrisini kırar.
+Bu, evrensel bir kural değildir; büyük ağlarda başlangıç ölçeği
+mimariyle ve aktivasyonlarla uyumlu seçilmelidir. Yanlılıklar sıfırla
+başlar. ReLU <span class="math inline">\(s=0\)</span> noktasında
+türevsizdir; <code>relu_derivative()</code> geleneksel olarak sıfır
+döndürür ve bu tek başına yakınsamayı güvenceye almaz. <span class="math inline">\(\eta=0.05\)</span> en iyi olduğu için değil,
+temkinli bir seçim olarak kullanılmıştır. Tablo <a href="#tab:eta">2</a>, sabit veri ve
+tohumla <span class="math inline">\(1000\)</span> epok sonunda öğrenme
+hızına duyarlılığı gösterir. Denenen en yüksek hız bu veride daha hızlı
+yakınsar, ancak evrensel olarak uygun olduğu sonucu çıkmaz. Kararlı
+eğitim ve izlenebilir kayıp geçmişi için <span class="math inline">\(0.05\)</span> korunur.</p>
+<div id="tab:eta">
+<table>
+<caption>Öğrenme hızına duyarlılık: <span class="math inline">\(1000\)</span> epok sonunda ortalama kayıp ve doğru
+eğitim sınıflandırmaları (tohum <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">Ortalama kayıp <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(64\)</span>
+içinde doğru</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="tam-python-uygulaması">Tam Python uygulaması</h3>
+<p>Program, işlev ve çalışma sırasına göre Kod <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a> arasında on ardışık
+blokta verilmiştir. Bloklar birlikte ek materyal olarak sunulan
+<code>neural_network.py</code> dosyasını oluşturur.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Çalışma ortamı</p><pre class="nm-python-code" dir="ltr"><code>"""Öğretici örnek: 2-12-1 ağıyla meyve sınıflandırma.
+Bağımlılıklar: numpy ve matplotlib. Çalıştırma: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — ReLU aktivasyonu</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """Gizli katman aktivasyonu: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — ReLU için hesaplamalı türev</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # ReLU s=0 noktasında türevlenmez; hesaplamada türev 0 alınır.
+    # Bu seçim yalnızca o noktadaki geri yayılım adımını tanımlar.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — Sigmoid aktivasyonu</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Çıktı aktivasyonu, değerler 0 ile 1 arasında."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — Sentetik veri üretimi için yardımcı eğri</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Yapay eğri (cm): öteleme, Gauss tepeciği, lojistik yükseliş.
+    # Sabitler doğrusal olmayan bir referans eğrisi kurmak için seçildi;
+    # deneysel ölçüm veya kestirilmiş parametre değildir.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — Sentetik eğitim ve gösterim amaçlı test verileri</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # Dört şeridin her birinde 16 kütle: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Küçük belirlenimci kaydırmalar aynı kütleleri önler.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Elmalar: eğrinin üzerinde iki şerit, cm cinsinden küçük farklarla.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Portakallar: referans eğrisinin altında iki şerit.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Sekiz gösterim örneği, kapsamlı istatistiksel test değil.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — İleri yayılımda tahminler</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, eğitim kümesinin istatistikleriyle.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Matris biçiminde ileri yayılım (her meyve bir satır).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — Geri yayılım ve gradyan inişiyle eğitim</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # Küçük rastgele ağırlıklar nöron simetrisini kırar;
+    # başlangıç yanlılıkları sıfırdır. 0.1 ölçeği öğretici seçimdir.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: meyve başına bir güncelleme, her epokta karıştırma.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # İleri yayılım: gizli ve çıktı katmanı denklemleri.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Geri yayılım: delta2 = dE/dz2 (karesel hata).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Stokastik gradyan inişi: theta &lt;- theta - eta*dE/dtheta.
+            # Bütün gradyanlar ÖNCEKİ parametreleri kullanır.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: her epok sonunda ortalama eğitim kaybı.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — Öğrenilen karar sınırının çizimi</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # y_hat=0.5 seviye eğrisi ÖĞRENİLEN karar sınırıdır.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -438,91 +711,161 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Elma - eğitim")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Portakal - eğitim")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="Elma - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="Portakal - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("Kütle (g)")
-    ax.set_ylabel("Çap (cm)")
-    ax.set_title("Eğitimden sonra sinir ağı çıktısı")
-
+    ax.set_xlabel('Kütle (g)')
+    ax.set_ylabel('Çap (cm)')
+    ax.set_title('Eğitim sonrası sinir ağı çıktısı')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Elma - eğitim'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Portakal - eğitim'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Elma - eğitim'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Portakal - eğitim'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
                linestyle='None', label='Elma - test'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
                linestyle='None', label='Portakal - test'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='Sinir ağı karar sınırı')
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Öğrenilen karar sınırı')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-<p>Kod, makalede incelenen ilk denklemlerden daha uzun olsa da yapısı açıktır. <code>build_data()</code> fonksiyonu <span class="math inline">\(64\)</span> eğitim örneğini ve sekiz açıklayıcı test örneğini otomatik olarak üretir. Ardından her iki değişkeni şu şekilde standartlaştırırız <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> burada <span class="math inline">\(\mu_j\)</span> ve <span class="math inline">\(\sigma_j\)</span> yalnızca eğitim kümesinden hesaplanır. Bu, test kümesinin parametre uyarlamasını etkilemesini önler ve aynı zamanda kütle ile çapı karşılaştırılabilir sayısal ölçeklere getirir.</p>
-<p>İleri geçiş özünde değişmez. Tek fark, ilk katmanın artık on iki gizli aktivasyondan oluşan bir vektör üretmesidir. Matris gösteriminde, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> Bu dört satır hâlâ algoritmanın matematiksel özünü içerir. Eğitim de daha önce tanıtılan mantığı korur: tahmin hesaplamak, hatayı ölçmek, duyarlılık bilgisini türevler yardımıyla geriye yaymak ve parametreleri küçük gradyan inişi adımlarıyla güncellemek.</p>
-<p>Kodda çıktı katmanındaki geri yayılım şu satırda görünür</p>
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-<p>ve gizli katmana yayılım şu satırda görünür</p>
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-<p>ardından tüm ağırlıklar ve yanlılıklar güncellenir. Örnekler her epokta karıştırıldığı ve parametreler her gözlemden sonra güncellendiği için bu uygulama <em>stokastik gradyan inişinin</em> temel bir biçimidir.</p>
-<p>Burada kullanılan rastgele tohum ve hiperparametrelerle son ortalama kayıp <span class="math inline">\(10^{-5}\)</span> ile <span class="math inline">\(10^{-4}\)</span> mertebesindedir ve <span class="math inline">\(64\)</span> eğitim örneğinin tamamı ile sekiz açıklayıcı test örneği beklenen sınıflandırmayı alır. Bu sonuç katı bir istatistiksel performans değerlendirmesi olarak yorumlanmamalıdır: veriler sentetiktir ve öğretici amaçlarla oluşturulmuştur. Amaçları, daha az basit bir ortamda küçük bir sinir ağının belirgin biçimde doğrusal olmayan bir karar sınırını nasıl öğrenebildiğini göstermektir.</p>
-<p>Şekil <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a>, programın son çıktısını kütle–çap düzleminde göstermektedir. Tüm eğitim noktaları gösterilmiştir. Vurgulanan eğri <span class="math inline">\(\widehat{y}=0.5\)</span> düzeyidir ve ağın öğrendiği karar sınırını temsil eder; gölgeli bölgeler ağın tahmin ettiği iki sınıfı gösterir. Daireler eğitim elmaları, kareler eğitim portakalları, üçgenler test elmaları ve çarpılar test portakallarıdır. Hiçbir veri noktasını kapatmaması için açıklama kutusu ana çizim bölgesinin dışına yerleştirilmiştir.</p>
-<figure id="fig:python_output">
-<img alt="Sinir ağının eğitiminden sonra elde edilen Python çıktısı. Sentetik veri kümesi, kütle–çap düzleminin geniş bir bölgesine yayılmış \(64\) eğitim örneği ve açıklayıcı bir test için ayrılmış sekiz ek örnek içerir. Vurgulanan eğri \(\widehat{y}=0.5\) düzeyidir ve öğrenilen karar sın" decoding="async" loading="lazy" src="../assets/img/tr/Fig07.png"/>
-<figcaption>Sinir ağının eğitiminden sonra elde edilen Python çıktısı. Sentetik veri kümesi, kütle–çap düzleminin geniş bir bölgesine yayılmış <span class="math inline">\(64\)</span> eğitim örneği ve açıklayıcı bir test için ayrılmış sekiz ek örnek içerir. Vurgulanan eğri <span class="math inline">\(\widehat{y}=0.5\)</span> düzeyidir ve öğrenilen karar sınırını temsil eder; gölgeli bölgeler ağın tahmin ettiği sınıfları gösterir. Daireler eğitim elmaları, kareler eğitim portakalları, üçgenler test elmaları ve çarpılar test portakallarıdır.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — Deneyin çalıştırılması</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Son ortalama kayıp:', history[-1])
+    print('Doğru eğitim tahminleri:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Doğru gösterim test tahminleri:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p><code>construct_data()</code> (Kod <a href="#cod:dados">6</a>)
+yalnızca Ek <a href="#appendix-synthetic-data">A</a> içindeki sentetik yapıyı uygular;
+yardımcı eğri optimizasyona girmez. <code>train()</code> (Kod <a href="#cod:treinamento">8</a>), Denklem <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> ve <a href="#eq:descida">descida</a> uyarınca ileri yayılımı,
+<span class="math inline">\(\delta^{(2)}\)</span> ve <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>
+duyarlılıklarını, gradyanları ve dört parametre güncellemesini uygular.
+Parametreler değiştirilmeden önce bütün gradyanlar hesaplanır.
+<code>plot_results()</code> veri üreten eğriyi değil, öğrenilen sınırı
+gösterir. Bağımsız Python dosyası ve çalıştırılabilir defter de
+sağlanır. <span class="math inline">\(6000\)</span> epok, <span class="math inline">\(42\)</span> tohumu ve <span class="math inline">\(\eta=0.05\)</span> sonunda ortalama kayıp <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span> elde edilir;
+<span class="math inline">\(64\)</span> eğitim noktasının ve sekiz
+gösterim testinin tamamı doğru sınıflandırılır. Bu sonuç sentetik veride
+sayısal bir doğrulamadır, genelleme başarısının istatistiksel kestirimi
+değildir. Şekil <a href="#fig:saida_python">8</a>, öğrenilen <span class="math inline">\(\widehat y=0.5\)</span> sınırını, eğitim (daire ve
+kare) ve gösterim testi (üçgen ve çarpı) noktalarını içerir.</p>
+<figure id="fig:saida_python">
+<img alt="\(2\) – \(12\) – \(1\) ağının öğrendiği \(\widehat y=0.5\) karar sınırı; eğitim ve gösterim amaçlı test örnekleriyle
+birlikte." decoding="async" loading="lazy" src="../assets/img/tr/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+ağının öğrendiği <span class="math inline">\(\widehat y=0.5\)</span>
+karar sınırı; eğitim ve gösterim amaçlı test örnekleriyle
+birlikte.</figcaption>
 </figure>
-<p>İki basit nokta grubunu ayıran bir doğruyla başladık ve ağ parametrelerinin otomatik ayarlanması sonucu eğri bir sınırın ortaya çıktığı daha zengin bir hesaplama örneğiyle bitirdik. Matematiğe gizemli hiçbir şey eklenmedi: uygulama yalnızca afin birleşimleri, aktivasyon fonksiyonlarını, türevleri, matris çarpımlarını ve gradyan inişi güncellemelerini daha büyük ölçekte ve yüksek hızda düzenleyip tekrar eder .</p>
-<p>Bu makaleyle ilişkili tüm hesaplama materyalleri — kod ve çalıştırılabilir bir Google Colab defteri dâhil — <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> adresinde sunulmaktadır. Böylece örnekleri incelemek, yeniden üretmek ya da uyarlamak isteyen okuyucular için tek bir erişim noktası sağlanmaktadır.</p>
-<h4 id="yapay-zekâ-kullanım-beyanı.">Yapay zekâ kullanım beyanı.</h4>
-<p>Yazar, OpenAI tarafından geliştirilen ChatGPT’yi taslak hazırlama, dil düzeltme, anlatımın düzenlenmesi ve öğretici şekillerin oluşturulmasında destek aracı olarak kullanmıştır. Matematiksel içeriğin tasarlanması ve geliştirilmesi, kod ve kullanılan kaynaklar dâhil olmak üzere çalışmanın nihai içeriğinin tüm sorumluluğu yazara aittir.</p>
+<p>Makaleye iki nokta grubunu ayıran bir doğruyla başlayıp parametre
+uyumundan doğan eğri karar sınırıyla son veriyoruz. Uygulama, açıklanan
+doğrusal birleşimleri, aktivasyonları, türevleri, matris çarpımlarını ve
+gradyan inişi adımlarını sistematik olarak yineler <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>. Python
+dosyası ve defter ek materyaldir; başka kaynaklar: <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Sentetik veri kümesinin oluşturulması</h2>
+<p>Bu ekteki ifadeler sayısal alıştırma için yapılan yalnızca <em>ad
+hoc</em> bir veri üretim tercihidir. Ağ mimarisinin, kayıp fonksiyonunun
+veya eğitim algoritmasının parçası değildir; yardımcı eğri ağırlık ve
+yanlılık güncellemesinde kullanılmaz. Kütle <span class="math inline">\(m\)</span> gram cinsinden sayısal olarak
+verildiğinde yardımcı çap eğrisini santimetre cinsinden şöyle
+tanımlarız:</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>İlk terim eğriyi düşeyde öteleler, ikinci terim <span class="math inline">\(155\)</span> g civarında tepe oluşturur ve üçüncü
+terim <span class="math inline">\(202\)</span> g civarında yumuşak bir
+yükseliş sağlar. Katsayılar meyve ölçümlerine uydurulmamış, görsel
+kolaylık için seçilmiştir. <span class="math inline">\(k=0,\ldots,15\)</span> için <span class="math inline">\(m_k=118+(212-118)k/15\)</span> gram alınır. İkinci
+kütle dizisi <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span> olup gram cinsinden kaydırmalar
+şunlardır:</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>Dört şeridin çapları şu denklemlerle bulunur:</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>Düşey kaymalar santimetre cinsindedir. Trigonometrik terimler fazla
+düzenli hizalanmayı önler; <em>fiziksel periyodiklik, stokastik gürültü
+veya öğrenilmiş üretici model değildir</em>. Ek
+<code>construct_data()</code> işlevi bu ifadeleri aynen uygular. Sekiz
+gösterim test çifti doğrudan kodda tanımlıdır.
+<code>reference_curve()</code> ve <code>construct_data()</code> (Kod <a href="#cod:curva">5</a>, <a href="#cod:dados">6</a>),
+Denklem <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> ifadelerini yardımcı eğriyi
+eğitim bilgisi olarak vermeden uygular. Program Bölüm 8 içinde on
+ardışık blokta ve bağımsız çalıştırılabilir dosyada sunulmuştur.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">Kaynakça</span><h2>Kaynakça</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2. baskı. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Erişim: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Paulo Martins Engel çevirisi. 2. baskı. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Erişim: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L.
+F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de
+Aprendizado de Máquina</em>. 2. baskı. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Erişim: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Paulo
+Martins Engel çevirisi. 2. baskı. Porto Alegre: Bookman, 2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham y D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, vol. 61, núm. 4, pp.
+860–891, 2019. doi: 10.1137/18M1165748</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>,
+v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Erişim: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Kaynaklar</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_TR.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>Bir Sinir Ağının Matematiksel Anatomisi</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_TR.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · Türkçe</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">Web sürümü güncellendi; mevcut PDF dosyası değiştirilmedi.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_TR.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>NeuralMath hakkında</h2><p class="bio">NeuralMath, Dr. Americo Cunha Jr. tarafından geliştirilen açık bir eğitim projesidir. Amacı, küçük bir sinir ağının içindeki matematiksel işlemleri kalkülüs ve istatistikte görece temel bir altyapıya sahip geniş bir kitle için görünür, incelenebilir ve yeniden üretilebilir hale getirmektir.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>Lisans</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Web sitesinin açıklayıcı metni ve özgün web materyali, aksi belirtilmedikçe CC BY 4.0 kapsamında sunulur. Makale PDF’si yayıncının lisansına tabi olabilir.</p></div></section>

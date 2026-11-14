@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="목차" class="toc"><h2>목차</h2><ol><li><a href="#컴퓨터는-언제-학습할-수-있는가" target="_blank" rel="noopener noreferrer">컴퓨터는 언제 학습할 수 있는가?</a></li><li><a href="#문제를-수학적으로-표현하기" target="_blank" rel="noopener noreferrer">문제를 수학적으로 표현하기</a></li><li><a href="#분류기로서의-직선" target="_blank" rel="noopener noreferrer">분류기로서의 직선</a></li><li><a href="#인공-뉴런" target="_blank" rel="noopener noreferrer">인공 뉴런</a></li><li><a href="#왜-활성화-함수가-필요한가" target="_blank" rel="noopener noreferrer">왜 활성화 함수가 필요한가?</a></li><li><a href="#작은-신경망-구성하기" target="_blank" rel="noopener noreferrer">작은 신경망 구성하기</a></li><li><a href="#신경망은-어떻게-학습하는가" target="_blank" rel="noopener noreferrer">신경망은 어떻게 학습하는가?</a></li><li><a href="#수학에서-python으로" target="_blank" rel="noopener noreferrer">수학에서 Python으로</a></li></ol></nav>
+<nav aria-label="목차" class="toc"><h2>목차</h2><ol><li><a href="#컴퓨터는-언제-학습할-수-있는가" target="_blank" rel="noopener noreferrer">컴퓨터는 언제 학습할 수 있는가?</a></li><li><a href="#문제를-수학적으로-표현하기" target="_blank" rel="noopener noreferrer">문제를 수학적으로 표현하기</a></li><li><a href="#분류기로서의-직선" target="_blank" rel="noopener noreferrer">분류기로서의 직선</a></li><li><a href="#인공-뉴런" target="_blank" rel="noopener noreferrer">인공 뉴런</a></li><li><a href="#왜-활성화-함수가-필요한가" target="_blank" rel="noopener noreferrer">왜 활성화 함수가 필요한가?</a></li><li><a href="#작은-신경망-구성하기" target="_blank" rel="noopener noreferrer">작은 신경망 구성하기</a></li><li><a href="#신경망은-어떻게-학습하는가" target="_blank" rel="noopener noreferrer">신경망은 어떻게 학습하는가?</a></li><li><a href="#수학에서-python으로" target="_blank" rel="noopener noreferrer">수학에서 Python으로</a></li><li><a href="#appendix-synthetic-data">합성 데이터 집합의 구성</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="컴퓨터는-언제-학습할-수-있는가"><span class="section-no">01</span><h2>컴퓨터는 언제 학습할 수 있는가?</h2>
 <p>일상에서 우리는 거의 의식하지 않은 채 분류 판단을 내린다. 과일을 보면 사과인지 오렌지인지 빠르게 구별하고, 휴대전화에 메시지가 도착하면 정상적인 대화와 원치 않는 광고를 구분한다. 의료 분석에서는 여러 측정값을 결합하여 판단을 지원할 수 있고, 금융기관에서는 신용을 제공하기 전에 여러 정보를 평가한다. 이 모든 예에서는 여러 특성을 함께 고려하여 하나의 답을 만든다.</p>
 <p>많은 전통적인 컴퓨터 프로그램에서는 이 답을 만들어 내는 규칙을 프로그래머가 명시적으로 작성한다. 규칙이 알려져 있고 명확히 표현할 수 있을 때는 잘 작동한다. 그러나 데이터의 변동성이 크거나 좋은 판단에 필요한 모든 조건을 미리 기술하기 어려울 때는 효과가 떨어진다. 따라서 다음과 같은 자연스러운 질문이 생긴다.</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> ReLU는 두 개의 선형 부분으로 이루어지지만 전체적으로는 선형이 아니다. 도함수는 <span class="math inline">\(s&lt;0\)</span>에서 <span class="math inline">\(0\)</span>, <span class="math inline">\(s&gt;0\)</span>에서 <span class="math inline">\(1\)</span>이다. <span class="math inline">\(s=0\)</span>에서는 보통의 도함수가 존재하지 않으므로 소프트웨어 구현에서는 기울기에 대해 어떤 약속을 정한다. 양의 입력에서는 <span class="math inline">\(s\)</span>가 커져도 도함수가 작아지지 않으므로 시그모이드에서 나타나는 포화 문제의 한 형태를 피할 수 있다.</p>
 <p>그림 <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a>은 이 세 활성화 함수를 시각적으로 비교한다. 계단 함수의 급격한 점프, 시그모이드의 부드러운 전이, ReLU의 기울기 변화를 확인할 수 있다.</p>
 <figure id="fig:activation_functions">
-<img alt="신경망 입문에서 자주 다루는 세 가지 활성화 함수의 비교. 계단 함수는 갑작스러운 이진 판단을 하고, 시그모이드는 \(0\) 과 \(1\) 사이를 부드럽게 전이하며, ReLU는 음의 입력을 억제하고 양의 입력을 그대로 통과시킨다. 비선형 활성화 함수는 다층 네트워크가 하나의 아핀 변환으로 축약되는 것을 막아 준다." decoding="async" loading="lazy" src="../assets/img/ko/Fig04.png"/>
+<img alt="신경망 입문에서 자주 다루는 세 가지 활성화 함수의 비교. 계단 함수는 갑작스러운 이진 판단을 하고, 시그모이드는 \(0\) 과 \(1\) 사이를 부드럽게 전이하며, ReLU는 음의 입력을 억제하고 양의 입력을 그대로 통과시킨다. 비선형 활성화 함수는 다층 네트워크가 하나의 아핀 변환으로 축약되는 것을 막아 준다." decoding="async" loading="lazy" src="../assets/img/ko/Fig04.webp"/>
 <figcaption>신경망 입문에서 자주 다루는 세 가지 활성화 함수의 비교. 계단 함수는 갑작스러운 이진 판단을 하고, 시그모이드는 <span class="math inline">\(0\)</span>과 <span class="math inline">\(1\)</span> 사이를 부드럽게 전이하며, ReLU는 음의 입력을 억제하고 양의 입력을 그대로 통과시킨다. 비선형 활성화 함수는 다층 네트워크가 하나의 아핀 변환으로 축약되는 것을 막아 준다.</figcaption>
 </figure>
 <p>주요 성질을 다음 표에 요약한다.</p>
@@ -221,217 +221,467 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}\]</span> 이다.</p>
 <p>이 표기는 뒤의 Python 프로그램에 나타날 구조를 미리 보여 준다. 과일을 입력하고 <span class="math inline">\(\widehat{y}\)</span>를 얻을 때까지 활성값을 차례로 계산하는 과정을 <em>순전파</em>(<em>forward propagation</em>) 또는 <em>forward pass</em>라고 한다. 남은 핵심 질문은 예측이 데이터에 맞도록 13개의 매개변수를 어떻게 자동으로 결정할 것인가이다.</p>
 </section><section class="article-section" id="신경망은-어떻게-학습하는가"><span class="section-no">07</span><h2>신경망은 어떻게 학습하는가?</h2>
-<p>가중치와 편향은 미리 알 수 없다. 정답이 알려진 예제를 사용해 조정해야 한다. 이 과정을 <em>학습</em>이라 하며 다음 순환으로 요약할 수 있다. <span class="math display">\[\boxed{\text{예측}}
-\longrightarrow
-\boxed{\text{오차 측정}}
-\longrightarrow
-\boxed{\text{매개변수 조정}}
-\longrightarrow
-\boxed{\text{반복}}.\]</span></p>
-<p>질량 <span class="math inline">\(140\)</span> g, 지름 <span class="math inline">\(7.0\)</span> cm인 과일을 생각하고 정답 클래스가 오렌지, 즉 <span class="math inline">\(y=0\)</span>이라고 하자. 학습의 어느 시점에서 네트워크가 <span class="math inline">\(\widehat{y}=0.80\)</span>을 출력했다고 하자. 예측과 목표값의 차이를 측정하는 간단한 방법 중 하나는 제곱오차 <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2\]</span> 이다. 이 예에서는 <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32\]</span> 가 된다.</p>
-<p>이 식은 하나의 예제에 대한 <em>손실 함수</em>이다. 제곱이므로 <span class="math inline">\(E\geq0\)</span>이고 목표값에서 멀리 떨어진 예측일수록 더 큰 벌점을 받는다. 계수 <span class="math inline">\(1/2\)</span>는 최솟값의 위치를 바꾸지 않지만 미분을 간단하게 한다. 이진 분류에서는 특히 교차엔트로피와 같은 다른 손실도 자주 사용한다. 여기서는 대수가 투명하고 최적화와 역전파를 소개하기에 충분하므로 제곱오차를 사용한다 .</p>
-<p>학습 데이터가 <span class="math inline">\(N\)</span>개의 예제를 포함한다면 전체 척도로 평균 손실 <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i\]</span> 을 사용할 수 있다. 각 예측은 네트워크의 가중치와 편향에 의존하므로 <span class="math inline">\(J\)</span>도 모든 매개변수에 의존한다. 학습은 <span class="math inline">\(J\)</span>를 작게 하는 매개변수 값을 찾는 과정이다.</p>
-<p>조정 메커니즘을 이해하기 위해 먼저 하나의 가중치 <span class="math inline">\(w\)</span>를 제외한 모든 매개변수를 고정해 보자. 그러면 손실을 <span class="math inline">\(J=J(w)\)</span>라는 한 변수 함수로 볼 수 있다. 그림 <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a>은 앞으로 설명할 학습의 기본 단계를 요약한다.</p>
-<figure id="fig:training_cycle">
-<img alt="신경망의 기본 학습 순환. 순전파를 통해 입력에서 예측을 얻고, 손실 함수로 예측과 목표값의 차이를 측정한다. 역전파에서는 연쇄법칙을 사용해 기울기를 계산하고, 경사하강법은 그 기울기를 이용해 가중치와 편향을 갱신한다. 이 순환을 많은 에포크 동안 반복하는 것이 학습이다." decoding="async" loading="lazy" src="../assets/img/ko/Fig06.png"/>
-<figcaption>신경망의 기본 학습 순환. 순전파를 통해 입력에서 예측을 얻고, 손실 함수로 예측과 목표값의 차이를 측정한다. 역전파에서는 연쇄법칙을 사용해 기울기를 계산하고, 경사하강법은 그 기울기를 이용해 가중치와 편향을 갱신한다. 이 순환을 많은 에포크 동안 반복하는 것이 학습이다.</figcaption>
+<p>신경망의 가중치와 편향은 미리 주어지지 않으며, 정답 레이블이 있는
+사례로부터 조정된다. 학습은 순전파, 손실 계산, 기울기 계산, 매개변수
+갱신을 반복하는 과정이다(그림 <a href="#fig:ciclo_treinamento">6</a>).
+핵심은 연쇄법칙으로 각 가중치와 편향의 미소 변화가 손실에 미치는 영향을
+계산할 수 있다는 점이다.</p>
+<p>매개변수를 조정하려면 예측과 실제 정답의 차이를 수치로 측정해야 한다.
+이를 <em>손실 함수</em>라 한다. 손실 함수는 각 예측에 벌점을 부여하므로
+서로 다른 매개변수 선택을 비교할 수 있다. 단순히 오분류 수를 세는 것과
+달리, 연속적인 손실은 정답에 가까운 예측과 먼 예측을 구별하고 학습
+방향을 제시하는 도함수를 제공한다.</p>
+<p>질량이 <span class="math inline">\(140\)</span> g, 지름이 <span class="math inline">\(7.0\)</span> cm인 오렌지(<span class="math inline">\(y=0\)</span>)를 생각하자. 신경망의 출력을 <span class="math inline">\(\widehat y\in(0,1)\)</span>로 놓고, 한 사례에 대한
+제곱 손실을 다음과 같이 사용한다.</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>여기서 <span class="math inline">\(y\)</span>는 실제 클래스이고 <span class="math inline">\(\widehat y\)</span>는 예측이다. 손실은 음수가
+아니며 예측이 정답에 가까워질수록 작아진다. 예를 들어 오렌지에 대한
+예측값 <span class="math inline">\(0.80\)</span>과 <span class="math inline">\(0.60\)</span>은 각각 <span class="math inline">\(E=0.32\)</span>와 <span class="math inline">\(E=0.18\)</span>을 낳는다. 임계값 <span class="math inline">\(0.5\)</span>에서는 둘 다 사과로 오분류하지만,
+손실은 더 가까운 두 번째 예측을 구별한다. 계수 <span class="math inline">\(1/2\)</span>는 최솟값 위치를 바꾸지 않으면서
+미분을 간결하게 한다.</p>
+<p>한 과일이 아니라 여러 사례에서 학습하려면 각 손실을 결합해야 한다.
+<span class="math inline">\(N\)</span>개 관측의 평균 손실을
+정의하자.</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>평균 손실은 훈련 집합에서의 성능을 요약하며 매개변수를 조정하여
+줄이려는 양이다. 그러나 <span class="math inline">\(J\)</span>의
+최소화가 새로운 데이터에서 좋은 예측을 보장하는 것은 아니다. 대수적으로
+간단한 식 <a href="#eq:perda">perda</a>를 유도에 사용한 뒤 이진 교차
+엔트로피의 기울기와 비교한다. 계산 실험 자체는 변경하지 않는다 <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="학습 단계: 순전파, 손실 계산, 민감도의 역전파 및 매개변수
+갱신." decoding="async" loading="lazy" src="../assets/img/ko/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. 학습 단계: 순전파, 손실 계산, 민감도의 역전파 및 매개변수
+갱신.</figcaption>
 </figure>
-<p>미적분에 익숙하지 않은 독자는 여기서 도함수를 <em>국소 민감도</em>의 척도로 생각할 수 있다. 어떤 매개변수를 조금 바꾸었을 때 손실이 어떻게 변하는 경향이 있는지를 나타낸다. 부호는 어느 방향으로 움직일 때 함수가 국소적으로 증가하거나 감소하는지를 보여 주고, 크기는 그 국소 변화의 강도를 나타낸다.</p>
-<p>도함수 <span class="math display">\[\frac{\partial J}{\partial w}\]</span> 는 국소 기울기를 준다. 이것이 양수이면 <span class="math inline">\(w\)</span>를 조금 늘릴 때 <span class="math inline">\(J\)</span>도 증가하는 경향이 있으므로 가중치를 반대 방향으로 움직여야 한다. 음수이면 <span class="math inline">\(w\)</span>를 늘릴 때 국소적으로 <span class="math inline">\(J\)</span>가 감소하는 경향이 있다. 두 경우는 <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w}\]</span> 로 함께 쓸 수 있다. 이것이 <em>경사하강법</em>의 기본 아이디어이다. 양수 <span class="math inline">\(\eta\)</span>를 <em>학습률</em>이라 하며 업데이트 크기를 제어한다. 너무 작으면 학습이 느리고, 너무 크면 진동이나 불안정성이 생길 수 있다.</p>
-<p>매개변수가 많은 네트워크에서는 임의의 가중치 또는 편향을 <span class="math inline">\(\theta\)</span>라고 쓰면 업데이트는 <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}\]</span> 가 된다. 모든 편미분을 모은 것이 손실의 <em>기울기</em>이다. 기하학적으로 기울기는 국소적으로 가장 빠르게 증가하는 방향을 가리키므로, 음의 기울기는 국소적인 감소 방향을 준다.</p>
-<p>이제 네트워크가 여러 함수의 합성일 때 이러한 도함수를 계산해야 한다. 순전파에서는 정보가 <span class="math display">\[\text{입력}
-\longrightarrow
-\text{은닉층}
-\longrightarrow
-\text{출력}\]</span> 방향으로 이동한다. 초기 층의 매개변수가 손실에 어떤 영향을 주는지 구하려면 의존 관계의 사슬을 수학적으로 거꾸로 따라가야 한다. 이 절차가 <em>역전파</em>(<em>backpropagation</em>)이며, 본질적으로 연쇄법칙을 체계적이고 효율적으로 적용하는 방법이다. Rumelhart, Hinton, Williams 는 은닉층이 있는 네트워크에서 이 방법을 널리 알린 고전적 문헌이고, Nielsen 은 자세하고 교육적인 유도를 제공한다.</p>
-<p>단순한 의존 관계로 <span class="math inline">\(E\)</span>가 <span class="math inline">\(\widehat{y}\)</span>에 의존하고, <span class="math inline">\(\widehat{y}\)</span>가 활성값 <span class="math inline">\(h\)</span>에 의존하며, 다시 <span class="math inline">\(h\)</span>가 가중치 <span class="math inline">\(w\)</span>에 의존한다고 하자. 그러면 연쇄법칙에 의해 <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}\]</span> 를 얻는다. 각 인자는 <span class="math inline">\(w\)</span>가 최종 손실에 영향을 미치는 과정의 한 단계를 나타낸다. 더 큰 네트워크에는 이런 사슬이 많이 존재하며, 역전파는 중간 도함수를 재사용하여 각 매개변수마다 따로 다시 계산하는 일을 피한다.</p>
-<p>실제 학습에서는 많은 예제를 사용한다. 학습 집합 전체를 한 번 통과하는 것을 하나의 <em>에포크</em>라고 한다. 뒤에서 제시할 교육용 프로그램처럼 각 예제 뒤에 매개변수를 갱신할 수도 있고, 대규모 네트워크에서 흔한 것처럼 <em>미니배치</em>라고 하는 작은 예제 묶음마다 갱신할 수도 있다. 어느 경우든 예측, 손실, 기울기, 업데이트의 순환을 많은 에포크 동안 반복한다.</p>
-<p>이 변화를 구체적으로 보는 한 방법은 하나의 고정된 예제에 대한 예측이 학습 단계별로 어떻게 달라지는지 추적하는 것이다. 다시 질량 <span class="math inline">\(140\)</span> g, 지름 <span class="math inline">\(7.0\)</span> cm이고 정답 클래스가 오렌지인 과일을 생각하자. 표 <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a>은 가상의 변화를 보여 준다. 이 값들은 특정 실행 결과가 아니라 메커니즘을 설명하기 위한 예일 뿐이다.</p>
-<div id="tab:learning">
+<p><span class="math inline">\(\theta\)</span>가 가중치 또는 편향이면
+<span class="math inline">\(\partial J/\partial\theta\)</span>는 그
+매개변수에 대한 평균 손실의 국소 민감도다. 경사하강법의 한 단계는 다음과
+같다.</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>학습률 <span class="math inline">\(\eta\)</span>는 갱신 크기를
+결정한다. 지나치게 작으면 수렴이 느려지고, 지나치게 크면 진동하거나
+발산할 수 있다. 다음 절의 코드처럼 관측 하나마다 갱신하면 <span class="math inline">\(\partial J/\partial\theta\)</span> 대신 <span class="math inline">\(\partial E_i/\partial\theta\)</span>를 사용한다.
+여기서는 이러한 확률적 경사하강법(SGD)을 사용한다.</p>
+<h3 id="신경망에서의-연쇄법칙">2–3–1 신경망에서의 연쇄법칙</h3>
+<p>그림 <a href="#fig:small_network">5</a>의 신경망을
+사용한다. 세 은닉 뉴런에는 ReLU, 출력에는 시그모이드가 적용된다.
+질량(g)과 지름(cm)은 단위와 수치 척도가 다르므로 각 특성을 <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span>로
+표준화한다. 여기서 <span class="math inline">\(\mu_j\)</span>는 기준
+평균이고 <span class="math inline">\(\sigma_j&gt;0\)</span>는 기준
+표준편차다. 이렇게 하면 입력이 무차원화되고 척도가 비슷해져 매개변수
+추정의 조건과 학습률 선택이 개선된다. 실제 계산에서는 훈련 데이터에서만
+통계량을 구해 테스트 데이터 누출을 방지한다. 다음 수치 예제에서는 계산을
+간단히 하기 위해 고정된 중심과 척도를 사용한다. 표준화된 입력 <span class="math inline">\(\mathbf{x}^{\ast}=(x_1^{\ast},x_2^{\ast})^{\mathsf
+T}\)</span>의 순전파는</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>여기서 <span class="math inline">\(c=b^{(2)}\)</span>는 출력 편향이고
+<span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>이다. 역전파는
+출력 뉴런에서 시작하여 연쇄법칙을 적용한다.</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>은닉층 활성값 <span class="math inline">\(h_j\)</span>도 해당 뉴런의
+가중치와 편향에 의존하므로 그 민감도를 다음과 같이 계산한다.</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>ReLU는 영에서 미분 가능하지 않다. 필요하면 계산상의 관례로 <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span>을 택한다.
+<span class="math inline">\(\delta^{(2)}\)</span>와 <span class="math inline">\(\delta_j^{(1)}\)</span>는 손실에 대한 <em>국소
+민감도</em>이지, 신경망을 통과하는 물리적 오차 신호가 아니다. 이 값을
+재사용하면 13개 매개변수를 각각 처음부터 미분할 필요가 없다.</p>
+<h3 id="매개변수-갱신의-완전한-수치-예제">매개변수 갱신의 완전한 수치
+예제</h3>
+<p>계산을 명확히 하기 위해 <em>이 예제에서만</em> 질량의 기준 중심과
+척도를 <span class="math inline">\(160\)</span> g 및 <span class="math inline">\(20\)</span> g, 지름은 <span class="math inline">\(7.5\)</span> cm 및 <span class="math inline">\(0.5\)</span> cm로 둔다. 과일 <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span>는
+무차원 입력</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>에 대응한다. 이 기준값은 설명용으로만 고정한 것이며, 절 <a href="#수학에서-python으로">8</a>의 프로그램에서는 훈련 데이터에서
+평균과 표준편차를 직접 계산한다.</p>
+<p>13개의 초기 매개변수를 다음과 같이 정한다.</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>식 <a href="#eq:forward">forward</a>를 순차적으로 적용하면
+다음을 얻는다.</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>초기 예측은 잘못된 클래스에 해당한다. 식 <a href="#eq:delta_saida">delta_saida</a>와 <a href="#eq:delta_oculta">delta_oculta</a>에서</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>세 번째 은닉 뉴런은 비활성 상태(<span class="math inline">\(z_3^{(1)}&lt;0\)</span>)이므로 이번 단계에서 입력
+가중치와 편향의 기울기가 영이다. <span class="math inline">\(\eta=0.05\)</span>를 선택하고 모든 매개변수에
+<span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span>를 동시에 적용한다. 표 <a href="#tab:passo_sgd">1</a>에 13개
+갱신 중 대표적인 항목을 보였다.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>학습 중 같은 과일에 대한 네트워크 예측이 변하는 가상의 예. 매개변수 업데이트를 반복하면 처음에는 잘못된 출력이 목표 라벨과 일치하는 분류에 가까워진다.</caption>
+<caption>학습률 <span class="math inline">\(\eta=0.05\)</span>의 SGD 한
+단계 전후에서 선택한 매개변수.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">에포크</th>
-<th style="text-align: center;">예측 <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">손실 <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">분류</th>
+<th style="text-align: left;">매개변수 <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">초깃값</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">갱신 후</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">사과</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">사과</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">사과</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">오렌지</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">오렌지</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>학습 초기에는 출력이 <span class="math inline">\(1\)</span>에 가까워 과일을 잘못 사과로 분류한다. 매개변수가 조정되면서 예측값이 낮아지고, 마침내 임계값 <span class="math inline">\(0.5\)</span>를 넘어 올바른 클래스가 된다. 이 과정에서 변하는 것은 가중치와 편향의 수치이며 네트워크 구조 자체는 고정되어 있다.</p>
-<p>학습 데이터에서 손실을 줄이는 것 자체가 최종 목적은 아니다. 유용한 네트워크는 매개변수 조정에 사용하지 않은 예제에도 좋은 예측을 해야 한다. 이 능력을 <em>일반화</em>라고 한다. 모델이 학습 집합의 세부 특징에 지나치게 맞춰져 새 데이터에서 성능이 나빠지는 현상을 <em>과적합</em>이라고 한다. 더 신중한 평가에서는 데이터를 학습 집합, 검증 집합, 테스트 집합으로 나누는 경우가 많다. 학습 집합은 매개변수 추정에, 검증 집합은 모델 개발 중의 선택에, 테스트 집합은 최종 평가에 사용한다. 일반화와 모델 평가에 대해서는 Faceli 등 과 Goodfellow, Bengio, Courville 에 더 자세한 논의가 있다.</p>
-<p>이제 신경망에서 “학습”의 수학적 의미에 도달했다. 이 맥락에서 학습이란 데이터의 오차 척도를 줄이고, 이상적으로는 새로운 예제에도 일반화할 수 있도록 합성 함수의 매개변수를 조정하는 것이다. 네트워크는 예측하고, 손실을 계산하고, 도함수를 통해 각 매개변수가 손실에 어떻게 영향을 주는지 구하고, 작은 수정을 반복한다.</p>
+<p><em>모든</em> 갱신된 매개변수로 순전파를 다시 계산하면 <span class="math inline">\(\widehat y_{\mathrm{new}}\simeq0.723717\)</span>,
+<span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span>으로
+한 단계 만에 손실이 감소한다. 예상대로 분류 결과는 아직 바뀌지 않는다.
+학습에는 많은 사례와 에포크에 걸친 반복이 필요하다.</p>
+<h3 id="제곱오차와-교차-엔트로피">제곱오차와 교차 엔트로피</h3>
+<p>제곱오차는 연쇄법칙을 보여 주기에 편리하다. 시그모이드 출력의 이진
+분류에서는 <em>이진 교차 엔트로피</em>도 널리 사용한다. <span class="math inline">\(y\in\{0,1\}\)</span>, <span class="math inline">\(\widehat y=\sigma(z)\)</span>일 때 한 관측의
+손실은</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>제곱 손실은 예측과 레이블의 수치 차이에 벌점을 주지만 교차 엔트로피는
+관측된 레이블에 낮은 확률을 부여한 예측을 더 강하게 벌한다. 여기서 <span class="math inline">\(\widehat y\)</span>는 클래스 <span class="math inline">\(1\)</span>의 확률로 해석한다. 훈련에서 가장 중요한
+차이는 출력 뉴런의 점수 <span class="math inline">\(z\)</span>에 대한
+미분에 있다. <span class="math inline">\(\sigma'(z)=\widehat
+y(1-\widehat y)\)</span>를 사용하면</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>차이만 비교하기 위해 오렌지(<span class="math inline">\(y=0\)</span>)의 예측값이 <span class="math inline">\(\widehat y=0.80\)</span>이라고 하자. 이때 <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span>, <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span>이고
+<span class="math inline">\(z\)</span>에 대한 도함수는 각각 <span class="math inline">\(0.128\)</span>과 <span class="math inline">\(0.80\)</span>이다. <span class="math inline">\(\eta=0.05\)</span>이면 출력 편향만의 갱신량은
+제곱오차에서 <span class="math inline">\(\Delta c=-0.0064\)</span>, 교차
+엔트로피에서 <span class="math inline">\(\Delta c=-0.0400\)</span>이다.
+이는 앞의 전체 수치 예제를 대체하지 않는 별도의 예시다.</p>
+<p>교차 엔트로피에서는 출력층 민감도에 <span class="math inline">\(\widehat y(1-\widehat y)\)</span> 인자가 곱해지지
+않는다. 따라서 크게 틀린 예측에서 시그모이드 포화에 따른
+<em>출력층</em>의 추가적인 기울기 감소를 피한다. 다른 층의 작은 기울기를
+없애거나 언제나 더 빠른 훈련을 보장하지는 않는다. 두 손실의 수치 척도가
+다르므로 값의 크기를 성능 지표처럼 직접 비교해서는 안 된다. 기존 수치
+실험의 재현성을 위해 기본 코드는 제곱오차를 유지한다.</p>
+<h3 id="에포크와-일반화">에포크와 일반화</h3>
+<p>훈련 사례 전체를 한 번 통과하는 것을 <em>에포크</em>라 한다. 다음
+절의 구현은 매 에포크마다 데이터를 섞고 한 과일마다 매개변수를 갱신한다.
+신경망 구조는 고정되지만 가중치, 편향, 결정 경계는 변화한다. 훈련 손실이
+줄어도 새로운 데이터에서 만족스러운 예측이 보장되지 않는다. 이러한
+능력을 <em>일반화</em>라고 하고, 훈련 사례에 지나치게 맞추어 새
+데이터에서 성능이 악화되는 현상을 <em>과적합</em>이라 한다. 더 큰
+연구에서는 훈련·검증·테스트 집합을 분리해 하이퍼파라미터를 선택하고
+편향을 줄인 평가를 수행한다 <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
 </section><section class="article-section" id="수학에서-python으로"><span class="section-no">08</span><h2>수학에서 Python으로</h2>
-<p>이제 수식을 실행 가능한 프로그램으로 옮긴다. 목적은 전용 신경망 라이브러리를 사용하는 것이 아니라, 본 논문에서 전개한 수학 연산을 <code>NumPy</code>로 직접 구현하는 것이다 . 이를 통해 선형 결합, 활성화 함수, 손실 계산, 역전파, 경사하강법이 코드에 어떻게 나타나는지 한 줄씩 확인할 수 있다.</p>
-<p>더 설득력 있는 최종 예제를 위해 질량–지름 평면의 더 넓은 영역에 분포한 합성 데이터 집합을 사용한다. 물리적 특성은 여전히 그램 단위의 질량과 센티미터 단위의 지름 두 가지뿐이지만, 이번에는 64개의 학습 예제를 평면의 넓은 영역에 배치하고, 추가로 8개의 예제를 설명용 테스트로 남겨 둔다. 데이터는 합성이지만 사과와 오렌지로서 비현실적이지 않은 범위에 유지한다. 또한 모든 점이 소수의 인공적인 군집에 몰리지 않으면서 비선형 결정 경계가 생기도록 구성한다.</p>
-<p>기하학적 아이디어는 단순하다. 질량–지름 평면에 기준 곡선을 정하고, 그 곡선 위쪽에 두 개의 띠 모양 영역으로 사과를, 아래쪽에 두 개의 띠 모양 영역으로 오렌지를 배치한다. 질량과 지름 모두에 작은 결정론적 섭동을 추가하여 관측점이 더 넓은 영역에 퍼지도록 한다. 그 결과 앞의 그림보다 풍부한 예제가 얻어진다. 점이 더 많고 영역 전체에 분포하며, 적절한 결정 경계도 직선보다 뚜렷하게 굽은 형태가 된다.</p>
-<p>이 마지막 계산 실험에서는 은닉층을 12개의 ReLU 뉴런으로 확장한다. 이는 앞 절에서 배운 개념적 구조를 바꾸지 않고 더 복잡한 경계를 표현하는 네트워크의 능력을 키울 뿐이다. 세 뉴런의 교육용 네트워크가 13개의 매개변수를 가진 데 비해, 여기서는 49개의 조정 가능한 매개변수를 가진다. 첫 번째 층에 24개의 가중치와 12개의 편향, 출력층에 12개의 가중치와 1개의 편향이 있다. 방정식의 형태는 완전히 같고 벡터와 행렬만 더 커진다.</p>
-<p>전체 프로그램은 다음과 같다.</p>
-<pre style="pythonterminal"><code>import numpy as np
+<p>절 <a href="#신경망은-어떻게-학습하는가">7</a>의 순전파, 연쇄법칙, 확률적
+매개변수 갱신을 NumPy만으로 구현한다 <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. 비선형 결정 경계를 나타내도록
+은닉층의 ReLU 뉴런을 3개에서 12개로 늘린다. 결과적인 <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+신경망에는 <span class="math inline">\(12(2+1)+(12+1)=49\)</span>개
+매개변수가 있지만 수학적 공식은 동일하다.</p>
+<h3 id="설명을-위한-합성-데이터">설명을 위한 합성 데이터</h3>
+<p>실험에는 질량–지름 평면의 네 구간에 각 <span class="math inline">\(16\)</span>개씩 배치한 <span class="math inline">\(64\)</span>개의 합성 훈련 데이터와 단지 그림을
+위한 추가 8개 관측값을 사용한다. 사과의 두 구간은 기준 곡선 위에,
+오렌지의 두 구간은 아래에 있다. 작은 결정론적 변위를 넣어 지나치게
+규칙적인 배열을 피한다. 값은 시각적으로 그럴듯한 분포와 비선형 결정
+경계를 만들기 위해서만 선택했다. <em>실험 측정치나 과일의 물리 모델이
+아니다</em>.</p>
+<p>기준 곡선은 <em>예시 생성에만</em> 쓰인다. 신경망에 제공하지 않으며
+손실이나 역전파에도 들어가지 않는다. 훈련에는 질량과 지름의 쌍 및
+레이블만 사용한다. 생성 식과 변위는 부록 <a href="#appendix-synthetic-data">A</a>에
+기록했으므로 그림 <a href="#fig:faixas_sinteticas">7</a>의
+데이터를 정확히 재현할 수 있다.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="보조 곡선 주위 네 구간에 놓인 합성 자료 \(64\) 개. 사과는 곡선 위, 오렌지는 아래에
+있으며 점선 곡선은 훈련에 사용하지 않는다." decoding="async" loading="lazy" src="../assets/img/ko/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. 보조 곡선 주위 네 구간에 놓인 합성 자료 <span class="math inline">\(64\)</span>개. 사과는 곡선 위, 오렌지는 아래에
+있으며 점선 곡선은 훈련에 사용하지 않는다.</figcaption>
+</figure>
+<p>그림 <a href="#fig:faixas_sinteticas">7</a>는
+<code>construct_data()</code>가 만든 점들을 보여 준다. 점선은 합성
+데이터 생성을 위한 보조 곡선이지 학습된 결정 경계가 아니다. 추가 8개
+사례는 최종 그림에만 쓰고 표준화 통계량 계산에 포함하지 않는다.</p>
+<h3 id="표준화와-학습-설정">표준화와 학습 설정</h3>
+<p>질량과 지름의 단위와 척도가 다르므로 각 입력을 무차원 변수로
+변환한다.</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p>평균 <span class="math inline">\(\mu_j\)</span>는 특성 <span class="math inline">\(j\)</span>를 중심화하고 표준편차 <span class="math inline">\(\sigma_j\)</span>는 크기를 조절한다. 여기서는
+<span class="math inline">\(N=64\)</span>다. 둘 다 <em>훈련
+데이터만</em>으로 계산한 뒤 테스트 관측에도 변경 없이 적용한다. <span class="math inline">\(\sigma_j&gt;0\)</span>을 가정하며 예측 격자에도
+동일한 변환을 사용한다.</p>
+<p>가중치는 난수 시드 <span class="math inline">\(42\)</span>, 평균 0과
+표준편차 <span class="math inline">\(0.1\)</span>의 정규분포로
+초기화한다. 작은 무작위 값이 은닉 뉴런의 대칭을 깨지만, 정규분포는
+보편적인 규칙이 아니라 단순한 선택이다. 더 큰 신경망에서는 구조와 활성화
+함수를 고려해 초기화 규모를 정해야 한다. 편향의 초깃값은 0이다. ReLU가
+<span class="math inline">\(s=0\)</span>에서 미분 불가능하므로
+<code>relu_derivative()</code>는 계산상의 관례로 이 지점에서 0을
+반환한다. 이 규약 자체가 수렴을 보장하지는 않는다.</p>
+<p>학습률 <span class="math inline">\(\eta=0.05\)</span>는 최적값이
+아니라 안정성을 고려한 선택이다. 동일한 시드와 데이터로 <span class="math inline">\(1000\)</span>에포크를 실행한 민감도 검사를 표 <a href="#tab:eta">2</a>에 보였다. 이 데이터에서는 가장 큰
+학습률이 빨리 수렴하지만, 일반적인 우월성을 뜻하지는 않는다. <span class="math inline">\(0.05\)</span>는 안정된 학습과 쉽게 확인할 수 있는
+손실 기록을 제공하므로 유지한다.</p>
+<div id="tab:eta">
+<table>
+<caption>학습률 민감도: <span class="math inline">\(1000\)</span>에포크
+후 평균 손실과 올바른 훈련 예측 수(시드 <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">평균 손실 <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">정답 수(64개 중)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="python-전체-구현">Python 전체 구현</h3>
+<p>완전한 프로그램은 코드 <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>에 함수별 실행
+순서대로 제시한다. 연속된 열 개 블록은 별도로 제공되는
+<code>neural_network.py</code> 파일을 구성한다.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — 실행 환경 설정</p><pre class="nm-python-code" dir="ltr"><code>"""Pedagogical example: fruit classification using a 2-12-1 network.
+Dependencies: numpy and matplotlib. Run: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-plt.rcParams["font.family"] = "Noto Sans CJK KR"
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — ReLU 활성화</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """Hidden-layer activation: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — ReLU의 계산상 도함수</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # ReLU is not differentiable at s=0; its computational derivative is set to 0.
+    # This convention only defines the backpropagation step at that point.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — 시그모이드 활성화</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Output activation, with values between 0 and 1."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — 자료 생성용 보조 곡선</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Artificial curve (cm): offset + Gaussian bump + logistic rise.
+    # The constants were chosen to construct a nonlinear reference curve;
+    # they are neither experimental measurements nor fitted parameters.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — 합성 훈련 및 예시 테스트 자료</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # 16 masses in each of four bands: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Small deterministic offsets avoid identical masses.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Apples: two bands above the curve, with small variations in cm.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Oranges: two bands below the reference curve.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Eight illustrative examples; not an extensive statistical test.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — 순전파를 통한 예측</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, using training-set statistics.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Forward pass in matrix notation (one row per fruit).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — 역전파와 경사하강 학습</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # Small random weights break symmetry between neurons;
+    # initial biases are zero. Scale 0.1 is a pedagogical choice.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: one update per fruit, shuffled in every epoch.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # Forward pass: hidden- and output-layer equations.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Backpropagation: delta2 = dE/dz2 (squared error).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Stochastic descent: theta &lt;- theta - eta*dE/dtheta.
+            # All gradients use the PREVIOUS parameter values.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: mean training loss at the end of each epoch.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — 학습된 결정 경계 시각화</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # Level set y_hat=0.5: LEARNED decision boundary.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -439,91 +689,162 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="사과 - 학습")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="오렌지 - 학습")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="사과 - 테스트")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="오렌지 - 테스트")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("질량 (g)")
-    ax.set_ylabel("지름 (cm)")
-    ax.set_title("학습 후 신경망의 출력")
-
+    ax.set_xlabel('Mass (g)')
+    ax.set_ylabel('Diameter (cm)')
+    ax.set_title('Neural-network output after training')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='사과 - 학습'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='오렌지 - 학습'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
-               linestyle='None', label='사과 - 테스트'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
-               linestyle='None', label='오렌지 - 테스트'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='신경망의 결정 경계')
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Apple - training'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Orange - training'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apple - test'),
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Orange - test'),
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Learned boundary')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-<p>코드는 본 논문에서 처음 다룬 방정식보다 길지만 구조는 여전히 명확하다. 함수 <code>build_data()</code>는 64개의 학습 예제와 8개의 설명용 테스트 예제를 자동으로 생성한다. 이어서 두 변수를 <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j}\]</span> 로 표준화한다. 여기서 <span class="math inline">\(\mu_j\)</span>와 <span class="math inline">\(\sigma_j\)</span>는 학습 집합만으로 계산한다. 이렇게 하면 테스트 집합이 매개변수 추정에 영향을 주는 것을 막고, 동시에 질량과 지름을 비교 가능한 수치 척도로 맞춘다.</p>
-<p>순전파의 본질은 변하지 않는다. 차이는 첫 번째 층이 12개의 은닉 활성값으로 이루어진 벡터를 출력한다는 점뿐이다. 행렬 표기로는 <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\mathrm{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> 이 네 식에는 알고리즘의 수학적 핵심이 그대로 담겨 있다. 학습도 앞에서 소개한 논리를 그대로 유지한다. 즉 예측을 계산하고, 오차를 측정하고, 도함수로 민감도 정보를 역방향으로 전파하고, 경사하강법의 작은 업데이트로 매개변수를 수정한다.</p>
-<p>코드에서 출력층의 역전파는</p>
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-<p>에 나타나고, 은닉층으로의 전파는</p>
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-<p>에 나타난다. 그런 다음 모든 가중치와 편향을 갱신한다. 각 에포크에서 예제의 순서를 섞고 관측마다 매개변수를 갱신하므로 이 구현은 기본적인 <em>확률적 경사하강법</em>의 한 예이다.</p>
-<p>여기서 사용한 난수 시드와 하이퍼파라미터에서는 최종 평균 손실이 대략 <span class="math inline">\(10^{-5}\)</span>에서 <span class="math inline">\(10^{-4}\)</span> 정도가 되며, 64개의 학습 예제와 8개의 설명용 테스트 예제는 모두 기대한 분류를 얻는다. 그러나 이를 엄밀한 통계적 성능 평가로 해석해서는 안 된다. 데이터는 합성이며 교육 목적에 맞게 구성되었다. 목적은 지나치게 단순하지 않은 설정에서 작은 신경망이 명확한 비선형 결정 경계를 학습할 수 있음을 보여 주는 것이다.</p>
-<p>그림 <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a>은 학습 후 최종 프로그램 출력을 질량–지름 평면에 보여 준다. 모든 학습점을 표시한다. 강조된 곡선은 <span class="math inline">\(\widehat{y}=0.5\)</span> 등고선으로, 네트워크가 학습한 결정 경계를 나타낸다. 색으로 칠한 영역은 네트워크가 예측하는 두 클래스를 보여 준다. 원은 학습용 사과, 사각형은 학습용 오렌지, 삼각형은 테스트용 사과, × 표시는 테스트용 오렌지를 나타낸다. 범례는 데이터 점을 가리지 않도록 주 그래프 영역 바깥에 배치하였다.</p>
-<figure id="fig:python_output">
-<img alt="신경망 학습 후 얻은 Python 출력. 합성 데이터 집합에는 질량–지름 평면의 넓은 영역에 분포한 64개의 학습 예제와 설명용 테스트로 별도 확보한 8개의 예제가 포함된다. 강조된 곡선은 \(\widehat{y}=0.5\) 등고선이며 학습된 결정 경계를 나타낸다. 색 영역은 네트워크가 예측하는 클래스를 보여 준다. 원은 학습용 사과, 사각형은 학습용 오렌지, 삼각형은 테스트용 사과, × 표시는 테스트용 오렌지를 나타낸다." decoding="async" loading="lazy" src="../assets/img/ko/Fig07.png"/>
-<figcaption>신경망 학습 후 얻은 Python 출력. 합성 데이터 집합에는 질량–지름 평면의 넓은 영역에 분포한 64개의 학습 예제와 설명용 테스트로 별도 확보한 8개의 예제가 포함된다. 강조된 곡선은 <span class="math inline">\(\widehat{y}=0.5\)</span> 등고선이며 학습된 결정 경계를 나타낸다. 색 영역은 네트워크가 예측하는 클래스를 보여 준다. 원은 학습용 사과, 사각형은 학습용 오렌지, 삼각형은 테스트용 사과, × 표시는 테스트용 오렌지를 나타낸다.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — 실험 실행</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Final mean loss:', history[-1])
+    print('Correct training predictions:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Correct illustrative test predictions:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p><code>construct_data()</code>(코드 <a href="#cod:dados">6</a>)는
+부록 <a href="#appendix-synthetic-data">A</a>에 기록된 합성 데이터 생성만 구현하며
+보조 곡선은 최적화에 참여하지 않는다. <code>train()</code>(코드 <a href="#cod:treinamento">8</a>)는 순전파, <span class="math inline">\(\delta^{(2)}\)</span>와 <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, 기울기, 네
+가지 매개변수 갱신을 식 <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a>, <a href="#eq:descida">descida</a>에 따라 구현한다. 모든
+기울기를 먼저 계산하고 나서 매개변수를 수정한다.
+<code>plot_results()</code>(코드 <a href="#cod:visualizacao">9</a>)는 합성 데이터
+생성 곡선이 아니라 학습된 경계를 그린다.</p>
+<p>재현 및 수정을 위해 독립적인 Python 파일과 실행 가능한 노트북도
+제공한다.</p>
+<p>시드 <span class="math inline">\(42\)</span>, <span class="math inline">\(\eta=0.05\)</span>, <span class="math inline">\(6000\)</span>에포크 후 평균 손실은 <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>이고, 훈련 자료
+<span class="math inline">\(64\)</span>개와 추가 예시 <span class="math inline">\(8\)</span>개를 모두 올바르게 분류한다. 이는 합성
+자료에서 계산 과정이 작동함을 확인할 뿐, <em>일반화 능력의 통계적 추정은
+아니다</em>. 그림 <a href="#fig:saida_python">8</a>의 학습된 결정 경계는 <span class="math inline">\(\widehat y=0.5\)</span>인 등위선이다. 원과
+사각형은 훈련, 삼각형과 십자 표시는 예시 테스트 점이다.</p>
+<figure id="fig:saida_python">
+<img alt="\(2\) – \(12\) – \(1\) 신경망이 학습한 결정 경계 \(\widehat
+y=0.5\) 와 훈련 및 예시 테스트 자료." decoding="async" loading="lazy" src="../assets/img/ko/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+신경망이 학습한 결정 경계 <span class="math inline">\(\widehat
+y=0.5\)</span>와 훈련 및 예시 테스트 자료.</figcaption>
 </figure>
-<p>본 논문은 두 개의 단순한 점 집합을 가르는 하나의 직선에서 시작하여, 네트워크 매개변수를 자동으로 조정함으로써 곡선형 경계가 나타나는 더 풍부한 계산 예제로 나아갔다. 수학적으로 신비로운 것은 아무것도 추가되지 않았다. 구현은 아핀 결합, 활성화 함수, 도함수, 행렬곱, 경사하강법 업데이트를 더 큰 규모에서 빠르게 정리하고 반복할 뿐이다 .</p>
-<p>본 논문과 관련된 모든 계산 자료 — 코드와 실행 가능한 Google Colab 노트북을 포함하여 — 는 <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>에서 공개한다. 독자는 여기에서 예제를 조사하고 재현하며 수정하는 데 필요한 자료에 한 번에 접근할 수 있다.</p>
-<h4 id="ai-사용에-관한-고지.">AI 사용에 관한 고지.</h4>
-<p>저자는 원고 작성, 언어적 다듬기, 설명 구성의 정리, 교육용 그림 제작을 지원하는 도구로 OpenAI가 개발한 ChatGPT를 사용하였다. 본 논문의 최종 내용, 수학적 소재의 구상과 전개, 코드, 사용된 참고문헌을 포함한 최종 결과에 대한 책임은 전적으로 저자에게 있다.</p>
+<p>처음에는 단순한 두 점 집합을 직선으로 분리했다. 마지막에는 매개변수를
+자동으로 조정하여 굽은 결정 경계를 학습하는 풍부한 계산 예제에 이르렀다.
+구현은 지금까지의 수학적 개념에 신비로운 요소를 추가하지 않는다. 선형
+결합, 활성화 함수, 도함수, 행렬 곱, 경사하강 갱신을 큰 규모에서 빠르게
+반복할 뿐이다 <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+<p>Python 프로그램과 실행 노트북은 이 판본의 보충 자료에 포함되어
+있으며, 관련 교육 자료는 <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>에서 볼 수 있다.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>합성 데이터 집합의 구성</h2>
+<p>다음 식은 계산 연습을 위한 데이터를 생성하기 위해 <em>임의로(ad
+hoc)</em> 선택한 방법을 기록할 뿐이다. 신경망 구조, 손실 함수, 학습
+알고리즘의 일부가 아니며, 보조 곡선에 관한 정보는 가중치나 편향을
+갱신하는 데 쓰이지 않는다.</p>
+<p>질량 <span class="math inline">\(m\)</span>을 g 단위의 수치로 입력할
+때 직경(cm)의 보조 곡선을 다음과 같이 정의한다.</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>첫째 항은 곡선을 수직 이동시키고, 둘째 항은 <span class="math inline">\(155\)</span> g 부근에서 봉우리를 만들며, 셋째 항은
+<span class="math inline">\(202\)</span> g 부근에서 완만한 상승을
+만든다. 계수는 시각적 편의를 위해 선택했으며 과일 관측에 적합한 값이
+아니다.</p>
+<p><span class="math inline">\(k=0,\ldots,15\)</span>에 대해 g 단위의
+<span class="math inline">\(m_k=118+(212-118)k/15\)</span>를 정한다. 두
+번째 질량 집합은 <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span>로 두며, 변위(g)는 다음 수열이다.</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>네 구간의 지름은 다음과 같이 계산한다.</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>수직 변위의 단위는 cm이다. 삼각함수는 배열이 지나치게 규칙적이지 않게
+하는 데 쓰일 뿐, <em>물리적 주기성, 확률 잡음 또는 학습된 생성 모델을
+뜻하지 않는다</em>. <code>construct_data()</code>는 이 식을 정확하게
+구현하며 추가 시험용 8개 쌍은 코드에 명시되어 있다.</p>
+<p><code>reference_curve()</code>와
+<code>construct_data()</code>(코드 <a href="#cod:curva">5</a>, <a href="#cod:dados">6</a>)는 식 <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>를 그대로 구현하되 보조 곡선을
+훈련 정보로 제공하지 않는다. 전체 프로그램은 제8절의 연속 코드 블록과
+보충 파일에 포함되어 직접 실행할 수 있다.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">참고문헌</span><h2>참고문헌</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida e A. C. P. L. F.
+de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado
+de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio e A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translated
+by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham e D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, v. 61, n. 4, p. 860–891,
+2019. doi: <a href="https://doi.org/10.1137/18M1165748" rel="noopener noreferrer" target="_blank">10.1137/18M1165748</a>.</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio e G. Hinton. “Deep learning”. <em>Nature</em>, v.
+521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton e R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>자료</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_KO.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>신경망의 수학적 해부</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_KO.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · 한국어</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">웹 버전은 업데이트되었으며 기존 PDF는 변경하지 않았습니다.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_KO.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>NeuralMath 소개</h2><p class="bio">NeuralMath는 Dr. Americo Cunha Jr.가 개발한 공개 교육 프로젝트입니다. 미적분과 통계에 대한 비교적 기초적인 수학 배경을 가진 폭넓은 독자가 작은 신경망 내부의 수학 연산을 보고, 검사하고, 재현할 수 있도록 하는 것이 목표입니다.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>라이선스</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>웹사이트의 설명 텍스트와 원본 웹 자료는 별도 표시가 없는 한 CC BY 4.0으로 제공됩니다. 논문 PDF에는 출판처의 라이선스가 적용될 수 있습니다.</p></div></section>

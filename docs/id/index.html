@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Daftar isi" class="toc"><h2>Daftar isi</h2><ol><li><a href="#kapan-komputer-dapat-belajar" target="_blank" rel="noopener noreferrer">Kapan komputer dapat belajar?</a></li><li><a href="#merepresentasikan-masalah-secara-matematis" target="_blank" rel="noopener noreferrer">Merepresentasikan masalah secara matematis</a></li><li><a href="#garis-lurus-sebagai-pengklasifikasi" target="_blank" rel="noopener noreferrer">Garis lurus sebagai pengklasifikasi</a></li><li><a href="#neuron-tiruan" target="_blank" rel="noopener noreferrer">Neuron tiruan</a></li><li><a href="#mengapa-kita-memerlukan-fungsi-aktivasi" target="_blank" rel="noopener noreferrer">Mengapa kita memerlukan fungsi aktivasi?</a></li><li><a href="#membangun-jaringan-saraf-kecil" target="_blank" rel="noopener noreferrer">Membangun jaringan saraf kecil</a></li><li><a href="#bagaimana-jaringan-saraf-belajar" target="_blank" rel="noopener noreferrer">Bagaimana jaringan saraf belajar?</a></li><li><a href="#dari-matematika-ke-python" target="_blank" rel="noopener noreferrer">Dari matematika ke Python</a></li></ol></nav>
+<nav aria-label="Daftar isi" class="toc"><h2>Daftar isi</h2><ol><li><a href="#kapan-komputer-dapat-belajar" target="_blank" rel="noopener noreferrer">Kapan komputer dapat belajar?</a></li><li><a href="#merepresentasikan-masalah-secara-matematis" target="_blank" rel="noopener noreferrer">Merepresentasikan masalah secara matematis</a></li><li><a href="#garis-lurus-sebagai-pengklasifikasi" target="_blank" rel="noopener noreferrer">Garis lurus sebagai pengklasifikasi</a></li><li><a href="#neuron-tiruan" target="_blank" rel="noopener noreferrer">Neuron tiruan</a></li><li><a href="#mengapa-kita-memerlukan-fungsi-aktivasi" target="_blank" rel="noopener noreferrer">Mengapa kita memerlukan fungsi aktivasi?</a></li><li><a href="#membangun-jaringan-saraf-kecil" target="_blank" rel="noopener noreferrer">Membangun jaringan saraf kecil</a></li><li><a href="#bagaimana-jaringan-saraf-belajar" target="_blank" rel="noopener noreferrer">Bagaimana jaringan saraf belajar?</a></li><li><a href="#dari-matematika-ke-python" target="_blank" rel="noopener noreferrer">Dari matematika ke Python</a></li><li><a href="#appendix-synthetic-data">Konstruksi himpunan data sintetis</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="kapan-komputer-dapat-belajar"><span class="section-no">01</span><h2>Kapan komputer dapat belajar?</h2>
 <p>Dalam kehidupan sehari-hari, kita membuat keputusan klasifikasi hampir tanpa menyadarinya. Dengan melihat sebuah buah, kita dengan cepat mengenalinya sebagai apel atau jeruk; ketika sebuah pesan masuk ke telepon, kita membedakan percakapan yang sah dari iklan yang tidak diinginkan; dalam analisis medis, beberapa pengukuran dapat digabungkan untuk mendukung suatu keputusan; dan di lembaga keuangan, berbagai informasi dievaluasi sebelum kredit diberikan. Dalam semua contoh ini, beberapa karakteristik dipertimbangkan secara bersama-sama untuk menghasilkan suatu jawaban.</p>
 <p>Dalam banyak program komputer tradisional, aturan yang menghasilkan jawaban tersebut ditulis secara eksplisit oleh pemrogram. Pendekatan ini bekerja dengan baik ketika aturannya diketahui dan dapat dinyatakan secara jelas. Pendekatan ini menjadi kurang efektif ketika data sangat bervariasi atau ketika sulit merumuskan terlebih dahulu setiap kondisi yang diperlukan untuk menghasilkan keputusan yang baik. Dari sini muncul pertanyaan yang alami:</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> Walaupun tersusun dari dua bagian linear, ReLU tidak linear secara global. Turunannya bernilai <span class="math inline">\(0\)</span> untuk <span class="math inline">\(s&lt;0\)</span> dan <span class="math inline">\(1\)</span> untuk <span class="math inline">\(s&gt;0\)</span>. Pada <span class="math inline">\(s=0\)</span>, turunan biasa tidak ada dan implementasi perangkat lunak menggunakan suatu konvensi untuk gradien. Untuk masukan positif, turunan tidak mengecil ketika <span class="math inline">\(s\)</span> bertambah, sehingga menghindari salah satu mekanisme saturasi sigmoid.</p>
 <p>Gambar <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> membandingkan ketiga aktivasi ini secara visual: lompatan tiba-tiba fungsi tangga, transisi sigmoid yang halus, dan perubahan kemiringan pada ReLU.</p>
 <figure id="fig:activation_functions">
-<img alt="Perbandingan tiga fungsi aktivasi yang umum digunakan dalam pembahasan pengantar jaringan saraf. Fungsi tangga membuat keputusan mendadak; sigmoid memberikan transisi halus antara \(0\) dan \(1\) ; dan ReLU menekan masukan negatif sambil mempertahankan masukan positif. Aktivasi n" decoding="async" loading="lazy" src="../assets/img/id/Fig04.png"/>
+<img alt="Perbandingan tiga fungsi aktivasi yang umum digunakan dalam pembahasan pengantar jaringan saraf. Fungsi tangga membuat keputusan mendadak; sigmoid memberikan transisi halus antara \(0\) dan \(1\) ; dan ReLU menekan masukan negatif sambil mempertahankan masukan positif. Aktivasi n" decoding="async" loading="lazy" src="../assets/img/id/Fig04.webp"/>
 <figcaption>Perbandingan tiga fungsi aktivasi yang umum digunakan dalam pembahasan pengantar jaringan saraf. Fungsi tangga membuat keputusan mendadak; sigmoid memberikan transisi halus antara <span class="math inline">\(0\)</span> dan <span class="math inline">\(1\)</span>; dan ReLU menekan masukan negatif sambil mempertahankan masukan positif. Aktivasi nonlinear mencegah tumpukan lapisan menyusut menjadi satu transformasi afin.</figcaption>
 </figure>
 <p>Sifat-sifat utamanya dirangkum di bawah ini.</p>
@@ -221,216 +221,501 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>Notasi ini mengantisipasi struktur yang akan muncul dalam program Python. Ketika sebuah buah diberikan pada masukan dan kita menghitung aktivasi secara berurutan hingga memperoleh <span class="math inline">\(\widehat{y}\)</span>, kita melakukan <em>propagasi maju</em> atau <em>forward pass</em>. Pertanyaan utama tetap sama: bagaimana ketiga belas parameter dapat ditentukan secara otomatis agar prediksi sesuai dengan data?</p>
 </section><section class="article-section" id="bagaimana-jaringan-saraf-belajar"><span class="section-no">07</span><h2>Bagaimana jaringan saraf belajar?</h2>
-<p>Bobot dan bias tidak diketahui sebelumnya. Keduanya harus disesuaikan menggunakan contoh yang jawaban benarnya tersedia. Proses ini disebut <em>pelatihan</em> dan dapat diringkas oleh siklus <span class="math display">\[\boxed{\text{membuat prediksi}}
-\longrightarrow
-\boxed{\text{mengukur galat}}
-\longrightarrow
-\boxed{\text{menyesuaikan parameter}}
-\longrightarrow
-\boxed{\text{mengulangi}}.\]</span></p>
-<p>Perhatikan buah bermassa <span class="math inline">\(140\)</span> g dan berdiameter <span class="math inline">\(7.0\)</span> cm yang kelas benarnya adalah jeruk, sehingga <span class="math inline">\(y=0\)</span>. Misalkan pada suatu tahap pelatihan jaringan menghasilkan <span class="math inline">\(\widehat{y}=0.80\)</span>. Salah satu ukuran sederhana untuk ketidaksesuaian antara prediksi dan target adalah galat kuadrat <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Untuk contoh ini, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
-<p>Ekspresi ini merupakan sebuah <em>fungsi galat</em> untuk satu contoh. Karena berupa kuadrat, <span class="math inline">\(E\geq0\)</span>, dan prediksi yang lebih jauh dari target menerima penalti yang lebih besar. Faktor <span class="math inline">\(1/2\)</span> tidak mengubah letak minimum, tetapi menyederhanakan turunan. Klasifikasi biner sering menggunakan fungsi galat lain, terutama entropi silang. Kita menggunakan galat kuadrat di sini karena aljabarnya transparan dan cukup untuk memperkenalkan optimisasi dan propagasi balik .</p>
-<p>Jika himpunan pelatihan memuat <span class="math inline">\(N\)</span> contoh, salah satu ukuran global adalah galat rata-rata <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Setiap prediksi bergantung pada bobot dan bias jaringan, sehingga <span class="math inline">\(J\)</span> juga bergantung pada semua parameter tersebut. Pelatihan berarti mencari nilai parameter yang membuat <span class="math inline">\(J\)</span> kecil.</p>
-<p>Untuk memahami mekanisme penyesuaian, pertama bayangkan semua parameter kecuali satu bobot <span class="math inline">\(w\)</span> dipertahankan tetap. Kita dapat memandang galat sebagai fungsi <span class="math inline">\(J=J(w)\)</span>. Gambar <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> merangkum tahap-tahap dasar pelatihan yang sekarang kita bahas.</p>
-<figure id="fig:training_cycle">
-<img alt="Siklus dasar pelatihan jaringan saraf. Propagasi maju mengubah masukan menjadi prediksi; fungsi galat mengukur ketidaksesuaian antara prediksi dan target; propagasi balik menghitung gradien dengan aturan rantai; dan penurunan gradien menggunakan gradien tersebut untuk memperbarui" decoding="async" loading="lazy" src="../assets/img/id/Fig06.png"/>
-<figcaption>Siklus dasar pelatihan jaringan saraf. Propagasi maju mengubah masukan menjadi prediksi; fungsi galat mengukur ketidaksesuaian antara prediksi dan target; propagasi balik menghitung gradien dengan aturan rantai; dan penurunan gradien menggunakan gradien tersebut untuk memperbarui bobot dan bias. Pengulangan siklus ini selama banyak epoch adalah proses yang kita sebut pembelajaran.</figcaption>
+<p>Bobot dan bias jaringan tidak diketahui sejak awal. Keduanya
+disesuaikan menggunakan contoh yang label kelasnya diketahui. Proses
+belajar mengulangi propagasi maju, penghitungan rugi, penghitungan
+gradien, dan pembaruan parameter (Gambar <a href="#fig:ciclo_treinamento">6</a>). Aturan rantai
+memungkinkan kita menghitung pengaruh lokal setiap bobot dan bias
+terhadap rugi. Untuk menyesuaikan parameter, diperlukan ukuran numerik
+selisih antara prediksi dan jawaban yang diharapkan. <em>Fungsi
+rugi</em> memberi penalti kepada setiap prediksi dan memungkinkan
+perbandingan berbagai pilihan parameter. Berbeda dari sekadar menghitung
+kesalahan klasifikasi, rugi kontinu membedakan jarak prediksi dari label
+dan memiliki turunan yang memandu pelatihan. Pertimbangkan jeruk
+bermassa <span class="math inline">\(140\)</span> g dan berdiameter
+<span class="math inline">\(7.0\)</span> cm, dengan <span class="math inline">\(y=0\)</span>. Jika keluaran jaringan <span class="math inline">\(\widehat y\in(0,1)\)</span>, rugi kuadrat untuk
+satu contoh ialah</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>Di sini <span class="math inline">\(y\)</span> merupakan label
+sebenarnya dan <span class="math inline">\(\widehat y\)</span> prediksi.
+Rugi tidak negatif dan bernilai nol jika prediksi sama dengan label.
+Untuk jeruk, prediksi <span class="math inline">\(0.80\)</span> dan
+<span class="math inline">\(0.60\)</span> masing-masing menghasilkan
+<span class="math inline">\(E=0.32\)</span> dan <span class="math inline">\(E=0.18\)</span>. Keduanya salah pada ambang <span class="math inline">\(0.5\)</span>, tetapi rugi membedakan mana yang
+lebih dekat ke label. Faktor <span class="math inline">\(1/2\)</span>
+tidak mengubah nilai minimumnya, namun menyederhanakan turunan. Untuk
+<span class="math inline">\(N\)</span> pengamatan kita definisikan rugi
+rata-rata sebagai</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>Rata-rata ini merangkum kecocokan pada data pelatihan dan menjadi
+besaran yang dikurangi melalui pembaruan parameter. Meminimalkan <span class="math inline">\(J\)</span> saja tidak menjamin prediksi baik pada
+data baru. Kita memakai rugi kuadrat karena bentuk aljabarnya sederhana,
+kemudian membandingkan gradiennya dengan entropi silang biner tanpa
+mengubah eksperimen numerik <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="Tahapan pelatihan: propagasi maju, perhitungan rugi,
+propagasi balik sensitivitas, dan pembaruan parameter." decoding="async" loading="lazy" src="../assets/img/id/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. Tahapan pelatihan: propagasi maju, perhitungan rugi,
+propagasi balik sensitivitas, dan pembaruan parameter.</figcaption>
 </figure>
-<p>Bagi pembaca yang belum banyak mempelajari kalkulus, turunan dapat ditafsirkan di sini sebagai ukuran <em>sensitivitas lokal</em>: turunan memberi tahu bagaimana perubahan kecil pada satu parameter cenderung mengubah galat. Tandanya menunjukkan arah yang secara lokal menaikkan atau menurunkan fungsi, sedangkan magnitudonya mengukur kuatnya perubahan lokal tersebut.</p>
-<p>Turunan <span class="math display">\[\frac{\partial J}{\partial w}\]</span> memberikan kemiringan lokal. Jika nilainya positif, peningkatan kecil pada <span class="math inline">\(w\)</span> cenderung meningkatkan <span class="math inline">\(J\)</span>, sehingga bobot harus bergerak ke arah yang berlawanan. Jika nilainya negatif, peningkatan <span class="math inline">\(w\)</span> cenderung menurunkan <span class="math inline">\(J\)</span> secara lokal. Kedua kasus dinyatakan oleh <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w},\]</span> yang merupakan gagasan dasar <em>penurunan gradien</em>. Bilangan positif <span class="math inline">\(\eta\)</span> adalah <em>laju pembelajaran</em>; nilainya mengendalikan ukuran langkah. Nilai yang sangat kecil dapat membuat pelatihan lambat, sedangkan nilai yang terlalu besar dapat menyebabkan osilasi atau ketidakstabilan.</p>
-<p>Untuk jaringan dengan banyak parameter, misalkan <span class="math inline">\(\theta\)</span> menyatakan sembarang bobot atau bias. Pembaruannya menjadi <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}.\]</span> Kumpulan seluruh turunan parsial membentuk <em>gradien</em> dari galat. Secara geometris, gradien menunjuk ke arah kenaikan lokal paling cepat, sehingga gradien negatif memberikan arah lokal untuk penurunan.</p>
-<p>Kita masih perlu menghitung turunan ini ketika jaringan merupakan komposisi beberapa fungsi. Selama propagasi maju, informasi bergerak sebagai <span class="math display">\[\text{masukan}
-\longrightarrow
-\text{lapisan tersembunyi}
-\longrightarrow
-\text{keluaran}.\]</span> Untuk menentukan bagaimana suatu parameter pada lapisan awal memengaruhi galat, kita secara matematis mengikuti rantai ketergantungan ke arah sebaliknya. Prosedur ini disebut <em>propagasi balik</em>. Pada dasarnya, propagasi balik adalah penerapan aturan rantai secara sistematis dan efisien. Rumelhart, Hinton, dan Williams  memberikan rujukan klasik mengenai popularisasi prosedur ini pada jaringan dengan lapisan tersembunyi; Nielsen  memberikan penurunan yang rinci dan sangat didaktis.</p>
-<p>Untuk rantai ketergantungan sederhana ketika <span class="math inline">\(E\)</span> bergantung pada <span class="math inline">\(\widehat{y}\)</span>, yang bergantung pada aktivasi <span class="math inline">\(h\)</span>, yang pada gilirannya bergantung pada bobot <span class="math inline">\(w\)</span>, aturan rantai memberikan <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}.\]</span> Setiap faktor menggambarkan satu tahap pengaruh <span class="math inline">\(w\)</span> terhadap galat akhir. Jaringan yang lebih besar memiliki banyak rantai semacam ini, dan propagasi balik mengatur perhitungan agar turunan antara dapat digunakan kembali, alih-alih dihitung ulang secara terpisah untuk setiap parameter.</p>
-<p>Dalam praktik, pelatihan menggunakan banyak contoh. Satu lintasan lengkap melalui himpunan pelatihan disebut sebuah <em>epoch</em>. Parameter dapat diperbarui setelah setiap contoh, seperti dalam program didaktis yang digunakan kemudian dalam artikel ini, atau setelah kelompok kecil contoh yang disebut <em>mini-batch</em>, yang umum pada jaringan lebih besar. Dalam kedua kasus, siklus prediksi, galat, gradien, dan pembaruan diulang selama banyak epoch.</p>
-<p>Cara konkret untuk memvisualisasikan evolusi ini adalah mengikuti prediksi untuk satu contoh tetap pada berbagai tahap pelatihan. Perhatikan kembali buah bermassa <span class="math inline">\(140\)</span> g dan berdiameter <span class="math inline">\(7.0\)</span> cm, yang kelas benarnya adalah jeruk. Tabel <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> menunjukkan perkembangan hipotetis. Nilai-nilai ini tidak berasal dari eksekusi tertentu; nilainya hanya mengilustrasikan mekanisme.</p>
-<div id="tab:learning">
+<p>Apabila <span class="math inline">\(\theta\)</span> adalah bobot atau
+bias, <span class="math inline">\(\partial J/\partial\theta\)</span>
+mengukur sensitivitas lokal rugi rata-rata terhadap parameter itu.
+Langkah penurunan gradien ditulis</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>Laju pembelajaran <span class="math inline">\(\eta\)</span> mengatur
+ukuran langkah. Nilai terlalu kecil dapat memperlambat konvergensi,
+sedangkan terlalu besar dapat menimbulkan osilasi atau divergensi. Jika
+parameter diperbarui setelah setiap pengamatan, seperti pada kode di
+Bagian <a href="#dari-matematika-ke-python">8</a>, <span class="math inline">\(\partial
+J/\partial\theta\)</span> diganti dengan <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Inilah
+penurunan gradien stokastik (SGD).</p>
+<h3 id="aturan-rantai-pada-jaringan-231">Aturan rantai pada jaringan
+2–3–1</h3>
+<p>Kita memakai jaringan pada Gambar <a href="#fig:small_network">[fig:pequena_rede]</a> dengan tiga
+neuron tersembunyi ReLU dan keluaran sigmoid. Masukan massa (gram) dan
+diameter (sentimeter) mempunyai skala berbeda. Agar pengondisian
+parameter tidak terganggu, setiap fitur ditransformasikan menjadi <span class="math inline">\(x_j^\ast=(x_j-\mu_j)/\sigma_j\)</span>, dengan
+<span class="math inline">\(\mu_j\)</span> dan <span class="math inline">\(\sigma_j&gt;0\)</span> sebagai rerata dan
+simpangan baku acuan. Masukan menjadi tak berdimensi dan sebanding
+skalanya. Pada eksperimen komputasi statistik ini diperoleh hanya dari
+data pelatihan agar informasi data uji tidak bocor. Dalam contoh
+hitungan berikut, pusat dan skala dipilih tetap semata-mata agar
+aritmetikanya mudah. Untuk <span class="math inline">\(\mathbf{x}^\ast=(x_1^\ast,x_2^\ast)^{\mathsf
+T}\)</span>, propagasi maju ialah</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>Di sini <span class="math inline">\(c=b^{(2)}\)</span> adalah bias
+keluaran dan <span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>.
+Propagasi balik dimulai dari neuron keluaran melalui penerapan aturan
+rantai secara berurutan:</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>Karena setiap aktivasi <span class="math inline">\(h_j\)</span> juga
+bergantung pada bobot dan biasnya, kita menghitung sensitivitas neuron
+tersembunyi:</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>ReLU tidak terdiferensialkan pada nol; sebagai konvensi komputasional
+kita ambil <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span>. Besaran
+<span class="math inline">\(\delta^{(2)}\)</span> dan <span class="math inline">\(\delta_j^{(1)}\)</span> ialah <em>sensitivitas
+lokal rugi</em>, bukan sinyal kesalahan fisik yang berjalan melewati
+jaringan. Pemakaian ulang besaran itu menghasilkan ketiga belas gradien
+tanpa mengulang diferensiasi dari awal untuk setiap bobot.</p>
+<h3 id="pembaruan-parameter-numerik-secara-lengkap">Pembaruan parameter
+numerik secara lengkap</h3>
+<p><em>Khusus untuk contoh ini</em> kita tetapkan pusat <span class="math inline">\(160\)</span> g dan skala <span class="math inline">\(20\)</span> g bagi massa, serta pusat <span class="math inline">\(7.5\)</span> cm dan skala <span class="math inline">\(0.5\)</span> cm bagi diameter. Buah <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span>
+menghasilkan masukan tak berdimensi</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>Nilai acuan ini hanya untuk demonstrasi; pada Bagian <a href="#dari-matematika-ke-python">8</a>, rerata dan simpangan baku dihitung
+dari data pelatihan. Pilih ketiga belas parameter awal sebagai</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>Persamaan <a href="#eq:forward">forward</a> berturut-turut
+memberikan</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>Prediksi awal masuk kelas yang salah. Dari Persamaan <a href="#eq:delta_saida">delta_saida</a> dan <a href="#eq:delta_oculta">delta_oculta</a> diperoleh</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>Neuron tersembunyi ketiga tidak aktif (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), sehingga gradien bobot
+masuk dan biasnya nol pada langkah ini. Dengan <span class="math inline">\(\eta=0.05\)</span>, kita memperbarui semua
+parameter secara serentak melalui <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span>. Tabel <a href="#tab:passo_sgd">1</a>
+menampilkan beberapa dari ketiga belas pembaruan.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>Evolusi hipotetis prediksi jaringan untuk buah yang sama selama pelatihan. Pembaruan parameter yang berulang dapat menggerakkan keluaran yang mula-mula salah menuju klasifikasi yang konsisten dengan label target.</caption>
+<caption>Parameter terpilih sebelum dan sesudah satu langkah SGD dengan
+<span class="math inline">\(\eta=0.05\)</span>.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Epoch</th>
-<th style="text-align: center;">Prediksi <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">Galat <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">Klasifikasi</th>
+<th style="text-align: left;">Parameter <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">Awal</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">Baru</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">Apel</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">Apel</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">Apel</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">Jeruk</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">Jeruk</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>Pada awalnya, keluaran dekat dengan <span class="math inline">\(1\)</span> dan buah salah diklasifikasikan sebagai apel. Ketika parameter disesuaikan, prediksi menurun dan akhirnya melintasi ambang <span class="math inline">\(0.5\)</span>, sehingga menghasilkan kelas yang benar. Yang berubah selama proses ini adalah nilai numerik bobot dan bias; arsitektur jaringan tetap sama.</p>
-<p>Mengurangi galat pada data pelatihan bukanlah tujuan akhir. Jaringan yang berguna juga harus membuat prediksi yang baik untuk contoh yang tidak digunakan untuk menyesuaikan parameter. Kemampuan ini disebut <em>generalisasi</em>. Ketika model menyesuaikan diri terlalu dekat dengan kekhasan himpunan pelatihan dan berkinerja lebih buruk pada data baru, terjadi <em>overfitting</em>. Dalam evaluasi yang lebih cermat, data biasanya dipisahkan menjadi himpunan pelatihan, validasi, dan pengujian: yang pertama digunakan untuk menyesuaikan parameter, yang kedua mendukung pilihan-pilihan selama pengembangan model, dan yang ketiga disimpan untuk evaluasi akhir. Pembahasan lebih luas mengenai generalisasi dan evaluasi model dapat ditemukan dalam Faceli et al.  dan Goodfellow, Bengio, dan Courville .</p>
-<p>Dengan demikian kita telah mencapai makna matematis dari pembelajaran dalam jaringan saraf. Dalam konteks ini, belajar berarti menyesuaikan parameter suatu fungsi komposit untuk mengurangi ukuran galat pada data dan, idealnya, melakukan generalisasi ke contoh baru. Jaringan membuat prediksi, menghitung galat, menggunakan turunan untuk menentukan bagaimana parameternya memengaruhi galat tersebut, lalu melakukan serangkaian koreksi kecil.</p>
+<p>Propagasi maju baru dengan <em>semua</em> parameter yang telah
+diperbarui memberikan <span class="math inline">\(\widehat
+y_{\mathrm{new}}\simeq0.723717\)</span> dan <span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span>. Rugi
+turun setelah satu langkah, walaupun keputusan kelas belum berubah.
+Pembelajaran memerlukan pengulangan atas banyak contoh dan epoch.</p>
+<h3 id="galat-kuadrat-dan-entropi-silang">Galat kuadrat dan entropi
+silang</h3>
+<p>Galat kuadrat cocok untuk menjelaskan aturan rantai, tetapi
+klasifikasi biner dengan keluaran sigmoid sering juga memakai
+<em>entropi silang biner</em>. Untuk <span class="math inline">\(y\in\{0,1\}\)</span> dan <span class="math inline">\(\widehat y=\sigma(z)\)</span>, rugi satu
+pengamatan adalah</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>Rugi kuadrat menghukum selisih numerik prediksi dengan label.
+Sebaliknya, entropi silang menghukum probabilitas rendah yang diberikan
+kepada kelas teramati, jika <span class="math inline">\(\widehat
+y\)</span> dianggap probabilitas kelas <span class="math inline">\(1\)</span>. Perbedaan utama saat pelatihan muncul
+ketika kita menurunkan fungsi terhadap skor <span class="math inline">\(z\)</span> pada neuron keluaran. Dengan aturan
+rantai dan <span class="math inline">\(\sigma'(z)=\widehat
+y(1-\widehat y)\)</span> diperoleh</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>Sebagai ilustrasi saja, anggap prediksi untuk jeruk (<span class="math inline">\(y=0\)</span>) adalah <span class="math inline">\(\widehat y=0.80\)</span>. Maka <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span> dan <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span>,
+sedangkan turunan terhadap <span class="math inline">\(z\)</span>
+berturut-turut <span class="math inline">\(0.128\)</span> dan <span class="math inline">\(0.80\)</span>. Pada <span class="math inline">\(\eta=0.05\)</span>, pembaruan bias keluaran
+tersendiri adalah <span class="math inline">\(\Delta c=-0.0064\)</span>
+untuk rugi kuadrat atau <span class="math inline">\(-0.0400\)</span>
+untuk entropi silang. Prediksi ilustratif <span class="math inline">\(0.80\)</span> ini bukan pengganti angka pada
+perhitungan lengkap sebelumnya. Pada entropi silang, faktor <span class="math inline">\(\widehat y(1-\widehat y)\)</span> tidak lagi
+mengalikan sensitivitas lapisan keluaran. Ini menghindari <em>pada
+lapisan itu</em> peredaman gradien tambahan akibat kejenuhan sigmoid
+ketika prediksi sangat keliru. Gradien kecil pada lapisan lain masih
+mungkin terjadi dan pelatihan lebih cepat tidak dijamin. Kedua nilai
+rugi berbeda skala, sehingga tidak boleh langsung dibandingkan sebagai
+ukuran kualitas. Kode utama tetap memakai rugi kuadrat agar langkah
+perhitungan dapat direproduksi; notebook pendamping membandingkan
+keduanya tanpa mengubah pelatihan.</p>
+<h3 id="epoch-dan-generalisasi">Epoch dan generalisasi</h3>
+<p>Satu lintasan lengkap atas seluruh data pelatihan disebut
+<em>epoch</em>. Program mengacak urutan contoh setiap epoch dan
+memperbarui parameter sesudah setiap buah. Arsitektur tetap sama, tetapi
+bobot, bias, dan batas keputusan berubah. Rugi pelatihan rendah tidak
+menjamin prediksi memadai pada data baru; kemampuan tersebut disebut
+<em>generalisasi</em>. Apabila kecocokan berlebihan terhadap data
+pelatihan merusak hasil pada data baru, terjadi <em>overfitting</em>.
+Pemisahan data pelatihan, validasi, dan pengujian dapat membantu
+pemilihan hiperparameter dan evaluasi yang kurang bias <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
 </section><section class="article-section" id="dari-matematika-ke-python"><span class="section-no">08</span><h2>Dari matematika ke Python</h2>
-<p>Sekarang kita beralih dari persamaan ke program yang dapat dieksekusi. Tujuannya bukan menggunakan pustaka jaringan saraf khusus, melainkan mengimplementasikan secara langsung, dengan <code>NumPy</code>, operasi matematis yang dikembangkan sepanjang artikel ini . Dengan demikian kita dapat melihat, baris demi baris, bagaimana kombinasi linear, fungsi aktivasi, perhitungan galat, propagasi balik, dan penurunan gradien muncul di dalam kode.</p>
-<p>Untuk contoh akhir yang lebih meyakinkan, kita menggunakan himpunan data sintetis yang tersebar pada domain massa–diameter yang lebih luas. Kita tetap hanya menggunakan dua fitur fisik — massa dalam gram dan diameter dalam sentimeter — tetapi sekarang menyebarkan <span class="math inline">\(64\)</span> contoh pelatihan pada wilayah bidang yang luas dan menyisihkan delapan contoh tambahan untuk pengujian ilustratif. Data tetap sintetis dan berada dalam rentang yang masuk akal untuk apel dan jeruk. Data dibangun untuk menghasilkan batas keputusan nonlinear tanpa memusatkan semua titik pada beberapa klaster yang terlalu artifisial.</p>
-<p>Gagasan geometrinya sederhana. Kita mendefinisikan kurva acuan pada bidang massa–diameter, menempatkan apel pada dua pita di atas kurva tersebut, dan menempatkan jeruk pada dua pita di bawahnya. Gangguan deterministik kecil ditambahkan pada massa dan diameter agar pengamatan menempati wilayah yang lebih luas. Contoh yang dihasilkan lebih kaya daripada ilustrasi sebelumnya: jumlah titik lebih banyak, data tersebar pada domain, dan batas keputusan yang sesuai jelas lebih melengkung daripada sebuah garis lurus.</p>
-<p>Untuk eksperimen komputasi terakhir ini, kita memperbesar lapisan tersembunyi menjadi dua belas neuron ReLU. Hal ini tidak mengubah struktur konseptual yang dipelajari pada bagian sebelumnya; hanya meningkatkan kapasitas jaringan untuk merepresentasikan batas yang lebih rumit. Sebagai ganti <span class="math inline">\(13\)</span> parameter pada jaringan didaktis dengan tiga neuron, sekarang terdapat <span class="math inline">\(49\)</span> parameter yang dapat disesuaikan: <span class="math inline">\(24\)</span> bobot dan <span class="math inline">\(12\)</span> bias pada lapisan pertama, diikuti oleh <span class="math inline">\(12\)</span> bobot dan satu bias pada lapisan keluaran. Persamaan mempertahankan bentuk yang sama persis; hanya vektor dan matriksnya menjadi lebih besar.</p>
-<p>Program lengkap ditunjukkan di bawah ini.</p>
-<pre style="pythonterminal"><code>import numpy as np
+<p>Sekarang kita menerapkan propagasi maju, aturan rantai, dan pembaruan
+stokastik Bagian <a href="#bagaimana-jaringan-saraf-belajar">7</a> menggunakan <code>NumPy</code>
+saja <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Untuk
+membentuk batas keputusan nonlinier, lapisan tersembunyi diperluas dari
+tiga menjadi dua belas neuron ReLU. Jaringan <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+memiliki <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
+parameter, namun persamaannya sama.</p>
+<h3 id="data-sintetis-untuk-demonstrasi">Data sintetis untuk
+demonstrasi</h3>
+<p>Eksperimen menggunakan <span class="math inline">\(64\)</span> contoh
+pelatihan sintetis dalam empat pita berisi <span class="math inline">\(16\)</span> titik masing-masing pada bidang
+massa–diameter, ditambah delapan contoh uji ilustratif. Dua pita apel
+berada di atas kurva acuan dan dua pita jeruk di bawahnya. Pergeseran
+deterministik kecil mencegah keteraturan sempurna. Angkanya dipilih
+hanya untuk menghasilkan sebaran visual yang masuk akal dan batas
+keputusan nonlinier; data ini <em>bukan pengukuran eksperimen ataupun
+model fisik buah</em>. Kurva acuan <em>hanya digunakan untuk
+membangkitkan contoh</em>: kurva tersebut tidak diberikan kepada
+jaringan, tidak muncul dalam rugi, dan tidak digunakan pada propagasi
+balik. Pelatihan menggunakan pasangan massa–diameter dan labelnya saja.
+Persamaan pembangkitan lengkap diberikan pada Lampiran <a href="#appendix-synthetic-data">A</a>.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="Sebaran \(64\) contoh
+sintetis dalam empat pita: dua pita apel di atas kurva bantu dan dua
+pita jeruk di bawahnya. Kurva putus-putus tidak digunakan saat
+pelatihan." decoding="async" loading="lazy" src="../assets/img/id/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. Sebaran <span class="math inline">\(64\)</span> contoh
+sintetis dalam empat pita: dua pita apel di atas kurva bantu dan dua
+pita jeruk di bawahnya. Kurva putus-putus tidak digunakan saat
+pelatihan.</figcaption>
+</figure>
+<p>Gambar <a href="#fig:faixas_sinteticas">7</a> memperlihatkan titik hasil
+<code>construct_data()</code>. Kurva putus-putus hanyalah bagian dari
+konstruksi data, bukan batas yang dipelajari. Delapan contoh tambahan
+hanya dipakai pada ilustrasi akhir dan tidak memengaruhi statistik
+standardisasi.</p>
+<h3 id="standardisasi-dan-pilihan-pelatihan">Standardisasi dan pilihan
+pelatihan</h3>
+<p>Karena massa dan diameter memiliki satuan serta skala berbeda, setiap
+fitur diubah menjadi variabel tak berdimensi:</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p>Rerata <span class="math inline">\(\mu_j\)</span> memusatkan fitur
+<span class="math inline">\(j\)</span>, sedangkan simpangan baku <span class="math inline">\(\sigma_j\)</span> menyekalakannya; di sini <span class="math inline">\(N=64\)</span>. Keduanya dihitung <em>hanya</em>
+dari data pelatihan, kemudian diterapkan tanpa perubahan kepada data
+uji. Diasumsikan <span class="math inline">\(\sigma_j&gt;0\)</span> dan
+transformasi yang sama digunakan pada kisi prediksi. Bobot awal diambil
+dari distribusi normal dengan rerata nol, simpangan baku <span class="math inline">\(0.1\)</span>, dan benih acak <span class="math inline">\(42\)</span>. Bobot acak kecil memecah simetri
+antarneuron tersembunyi. Pilihan ini sederhana, bukan aturan universal;
+pada jaringan lebih besar skala inisialisasi mesti disesuaikan dengan
+arsitektur dan fungsi aktivasi. Bias dimulai dari nol. ReLU tidak
+memiliki turunan di <span class="math inline">\(0\)</span>;
+<code>relu_derivative()</code> mengambil nol sebagai konvensi, tetapi
+tidak dengan sendirinya menjamin konvergensi. Kita memilih <span class="math inline">\(\eta=0.05\)</span> sebagai pilihan berhati-hati,
+bukan laju optimum. Tabel <a href="#tab:eta">2</a> menyajikan pemeriksaan sensitivitas
+sederhana sesudah <span class="math inline">\(1000\)</span> epoch dengan
+data dan benih tetap. Laju terbesar yang dicoba lebih cepat konvergen
+pada data ini, namun hal tersebut tidak membuktikan keunggulannya secara
+umum. Nilai <span class="math inline">\(0.05\)</span> dipertahankan
+karena stabil dan riwayat ruginya mudah diperiksa.</p>
+<div id="tab:eta">
+<table>
+<caption>Sensitivitas terhadap laju pembelajaran: rugi rata-rata dan
+prediksi pelatihan yang benar setelah <span class="math inline">\(1000\)</span> epoch (benih <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">Rugi rata-rata <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">Benar dari <span class="math inline">\(64\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="implementasi-python-lengkap">Implementasi Python lengkap</h3>
+<p>Program dicantumkan dalam Kode <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, disusun berdasarkan
+fungsi dan urutan eksekusi. Sepuluh blok berurutan itu bersama-sama
+membentuk berkas <code>neural_network.py</code> yang disertakan sebagai
+bahan pendamping.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Persiapan lingkungan</p><pre class="nm-python-code" dir="ltr"><code>"""Contoh pedagogis: klasifikasi buah dengan jaringan 2-12-1.
+Dependensi: numpy dan matplotlib. Jalankan: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — Aktivasi ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """Aktivasi lapisan tersembunyi: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — Turunan komputasional ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # ReLU tidak terdiferensialkan pada s=0; turunan komputasinya diambil nol.
+    # Konvensi ini hanya menentukan langkah propagasi balik di titik tersebut.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — Aktivasi sigmoid</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Aktivasi keluaran dengan nilai antara 0 dan 1."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — Kurva bantu untuk pembangkitan data</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Kurva buatan (cm): pergeseran, tonjolan Gaussian, kenaikan logistik.
+    # Konstanta dipilih untuk membangun kurva acuan nonlinier;
+    # bukan pengukuran eksperimen atau parameter hasil fitting.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — Data sintetis pelatihan dan pengujian ilustratif</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # Ada 16 massa pada setiap pita: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Pergeseran deterministik kecil menghindari massa yang identik.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Apel: dua pita di atas kurva dengan variasi kecil dalam cm.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Jeruk: dua pita di bawah kurva acuan.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Delapan contoh ilustratif, bukan pengujian statistika menyeluruh.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — Prediksi dengan propagasi maju</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, menggunakan statistik data pelatihan.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Propagasi maju dalam notasi matriks (satu baris per buah).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — Pelatihan melalui propagasi balik dan penurunan gradien</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # Bobot acak kecil memecah simetri antarneuron;
+    # bias awal nol. Skala 0.1 dipilih untuk tujuan pedagogis.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: satu pembaruan per buah, urutan diacak setiap epoch.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # Propagasi maju: persamaan lapisan tersembunyi dan keluaran.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Propagasi balik: delta2 = dE/dz2 (galat kuadrat).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Penurunan gradien stokastik: theta &lt;- theta - eta*dE/dtheta.
+            # Semua gradien memakai nilai parameter SEBELUM pembaruan.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: rugi pelatihan rata-rata pada akhir setiap epoch.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — Visualisasi batas keputusan yang dipelajari</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # Himpunan aras y_hat=0.5 ialah batas keputusan HASIL BELAJAR.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -438,91 +723,170 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Apel - pelatihan")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Jeruk - pelatihan")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="Apel - pengujian")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="Jeruk - pengujian")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("Massa (g)")
-    ax.set_ylabel("Diameter (cm)")
-    ax.set_title("Keluaran jaringan saraf setelah pelatihan")
-
+    ax.set_xlabel('Massa (g)')
+    ax.set_ylabel('Diameter (cm)')
+    ax.set_title('Keluaran jaringan saraf sesudah pelatihan')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Apel - pelatihan'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Jeruk - pelatihan'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
-               linestyle='None', label='Apel - pengujian'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
-               linestyle='None', label='Jeruk - pengujian'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='Batas keputusan jaringan saraf')
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Apel - pelatihan'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Jeruk - pelatihan'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
+               linestyle='None', label='Apel - uji'),
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
+               linestyle='None', label='Jeruk - uji'),
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Batas keputusan terpelajar')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-<p>Walaupun kode lebih panjang daripada persamaan pertama yang dipelajari dalam artikel, strukturnya tetap transparan. Fungsi <code>build_data()</code> secara otomatis menghasilkan <span class="math inline">\(64\)</span> contoh pelatihan dan delapan contoh pengujian ilustratif. Selanjutnya kita menstandardisasi kedua variabel menurut <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> dengan <span class="math inline">\(\mu_j\)</span> dan <span class="math inline">\(\sigma_j\)</span> dihitung hanya dari himpunan pelatihan. Hal ini mencegah himpunan pengujian memengaruhi penyesuaian parameter dan sekaligus menempatkan massa dan diameter pada skala numerik yang sebanding.</p>
-<p>Propagasi maju pada dasarnya tidak berubah. Satu-satunya perbedaan adalah lapisan pertama sekarang menghasilkan vektor dua belas aktivasi tersembunyi. Dalam notasi matriks, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\operatorname{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> Keempat baris ini tetap memuat inti matematis algoritme. Pelatihan juga mempertahankan logika yang diperkenalkan sebelumnya: menghitung prediksi, mengukur galat, merambatkan informasi sensitivitas ke belakang menggunakan turunan, lalu memperbarui parameter dengan langkah-langkah kecil penurunan gradien.</p>
-<p>Dalam kode, propagasi balik pada lapisan keluaran muncul pada</p>
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-<p>dan perambatan ke lapisan tersembunyi muncul pada</p>
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-<p>yang diikuti oleh pembaruan semua bobot dan bias. Karena contoh diacak pada setiap epoch dan parameter diperbarui setelah setiap pengamatan, implementasi ini merupakan bentuk elementer dari <em>penurunan gradien stokastik</em>.</p>
-<p>Dengan seed acak dan hiperparameter yang digunakan di sini, galat rata-rata akhir berada pada orde <span class="math inline">\(10^{-5}\)</span> hingga <span class="math inline">\(10^{-4}\)</span>, dan seluruh <span class="math inline">\(64\)</span> contoh pelatihan bersama delapan contoh pengujian ilustratif menerima klasifikasi yang diharapkan. Hal ini tidak boleh ditafsirkan sebagai penilaian kinerja statistik yang ketat: data bersifat sintetis dan dibangun untuk tujuan pedagogis. Perannya adalah menunjukkan, dalam situasi yang tidak terlalu sepele, bagaimana sebuah jaringan saraf kecil dapat mempelajari batas keputusan yang jelas nonlinear.</p>
-<p>Gambar <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> menunjukkan keluaran akhir program pada bidang massa–diameter. Semua titik pelatihan ditampilkan. Kurva yang disorot adalah level <span class="math inline">\(\widehat{y}=0.5\)</span> dan merepresentasikan batas keputusan yang dipelajari jaringan; daerah berarsir menunjukkan dua kelas yang diprediksi. Lingkaran menyatakan apel pelatihan, persegi menyatakan jeruk pelatihan, segitiga menyatakan apel pengujian, dan tanda silang menyatakan jeruk pengujian. Legenda ditempatkan di luar daerah utama grafik agar tidak ada titik data yang tertutup.</p>
-<figure id="fig:python_output">
-<img alt="Keluaran Python setelah pelatihan jaringan saraf. Himpunan data sintetis memuat \(64\) contoh pelatihan yang tersebar pada wilayah luas bidang massa–diameter dan delapan contoh tambahan yang disisihkan untuk pengujian ilustratif. Kurva yang disorot adalah level \(\widehat{y}=0.5\" decoding="async" loading="lazy" src="../assets/img/id/Fig07.png"/>
-<figcaption>Keluaran Python setelah pelatihan jaringan saraf. Himpunan data sintetis memuat <span class="math inline">\(64\)</span> contoh pelatihan yang tersebar pada wilayah luas bidang massa–diameter dan delapan contoh tambahan yang disisihkan untuk pengujian ilustratif. Kurva yang disorot adalah level <span class="math inline">\(\widehat{y}=0.5\)</span> dan merepresentasikan batas keputusan yang dipelajari; daerah berarsir menunjukkan kelas yang diprediksi jaringan. Lingkaran merepresentasikan apel pelatihan, persegi jeruk pelatihan, segitiga apel pengujian, dan tanda silang jeruk pengujian.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — Menjalankan eksperimen</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Rugi rata-rata akhir:', history[-1])
+    print('Prediksi pelatihan benar:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Prediksi uji ilustratif benar:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p>Fungsi <code>construct_data()</code> (Kode <a href="#cod:dados">6</a>)
+hanya menerapkan konstruksi sintetis pada Lampiran <a href="#appendix-synthetic-data">A</a>; kurva bantu
+tidak ikut dioptimasi. Fungsi <code>train()</code> (Kode <a href="#cod:treinamento">8</a>) menerapkan
+propagasi maju, perhitungan <span class="math inline">\(\delta^{(2)}\)</span> dan <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradien, serta
+empat pembaruan parameter sesuai Persamaan <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a>, dan <a href="#eq:descida">descida</a>. Semua gradien dihitung
+sebelum parameter mana pun diubah. Fungsi <code>plot_results()</code>
+menampilkan batas yang dipelajari, bukan kurva pembangkit data. Berkas
+Python mandiri dan notebook yang dapat dijalankan disediakan untuk
+reproduksi. Sesudah <span class="math inline">\(6000\)</span> epoch
+dengan benih <span class="math inline">\(42\)</span> dan <span class="math inline">\(\eta=0.05\)</span>, rugi rata-rata akhir ialah
+<span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>, dengan
+semua <span class="math inline">\(64\)</span> contoh pelatihan dan
+delapan uji ilustratif diklasifikasikan secara benar. Ini memverifikasi
+perilaku komputasi pada data sintetis, bukan perkiraan statistik atas
+kemampuan generalisasi. Gambar <a href="#fig:saida_python">8</a>
+menunjukkan batas <span class="math inline">\(\widehat y=0.5\)</span>
+yang dipelajari: lingkaran dan kotak mewakili pelatihan, sedangkan
+segitiga dan tanda silang mewakili uji ilustratif.</p>
+<figure id="fig:saida_python">
+<img alt="Batas keputusan \(\widehat
+y=0.5\) yang dipelajari jaringan \(2\) – \(12\) – \(1\) , beserta data pelatihan dan contoh
+pengujian ilustratif." decoding="async" loading="lazy" src="../assets/img/id/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. Batas keputusan <span class="math inline">\(\widehat
+y=0.5\)</span> yang dipelajari jaringan <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>, beserta data pelatihan dan contoh
+pengujian ilustratif.</figcaption>
 </figure>
-<p>Kita memulai dengan sebuah garis lurus yang memisahkan dua kelompok titik sederhana dan berakhir dengan contoh komputasi yang lebih kaya, ketika batas melengkung muncul dari penyesuaian otomatis parameter jaringan. Tidak ada sesuatu yang misterius yang ditambahkan pada matematikanya: implementasi hanya mengatur dan mengulangi, dalam skala yang lebih besar dan dengan kecepatan tinggi, kombinasi afin, fungsi aktivasi, turunan, perkalian matriks, dan pembaruan penurunan gradien .</p>
-<p>Seluruh materi komputasi yang terkait dengan artikel ini — termasuk kode dan notebook Google Colab yang dapat dieksekusi — tersedia di <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>, yang menyediakan satu titik akses bagi pembaca yang ingin mengeksplorasi, mereproduksi, atau mengadaptasi contoh-contoh tersebut.</p>
-<h4 id="pernyataan-penggunaan-ai.">Pernyataan penggunaan AI.</h4>
-<p>Penulis menggunakan ChatGPT, yang dikembangkan oleh OpenAI, sebagai alat bantu untuk penyusunan draf, revisi bahasa, pengorganisasian paparan, dan pembuatan gambar didaktis. Penulis bertanggung jawab penuh atas isi akhir karya ini, termasuk konsepsi dan pengembangan materi matematis, kode, dan referensi yang digunakan.</p>
+<p>Pembahasan bermula dari garis lurus pemisah dua kumpulan titik dan
+berakhir dengan batas keputusan melengkung hasil penyesuaian parameter
+otomatis. Implementasi hanya merangkai operasi yang telah dijelaskan:
+kombinasi linier, aktivasi, turunan, perkalian matriks, dan langkah
+penurunan gradien <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>. Program Python dan
+notebook tersedia sebagai bahan pendamping; sumber pembelajaran lain ada
+di <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Konstruksi himpunan data sintetis</h2>
+<p>Persamaan pada lampiran ini hanya mendokumentasikan pilihan <em>ad
+hoc</em> untuk membangkitkan data latihan komputasi. Bentuk ini bukan
+arsitektur jaringan, fungsi rugi, atau algoritme pelatihan. Tidak ada
+informasi kurva bantu yang digunakan untuk memperbarui bobot atau bias.
+Dengan massa <span class="math inline">\(m\)</span> dinyatakan numerik
+dalam gram, kurva bantu diameter dalam sentimeter didefinisikan
+sebagai</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>Suku pertama menggeser kurva secara vertikal; suku kedua memberikan
+tonjolan dekat <span class="math inline">\(155\)</span> g dan suku
+ketiga kenaikan halus sekitar <span class="math inline">\(202\)</span> g. Koefisien dipilih demi ilustrasi,
+bukan melalui fitting data buah. Untuk <span class="math inline">\(k=0,\ldots,15\)</span>, tetapkan <span class="math inline">\(m_k=118+(212-118)k/15\)</span> gram. Himpunan
+massa kedua didefinisikan sebagai <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span>, dengan pergeseran dalam gram</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>Diameter keempat pita dihitung melalui</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>Pergeseran vertikal dinyatakan dalam sentimeter. Faktor trigonometri
+menghindari jajaran yang terlalu teratur; faktor tersebut <em>bukan
+periodisitas fisik, derau stokastik, ataupun model generatif hasil
+belajar</em>. Fungsi <code>construct_data()</code> menerapkan persamaan
+ini persis; delapan pasangan uji ilustratif diberikan langsung dalam
+kode. Fungsi <code>reference_curve()</code> dan
+<code>construct_data()</code> (Kode <a href="#cod:curva">5</a>
+dan <a href="#cod:dados">6</a>) menerapkan Persamaan <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> tanpa memberikan kurva bantu
+sebagai informasi pelatihan. Program lengkap ada pada Bagian 8 dalam
+sepuluh blok berurutan dan tersedia sebagai berkas yang dapat
+dijalankan.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">Referensi</span><h2>Referensi</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Tersedia di: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Diterjemahkan oleh Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Tersedia di: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L.
+F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de
+Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Tersedia di: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>.
+Diterjemahkan oleh Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman,
+2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham y D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, vol. 61, núm. 4, pp.
+860–891, 2019. doi: 10.1137/18M1165748</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>,
+v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Tersedia di: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Sumber daya</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_ID.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>Anatomi Matematis Jaringan Saraf</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_ID.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · Bahasa Indonesia</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">Versi web telah diperbarui; PDF yang tersedia belum diubah.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_ID.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>Tentang NeuralMath</h2><p class="bio">NeuralMath adalah proyek pendidikan terbuka yang dikembangkan oleh Dr. Americo Cunha Jr. Tujuannya adalah membuat operasi matematika di dalam jaringan saraf kecil menjadi terlihat, dapat diperiksa, dan dapat direproduksi oleh khalayak luas dengan bekal matematika yang relatif dasar dalam kalkulus dan statistika.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>Lisensi</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Teks penjelasan dan materi asli situs web tersedia di bawah CC BY 4.0 kecuali dinyatakan lain. PDF artikel dapat tunduk pada lisensi penerbit.</p></div></section>

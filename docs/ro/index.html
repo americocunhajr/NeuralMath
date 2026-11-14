@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Cuprins" class="toc"><h2>Cuprins</h2><ol><li><a href="#când-poate-învăța-un-calculator" target="_blank" rel="noopener noreferrer">Când poate învăța un calculator?</a></li><li><a href="#reprezentarea-matematică-a-problemei" target="_blank" rel="noopener noreferrer">Reprezentarea matematică a problemei</a></li><li><a href="#o-dreaptă-ca-clasificator" target="_blank" rel="noopener noreferrer">O dreaptă ca clasificator</a></li><li><a href="#neuronul-artificial" target="_blank" rel="noopener noreferrer">Neuronul artificial</a></li><li><a href="#de-ce-avem-nevoie-de-o-funcție-de-activare" target="_blank" rel="noopener noreferrer">De ce avem nevoie de o funcție de activare?</a></li><li><a href="#construirea-unei-rețele-neuronale-mici" target="_blank" rel="noopener noreferrer">Construirea unei rețele neuronale mici</a></li><li><a href="#cum-învață-o-rețea-neuronală" target="_blank" rel="noopener noreferrer">Cum învață o rețea neuronală?</a></li><li><a href="#de-la-matematică-la-python" target="_blank" rel="noopener noreferrer">De la matematică la Python</a></li></ol></nav>
+<nav aria-label="Cuprins" class="toc"><h2>Cuprins</h2><ol><li><a href="#când-poate-învăța-un-calculator" target="_blank" rel="noopener noreferrer">Când poate învăța un calculator?</a></li><li><a href="#reprezentarea-matematică-a-problemei" target="_blank" rel="noopener noreferrer">Reprezentarea matematică a problemei</a></li><li><a href="#o-dreaptă-ca-clasificator" target="_blank" rel="noopener noreferrer">O dreaptă ca clasificator</a></li><li><a href="#neuronul-artificial" target="_blank" rel="noopener noreferrer">Neuronul artificial</a></li><li><a href="#de-ce-avem-nevoie-de-o-funcție-de-activare" target="_blank" rel="noopener noreferrer">De ce avem nevoie de o funcție de activare?</a></li><li><a href="#construirea-unei-rețele-neuronale-mici" target="_blank" rel="noopener noreferrer">Construirea unei rețele neuronale mici</a></li><li><a href="#cum-învață-o-rețea-neuronală" target="_blank" rel="noopener noreferrer">Cum învață o rețea neuronală?</a></li><li><a href="#de-la-matematică-la-python" target="_blank" rel="noopener noreferrer">De la matematică la Python</a></li><li><a href="#appendix-synthetic-data">Construcția setului de date sintetice</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="când-poate-învăța-un-calculator"><span class="section-no">01</span><h2>Când poate învăța un calculator?</h2>
 <p>În viața de zi cu zi luăm decizii de clasificare aproape fără să ne dăm seama. Privind un fruct, îl recunoaștem rapid ca fiind un măr sau o portocală; când primim un mesaj pe telefon, distingem o conversație legitimă de publicitatea nedorită; într-o analiză medicală, mai multe măsurători pot fi combinate pentru a sprijini o decizie; iar în instituțiile financiare sunt evaluate mai multe informații înainte de acordarea unui credit. În toate aceste exemple, mai multe caracteristici sunt analizate împreună pentru a produce un răspuns.</p>
 <p>În multe programe de calculator tradiționale, regulile care produc acest răspuns sunt scrise explicit de programator. Această abordare funcționează bine atunci când regulile sunt cunoscute și pot fi formulate clar. Ea devine mai puțin eficientă atunci când datele sunt foarte variabile sau când este dificil să formulăm în prealabil toate condițiile necesare pentru o decizie bună. De aici apare o întrebare firească:</p>
@@ -130,7 +130,7 @@ s, &amp; s\geq0.
 \end{cases}\]</span> Deși este alcătuită din două porțiuni liniare, ReLU nu este liniară la nivel global. Derivata sa este <span class="math inline">\(0\)</span> pentru <span class="math inline">\(s&lt;0\)</span> și <span class="math inline">\(1\)</span> pentru <span class="math inline">\(s&gt;0\)</span>. În <span class="math inline">\(s=0\)</span>, derivata obișnuită nu există, iar implementările software adoptă o convenție pentru gradient. Pentru intrări pozitive, derivata nu scade atunci când <span class="math inline">\(s\)</span> crește, evitând unul dintre mecanismele de saturație ale sigmoidei.</p>
 <p>Figura <a data-reference="fig:activation_functions" data-reference-type="ref" href="#fig:activation_functions" target="_blank" rel="noopener noreferrer">4</a> compară vizual aceste trei activări: saltul brusc al funcției treaptă, tranziția netedă a sigmoidei și schimbarea pantei în cazul ReLU.</p>
 <figure id="fig:activation_functions">
-<img alt="Comparație între trei funcții de activare utilizate frecvent în prezentările introductive ale rețelelor neuronale. Funcția treaptă ia o decizie bruscă; sigmoida oferă o tranziție netedă între \(0\) și \(1\) ; iar ReLU suprimă intrările negative și le păstrează pe cele pozitive. A" decoding="async" loading="lazy" src="../assets/img/ro/Fig04.png"/>
+<img alt="Comparație între trei funcții de activare utilizate frecvent în prezentările introductive ale rețelelor neuronale. Funcția treaptă ia o decizie bruscă; sigmoida oferă o tranziție netedă între \(0\) și \(1\) ; iar ReLU suprimă intrările negative și le păstrează pe cele pozitive. A" decoding="async" loading="lazy" src="../assets/img/ro/Fig04.webp"/>
 <figcaption>Comparație între trei funcții de activare utilizate frecvent în prezentările introductive ale rețelelor neuronale. Funcția treaptă ia o decizie bruscă; sigmoida oferă o tranziție netedă între <span class="math inline">\(0\)</span> și <span class="math inline">\(1\)</span>; iar ReLU suprimă intrările negative și le păstrează pe cele pozitive. Activările neliniare împiedică o succesiune de straturi să se reducă la o singură transformare afină.</figcaption>
 </figure>
 <p>Principalele lor proprietăți sunt rezumate mai jos.</p>
@@ -221,216 +221,530 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>Această notație anticipează structura care va apărea în programul Python. Atunci când un fruct este prezentat la intrare și calculăm succesiv activările până la obținerea lui <span class="math inline">\(\widehat{y}\)</span>, efectuăm <em>propagarea înainte</em> sau un <em>forward pass</em>. Întrebarea centrală rămâne: cum pot fi determinați automat cei treisprezece parametri astfel încât predicțiile să se potrivească datelor?</p>
 </section><section class="article-section" id="cum-învață-o-rețea-neuronală"><span class="section-no">07</span><h2>Cum învață o rețea neuronală?</h2>
-<p>Ponderile și biasurile nu sunt cunoscute dinainte. Ele trebuie ajustate folosind exemple pentru care răspunsul corect este disponibil. Acest proces se numește <em>antrenare</em> și poate fi rezumat prin ciclul <span class="math display">\[\boxed{\text{predicție}}
-\longrightarrow
-\boxed{\text{măsurarea erorii}}
-\longrightarrow
-\boxed{\text{ajustarea parametrilor}}
-\longrightarrow
-\boxed{\text{repetare}}.\]</span></p>
-<p>Considerăm un fruct cu masa de <span class="math inline">\(140\)</span> g și diametrul de <span class="math inline">\(7.0\)</span> cm, a cărui clasă corectă este portocală, deci <span class="math inline">\(y=0\)</span>. Să presupunem că, la un moment dat în timpul antrenării, rețeaua produce <span class="math inline">\(\widehat{y}=0.80\)</span>. O măsură simplă a diferenței dintre predicție și țintă este eroarea pătratică <span class="math display">\[E=\frac{1}{2}\left(y-\widehat{y}\right)^2.\]</span> Pentru acest exemplu, <span class="math display">\[E=\frac{1}{2}(0-0.80)^2=0.32.\]</span></p>
-<p>Această expresie este o <em>funcție de pierdere</em> pentru un singur exemplu. Fiind un pătrat, <span class="math inline">\(E\geq0\)</span>, iar predicțiile mai îndepărtate de țintă primesc penalizări mai mari. Factorul <span class="math inline">\(1/2\)</span> nu schimbă poziția minimului, dar simplifică derivatele. În clasificarea binară sunt folosite adesea alte pierderi, în special entropia încrucișată. Aici folosim eroarea pătratică deoarece algebra ei este transparentă și este suficientă pentru introducerea optimizării și a retropropagării .</p>
-<p>Dacă setul de antrenare conține <span class="math inline">\(N\)</span> exemple, o măsură globală este pierderea medie <span class="math display">\[J=\frac{1}{N}\sum_{i=1}^{N}E_i.\]</span> Fiecare predicție depinde de ponderile și biasurile rețelei, astfel încât <span class="math inline">\(J\)</span> depinde și ea de toți acești parametri. Antrenarea înseamnă căutarea unor valori ale parametrilor care fac ca <span class="math inline">\(J\)</span> să fie mică.</p>
-<p>Pentru a înțelege mecanismul de ajustare, imaginăm mai întâi că toți parametrii, cu excepția unei singure ponderi <span class="math inline">\(w\)</span>, sunt menținuți fixați. Putem considera atunci pierderea drept o funcție <span class="math inline">\(J=J(w)\)</span>. Figura <a data-reference="fig:training_cycle" data-reference-type="ref" href="#fig:training_cycle" target="_blank" rel="noopener noreferrer">6</a> rezumă etapele de bază ale antrenării pe care le analizăm în continuare.</p>
-<figure id="fig:training_cycle">
-<img alt="Ciclul de bază al antrenării unei rețele neuronale. Propagarea înainte transformă intrările într-o predicție; funcția de pierdere măsoară diferența dintre predicție și țintă; retropropagarea calculează gradienții folosind regula lanțului; iar coborârea gradientului folosește aceș" decoding="async" loading="lazy" src="../assets/img/ro/Fig06.png"/>
-<figcaption>Ciclul de bază al antrenării unei rețele neuronale. Propagarea înainte transformă intrările într-o predicție; funcția de pierdere măsoară diferența dintre predicție și țintă; retropropagarea calculează gradienții folosind regula lanțului; iar coborârea gradientului folosește acești gradienți pentru a actualiza ponderile și biasurile. Repetarea acestui ciclu de-a lungul mai multor epoci este ceea ce numim învățare.</figcaption>
+<p>Ponderile și termenii de bias ai rețelei nu sunt cunoscuți dinainte:
+ei se ajustează pe baza exemplelor cu etichete de clasă cunoscute.
+Învățarea presupune repetarea propagării directe, a calculului
+pierderii, a determinării gradienților și a actualizării parametrilor
+(Figura <a href="#fig:ciclo_treinamento">6</a>). Regula lanțului arată
+sensibilitatea pierderii în raport cu fiecare pondere și bias.</p>
+<p>Pentru ajustarea parametrilor avem nevoie mai întâi de o măsură
+numerică a diferenței dintre predicție și răspunsul așteptat. O
+<em>funcție de pierdere</em> atribuie o penalizare fiecărei predicții și
+permite compararea unor valori diferite ale ponderilor și biasurilor.
+Spre deosebire de simpla numărare a erorilor de clasificare, o pierdere
+continuă distinge predicțiile aflate mai aproape sau mai departe de
+etichetă și furnizează derivate utile pentru antrenare.</p>
+<p>Considerăm un fruct cu masa de <span class="math inline">\(140\)</span> g și diametrul de <span class="math inline">\(7.0\)</span> cm, identificat drept portocală
+(<span class="math inline">\(y=0\)</span>). Dacă <span class="math inline">\(\widehat y\in(0,1)\)</span> este ieșirea rețelei,
+folosim pierderea pătratică pentru o observație:</p>
+<p id="eq:perda"><span class="math display">\[\label{eq:perda}
+E=\frac12(\widehat y-y)^2.\]</span></p>
+<p>Aici <span class="math inline">\(y\)</span> este clasa reală, iar
+<span class="math inline">\(\widehat y\)</span> este predicția.
+Pierderea este nenegativă și tinde la zero când predicția se apropie de
+etichetă; o diferență <span class="math inline">\(|\widehat
+y-y|\)</span> mai mare produce o penalizare mai mare. Pentru o
+portocală, predicțiile <span class="math inline">\(0.80\)</span> și
+<span class="math inline">\(0.60\)</span> dau <span class="math inline">\(E=0.32\)</span>, respectiv <span class="math inline">\(E=0.18\)</span>. Ambele clasifică greșit fructul
+drept măr la pragul <span class="math inline">\(0.5\)</span>, dar
+funcția de pierdere distinge predicția mai apropiată de valoarea
+corectă. Factorul <span class="math inline">\(1/2\)</span> nu schimbă
+minimul și simplifică derivarea.</p>
+<p>Rețeaua trebuie să învețe din mai multe exemple, nu dintr-un singur
+fruct. Pentru <span class="math inline">\(N\)</span> observații definim
+pierderea medie</p>
+<p id="eq:perda_media"><span class="math display">\[\label{eq:perda_media}
+J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
+<p>Această medie rezumă potrivirea pe mulțimea de antrenare și este
+mărimea pe care încercăm să o reducem modificând parametrii. Minimizarea
+lui <span class="math inline">\(J\)</span> nu garantează, în sine,
+predicții bune pentru date noi; vom reveni la generalizare. Păstrăm
+pierderea pătratică din ecuația <a href="#eq:perda">perda</a>
+pentru simplitatea sa algebrică și ulterior comparăm gradientul ei cu
+cel al entropiei încrucișate binare fără a modifica experimentul numeric
+<span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<figure id="fig:ciclo_treinamento">
+<img alt="Etapele antrenării: propagare directă, evaluarea pierderii,
+retropropagarea gradienților și actualizarea parametrilor." decoding="async" loading="lazy" src="../assets/img/ro/Fig06.webp" style="width:88.0%"/>
+<figcaption>6. Etapele antrenării: propagare directă, evaluarea pierderii,
+retropropagarea gradienților și actualizarea parametrilor.</figcaption>
 </figure>
-<p>Pentru cititorii cu puțină experiență în calcul diferențial, o derivată poate fi interpretată aici ca o măsură a <em>sensibilității locale</em>: ea ne spune cum tinde să se modifice pierderea atunci când un parametru se schimbă puțin. Semnul indică direcția care mărește sau micșorează local funcția, iar modulul măsoară intensitatea acestei variații locale.</p>
-<p>Derivata <span class="math display">\[\frac{\partial J}{\partial w}\]</span> reprezintă panta locală. Dacă este pozitivă, o mică creștere a lui <span class="math inline">\(w\)</span> tinde să mărească <span class="math inline">\(J\)</span>, deci ponderea trebuie deplasată în direcția opusă. Dacă este negativă, creșterea lui <span class="math inline">\(w\)</span> tinde local să micșoreze <span class="math inline">\(J\)</span>. Ambele cazuri sunt descrise de <span class="math display">\[w_{\mathrm{new}}
-=
-w_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial w},\]</span> care reprezintă ideea de bază a <em>coborârii gradientului</em>. Numărul pozitiv <span class="math inline">\(\eta\)</span> este <em>rata de învățare</em>; el controlează mărimea pasului. O valoare foarte mică poate face antrenarea lentă, în timp ce o valoare excesiv de mare poate produce oscilații sau instabilitate.</p>
-<p>Pentru o rețea cu mulți parametri, fie <span class="math inline">\(\theta\)</span> orice pondere sau bias. Actualizarea devine <span class="math display">\[\theta_{\mathrm{new}}
-=
-\theta_{\mathrm{old}}
--
-\eta\frac{\partial J}{\partial\theta}.\]</span> Colecția tuturor derivatelor parțiale formează <em>gradientul</em> pierderii. Geometric, gradientul indică direcția celei mai rapide creșteri locale, astfel încât gradientul negativ oferă o direcție locală de descreștere.</p>
-<p>Trebuie încă să calculăm aceste derivate atunci când rețeaua este o compunere de mai multe funcții. În timpul propagării înainte, informația se deplasează astfel: <span class="math display">\[\text{intrări}
-\longrightarrow
-\text{strat ascuns}
-\longrightarrow
-\text{ieșire}.\]</span> Pentru a determina modul în care un parametru dintr-un strat timpuriu influențează pierderea, urmărim matematic lanțul dependențelor în direcția inversă. Această procedură se numește <em>retropropagare</em> (backpropagation). În esență, ea este o aplicare sistematică și eficientă a regulii lanțului. Rumelhart, Hinton și Williams  oferă o referință clasică pentru popularizarea acestei proceduri în rețele cu straturi ascunse; Nielsen  prezintă o derivare detaliată și deosebit de didactică.</p>
-<p>Pentru un lanț simplu de dependențe în care <span class="math inline">\(E\)</span> depinde de <span class="math inline">\(\widehat{y}\)</span>, care depinde de o activare <span class="math inline">\(h\)</span>, care la rândul ei depinde de o pondere <span class="math inline">\(w\)</span>, regula lanțului dă <span class="math display">\[\frac{\partial E}{\partial w}
-=
-\frac{\partial E}{\partial\widehat{y}} \,
-\frac{\partial\widehat{y}}{\partial h} \,
-\frac{\partial h}{\partial w}.\]</span> Fiecare factor descrie o etapă a influenței lui <span class="math inline">\(w\)</span> asupra pierderii finale. Rețelele mai mari conțin multe astfel de lanțuri, iar retropropagarea organizează calculul astfel încât derivatele intermediare să poată fi reutilizate, în loc să fie recalculate separat pentru fiecare parametru.</p>
-<p>În practică, antrenarea utilizează multe exemple. O parcurgere completă a setului de antrenare se numește <em>epocă</em>. Parametrii pot fi actualizați după fiecare exemplu, ca în programul didactic folosit mai târziu în acest articol, sau după grupuri mici de exemple numite <em>mini-batch-uri</em>, ceea ce este obișnuit în rețelele mai mari. În ambele cazuri, ciclul predicțiilor, pierderilor, gradienților și actualizărilor se repetă de-a lungul multor epoci.</p>
-<p>Un mod concret de a vizualiza această evoluție este să urmărim predicția pentru același exemplu în diferite etape ale antrenării. Considerăm din nou fructul cu masa de <span class="math inline">\(140\)</span> g și diametrul de <span class="math inline">\(7.0\)</span> cm, a cărui clasă corectă este portocală. Tabelul <a data-reference="tab:learning" data-reference-type="ref" href="#tab:learning" target="_blank" rel="noopener noreferrer">1</a> arată o progresie ipotetică. Aceste valori nu corespund unei anumite execuții; ele doar ilustrează mecanismul.</p>
-<div id="tab:learning">
+<p>Dacă <span class="math inline">\(\theta\)</span> reprezintă o pondere
+sau un bias, derivata <span class="math inline">\(\partial
+J/\partial\theta\)</span> măsoară sensibilitatea locală a pierderii
+medii față de acel parametru. Un pas de coborâre a gradientului este</p>
+<p id="eq:descida"><span class="math display">\[\label{eq:descida}
+\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
+J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
+<p>Rata de învățare <span class="math inline">\(\eta\)</span>
+controlează dimensiunea pasului: valori prea mici pot încetini
+convergența, iar valori prea mari pot produce oscilații sau divergență.
+Când parametrii sunt actualizați după fiecare observație, ca în codul
+din Secțiunea <a href="#de-la-matematică-la-python">8</a>, <span class="math inline">\(\partial
+J/\partial\theta\)</span> este înlocuit cu <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Aceasta este
+forma de coborâre stochastică a gradientului (SGD) folosită aici.</p>
+<h3 id="regula-lanțului-în-rețeaua-231">Regula lanțului în rețeaua
+2–3–1</h3>
+<p>Folosim rețeaua din Figura <a href="#fig:small_network">[fig:pequena_rede]</a>, cu trei
+neuroni ascunși ReLU și o ieșire sigmoidă. Intrările reprezintă masa
+(grame) și diametrul (centimetri), având scări numerice diferite. Pentru
+a evita afectarea condiționării ajustării, transformăm fiecare
+caracteristică potrivit relației <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span>, unde
+<span class="math inline">\(\mu_j\)</span> și <span class="math inline">\(\sigma_j&gt;0\)</span> sunt media și abaterea
+standard de referință. Obținem astfel intrări adimensionale pe scări
+comparabile, ceea ce ușurează alegerea pasului de optimizare. În
+experiment, aceste statistici sunt calculate numai din datele de
+antrenare, pentru a evita scurgerea de informații din mulțimea de test.
+În exemplul numeric următor, centrele și scările sunt fixate exclusiv
+pentru simplificarea calculelor.</p>
+<p>Pentru intrarea standardizată <span class="math inline">\(\mathbf{x}^{\ast}=(x_1^{\ast},x_2^{\ast})^{\mathsf
+T}\)</span>, propagarea directă este</p>
+<p id="eq:forward"><span class="math display">\[\label{eq:forward}
+\begin{aligned}
+\mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
+&amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
+z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
+&amp;\widehat y&amp;=\sigma(z^{(2)}).
+\end{aligned}\]</span></p>
+<p>Aici <span class="math inline">\(c=b^{(2)}\)</span> este biasul de
+ieșire și <span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>.
+Retropropagarea începe la neuronul de ieșire, prin aplicarea succesivă a
+regulii lanțului:</p>
+<p id="eq:delta_saida"><span class="math display">\[\label{eq:delta_saida}
+\begin{aligned}
+\delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
+&amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
+  \underbrace{\frac{\partial\widehat y}{\partial z^{(2)}}}_{\widehat
+y(1-\widehat y)}
+=(\widehat y-y)\widehat y(1-\widehat y),\\
+\frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
+\qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
+\end{aligned}\]</span></p>
+<p>Deoarece fiecare activare <span class="math inline">\(h_j\)</span>
+depinde și de ponderile și biasul neuronului corespunzător, calculăm
+sensibilitățile neuronilor ascunși:</p>
+<p id="eq:delta_oculta"><span class="math display">\[\label{eq:delta_oculta}
+\begin{aligned}
+\delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
+&amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
+\frac{\partial E}{\partial w_{jk}}
+&amp;=\delta_j^{(1)}x_k^{\ast},\qquad
+\frac{\partial E}{\partial b_j}=\delta_j^{(1)}.
+\end{aligned}\]</span></p>
+<p>ReLU nu este derivabilă în zero; când este necesar adoptăm convenția
+computațională <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span>.
+Cantitățile <span class="math inline">\(\delta^{(2)}\)</span> și <span class="math inline">\(\delta_j^{(1)}\)</span> sunt sensibilități locale
+ale pierderii, nu „erori fizice” care circulă prin rețea. Refolosirea
+lor permite calcularea celor treisprezece gradienți fără repetarea
+integrală a derivării pentru fiecare pondere.</p>
+<h3 id="o-actualizare-numerică-completă-a-parametrilor">O actualizare
+numerică completă a parametrilor</h3>
+<p>Pentru claritatea calculelor, <em>doar în acest exemplu</em>, alegem
+un centru de <span class="math inline">\(160\)</span> g și o scară de
+<span class="math inline">\(20\)</span> g pentru masă și un centru de
+<span class="math inline">\(7.5\)</span> cm și o scară de <span class="math inline">\(0.5\)</span> cm pentru diametru. Fructul <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span>
+corespunde intrării adimensionale</p>
+<p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
+\mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
+=\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
+<p>Aceste valori de referință sunt fixate pentru demonstrație; în
+Secțiunea <a href="#de-la-matematică-la-python">8</a>, media și abaterea standard vor fi
+calculate direct din datele de antrenare.</p>
+<p>Alegem cei treisprezece parametri inițiali</p>
+<p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
+W^{(1)}=\begin{bmatrix}
+0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
+\end{bmatrix},\quad
+\mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
+W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
+c=1.\]</span></p>
+<p>Ecuația <a href="#eq:forward">forward</a> furnizează, succesiv,</p>
+<p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
+\begin{gathered}
+\mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
+\mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
+z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
+\widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
+\end{gathered}\]</span></p>
+<p>Predicția inițială corespunde clasei greșite. Din ecuațiile <a href="#eq:delta_saida">delta_saida</a> și <a href="#eq:delta_oculta">delta_oculta</a> obținem</p>
+<p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
+\begin{gathered}
+\delta^{(2)}\simeq0.144274,\qquad
+\boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
+\frac{\partial E}{\partial W^{(2)}}\simeq
+(0.028855,\;0.043282,\;0),\qquad
+\frac{\partial E}{\partial W^{(1)}}\simeq
+\begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
+\end{gathered}\]</span></p>
+<p>Al treilea neuron ascuns este inactiv (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>); prin urmare, gradienții
+ponderilor sale de intrare și ai biasului sunt nuli la acest pas. Pentru
+<span class="math inline">\(\eta=0.05\)</span>, aplicăm <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
+E/\partial\theta\)</span> simultan tuturor parametrilor. Tabelul <a href="#tab:passo_sgd">1</a> prezintă câteva dintre cele
+treisprezece actualizări; celelalte urmează aceleași formule.</p>
+<div id="tab:passo_sgd">
 <table>
-<caption>Evoluție ipotetică a predicției rețelei pentru același fruct în timpul antrenării. Actualizările repetate ale parametrilor pot deplasa o ieșire inițial incorectă către o clasificare compatibilă cu eticheta țintă.</caption>
+<caption>Parametri selectați înainte și după un pas SGD cu <span class="math inline">\(\eta=0.05\)</span>.</caption>
 <thead>
 <tr class="header">
-<th style="text-align: center;">Epocă</th>
-<th style="text-align: center;">Predicție <span class="math inline">\(\widehat{y}\)</span></th>
-<th style="text-align: center;">Pierdere <span class="math inline">\(E\)</span></th>
-<th style="text-align: center;">Clasificare</th>
+<th style="text-align: left;">Parametrul <span class="math inline">\(\theta\)</span></th>
+<th style="text-align: right;">Inițial</th>
+<th style="text-align: right;"><span class="math inline">\(\partial
+E/\partial\theta\)</span></th>
+<th style="text-align: right;">Actualizat</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0.86</td>
-<td style="text-align: center;">0.37</td>
-<td style="text-align: center;">Măr</td>
+<td style="text-align: left;"><span class="math inline">\(v_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.028855\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.498557\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">0.71</td>
-<td style="text-align: center;">0.25</td>
-<td style="text-align: center;">Măr</td>
+<td style="text-align: left;"><span class="math inline">\(v_2\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.400000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.043282\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.402164\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">0.55</td>
-<td style="text-align: center;">0.15</td>
-<td style="text-align: center;">Măr</td>
+<td style="text-align: left;"><span class="math inline">\(c\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(1.000000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.144274\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.992786\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">0.31</td>
-<td style="text-align: center;">0.05</td>
-<td style="text-align: center;">Portocală</td>
+<td style="text-align: left;"><span class="math inline">\(w_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.200000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.203607\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">0.09</td>
-<td style="text-align: center;">0.004</td>
-<td style="text-align: center;">Portocală</td>
+<td style="text-align: left;"><span class="math inline">\(w_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.300000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.057710\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(-0.302885\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(b_1\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.500000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.072137\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.496393\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_{31}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(0.100000\)</span></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>La început, ieșirea este apropiată de <span class="math inline">\(1\)</span>, iar fructul este clasificat incorect drept măr. Pe măsură ce parametrii sunt ajustați, predicția scade și trece în cele din urmă sub pragul <span class="math inline">\(0.5\)</span>, producând clasa corectă. Ceea ce se schimbă în acest proces sunt valorile numerice ale ponderilor și biasurilor; arhitectura rețelei rămâne fixă.</p>
-<p>Reducerea pierderii pe datele de antrenare nu este obiectivul final. O rețea utilă trebuie să facă predicții bune și pentru exemple care nu au fost folosite la ajustarea parametrilor. Această capacitate se numește <em>generalizare</em>. Atunci când un model se adaptează prea mult la particularitățile setului de antrenare și are performanțe mai slabe pe date noi, apare <em>supraînvățarea</em> (overfitting). În evaluări mai riguroase, datele sunt de obicei separate în seturi de antrenare, validare și testare: primul ajustează parametrii, al doilea sprijină alegerile făcute în timpul dezvoltării modelului, iar al treilea este rezervat evaluării finale. Discuții mai ample despre generalizare și evaluarea modelelor pot fi găsite în Faceli et al.  și Goodfellow, Bengio și Courville .</p>
-<p>Am ajuns astfel la sensul matematic al învățării într-o rețea neuronală. În acest context, a învăța înseamnă a ajusta parametrii unei funcții compuse astfel încât să reducă o măsură a erorii pe date și, ideal, să generalizeze la exemple noi. Rețeaua face o predicție, calculează o pierdere, folosește derivate pentru a determina modul în care parametrii influențează acea pierdere și efectuează o succesiune de mici corecții.</p>
+<p>O nouă propagare directă folosind <em>toți</em> parametrii
+actualizați dă <span class="math inline">\(\widehat
+y_{\mathrm{new}}\simeq0.723717\)</span> și <span class="math inline">\(E_{\mathrm{new}}\simeq0.261883\)</span>: pierderea
+a scăzut după un singur pas. Clasa prezisă încă nu s-a schimbat, ceea ce
+este de așteptat; învățarea necesită repetarea procesului pe multe
+exemple și epoci.</p>
+<h3 id="eroare-pătratică-și-entropie-încrucișată">Eroare pătratică și
+entropie încrucișată</h3>
+<p>Eroarea pătratică este convenabilă pentru explicarea regulii
+lanțului, dar în clasificarea binară cu ieșire sigmoidă se folosește
+frecvent și <em>entropia încrucișată binară</em>. Pentru <span class="math inline">\(y\in\{0,1\}\)</span> și <span class="math inline">\(\widehat y=\sigma(z)\)</span>, pierderea unei
+observații este</p>
+<p id="eq:entropia_cruzada"><span class="math display">\[\label{eq:entropia_cruzada}
+E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
+<p>În timp ce eroarea pătratică penalizează diferența numerică dintre
+predicție și etichetă, entropia încrucișată penalizează predicțiile care
+atribuie o probabilitate mică etichetei observate, interpretând <span class="math inline">\(\widehat y\)</span> drept probabilitatea clasei
+<span class="math inline">\(1\)</span>. Diferența esențială în antrenare
+apare la derivarea în raport cu scorul <span class="math inline">\(z\)</span> al neuronului de ieșire. Folosind
+regula lanțului și <span class="math inline">\(\sigma'(z)=\widehat
+y(1-\widehat y)\)</span> obținem</p>
+<p id="eq:derivada_entropia_cruzada"><span class="math display">\[\label{eq:derivada_entropia_cruzada}
+\begin{aligned}
+\frac{\partial E_{\mathrm{CE}}}{\partial z}
+&amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
+  \widehat y(1-\widehat y)
+=\widehat y-y,\\
+\frac{\partial E_{\mathrm{SE}}}{\partial z}
+&amp;=(\widehat y-y)\widehat y(1-\widehat y),
+\qquad E_{\mathrm{SE}}=\tfrac12(\widehat y-y)^2.
+\end{aligned}\]</span></p>
+<p>Pentru a ilustra numai această diferență, presupunem predicția <span class="math inline">\(\widehat y=0.80\)</span> pentru o portocală (<span class="math inline">\(y=0\)</span>). Atunci <span class="math inline">\(E_{\mathrm{SE}}=0.32\)</span> și <span class="math inline">\(E_{\mathrm{CE}}=-\ln(0.20)\simeq1.60944\)</span>,
+în timp ce derivatele în raport cu <span class="math inline">\(z\)</span> sunt <span class="math inline">\(0.128\)</span> și <span class="math inline">\(0.80\)</span>. Cu <span class="math inline">\(\eta=0.05\)</span>, modificarea izolată a biasului
+de ieșire, pentru care <span class="math inline">\(\partial E/\partial
+c=\partial E/\partial z\)</span>, ar fi <span class="math inline">\(\Delta c=-0.0064\)</span> pentru eroare pătratică
+și <span class="math inline">\(\Delta c=-0.0400\)</span> pentru entropie
+încrucișată. Predicția ilustrativă <span class="math inline">\(0.80\)</span> nu înlocuiește valorile calculate în
+exemplul complet anterior.</p>
+<p>La entropia încrucișată, factorul <span class="math inline">\(\widehat y(1-\widehat y)\)</span> nu mai
+înmulțește sensibilitatea stratului de ieșire. Astfel se evită, <em>în
+acel strat</em>, atenuarea suplimentară a gradientului cauzată de
+saturația sigmoidei când predicția este foarte greșită. Aceasta nu
+elimină gradienții mici din celelalte straturi și nici nu garantează o
+antrenare mai rapidă în orice situație. Cum funcțiile de pierdere au
+scări diferite, valorile lor nu trebuie comparate direct ca măsuri ale
+calității. Codul principal păstrează eroarea pătratică, pentru a face
+reproductibil exemplul anterior; notebookul suplimentar prezintă
+comparația fără modificarea antrenării.</p>
+<h3 id="epoci-și-generalizare">Epoci și generalizare</h3>
+<p>O trecere completă prin exemplele de antrenare se numește
+<em>epocă</em>. Programul din secțiunea următoare amestecă exemplele la
+fiecare epocă și actualizează parametrii după fiecare fruct. Arhitectura
+rămâne fixă, dar ponderile, biasurile și frontiera de decizie se
+modifică. Scăderea pierderii la antrenare nu garantează predicții bune
+pentru date noi. Această capacitate se numește <em>generalizare</em>;
+dacă adaptarea excesivă la exemplele de antrenare afectează predicțiile
+pe date noi, apare <em>supraînvățarea</em>. În studii mai ample,
+seturile separate de antrenare, validare și testare permit alegerea
+hiperparametrilor și evaluarea cu mai puțină părtinire <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
 </section><section class="article-section" id="de-la-matematică-la-python"><span class="section-no">08</span><h2>De la matematică la Python</h2>
-<p>Trecem acum de la ecuații la un program executabil. Scopul nu este să utilizăm o bibliotecă specializată pentru rețele neuronale, ci să implementăm direct, cu <code>NumPy</code>, operațiile matematice dezvoltate pe parcursul articolului . Astfel putem vedea, linie cu linie, cum apar în cod combinațiile liniare, funcțiile de activare, calculul pierderii, retropropagarea și coborârea gradientului.</p>
-<p>Pentru un exemplu final mai convingător, folosim un set de date sintetic răspândit pe un domeniu mai larg masă–diametru. Continuăm să lucrăm cu doar două caracteristici fizice — masa în grame și diametrul în centimetri — dar distribuim acum <span class="math inline">\(64\)</span> de exemple de antrenare într-o regiune largă a planului și rezervăm încă opt exemple pentru un test ilustrativ. Datele rămân sintetice și se mențin în intervale plauzibile pentru mere și portocale. Ele sunt construite astfel încât să producă o frontieră de decizie neliniară fără a concentra toate punctele în câteva grupuri excesiv de artificiale.</p>
-<p>Ideea geometrică este simplă. Definim o curbă de referință în planul masă–diametru, plasăm merele în două benzi deasupra acestei curbe și portocalele în două benzi dedesubt. Adăugăm mici perturbații deterministe atât masei, cât și diametrului, astfel încât observațiile să ocupe o regiune mai largă. Exemplul rezultat este mai bogat decât ilustrațiile anterioare: conține mai multe puncte, datele sunt distribuite pe domeniu, iar frontiera de decizie adecvată este în mod clar mai curbată decât o dreaptă.</p>
-<p>Pentru acest experiment computațional final, mărim stratul ascuns la doisprezece neuroni ReLU. Aceasta nu schimbă structura conceptuală studiată în secțiunile precedente; doar mărește capacitatea rețelei de a reprezenta o frontieră mai elaborată. În locul celor <span class="math inline">\(13\)</span> parametri ai rețelei pedagogice cu trei neuroni, avem acum <span class="math inline">\(49\)</span> de parametri ajustabili: <span class="math inline">\(24\)</span> de ponderi și <span class="math inline">\(12\)</span> biasuri în primul strat, urmate de <span class="math inline">\(12\)</span> ponderi și un bias în stratul de ieșire. Ecuațiile păstrează exact aceeași formă; doar vectorii și matricele devin mai mari.</p>
-<p>Programul complet este prezentat mai jos.</p>
-<pre style="pythonterminal"><code>import numpy as np
+<p>Implementăm acum, folosind numai <code>NumPy</code>, propagarea
+directă, regula lanțului și actualizarea stocastică derivată în
+Secțiunea <a href="#cum-învață-o-rețea-neuronală">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Pentru a obține o frontieră
+neliniară mărim stratul ascuns de la trei la doisprezece neuroni ReLU.
+Rețeaua <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
+rezultată are <span class="math inline">\(12(2+1)+(12+1)=49\)</span> de
+parametri, dar folosește exact aceleași ecuații.</p>
+<h3 id="date-sintetice-pentru-o-demonstrație">Date sintetice pentru o
+demonstrație</h3>
+<p>Experimentul folosește <span class="math inline">\(64\)</span> de
+exemple sintetice de antrenare, grupate în patru benzi a câte <span class="math inline">\(16\)</span> puncte în planul masă–diametru, și opt
+observații suplimentare pentru o testare pur ilustrativă. Două benzi cu
+mere se găsesc deasupra unei curbe de referință, iar două cu portocale
+dedesubt. Deplasări deterministe mici evită alinierea perfect regulată.
+Valorile au fost alese numai pentru o distribuție vizual plauzibilă și o
+frontieră de decizie neliniară; <em>nu sunt măsurători experimentale și
+nu constituie un model fizic al fructelor</em>.</p>
+<p>Curba de referință este folosită <em>exclusiv pentru generarea
+exemplelor</em>. Ea nu este furnizată rețelei, nu intră în funcția de
+pierdere și nu participă la retropropagare. Antrenarea folosește doar
+perechile masă–diametru și etichetele lor. Formula generatoare și
+deplasările sunt documentate în Anexa <a href="#appendix-synthetic-data">A</a>, astfel
+încât datele din Figura <a href="#fig:faixas_sinteticas">7</a>
+pot fi reproduse exact.</p>
+<figure id="fig:faixas_sinteticas">
+<img alt="Distribuția a \(64\) de
+exemple sintetice în patru benzi, două deasupra (mere) și două
+dedesubtul (portocale) unei curbe auxiliare alese pentru generarea
+punctelor. Curba întrerupt" decoding="async" loading="lazy" src="../assets/img/ro/Fig07.webp" style="width:92.0%"/>
+<figcaption>7. Distribuția a <span class="math inline">\(64\)</span> de
+exemple sintetice în patru benzi, două deasupra (mere) și două
+dedesubtul (portocale) unei curbe auxiliare alese pentru generarea
+punctelor. Curba întreruptă nu este utilizată la antrenare.</figcaption>
+</figure>
+<p>Figura <a href="#fig:faixas_sinteticas">7</a> prezintă punctele produse
+de <code>construct_data()</code>; curba întreruptă aparține numai
+construcției sintetice și nu este o frontieră învățată. Cele opt exemple
+suplimentare apar numai în ilustrația finală și nu influențează
+statisticile de standardizare.</p>
+<h3 id="standardizare-și-opțiuni-de-antrenare">Standardizare și opțiuni
+de antrenare</h3>
+<p>Deoarece masa și diametrul au unități și scări diferite, transformăm
+fiecare intrare într-o variabilă adimensională:</p>
+<p id="eq:padronizacao"><span class="math display">\[\label{eq:padronizacao}
+x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
+\mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
+\sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span></p>
+<p>Media <span class="math inline">\(\mu_j\)</span> centrează
+caracteristica <span class="math inline">\(j\)</span>, iar abaterea
+standard <span class="math inline">\(\sigma_j\)</span> o rescalează;
+aici <span class="math inline">\(N=64\)</span>. Ambele statistici sunt
+calculate <em>numai</em> pe datele de antrenare și apoi aplicate
+neschimbate la datele de testare. Procedura presupune <span class="math inline">\(\sigma_j&gt;0\)</span>. Aceeași transformare se
+folosește pentru intrările rețelei și pentru grila de predicție.</p>
+<p>Inițializăm ponderile dintr-o distribuție normală de medie zero și
+abatere standard <span class="math inline">\(0.1\)</span>, cu sămânța
+aleatoare <span class="math inline">\(42\)</span>. Ponderile aleatoare
+mici rup simetria dintre neuronii ascunși; distribuția normală este o
+opțiune simplă, nu o regulă universală. Pentru rețele mai mari, scara
+inițializării trebuie să țină seama de arhitectură și de funcțiile de
+activare. Biasurile pornesc de la zero. ReLU nu este derivabilă în <span class="math inline">\(s=0\)</span>; funcția
+<code>relu_derivative()</code> adoptă convențional derivata zero în acel
+punct, fără a modifica definiția matematică sau a garanta
+convergența.</p>
+<p>Folosim <span class="math inline">\(\eta=0.05\)</span> ca alegere
+prudentă, nu ca rată optimă. Un studiu simplu de sensibilitate cu date
+și sămânță fixate produce Tabelul <a href="#tab:eta">2</a> după <span class="math inline">\(1000\)</span> de epoci. Cea mai mare rată testată
+converge mai rapid pe acest set, dar nu rezultă de aici că este
+potrivită în general. Păstrăm <span class="math inline">\(0.05\)</span>
+pentru o antrenare stabilă și o evoluție a pierderii ușor de
+urmărit.</p>
+<div id="tab:eta">
+<table>
+<caption>Sensibilitatea la rata de învățare: pierderea medie și
+clasificările corecte la antrenare după <span class="math inline">\(1000\)</span> de epoci (sămânța <span class="math inline">\(42\)</span>).</caption>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\eta\)</span></th>
+<th style="text-align: center;">Pierderea medie <span class="math inline">\(J\)</span></th>
+<th style="text-align: center;">Corecte din <span class="math inline">\(64\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.005\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.041871\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.006485\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0.000106\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="implementare-integrală-în-python">Implementare integrală în
+Python</h3>
+<p>Programul complet este prezentat în Codurile <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, ordonate după
+funcție și în ordinea execuției. Cele zece blocuri consecutive
+alcătuiesc fișierul <code>neural_network.py</code>, inclus și în
+materialele suplimentare.</p>
+<section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Pregătirea mediului</p><pre class="nm-python-code" dir="ltr"><code>"""Exemplu didactic: clasificarea fructelor cu o rețea 2-12-1.
+Dependențe: numpy și matplotlib. Rulare: python neural_network.py.
+"""
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 
-def relu(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu"><p class="nm-code-heading">02 — Activarea ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu(s):
+    """Activarea stratului ascuns: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 
 
-def relu_derivative(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:relu_derivada"><p class="nm-code-heading">03 — Derivata computațională a ReLU</p><pre class="nm-python-code" dir="ltr"><code>def relu_derivative(s):
+    # ReLU nu este derivabilă la s=0; derivata computațională este zero.
+    # Convenția definește numai pasul retropropagării în acel punct.
     return (s &gt; 0).astype(float)
 
 
-def sigmoid(s):
+</code></pre></section>
+<section class="nm-code-block" id="cod:sigmoid"><p class="nm-code-heading">04 — Activarea sigmoidă</p><pre class="nm-python-code" dir="ltr"><code>def sigmoid(s):
+    """Activare de ieșire, cu valori între 0 și 1."""
     return 1 / (1 + np.exp(-s))
 
 
-def base_boundary(m):
-    return 6.68 + 0.74*np.exp(-((m-155)/20)**2) \
-           + 1.50/(1 + np.exp(-(m-202)/5))
+</code></pre></section>
+<section class="nm-code-block" id="cod:curva"><p class="nm-code-heading">05 — Curba auxiliară pentru generarea datelor</p><pre class="nm-python-code" dir="ltr"><code>def reference_curve(m):
+    # Curbă artificială (cm): decalaj, vârf gaussian și creștere logistică.
+    # Constantele construiesc o curbă de referință neliniară;
+    # nu reprezintă măsurători sau parametri estimați.
+    return (6.68 + 0.74*np.exp(-((m-155)/20)**2)
+            + 1.50/(1 + np.exp(-(m-202)/5)))
 
 
-def build_data():
+</code></pre></section>
+<section class="nm-code-block" id="cod:dados"><p class="nm-code-heading">06 — Date sintetice de antrenare și testare ilustrativă</p><pre class="nm-python-code" dir="ltr"><code>def construct_data():
+    # 16 mase în fiecare dintre cele patru benzi: a1, a2, l1, l2.
     masses_1 = np.linspace(118, 212, 16)
+    # Mici deplasări deterministe evită mase identice.
     masses_2 = masses_1 + np.array([
-        1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
-        1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7
+        1.2, -1.1, 0.8, -1.3, 1.0, -0.8, 1.1, -1.0,
+        1.3, -0.9, 0.9, -1.2, 1.0, -1.0, 0.8, -0.7
     ])
     k = np.arange(16)
 
+    # Mere: două benzi deasupra curbei, cu variații mici în cm.
     a1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
+        reference_curve(masses_1) + 0.22 + 0.05*np.sin(0.8*k)
     ])
     a2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
+        reference_curve(masses_2) + 0.58 + 0.06*np.cos(0.45*k)
     ])
 
-    o1 = np.column_stack([
+    # Portocale: două benzi sub curba de referință.
+    l1 = np.column_stack([
         masses_1,
-        base_boundary(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
+        reference_curve(masses_1) - (0.22 + 0.04*np.cos(0.7*k))
     ])
-    o2 = np.column_stack([
+    l2 = np.column_stack([
         masses_2,
-        base_boundary(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
+        reference_curve(masses_2) - (0.55 + 0.05*np.sin(0.5*k))
     ])
 
-    X_train = np.vstack([a1, a2, o1, o2])
+    X_train = np.vstack([a1, a2, l1, l2])
     y_train = np.array([1.0]*32 + [0.0]*32)
 
+    # Opt exemple ilustrative, nu o testare statistică amplă.
     X_test = np.array([
         [121.0, 7.20], [135.0, 7.45],
         [152.0, 7.75], [171.0, 7.32],
         [121.0, 6.28], [152.0, 6.86],
         [189.0, 6.48], [208.0, 7.55]
     ])
-    y_test = np.array([1,1,1,1,0,0,0,0], dtype=float)
-
+    y_test = np.array([1, 1, 1, 1, 0, 0, 0, 0], dtype=float)
     return X_train, y_train, X_test, y_test
 
 
-def predict(X, mean, std, W1, b1, W2, b2):
+</code></pre></section>
+<section class="nm-code-block" id="cod:previsao"><p class="nm-code-heading">07 — Predicții prin propagare directă</p><pre class="nm-python-code" dir="ltr"><code>def predict(X, mean, std, W1, b1, W2, b2):
+    # x_j^* = (x_j - mu_j)/sigma_j, folosind statistici numai din setul de antrenare.
     Xn = (X - mean) / std
-    outputs = []
-    for x in Xn:
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        outputs.append(y_hat)
-    return np.array(outputs)
+    # Propagare directă matricială (un rând pentru fiecare fruct).
+    h = relu(Xn @ W1.T + b1)
+    return sigmoid(h @ W2 + b2)
 
 
-X_train, y_train, X_test, y_test = build_data()
+</code></pre></section>
+<section class="nm-code-block" id="cod:treinamento"><p class="nm-code-heading">08 — Antrenarea prin retropropagare și coborârea gradientului</p><pre class="nm-python-code" dir="ltr"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
+    rng = np.random.default_rng(seed)
+    # Ponderile aleatoare mici rup simetria neuronilor;
+    # biasurile sunt inițial zero; scara 0.1 este didactică.
+    W1 = 0.1 * rng.standard_normal((12, 2))
+    b1 = np.zeros(12)
+    W2 = 0.1 * rng.standard_normal(12)
+    b2 = 0.0
+    history = []
 
-mean = X_train.mean(axis=0)
-std = X_train.std(axis=0)
-Xn = (X_train - mean) / std
+    for epoch in range(n_epochs):
+        # SGD: o actualizare per fruct, în ordine aleatoare la fiecare epocă.
+        for i in rng.permutation(len(Xn)):
+            x, target = Xn[i], y_train[i]
 
-rng = np.random.default_rng(42)
-W1 = 0.1 * rng.standard_normal((12, 2))
-b1 = np.zeros(12)
-W2 = 0.1 * rng.standard_normal(12)
-b2 = 0.0
-eta = 0.05
-n_epochs = 6000
-history = []
+            # Propagare directă: ecuațiile stratului ascuns și ieșirii.
+            z1 = W1 @ x + b1
+            h = relu(z1)
+            z2 = W2 @ h + b2
+            y_hat = sigmoid(z2)
 
-for epoch in range(n_epochs):
-    for i in rng.permutation(len(Xn)):
-        x = Xn[i]
-        target = y_train[i]
+            # Retropropagare: delta2 = dE/dz2 (eroare pătratică).
+            delta2 = (y_hat - target) * y_hat * (1 - y_hat)
+            dW2, db2 = delta2 * h, delta2
+            # delta1_j = delta2 * W2_j * ReLU'(z1_j).
+            delta1 = (delta2 * W2) * relu_derivative(z1)
+            dW1 = np.outer(delta1, x)
+            db1 = delta1
 
-        z1 = W1 @ x + b1
-        h = relu(z1)
-        z2 = W2 @ h + b2
-        y_hat = sigmoid(z2)
+            # Coborâre stocastică: theta &lt;- theta - eta*dE/dtheta.
+            # Toți gradienții folosesc valorile VECHI ale parametrilor.
+            W1 -= eta * dW1
+            b1 -= eta * db1
+            W2 -= eta * dW2
+            b2 -= eta * db2
 
-        delta2 = (y_hat - target) * y_hat * (1 - y_hat)
-        dW2 = delta2 * h
-        db2 = delta2
-        delta1 = (delta2 * W2) * relu_derivative(z1)
-        dW1 = np.outer(delta1, x)
-        db1 = delta1
+        # J: pierderea medie de antrenare la sfârșitul fiecărei epoci.
+        h_all = relu(Xn @ W1.T + b1)
+        y_pred = sigmoid(h_all @ W2 + b2)
+        history.append(np.mean(0.5 * (y_train - y_pred)**2))
 
-        W1 -= eta * dW1
-        b1 -= eta * db1
-        W2 -= eta * dW2
-        b2 -= eta * db2
-
-    errors = []
-    for x, target in zip(Xn, y_train):
-        h = relu(W1 @ x + b1)
-        y_hat = sigmoid(W2 @ h + b2)
-        errors.append(0.5 * (target - y_hat)**2)
-    history.append(np.mean(errors))
+    return W1, b1, W2, b2, np.array(history)
 
 
-def make_figure():
+</code></pre></section>
+<section class="nm-code-block" id="cod:visualizacao"><p class="nm-code-heading">09 — Reprezentarea frontierei învățate</p><pre class="nm-python-code" dir="ltr"><code>def plot_results(X_train, y_train, X_test, y_test,
+                  mean, std, W1, b1, W2, b2, save_path=None):
+    # Nivel y_hat=0.5: frontiera de decizie ÎNVĂȚATĂ.
     masses = np.linspace(116, 214, 500)
     diameters = np.linspace(6.0, 8.85, 500)
     M, D = np.meshgrid(masses, diameters)
@@ -438,91 +752,178 @@ def make_figure():
     P = predict(grid, mean, std, W1, b1, W2, b2).reshape(M.shape)
 
     fig, ax = plt.subplots(figsize=(9.2, 6.3))
-    ax.contourf(
-        M, D, P,
-        levels=[0.0, 0.25, 0.50, 0.75, 1.0],
-        colors=["#f3e0cb", "#ecd5c4", "#dbe7cf", "#cde3bf"],
-        alpha=0.95
-    )
-    ax.contour(M, D, P, levels=[0.5],
-               colors=["#5a1a8a"], linewidths=2.2)
+    ax.contourf(M, D, P, levels=[0, 0.25, 0.50, 0.75, 1],
+                colors=['#f3e0cb', '#ecd5c4', '#dbe7cf', '#cde3bf'],
+                alpha=0.95)
+    ax.contour(M, D, P, levels=[0.5], colors=['#5a1a8a'],
+               linewidths=2.2)
 
     mask = y_train == 1.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="o",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Măr - antrenare")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='o',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_train == 0.0
-    ax.scatter(X_train[mask,0], X_train[mask,1], marker="s",
-               s=48, facecolors="white", edgecolors="black",
-               linewidths=1.1, label="Portocală - antrenare")
+    ax.scatter(X_train[mask, 0], X_train[mask, 1], marker='s',
+               s=48, facecolors='white', edgecolors='black', linewidths=1.1)
     mask = y_test == 1.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="^",
-               s=92, color="#1f77b4", label="Măr - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='^',
+               s=92, color='#1f77b4')
     mask = y_test == 0.0
-    ax.scatter(X_test[mask,0], X_test[mask,1], marker="x",
-               s=110, color="#ff7f0e", linewidths=2.0,
-               label="Portocală - test")
+    ax.scatter(X_test[mask, 0], X_test[mask, 1], marker='x',
+               s=110, color='#ff7f0e', linewidths=2.0)
 
-    ax.set_xlabel("Masă (g)")
-    ax.set_ylabel("Diametru (cm)")
-    ax.set_title("Ieșirea rețelei neuronale după antrenare")
-
+    ax.set_xlabel('Masă (g)')
+    ax.set_ylabel('Diametru (cm)')
+    ax.set_title('Ieșirea rețelei după antrenare')
     handles = [
-        Line2D([0],[0], marker='o', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Măr - antrenare'),
-        Line2D([0],[0], marker='s', markersize=9,
-               markerfacecolor='white', markeredgecolor='black',
-               linestyle='None', label='Portocală - antrenare'),
-        Line2D([0],[0], marker='^', markersize=9, color='#1f77b4',
+        Line2D([0], [0], marker='o', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Măr - antrenare'),
+        Line2D([0], [0], marker='s', markersize=9, markerfacecolor='white',
+               markeredgecolor='black', linestyle='None',
+               label='Portocală - antrenare'),
+        Line2D([0], [0], marker='^', markersize=9, color='#1f77b4',
                linestyle='None', label='Măr - test'),
-        Line2D([0],[0], marker='x', markersize=10, color='#ff7f0e',
+        Line2D([0], [0], marker='x', markersize=10, color='#ff7f0e',
                linestyle='None', label='Portocală - test'),
-        Line2D([0],[0], color='#5a1a8a', lw=2.2,
-               label='Frontiera de decizie a rețelei neuronale')
+        Line2D([0], [0], color='#5a1a8a', linewidth=2.2,
+               label='Frontiera învățată')
     ]
     ax.legend(handles=handles, loc='center left',
               bbox_to_anchor=(1.02, 0.5), frameon=True)
-
     fig.tight_layout()
-    plt.show()</code></pre>
-<p>Deși codul este mai lung decât primele ecuații studiate în articol, structura sa rămâne transparentă. Funcția <code>build_data()</code> generează automat cele <span class="math inline">\(64\)</span> de exemple de antrenare și cele opt exemple ilustrative de test. Apoi standardizăm ambele variabile conform relației <span class="math display">\[x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\]</span> unde <span class="math inline">\(\mu_j\)</span> și <span class="math inline">\(\sigma_j\)</span> sunt calculate numai din setul de antrenare. Astfel, setul de test nu influențează ajustarea parametrilor, iar masa și diametrul sunt aduse pe scări numerice comparabile.</p>
-<p>Propagarea înainte nu se schimbă în esență. Singura diferență este că primul strat produce acum un vector cu douăsprezece activări ascunse. În notație matricială, <span class="math display">\[\mathbf{z}^{(1)}=W^{(1)}\mathbf{x}+\mathbf{b}^{(1)},
-\qquad
-\mathbf{h}=\mathrm{ReLU}(\mathbf{z}^{(1)}),\]</span> <span class="math display">\[z^{(2)}=W^{(2)}\mathbf{h}+b^{(2)},
-\qquad
-\widehat{y}=\sigma(z^{(2)}).\]</span> Aceste patru linii conțin în continuare nucleul matematic al algoritmului. Antrenarea păstrează și ea logica introdusă anterior: calculăm o predicție, îi măsurăm eroarea, propagăm înapoi informația de sensibilitate folosind derivate și actualizăm parametrii prin pași mici de coborâre a gradientului.</p>
-<p>În cod, retropropagarea la stratul de ieșire apare în</p>
-<pre><code>delta2 = (y_hat - target) * y_hat * (1 - y_hat)</code></pre>
-<p>iar propagarea către stratul ascuns apare în</p>
-<pre><code>delta1 = (delta2 * W2) * relu_derivative(z1)</code></pre>
-<p>urmată de actualizarea tuturor ponderilor și biasurilor. Deoarece exemplele sunt amestecate la fiecare epocă, iar parametrii sunt actualizați după fiecare observație, această implementare este o formă elementară de <em>coborâre stocastică a gradientului</em>.</p>
-<p>Cu sămânța aleatoare și hiperparametrii utilizați aici, pierderea medie finală este de ordinul <span class="math inline">\(10^{-5}\)</span> până la <span class="math inline">\(10^{-4}\)</span>, iar toate cele <span class="math inline">\(64\)</span> de exemple de antrenare, împreună cu cele opt exemple ilustrative de test, primesc clasificarea așteptată. Acest rezultat nu trebuie interpretat ca o evaluare statistică riguroasă a performanței: datele sunt sintetice și au fost construite în scop pedagogic. Rolul lor este de a arăta, într-un cadru mai puțin trivial, cum o rețea neuronală mică poate învăța o frontieră de decizie clar neliniară.</p>
-<p>Figura <a data-reference="fig:python_output" data-reference-type="ref" href="#fig:python_output" target="_blank" rel="noopener noreferrer">7</a> arată ieșirea finală a programului în planul masă–diametru. Sunt afișate toate punctele de antrenare. Curba evidențiată este nivelul <span class="math inline">\(\widehat{y}=0.5\)</span> și reprezintă frontiera de decizie învățată de rețea; regiunile colorate indică cele două clase prezise. Cercurile reprezintă merele de antrenare, pătratele portocalele de antrenare, triunghiurile merele de test, iar crucile portocalele de test. Legenda este amplasată în afara regiunii principale a graficului pentru ca niciun punct să nu fie ascuns.</p>
-<figure id="fig:python_output">
-<img alt="Ieșirea Python după antrenarea rețelei neuronale. Setul de date sintetic conține \(64\) de exemple de antrenare răspândite într-o regiune largă a planului masă–diametru și încă opt exemple rezervate pentru un test ilustrativ. Curba evidențiată este nivelul \(\widehat{y}=0.5\) și " decoding="async" loading="lazy" src="../assets/img/ro/Fig07.png"/>
-<figcaption>Ieșirea Python după antrenarea rețelei neuronale. Setul de date sintetic conține <span class="math inline">\(64\)</span> de exemple de antrenare răspândite într-o regiune largă a planului masă–diametru și încă opt exemple rezervate pentru un test ilustrativ. Curba evidențiată este nivelul <span class="math inline">\(\widehat{y}=0.5\)</span> și reprezintă frontiera de decizie învățată; regiunile colorate indică clasele prezise de rețea. Cercurile reprezintă merele de antrenare, pătratele portocalele de antrenare, triunghiurile merele de test, iar crucile portocalele de test.</figcaption>
+    if save_path:
+        fig.savefig(save_path, dpi=200, bbox_inches='tight')
+    return fig, ax
+
+
+</code></pre></section>
+<section class="nm-code-block" id="cod:principal"><p class="nm-code-heading">10 — Executarea experimentului</p><pre class="nm-python-code" dir="ltr"><code>if __name__ == '__main__':
+    X_train, y_train, X_test, y_test = construct_data()
+    mean, std = X_train.mean(axis=0), X_train.std(axis=0)
+    Xn = (X_train - mean) / std
+    W1, b1, W2, b2, history = train(Xn, y_train)
+    p_train = predict(X_train, mean, std, W1, b1, W2, b2)
+    p_test = predict(X_test, mean, std, W1, b1, W2, b2)
+    print('Pierderea medie finală:', history[-1])
+    print('Predicții corecte la antrenare:', np.sum((p_train &gt;= 0.5) == y_train), '/64')
+    print('Predicții corecte la testul ilustrativ:',
+          np.sum((p_test &gt;= 0.5) == y_test), '/8')
+    plot_results(X_train, y_train, X_test, y_test,
+                 mean, std, W1, b1, W2, b2)
+    plt.show()
+</code></pre></section>
+<p>Funcția <code>construct_data()</code> (Codul <a href="#cod:dados">6</a>)
+implementează numai construcția sintetică din Anexa <a href="#appendix-synthetic-data">A</a>; curba auxiliară nu intră în
+optimizare. Funcția <code>train()</code> (Codul <a href="#cod:treinamento">8</a>) realizează
+propagarea directă, calculul lui <span class="math inline">\(\delta^{(2)}\)</span> și <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradienții și
+cele patru actualizări de parametri din ecuațiile <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> și <a href="#eq:descida">descida</a>. Toți gradienții se
+calculează înainte de modificarea vreunui parametru. Funcția
+<code>plot_results()</code> (Codul <a href="#cod:visualizacao">9</a>) reprezintă
+frontiera învățată, nu curba de generare a datelor.</p>
+<p>Programul este disponibil și ca fișier Python independent, precum și
+sub forma unui notebook executabil pentru reproducere și adaptare.</p>
+<p>După <span class="math inline">\(6000\)</span> de epoci, cu sămânța
+<span class="math inline">\(42\)</span> și <span class="math inline">\(\eta=0.05\)</span>, execuția obține pierderea
+medie finală <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>, cu toate cele
+<span class="math inline">\(64\)</span> de observații de antrenare și
+cele opt exemple suplimentare clasificate corect. Aceasta verifică
+comportamentul numeric pe un exemplu sintetic, nu reprezintă o estimare
+statistică a generalizării. Figura <a href="#fig:saida_python">8</a>
+prezintă frontiera învățată <span class="math inline">\(\widehat
+y=0.5\)</span>; cercurile și pătratele marchează antrenarea, iar
+triunghiurile și crucile exemplele ilustrative de test.</p>
+<figure id="fig:saida_python">
+<img alt="Frontiera de decizie \(\widehat
+y=0.5\) învățată de rețeaua \(2\) – \(12\) – \(1\) , împreună cu exemplele de antrenare și
+de testare ilustrativă." decoding="async" loading="lazy" src="../assets/img/ro/Fig08.webp" style="width:98.0%"/>
+<figcaption>8. Frontiera de decizie <span class="math inline">\(\widehat
+y=0.5\)</span> învățată de rețeaua <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>, împreună cu exemplele de antrenare și
+de testare ilustrativă.</figcaption>
 </figure>
-<p>Am pornit de la o dreaptă care separă două grupuri simple de puncte și am ajuns la un exemplu computațional mai bogat, în care o frontieră curbată rezultă din ajustarea automată a parametrilor rețelei. Nu a fost adăugat nimic misterios matematicii: implementarea doar organizează și repetă, la o scară mai mare și cu viteză ridicată, combinații afine, funcții de activare, derivate, produse matriciale și actualizări prin coborârea gradientului .</p>
-<p>Tot materialul computațional asociat acestui articol — inclusiv codul și un notebook Google Colab executabil — este disponibil la <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>, oferind un punct unic de acces cititorilor care doresc să exploreze, să reproducă sau să adapteze exemplele.</p>
-<h4 id="declarație-privind-utilizarea-ia.">Declarație privind utilizarea IA.</h4>
-<p>Autorul a utilizat ChatGPT, dezvoltat de OpenAI, ca instrument de sprijin pentru redactare, revizuire lingvistică, organizare expozitivă și generarea figurilor didactice. Autorul își asumă întreaga responsabilitate pentru conținutul final al lucrării, inclusiv pentru concepția și dezvoltarea materialului matematic, codul și referințele utilizate.</p>
+<p>Am început articolul cu o dreaptă care separă două mulțimi simple de
+puncte și încheiem cu un exemplu numeric mai bogat, unde ajustarea
+automată a parametrilor produce o frontieră curbată. Implementarea nu
+adaugă nimic misterios matematicii discutate: doar organizează și
+repetă, la scară și viteză mari, combinații liniare, funcții de
+activare, derivate, produse matriciale și pași de coborâre a
+gradientului <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+<p>Programul Python și notebookul executabil însoțesc fișierele
+suplimentare ale acestei ediții. Portalul <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>
+oferă alte resurse didactice.</p>
+</section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Construcția setului de date sintetice</h2>
+<p>Expresiile din această anexă documentează doar o alegere <em>ad
+hoc</em> pentru generarea datelor exercițiului numeric. Ele nu fac parte
+din arhitectură, funcția de pierdere ori algoritmul de antrenare. Nicio
+informație despre curba auxiliară nu intră în actualizările ponderilor
+și ale biasurilor.</p>
+<p>Pentru masa <span class="math inline">\(m\)</span> introdusă numeric
+în grame, definim o curbă auxiliară a diametrului, exprimat în
+centimetri, prin</p>
+<p id="eq:fronteira_base"><span class="math display">\[\label{eq:fronteira_base}
+d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
++\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span></p>
+<p>Primul termen deplasează vertical curba, al doilea creează o ridicare
+în apropiere de <span class="math inline">\(155\)</span> g, iar al
+treilea produce o creștere lină în jur de <span class="math inline">\(202\)</span> g. Coeficienții au fost aleși pentru
+aspectul grafic, nu ajustați pe observații despre fructe.</p>
+<p>Pentru <span class="math inline">\(k=0,\ldots,15\)</span> luăm <span class="math inline">\(m_k=118+(212-118)k/15\)</span>, în grame. Al
+doilea set de mase este <span class="math inline">\(\widetilde
+m_k=m_k+\varepsilon_k\)</span>, cu deplasările, în grame,</p>
+<p id="eq:deslocamentos"><span class="math display">\[\label{eq:deslocamentos}
+(1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
+1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span></p>
+<p>Diametrele celor patru benzi se calculează prin</p>
+<p id="eq:faixas"><span class="math display">\[\label{eq:faixas}
+\begin{aligned}
+d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
+d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
+d_{l1,k}&amp;=d_0(m_k)-\bigl[0.22+0.04\cos(0.7k)\bigr],\\
+d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
+\end{aligned}\]</span></p>
+<p>Deplasările verticale sunt exprimate în centimetri. Funcțiile
+trigonometrice evită alinierea excesiv de regulată; ele <em>nu</em>
+reprezintă periodicitate fizică, zgomot stochastic sau un model
+generativ învățat. Funcția suplimentară <code>construct_data()</code>
+implementează exact aceste expresii. Cele opt perechi suplimentare
+pentru testarea ilustrativă sunt specificate direct în cod.</p>
+<p>Funcțiile <code>reference_curve()</code> și
+<code>construct_data()</code> (Codurile <a href="#cod:curva">5</a>
+și <a href="#cod:dados">6</a>) implementează exact
+ecuațiile <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>, fără a furniza curba
+auxiliară ca informație pentru antrenare. Programul complet este
+reprodus în Secțiunea 8 în blocuri consecutive și furnizat și ca
+material suplimentar pentru executare.</p>
 </section></div>
 <section class="article-section references"><span class="section-no">Referințe</span><h2>Referințe</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi: 10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>, v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, v. 323, p. 533–536, 1986. doi: 10.1038/323533a0</p>
+<p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
+<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
+doi: 10.21711/2319023x2022/pmo1032</p>
+<p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L.
+F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de
+Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
+<p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>.
+Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" rel="noopener noreferrer" target="_blank">http://www.deeplearningbook.org</a></p>
+<p id="bib:harris2020numpy">[4] C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
+programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
+10.1038/s41586-020-2649-2</p>
+<p id="bib:haykin2001">[5] S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation
+by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
+<p id="bib:higham2019">[6] C. F. Higham y D. J. Higham. “Deep Learning: An Introduction for
+Applied Mathematicians”. <em>SIAM Review</em>, vol. 61, núm. 4, pp.
+860–891, 2019. doi: 10.1137/18M1165748</p>
+<p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>,
+v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
+<p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
+Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" rel="noopener noreferrer" target="_blank">https://neuralnetworksanddeeplearning.com</a></p>
+<p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning
+representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
+533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">NeuralMath</span><h2>Resurse</h2><div class="resource-grid">
 <a class="resource-card" href="../pdf/NeuralMath_RO.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>Anatomia matematică a unei rețele neuronale</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_RO.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · Română</span></a>
-</div></section>
+</div><p class="note nm-web-pdf-note">Versiunea web a fost actualizată; PDF-ul existent rămâne neschimbat.</p><p><a href="https://github.com/americocunhajr/NeuralMath/blob/main/PythonCodes/neural_network_RO.py" target="_blank" rel="noopener noreferrer">Python (.py)</a></p></section>
 <section><h2>Despre NeuralMath</h2><p class="bio">NeuralMath este un proiect educațional deschis dezvoltat de Dr. Americo Cunha Jr. Scopul său este de a face operațiile matematice din interiorul unei rețele neuronale mici vizibile, inspectabile și reproductibile pentru un public larg cu pregătire matematică relativ elementară în calcul și statistică.</p><p class="linksline"><a href="https://americocunha.org" target="_blank" rel="noopener noreferrer">americocunha.org</a><a href="https://orcid.org/0000-0002-8342-0363" target="_blank" rel="noopener noreferrer">ORCID</a><a href="https://scholar.google.com/citations?user=4r36RpoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></p></section>
 
 <section><h2>Licență</h2><div class="license-row"><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer"><img alt="Creative Commons Attribution 4.0 International" src="https://licensebuttons.net/l/by/4.0/88x31.png"/></a><p>Textul explicativ al site-ului și materialul original sunt disponibile sub CC BY 4.0, dacă nu se precizează altfel. PDF-ul articolului poate fi supus licenței publicației.</p></div></section>
