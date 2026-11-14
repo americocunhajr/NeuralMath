@@ -9,6 +9,8 @@ import xml.etree.ElementTree as ET
 ROOT = Path("docs")
 DOMAIN = "https://neuralmath.org"
 DATE = "2026-10-07"
+MODIFIED = {"en": "2026-11-14", "pt": "2026-11-13"}
+SITEMAP_MODIFIED = {"en": "2026-11-14"}
 CODES = "ar bn cs de el en es fa fr hi hu id it ja ko nl pl pt ro ru sv tr uk ur vi zh".split()
 KEY = "9b83762f5d4f4b36a7e2147c8d6a31e1"
 LANG = {code: code for code in CODES}
@@ -84,16 +86,16 @@ def check_page(code):
 
     title = page.one("citation_title")
     description = page.one("description")
-    image = f"{DOMAIN}/assets/img/{code}/Fig07.png"
+    image = f"{DOMAIN}/assets/img/{code}/Fig08.png" if code == "pt" else f"{DOMAIN}/assets/img/{code}/Fig07.png"
     pdf = f"{DOMAIN}/pdf/NeuralMath_{code.upper()}.pdf"
     assert page.one("citation_pdf_url") == pdf, path
     assert (ROOT / "pdf" / f"NeuralMath_{code.upper()}.pdf").stat().st_size > 100000, path
-    assert (ROOT / "assets" / "img" / code / "Fig07.png").is_file(), path
+    assert (ROOT / "assets" / "img" / code / ("Fig08.png" if code == "pt" else "Fig07.png")).is_file(), path
     for key, value in {
         "og:type": "article", "og:site_name": "NeuralMath", "og:title": title,
         "og:description": description, "og:url": URL[code], "og:image": image,
         "og:image:alt": title, "article:published_time": DATE,
-        "article:modified_time": DATE, "twitter:card": "summary_large_image",
+        "article:modified_time": MODIFIED.get(code, DATE), "twitter:card": "summary_large_image",
         "twitter:title": title, "twitter:description": description, "twitter:image": image,
     }.items():
         assert page.one(key) == value, (path, key)
@@ -113,7 +115,7 @@ def check_page(code):
         "@id": URL[code] + "#article", "headline": title,
         "description": description, "url": URL[code],
         "mainEntityOfPage": URL[code], "inLanguage": LANG[code],
-        "image": image, "datePublished": DATE, "dateModified": DATE,
+        "image": image, "datePublished": DATE, "dateModified": MODIFIED.get(code, DATE),
     }.items():
         assert article[key] == value, (path, key)
     assert article["author"] == {"@id": person_id}, path
@@ -135,7 +137,7 @@ ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 entries = ET.parse(ROOT / "sitemap.xml").getroot().findall("s:url", ns)
 assert len(entries) == 26
 assert {entry.findtext("s:loc", namespaces=ns) for entry in entries} == set(URL.values())
-assert all(entry.findtext("s:lastmod", namespaces=ns) == DATE for entry in entries)
+assert all(entry.findtext("s:lastmod", namespaces=ns) == SITEMAP_MODIFIED.get(next(c for c, u in URL.items() if u == entry.findtext("s:loc", namespaces=ns)), DATE) for entry in entries)
 assert all(entry.find("s:priority", ns) is None and entry.find("s:changefreq", ns) is None for entry in entries)
 assert f"Sitemap: {DOMAIN}/sitemap.xml" in (ROOT / "robots.txt").read_text(encoding="utf-8")
 assert (ROOT / f"{KEY}.txt").read_text(encoding="utf-8").strip() == KEY
