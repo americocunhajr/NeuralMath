@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Obsah" class="toc"><h2>Obsah</h2><ol><li><a href="#kdy-se-může-počítač-učit" target="_blank" rel="noopener noreferrer">Kdy se může počítač učit?</a></li><li><a href="#matematická-reprezentace-problému" target="_blank" rel="noopener noreferrer">Matematická reprezentace problému</a></li><li><a href="#přímka-jako-klasifikátor" target="_blank" rel="noopener noreferrer">Přímka jako klasifikátor</a></li><li><a href="#umělý-neuron" target="_blank" rel="noopener noreferrer">Umělý neuron</a></li><li><a href="#proč-potřebujeme-aktivační-funkci" target="_blank" rel="noopener noreferrer">Proč potřebujeme aktivační funkci?</a></li><li><a href="#stavba-malé-neuronové-sítě" target="_blank" rel="noopener noreferrer">Stavba malé neuronové sítě</a></li><li><a href="#jak-se-neuronová-síť-učí" target="_blank" rel="noopener noreferrer">Jak se neuronová síť učí?</a></li><li><a href="#od-matematiky-k-pythonu" target="_blank" rel="noopener noreferrer">Od matematiky k Pythonu</a></li><li><a href="#appendix-synthetic-data">Konstrukce syntetického souboru dat</a></li></ol></nav>
+<nav aria-label="Obsah" class="toc"><h2>Obsah</h2><ol><li><a href="#kdy-se-může-počítač-učit" target="_blank" rel="noopener noreferrer">Kdy se může počítač učit?</a></li><li><a href="#matematická-reprezentace-problému" target="_blank" rel="noopener noreferrer">Matematická reprezentace problému</a></li><li><a href="#přímka-jako-klasifikátor" target="_blank" rel="noopener noreferrer">Přímka jako klasifikátor</a></li><li><a href="#umělý-neuron" target="_blank" rel="noopener noreferrer">Umělý neuron</a></li><li><a href="#proč-potřebujeme-aktivační-funkci" target="_blank" rel="noopener noreferrer">Proč potřebujeme aktivační funkci?</a></li><li><a href="#stavba-malé-neuronové-sítě" target="_blank" rel="noopener noreferrer">Stavba malé neuronové sítě</a></li><li><a href="#jak-se-neuronová-síť-učí" target="_blank" rel="noopener noreferrer">Jak se neuronová síť učí?</a></li><li><a href="#od-matematiky-k-pythonu" target="_blank" rel="noopener noreferrer">Od matematiky k Pythonu</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Konstrukce syntetického souboru dat</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="kdy-se-může-počítač-učit"><span class="section-no">01</span><h2>Kdy se může počítač učit?</h2>
 <p>V každodenním životě téměř bezděčně činíme klasifikační rozhodnutí. Když se podíváme na ovoce, rychle rozpoznáme, zda jde o jablko nebo pomeranč; když nám přijde zpráva do telefonu, odlišujeme běžnou komunikaci od nevyžádané reklamy; v lékařské analýze lze několik měření kombinovat jako podporu rozhodnutí; a ve finančních institucích se před poskytnutím úvěru vyhodnocuje mnoho informací. Ve všech těchto příkladech se současně posuzuje několik vlastností, aby bylo možné získat odpověď.</p>
 <p>V mnoha tradičních počítačových programech jsou pravidla vedoucí k takové odpovědi explicitně zapsána programátorem. Tento přístup funguje dobře, pokud jsou pravidla známá a lze je jasně formulovat. Je však méně účinný, jsou-li data velmi rozmanitá nebo je-li obtížné předem stanovit všechny podmínky potřebné pro dobré rozhodnutí. To vede k přirozené otázce:</p>
@@ -224,7 +224,7 @@ v_1&amp;v_2&amp;v_3
 <p>Váhy a posuny (biasy) sítě nejsou předem známé: upravují se podle
 příkladů se známými třídami. Učení spočívá v opakování dopředného
 průchodu, výpočtu ztráty, určení gradientů a aktualizace parametrů
-(Obrázek <a href="#fig:ciclo_treinamento">6</a>). Řetězové pravidlo
+(Obrázek <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>). Řetězové pravidlo
 umožňuje zjistit, jak je ztráta lokálně citlivá na každou váhu a každý
 posun.</p>
 <p>K úpravě parametrů potřebujeme nejprve číselnou míru rozdílu mezi
@@ -255,9 +255,9 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <p>Tento průměr shrnuje přizpůsobení trénovacím datům a jeho hodnotu
 chceme úpravou parametrů snižovat. Minimalizace <span class="math inline">\(J\)</span> sama o sobě nezaručuje dobré předpovědi
 pro nová data; vrátíme se k tomu při diskusi generalizace. Kvadratickou
-ztrátu z rovnice <a href="#eq:perda">perda</a> používáme pro algebraickou
+ztrátu z rovnice <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a> používáme pro algebraickou
 jednoduchost a později její gradient porovnáme s gradientem binární
-křížové entropie bez změny numerického experimentu <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+křížové entropie bez změny numerického experimentu <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Fáze učení: dopředný průchod, výpočet ztráty, zpětné šíření
 gradientů a aktualizace parametrů." decoding="async" loading="lazy" src="../assets/img/cs/Fig06.webp" style="width:88.0%"/>
@@ -274,13 +274,13 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>Rychlost učení <span class="math inline">\(\eta\)</span> řídí
 velikost kroku: příliš malé hodnoty mohou zpomalit konvergenci, příliš
 velké mohou vyvolat oscilace nebo divergenci. Aktualizujeme-li parametry
-po každém pozorování, jako v kódu v Oddílu <a href="#od-matematiky-k-pythonu">8</a>, nahradíme
+po každém pozorování, jako v kódu v Oddílu <a href="#od-matematiky-k-pythonu" target="_blank" rel="noopener noreferrer">8</a>, nahradíme
 <span class="math inline">\(\partial J/\partial\theta\)</span> výrazem
 <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Jde o
 zde použitou formu stochastického gradientního sestupu (SGD).</p>
 <h3 id="řetězové-pravidlo-v-síti-231">Řetězové pravidlo v síti
 2–3–1</h3>
-<p>Použijeme síť z Obrázku <a href="#fig:small_network">[fig:pequena_rede]</a> se třemi
+<p>Použijeme síť z Obrázku <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a> se třemi
 skrytými neurony ReLU a sigmoidálním výstupem. Vstupy představují
 hmotnost (v gramech) a průměr (v centimetrech), tedy veličiny s různými
 číselnými škálami. Aby tento rozdíl nezhoršoval podmíněnost
@@ -338,7 +338,7 @@ bezrozměrný vstup</p>
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>Tyto referenční hodnoty slouží jen k demonstraci; v Oddílu <a href="#od-matematiky-k-pythonu">8</a> se průměr a směrodatná odchylka
+<p>Tyto referenční hodnoty slouží jen k demonstraci; v Oddílu <a href="#od-matematiky-k-pythonu" target="_blank" rel="noopener noreferrer">8</a> se průměr a směrodatná odchylka
 vypočítají přímo z trénovacích dat.</p>
 <p>Zvolme třináct počátečních parametrů</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -348,7 +348,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Rovnice <a href="#eq:forward">forward</a> postupně dává</p>
+<p>Rovnice <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> postupně dává</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -356,7 +356,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>Původní předpověď odpovídá nesprávné třídě. Z rovnic <a href="#eq:delta_saida">delta_saida</a> a <a href="#eq:delta_oculta">delta_oculta</a> dostáváme</p>
+<p>Původní předpověď odpovídá nesprávné třídě. Z rovnic <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> a <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> dostáváme</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -368,7 +368,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \end{gathered}\]</span></p>
 <p>Třetí skrytý neuron je neaktivní (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), takže gradienty jeho
 vstupních vah a posunu jsou v tomto kroku nulové. Při <span class="math inline">\(\eta=0.05\)</span> použijeme <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span> současně na všechny parametry. Tabulka <a href="#tab:passo_sgd">1</a> ukazuje několik ze třinácti
+E/\partial\theta\)</span> současně na všechny parametry. Tabulka <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> ukazuje několik ze třinácti
 aktualizací; ostatní vyplývají ze stejných vzorců.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -483,10 +483,10 @@ předpovědi pro nová pozorování. Tato schopnost se nazývá
 <em>generalizace</em>; jestliže přílišné přizpůsobení trénovacím datům
 zhoršuje nové předpovědi, jde o <em>přeučení</em>. V rozsáhlejších
 studiích umožňují oddělené trénovací, validační a testovací množiny
-volit hyperparametry a hodnotit model s menším zkreslením <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+volit hyperparametry a hodnotit model s menším zkreslením <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="od-matematiky-k-pythonu"><span class="section-no">08</span><h2>Od matematiky k Pythonu</h2>
 <p>Nyní pouze s <code>NumPy</code> implementujeme dopřednou propagaci,
-řetězové pravidlo a stochastické aktualizace odvozené v Oddílu <a href="#jak-se-neuronová-síť-učí">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Abychom ukázali nelineární
+řetězové pravidlo a stochastické aktualizace odvozené v Oddílu <a href="#jak-se-neuronová-síť-učí" target="_blank" rel="noopener noreferrer">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Abychom ukázali nelineární
 hranici, rozšíříme skrytou vrstvu ze tří na dvanáct neuronů ReLU.
 Výsledná síť <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 obsahuje <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
@@ -505,7 +505,7 @@ model ovoce</em>.</p>
 příkladů</em>. Síť ji nedostává, nevyskytuje se ve ztrátové funkci a
 nepodílí se na zpětném šíření. Trénování využívá pouze dvojice
 hmotnost–průměr a jejich štítky. Generující vzorec a posuny jsou uvedeny
-v Dodatku <a href="#appendix-synthetic-data">A</a>, takže body z Obrázku <a href="#fig:faixas_sinteticas">7</a> lze přesně
+v Dodatku <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>, takže body z Obrázku <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> lze přesně
 reprodukovat.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Rozložení \(64\) syntetických příkladů do čtyř pásů: dva nad (jablka) a dva pod
@@ -516,7 +516,7 @@ syntetických příkladů do čtyř pásů: dva nad (jablka) a dva pod
 (pomeranče) pomocnou křivkou zvolenou pro generování bodů. Přerušovaná
 křivka se při trénování nepoužívá.</figcaption>
 </figure>
-<p>Obrázek <a href="#fig:faixas_sinteticas">7</a> ukazuje body vytvořené
+<p>Obrázek <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> ukazuje body vytvořené
 funkcí <code>construct_data()</code>; přerušovaná křivka je pouze
 pomůckou pro syntetickou konstrukci a není naučenou rozhodovací hranicí.
 Osm dalších příkladů slouží jen pro konečnou ilustraci a neovlivňuje
@@ -548,7 +548,7 @@ funkce <code>relu_derivative()</code> tam konvenčně používá nulu, aniž
 by měnila matematickou definici nebo zaručovala konvergenci.</p>
 <p>Volíme <span class="math inline">\(\eta=0.05\)</span> jako opatrnou
 hodnotu, nikoli jako optimální rychlost učení. Jednoduchá analýza
-citlivosti se stejnými daty a semenem generátoru vede po <span class="math inline">\(1000\)</span> epochách k Tabulce <a href="#tab:eta">2</a>. Nejvyšší zkoušená rychlost konverguje na
+citlivosti se stejnými daty a semenem generátoru vede po <span class="math inline">\(1000\)</span> epochách k Tabulce <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a>. Nejvyšší zkoušená rychlost konverguje na
 těchto datech rychleji, z toho však neplyne její obecná vhodnost.
 Hodnotu <span class="math inline">\(0.05\)</span> ponecháváme pro
 stabilní trénování a přehledný vývoj ztráty.</p>
@@ -584,7 +584,7 @@ epochách (seed <span class="math inline">\(42\)</span>).</caption>
 </table>
 </div>
 <h3 id="úplná-implementace-v-pythonu">Úplná implementace v Pythonu</h3>
-<p>Celý program je v Kódech <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, uspořádaných podle
+<p>Celý program je v Kódech <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, uspořádaných podle
 funkcí a pořadí provádění. Deset po sobě jdoucích bloků tvoří soubor
 <code>neural_network.py</code>, který je také přiložen samostatně.</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Příprava prostředí</p><pre class="nm-python-code" dir="ltr"><code>"""Didaktický příklad: klasifikace ovoce pomocí sítě 2-12-1.
@@ -793,14 +793,14 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Funkce <code>construct_data()</code> (Kód <a href="#cod:dados">6</a>)
-realizuje výhradně syntetické generování dat popsané v Dodatku <a href="#appendix-synthetic-data">A</a>; pomocná křivka do optimalizace
-nevstupuje. Funkce <code>train()</code> (Kód <a href="#cod:treinamento">8</a>) provádí dopředný
+<p>Funkce <code>construct_data()</code> (Kód <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+realizuje výhradně syntetické generování dat popsané v Dodatku <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; pomocná křivka do optimalizace
+nevstupuje. Funkce <code>train()</code> (Kód <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) provádí dopředný
 průchod, výpočet <span class="math inline">\(\delta^{(2)}\)</span> a
 <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>,
-gradientů a čtyř aktualizací parametrů podle rovnic <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> a <a href="#eq:descida">descida</a>. Všechny gradienty se
+gradientů a čtyř aktualizací parametrů podle rovnic <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> a <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Všechny gradienty se
 vypočítají před změnou kteréhokoli parametru. Funkce
-<code>plot_results()</code> (Kód <a href="#cod:visualizacao">9</a>) znázorňuje
+<code>plot_results()</code> (Kód <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) znázorňuje
 naučenou hranici, nikoli křivku použitou pro generování dat.</p>
 <p>Program je dostupný také jako samostatný soubor Pythonu a jako
 spustitelný notebook pro snadnou reprodukci a úpravy.</p>
@@ -810,7 +810,7 @@ ztrátu <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span> a
 správně klasifikujeme všech <span class="math inline">\(64\)</span>
 trénovacích pozorování i osm dalších příkladů. Tento výsledek potvrzuje
 numerické chování programu na syntetických datech, ale není statistickým
-odhadem generalizační výkonnosti. Obrázek <a href="#fig:saida_python">8</a>
+odhadem generalizační výkonnosti. Obrázek <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a>
 ukazuje naučenou hranici <span class="math inline">\(\widehat
 y=0.5\)</span>; kruhy a čtverce označují trénovací data, trojúhelníky a
 křížky ilustrační test.</p>
@@ -827,9 +827,9 @@ zakončili bohatším výpočetním příkladem, kde automatická úprava
 parametrů vytvoří zakřivenou hranici. Implementace nepřidává k
 vysvětlené matematice nic tajemného: ve velkém měřítku a rychle opakuje
 lineární kombinace, aktivační funkce, derivace, maticové součiny a kroky
-gradientního sestupu <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+gradientního sestupu <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>.</p>
 <p>Program Pythonu a spustitelný notebook jsou přiloženy v doplňkových
-souborech této verze. Web <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> nabízí další výukové
+souborech této verze. Web <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> nabízí další výukové
 materiály.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Konstrukce syntetického souboru dat</h2>
 <p>Výrazy v tomto dodatku dokumentují pouze volbu <em>ad hoc</em> pro
@@ -863,8 +863,8 @@ periodicitu, stochastický šum ani naučený generativní model. Doplňková
 funkce <code>construct_data()</code> přesně implementuje uvedené výrazy.
 Osm dalších dvojic pro ilustrační test je uvedeno přímo v kódu.</p>
 <p>Funkce <code>reference_curve()</code> a <code>construct_data()</code>
-(Kódy <a href="#cod:curva">5</a> a <a href="#cod:dados">6</a>)
-přesně implementují rovnice <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>, aniž by síti poskytovaly
+(Kódy <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a> a <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+přesně implementují rovnice <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>, aniž by síti poskytovaly
 pomocnou křivku jako informaci při trénování. Úplný program je v
 Oddílu 8 uveden v po sobě jdoucích blocích a je rovněž přiložen k
 přímému spuštění.</p>
