@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Spis treści" class="toc"><h2>Spis treści</h2><ol><li><a href="#kiedy-komputer-może-się-uczyć" target="_blank" rel="noopener noreferrer">Kiedy komputer może się uczyć?</a></li><li><a href="#matematyczna-reprezentacja-problemu" target="_blank" rel="noopener noreferrer">Matematyczna reprezentacja problemu</a></li><li><a href="#prosta-jako-klasyfikator" target="_blank" rel="noopener noreferrer">Prosta jako klasyfikator</a></li><li><a href="#sztuczny-neuron" target="_blank" rel="noopener noreferrer">Sztuczny neuron</a></li><li><a href="#dlaczego-potrzebujemy-funkcji-aktywacji" target="_blank" rel="noopener noreferrer">Dlaczego potrzebujemy funkcji aktywacji?</a></li><li><a href="#budowa-małej-sieci-neuronowej" target="_blank" rel="noopener noreferrer">Budowa małej sieci neuronowej</a></li><li><a href="#jak-uczy-się-sieć-neuronowa" target="_blank" rel="noopener noreferrer">Jak uczy się sieć neuronowa?</a></li><li><a href="#od-matematyki-do-pythona" target="_blank" rel="noopener noreferrer">Od matematyki do Pythona</a></li><li><a href="#appendix-synthetic-data">Konstrukcja syntetycznego zbioru danych</a></li></ol></nav>
+<nav aria-label="Spis treści" class="toc"><h2>Spis treści</h2><ol><li><a href="#kiedy-komputer-może-się-uczyć" target="_blank" rel="noopener noreferrer">Kiedy komputer może się uczyć?</a></li><li><a href="#matematyczna-reprezentacja-problemu" target="_blank" rel="noopener noreferrer">Matematyczna reprezentacja problemu</a></li><li><a href="#prosta-jako-klasyfikator" target="_blank" rel="noopener noreferrer">Prosta jako klasyfikator</a></li><li><a href="#sztuczny-neuron" target="_blank" rel="noopener noreferrer">Sztuczny neuron</a></li><li><a href="#dlaczego-potrzebujemy-funkcji-aktywacji" target="_blank" rel="noopener noreferrer">Dlaczego potrzebujemy funkcji aktywacji?</a></li><li><a href="#budowa-małej-sieci-neuronowej" target="_blank" rel="noopener noreferrer">Budowa małej sieci neuronowej</a></li><li><a href="#jak-uczy-się-sieć-neuronowa" target="_blank" rel="noopener noreferrer">Jak uczy się sieć neuronowa?</a></li><li><a href="#od-matematyki-do-pythona" target="_blank" rel="noopener noreferrer">Od matematyki do Pythona</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Konstrukcja syntetycznego zbioru danych</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="kiedy-komputer-może-się-uczyć"><span class="section-no">01</span><h2>Kiedy komputer może się uczyć?</h2>
 <p>W życiu codziennym niemal bezwiednie podejmujemy decyzje klasyfikacyjne. Patrząc na owoc, szybko rozpoznajemy, czy jest to jabłko, czy pomarańcza; gdy na telefon przychodzi wiadomość, odróżniamy prawidłową korespondencję od niechcianej reklamy; w analizie medycznej kilka pomiarów może być łączonych, aby wesprzeć decyzję; a w instytucjach finansowych przed przyznaniem kredytu ocenia się wiele informacji. We wszystkich tych przykładach kilka cech rozpatruje się jednocześnie, aby uzyskać odpowiedź.</p>
 <p>W wielu tradycyjnych programach komputerowych reguły prowadzące do takiej odpowiedzi są jawnie zapisane przez programistę. Podejście to działa dobrze, gdy reguły są znane i można je jasno sformułować. Staje się mniej skuteczne, gdy dane są bardzo zróżnicowane albo gdy trudno z góry określić wszystkie warunki potrzebne do podjęcia dobrej decyzji. Prowadzi to do naturalnego pytania:</p>
@@ -224,7 +224,7 @@ v_1&amp;v_2&amp;v_3
 <p>Wagi i wyrazy wolne sieci nie są znane z góry: dobiera się je na
 podstawie przykładów o znanych etykietach klas. Uczenie polega na
 powtarzaniu propagacji w przód, obliczania straty, wyznaczania
-gradientów i aktualizacji parametrów (Rysunek <a href="#fig:ciclo_treinamento">6</a>). Reguła łańcuchowa pozwala
+gradientów i aktualizacji parametrów (Rysunek <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>). Reguła łańcuchowa pozwala
 ustalić lokalną wrażliwość straty na każdą wagę i każdy wyraz wolny.</p>
 <p>Aby dopasować parametry, potrzebujemy najpierw numerycznej miary
 rozbieżności między predykcją a oczekiwaną odpowiedzią. <em>Funkcja
@@ -257,9 +257,9 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <p>Ta średnia podsumowuje dopasowanie do zbioru treningowego i to ją
 chcemy zmniejszać, modyfikując parametry. Minimalizacja <span class="math inline">\(J\)</span> sama w sobie nie zapewnia dobrych
 predykcji dla nowych danych; wrócimy do tego zagadnienia przy
-uogólnianiu. Zachowujemy stratę kwadratową z równania <a href="#eq:perda">perda</a> ze względu na prostotę
+uogólnianiu. Zachowujemy stratę kwadratową z równania <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a> ze względu na prostotę
 rachunkową, a następnie porównujemy jej gradient z gradientem binarnej
-entropii krzyżowej bez zmiany doświadczenia numerycznego <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+entropii krzyżowej bez zmiany doświadczenia numerycznego <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Etapy uczenia: propagacja w przód, obliczenie straty,
 propagacja wsteczna gradientów i aktualizacja parametrów." decoding="async" loading="lazy" src="../assets/img/pl/Fig06.webp" style="width:88.0%"/>
@@ -276,13 +276,13 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>Szybkość uczenia <span class="math inline">\(\eta\)</span> określa
 wielkość kroku: zbyt mała może spowalniać zbieżność, zbyt duża prowadzić
 do oscylacji lub rozbieżności. Jeżeli parametry aktualizuje się po
-każdej obserwacji, jak w kodzie z Sekcji <a href="#od-matematyki-do-pythona">8</a>, to <span class="math inline">\(\partial J/\partial\theta\)</span> zastępuje się
+każdej obserwacji, jak w kodzie z Sekcji <a href="#od-matematyki-do-pythona" target="_blank" rel="noopener noreferrer">8</a>, to <span class="math inline">\(\partial J/\partial\theta\)</span> zastępuje się
 przez <span class="math inline">\(\partial E_i/\partial\theta\)</span>.
 Taką postać stochastycznego spadku gradientowego (SGD) stosujemy w tym
 przykładzie.</p>
 <h3 id="reguła-łańcuchowa-w-sieci-231">Reguła łańcuchowa w sieci
 2–3–1</h3>
-<p>Rozpatrujemy sieć z Rysunku <a href="#fig:small_network">[fig:pequena_rede]</a>, z trzema
+<p>Rozpatrujemy sieć z Rysunku <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a>, z trzema
 ukrytymi neuronami ReLU i wyjściem sigmoidalnym. Wejścia oznaczają masę
 (w gramach) i średnicę (w centymetrach), których skale liczbowe są
 różne. Aby ograniczyć niekorzystny wpływ tej różnicy na uwarunkowanie
@@ -343,7 +343,7 @@ odpowiada wtedy bezwymiarowemu wejściu</p>
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
 <p>Te wartości referencyjne wybrano na potrzeby demonstracji; w
-Sekcji <a href="#od-matematyki-do-pythona">8</a> średnia i odchylenie standardowe będą
+Sekcji <a href="#od-matematyki-do-pythona" target="_blank" rel="noopener noreferrer">8</a> średnia i odchylenie standardowe będą
 wyznaczane wprost ze zbioru treningowego.</p>
 <p>Wybierzmy trzynaście parametrów początkowych</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -353,7 +353,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Równanie <a href="#eq:forward">forward</a> daje kolejno</p>
+<p>Równanie <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> daje kolejno</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -361,7 +361,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>Początkowa predykcja wskazuje błędną klasę. Z równań <a href="#eq:delta_saida">delta_saida</a> i <a href="#eq:delta_oculta">delta_oculta</a> otrzymujemy</p>
+<p>Początkowa predykcja wskazuje błędną klasę. Z równań <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> i <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> otrzymujemy</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -374,7 +374,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>Trzeci neuron ukryty jest nieaktywny (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), dlatego gradienty jego
 wag wejściowych i wyrazu wolnego są w tym kroku zerowe. Dla <span class="math inline">\(\eta=0.05\)</span> stosujemy <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
 E/\partial\theta\)</span> jednocześnie do wszystkich parametrów.
-Tabela <a href="#tab:passo_sgd">1</a> przedstawia kilka spośród trzynastu
+Tabela <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> przedstawia kilka spośród trzynastu
 aktualizacji; pozostałe wynikają z tych samych wzorów.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -494,11 +494,11 @@ zdolność nazywamy <em>uogólnianiem</em>; gdy nadmierne dopasowanie do
 treningu pogarsza wyniki dla nowych danych, mówimy o
 <em>przeuczeniu</em>. W obszerniejszych badaniach oddzielne zbiory
 treningowe, walidacyjne i testowe pozwalają dobrać hiperparametry oraz
-ocenić model z mniejszym obciążeniem <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+ocenić model z mniejszym obciążeniem <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="od-matematyki-do-pythona"><span class="section-no">08</span><h2>Od matematyki do Pythona</h2>
 <p>Zaimplementujemy teraz propagację w przód, regułę łańcuchową i
 stochastyczne aktualizacje, korzystając wyłącznie z <code>NumPy</code>
-<span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Aby uzyskać
+<span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Aby uzyskać
 nieliniową granicę, zwiększamy liczbę neuronów ReLU w warstwie ukrytej z
 trzech do dwunastu. Powstała sieć <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 ma <span class="math inline">\(12(2+1)+(12+1)=49\)</span> parametrów i
@@ -517,8 +517,8 @@ pomiary doświadczalne ani model fizyczny owoców</em>.</p>
 przykładów</em>. Nie jest ona przekazywana sieci, nie występuje w
 funkcji straty ani w propagacji wstecznej. Uczenie wykorzystuje jedynie
 pary masa–średnica i etykiety. Wzór generujący oraz przesunięcia podano
-w Dodatku <a href="#appendix-synthetic-data">A</a>, co pozwala dokładnie odtworzyć punkty
-z Rysunku <a href="#fig:faixas_sinteticas">7</a>.</p>
+w Dodatku <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>, co pozwala dokładnie odtworzyć punkty
+z Rysunku <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Rozkład \(64\) syntetycznych przykładów w czterech pasmach: dwóch powyżej (jabłka) i
 dwóch poniżej (pomarańcze) krzywej pomocniczej użytej do generowania
@@ -529,7 +529,7 @@ dwóch poniżej (pomarańcze) krzywej pomocniczej użytej do generowania
 punktów. Krzywa przerywana nie jest wykorzystywana w
 uczeniu.</figcaption>
 </figure>
-<p>Rysunek <a href="#fig:faixas_sinteticas">7</a> przedstawia punkty
+<p>Rysunek <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> przedstawia punkty
 wygenerowane przez funkcję <code>construct_data()</code>; krzywa
 przerywana jest elementem konstrukcji syntetycznej, a nie granicą
 wyuczoną przez sieć. Osiem dodatkowych przykładów służy wyłącznie do
@@ -560,7 +560,7 @@ matematycznej i nie gwarantując zbieżności.</p>
 <p>Stosujemy <span class="math inline">\(\eta=0.05\)</span> jako
 ostrożnie wybraną, a nie optymalną szybkość uczenia. Prosty test
 wrażliwości przy tych samych danych i ziarnie losowym daje wyniki w
-Tabeli <a href="#tab:eta">2</a> po <span class="math inline">\(1000\)</span> epokach. Największa rozważana
+Tabeli <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> po <span class="math inline">\(1000\)</span> epokach. Największa rozważana
 szybkość zapewnia w tym zbiorze szybszą zbieżność, lecz nie dowodzi to
 jej ogólnej przydatności. Zachowujemy <span class="math inline">\(0.05\)</span>, ponieważ daje stabilny trening i
 łatwe do analizy przebiegi straty.</p>
@@ -597,7 +597,7 @@ epokach (ziarno <span class="math inline">\(42\)</span>).</caption>
 </div>
 <h3 id="pełna-implementacja-w-pythonie">Pełna implementacja w
 Pythonie</h3>
-<p>Kompletny program przedstawiamy w Kodach <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, ułożonych według
+<p>Kompletny program przedstawiamy w Kodach <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, ułożonych według
 funkcji i kolejności wykonywania. Te dziesięć kolejnych bloków tworzy
 plik <code>neural_network.py</code>, dostępny także jako materiał
 dodatkowy.</p>
@@ -807,13 +807,13 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Funkcja <code>construct_data()</code> (Kod <a href="#cod:dados">6</a>)
-realizuje wyłącznie syntetyczne konstruowanie danych z Dodatku <a href="#appendix-synthetic-data">A</a>; krzywa pomocnicza nie uczestniczy w
-optymalizacji. Funkcja <code>train()</code> (Kod <a href="#cod:treinamento">8</a>) realizuje
+<p>Funkcja <code>construct_data()</code> (Kod <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+realizuje wyłącznie syntetyczne konstruowanie danych z Dodatku <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; krzywa pomocnicza nie uczestniczy w
+optymalizacji. Funkcja <code>train()</code> (Kod <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) realizuje
 propagację w przód, obliczenie <span class="math inline">\(\delta^{(2)}\)</span> i <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradientów
-oraz czterech aktualizacji parametrów zgodnie z równaniami <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> i <a href="#eq:descida">descida</a>. Wszystkie gradienty
+oraz czterech aktualizacji parametrów zgodnie z równaniami <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> i <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Wszystkie gradienty
 oblicza się przed zmianą któregokolwiek parametru. Funkcja
-<code>plot_results()</code> (Kod <a href="#cod:visualizacao">9</a>) rysuje granicę
+<code>plot_results()</code> (Kod <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) rysuje granicę
 wyuczoną, a nie krzywą generującą dane.</p>
 <p>Program jest również dostępny jako samodzielny plik Pythona i
 wykonywalny notebook, co ułatwia odtwarzanie i modyfikowanie
@@ -824,7 +824,7 @@ końcową <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>
 oraz poprawną klasyfikację wszystkich <span class="math inline">\(64\)</span> przykładów treningowych i ośmiu
 dodatkowych. Wynik ten potwierdza działanie obliczeniowe na przykładzie
 syntetycznym, lecz nie jest statystycznym oszacowaniem zdolności
-uogólniania. Rysunek <a href="#fig:saida_python">8</a>
+uogólniania. Rysunek <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a>
 pokazuje wyuczoną granicę <span class="math inline">\(\widehat
 y=0.5\)</span>; kółka i kwadraty oznaczają trening, a trójkąty i
 krzyżyki test ilustracyjny.</p>
@@ -841,9 +841,9 @@ punktów, a kończymy bogatszym eksperymentem, w którym krzywoliniowa
 granica powstaje dzięki automatycznemu dostrajaniu parametrów.
 Implementacja nie wprowadza nowych tajemnic: organizuje i powtarza na
 dużą skalę kombinacje liniowe, aktywacje, pochodne, iloczyny macierzy i
-kroki spadku gradientowego <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+kroki spadku gradientowego <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>.</p>
 <p>Program Pythona i wykonywalny notebook dołączono do plików
-uzupełniających tej edycji. Serwis <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a> udostępnia inne zasoby
+uzupełniających tej edycji. Serwis <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a> udostępnia inne zasoby
 edukacyjne.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Konstrukcja syntetycznego zbioru danych</h2>
 <p>Wyrażenia w tym dodatku dokumentują wyłącznie wybór <em>ad hoc</em>
@@ -885,9 +885,9 @@ wyuczonego modelu generatywnego. Funkcja dodatkowa
 <code>construct_data()</code> implementuje dokładnie te wzory. Osiem par
 do testu ilustracyjnego podano bezpośrednio w kodzie.</p>
 <p>Funkcje <code>reference_curve()</code> i
-<code>construct_data()</code> (Kody <a href="#cod:curva">5</a>
-i <a href="#cod:dados">6</a>) realizują dokładnie
-równania <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>, nie dostarczając krzywej
+<code>construct_data()</code> (Kody <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+i <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) realizują dokładnie
+równania <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>, nie dostarczając krzywej
 pomocniczej jako informacji uczącej. Cały program znajduje się w
 Sekcji 8 w kolejnych blokach i jest także dołączony w plikach do
 samodzielnego uruchomienia.</p>

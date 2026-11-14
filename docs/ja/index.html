@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="目次" class="toc"><h2>目次</h2><ol><li><a href="#コンピュータはいつ学習できるのか" target="_blank" rel="noopener noreferrer">コンピュータはいつ学習できるのか？</a></li><li><a href="#問題を数学的に表現する" target="_blank" rel="noopener noreferrer">問題を数学的に表現する</a></li><li><a href="#分類器としての直線" target="_blank" rel="noopener noreferrer">分類器としての直線</a></li><li><a href="#人工ニューロン" target="_blank" rel="noopener noreferrer">人工ニューロン</a></li><li><a href="#なぜ活性化関数が必要なのか" target="_blank" rel="noopener noreferrer">なぜ活性化関数が必要なのか？</a></li><li><a href="#小さなニューラルネットワークを構成する" target="_blank" rel="noopener noreferrer">小さなニューラルネットワークを構成する</a></li><li><a href="#ニューラルネットワークはどのように学習するのか" target="_blank" rel="noopener noreferrer">ニューラルネットワークはどのように学習するのか？</a></li><li><a href="#数学から-python-へ" target="_blank" rel="noopener noreferrer">数学から Python へ</a></li><li><a href="#appendix-synthetic-data">合成データ集合の構成</a></li></ol></nav>
+<nav aria-label="目次" class="toc"><h2>目次</h2><ol><li><a href="#コンピュータはいつ学習できるのか" target="_blank" rel="noopener noreferrer">コンピュータはいつ学習できるのか？</a></li><li><a href="#問題を数学的に表現する" target="_blank" rel="noopener noreferrer">問題を数学的に表現する</a></li><li><a href="#分類器としての直線" target="_blank" rel="noopener noreferrer">分類器としての直線</a></li><li><a href="#人工ニューロン" target="_blank" rel="noopener noreferrer">人工ニューロン</a></li><li><a href="#なぜ活性化関数が必要なのか" target="_blank" rel="noopener noreferrer">なぜ活性化関数が必要なのか？</a></li><li><a href="#小さなニューラルネットワークを構成する" target="_blank" rel="noopener noreferrer">小さなニューラルネットワークを構成する</a></li><li><a href="#ニューラルネットワークはどのように学習するのか" target="_blank" rel="noopener noreferrer">ニューラルネットワークはどのように学習するのか？</a></li><li><a href="#数学から-python-へ" target="_blank" rel="noopener noreferrer">数学から Python へ</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">合成データ集合の構成</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="コンピュータはいつ学習できるのか"><span class="section-no">01</span><h2>コンピュータはいつ学習できるのか？</h2>
 <p>日常生活では，私たちはほとんど意識することなく分類の判断を行っている。果物を見ればすぐにリンゴかオレンジかを見分け，携帯電話にメッセージが届けば通常の会話と不要な広告を区別する。医療分析では複数の測定値を組み合わせて判断を支援でき，金融機関では信用供与の前にさまざまな情報が評価される。これらの例ではいずれも，複数の特徴を同時に考慮して一つの答えを得ている。</p>
 <p>多くの従来型コンピュータプログラムでは，その答えを生み出す規則をプログラマが明示的に記述する。この方法は，規則が既知で明確に表現できる場合には有効である。しかし，データの変動が大きい場合や，良い判断に必要な条件をすべて事前に記述することが難しい場合には，この方法は十分に機能しなくなる。そこで自然に次の問いが生じる。</p>
@@ -221,7 +221,7 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}\]</span> である。</p>
 <p>この表記は，後に Python プログラムで現れる構造を先取りしている。果物を入力し，<span class="math inline">\(\widehat{y}\)</span> が得られるまで順に活性を計算する過程を，<em>順伝播</em>（<em>forward propagation</em>）または<em>forward pass</em> と呼ぶ。残る中心的な問いは，予測がデータに合うように13個のパラメータを自動的に決めるにはどうすればよいか，ということである。</p>
 </section><section class="article-section" id="ニューラルネットワークはどのように学習するのか"><span class="section-no">07</span><h2>ニューラルネットワークはどのように学習するのか？</h2>
-<p>重みとバイアスはあらかじめ与えられるのではなく，正解ラベル付きの事例から調整される。学習では，順伝播，損失の計算，勾配の計算，パラメータ更新を反復する（図 <a href="#fig:ciclo_treinamento">6</a>）。連鎖律により，各重みとバイアスを微小に変えたときの損失の変化を求められることが重要である。</p>
+<p>重みとバイアスはあらかじめ与えられるのではなく，正解ラベル付きの事例から調整される。学習では，順伝播，損失の計算，勾配の計算，パラメータ更新を反復する（図 <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>）。連鎖律により，各重みとバイアスを微小に変えたときの損失の変化を求められることが重要である。</p>
 <p>調整には，予測と正解との食い違いを数値で測る必要がある。この指標を<em>損失関数</em>と呼ぶ。損失関数は各予測に罰則を与え，異なるパラメータを比較可能にする。単に誤分類数を数える方法とは異なり，連続的な損失は正解に近い予測と遠い予測を区別し，学習の方向を与える導関数をもつ。</p>
 <p>質量 <span class="math inline">\(140\)</span> g，直径 <span class="math inline">\(7.0\)</span> cm のオレンジ（<span class="math inline">\(y=0\)</span>）を考えよう。ネットワークの出力を
 <span class="math inline">\(\widehat y\in(0,1)\)</span>
@@ -239,8 +239,8 @@ E=\frac12(\widehat y-y)^2.\]</span></p>
 J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <p>この平均は訓練集合上の性能を要約し，パラメータ調整によって減らそうとする量である。しかし
 <span class="math inline">\(J\)</span>
-の最小化だけでは未知の事例に対する性能は保証されない。導出には代数的に簡単な式 <a href="#eq:perda">perda</a>
-を用い，後にバイナリ交差エントロピーの勾配と比較する。ただし計算実験そのものは変更しない <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>。</p>
+の最小化だけでは未知の事例に対する性能は保証されない。導出には代数的に簡単な式 <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a>
+を用い，後にバイナリ交差エントロピーの勾配と比較する。ただし計算実験そのものは変更しない <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>。</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="学習の各段階：順伝播，損失の計算，感度の逆伝播，パラメータ更新。" decoding="async" loading="lazy" src="../assets/img/ja/Fig06.webp" style="width:88.0%"/>
 <figcaption>6. 学習の各段階：順伝播，損失の計算，感度の逆伝播，パラメータ更新。</figcaption>
@@ -258,7 +258,7 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 を用いる。本稿ではこの確率的勾配降下法（SGD）を採用する。</p>
 <h3 id="ネットワークにおける連鎖律">2–3–1
 ネットワークにおける連鎖律</h3>
-<p>図 <a href="#fig:small_network">5</a>
+<p>図 <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a>
 のネットワークを用い，３つの隠れニューロンには
 ReLU，出力にはシグモイドを適用する。質量（g）と直径（cm）は数値尺度が異なる。パラメータ推定の条件を悪化させないよう，各特徴量を
 <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span>
@@ -308,7 +308,7 @@ y(1-\widehat y)}
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>に対応する。これらの値は説明のため固定したものであり，節 <a href="#数学から-python-へ">8</a>
+<p>に対応する。これらの値は説明のため固定したものであり，節 <a href="#数学から-python-へ" target="_blank" rel="noopener noreferrer">8</a>
 のプログラムは訓練データから平均と標準偏差を計算する。</p>
 <p>初期の 13 個のパラメータを次のように選ぶ。</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -318,7 +318,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>式 <a href="#eq:forward">forward</a> から順に次を得る。</p>
+<p>式 <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> から順に次を得る。</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -326,7 +326,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>初期予測は誤分類である。式 <a href="#eq:delta_saida">delta_saida</a> と <a href="#eq:delta_oculta">delta_oculta</a> から，</p>
+<p>初期予測は誤分類である。式 <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> と <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> から，</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -337,7 +337,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \begin{bmatrix}-0.072137&amp;-0.072137\\\phantom{-}0.057710&amp;\phantom{-}0.057710\\\phantom{-}0&amp;\phantom{-}0\end{bmatrix}.
 \end{gathered}\]</span></p>
 <p>第３隠れニューロンは不活性（<span class="math inline">\(z_3^{(1)}&lt;0\)</span>）なので，この更新ではその入力重みとバイアスの勾配は零になる。<span class="math inline">\(\eta=0.05\)</span> とし，全パラメータに <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span> を同時に適用する。表 <a href="#tab:passo_sgd">1</a> は 13
+E/\partial\theta\)</span> を同時に適用する。表 <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> は 13
 個の更新から代表例を示す。</p>
 <div id="tab:passo_sgd">
 <table>
@@ -430,24 +430,24 @@ E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
 y(1-\widehat y)\)</span>
 が<em>出力層</em>の感度に掛からず，誤った予測でシグモイドが飽和するときの追加的な勾配減衰を避けられる。しかし他の層の小さな勾配まで除去するわけではなく，常に学習が速くなる保証もない。両損失は尺度が違うため，数値の大小をそのまま品質比較に用いてはならない。再現性を保つため主プログラムでは二乗誤差を使い，比較は補足ノートブックに示す。</p>
 <h3 id="エポックと汎化">エポックと汎化</h3>
-<p>訓練事例をすべて一度処理することを<em>エポック</em>という。次節の実装は各エポックで順序を混合し，果物１個ごとに更新する。構造は固定したまま，重み，バイアス，決定境界が変化する。ただし訓練損失の低下は新しい観測に対する良い予測を保証しない。この能力を<em>汎化</em>といい，訓練集合への過度な適合により未知データの性能が悪化することを<em>過学習</em>という。より一般的な研究では訓練・検証・テスト集合を分けてハイパーパラメータ選択と性能評価を行う <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>。</p>
+<p>訓練事例をすべて一度処理することを<em>エポック</em>という。次節の実装は各エポックで順序を混合し，果物１個ごとに更新する。構造は固定したまま，重み，バイアス，決定境界が変化する。ただし訓練損失の低下は新しい観測に対する良い予測を保証しない。この能力を<em>汎化</em>といい，訓練集合への過度な適合により未知データの性能が悪化することを<em>過学習</em>という。より一般的な研究では訓練・検証・テスト集合を分けてハイパーパラメータ選択と性能評価を行う <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>。</p>
 </section><section class="article-section" id="数学から-python-へ"><span class="section-no">08</span><h2>数学から Python へ</h2>
-<p>節 <a href="#ニューラルネットワークはどのように学習するのか">7</a>
-で導いた順伝播，連鎖律，確率的更新を NumPy のみで実装する <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>。非線形な決定境界を示すため隠れ層を３個から
+<p>節 <a href="#ニューラルネットワークはどのように学習するのか" target="_blank" rel="noopener noreferrer">7</a>
+で導いた順伝播，連鎖律，確率的更新を NumPy のみで実装する <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>。非線形な決定境界を示すため隠れ層を３個から
 12 個の ReLU ニューロンへ拡張する。この <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 ネットワークには <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
 個のパラメータがあるが，使用する数式は同じである。</p>
 <h3 id="説明用の合成データ">説明用の合成データ</h3>
 <p>実験では質量–直径平面に四つの帯状領域を作り，各帯 <span class="math inline">\(16\)</span> 点，計 <span class="math inline">\(64\)</span>
 点の人工訓練例を用いる。さらに図示だけを目的とする８点を用意する。リンゴの二つの帯は補助曲線より上，オレンジの二つの帯は下に配置し，微小な決定論的ずれで規則的すぎる配置を避ける。これらの値は非線形な境界を例示するために選んだものであり，<em>実測値でも果物の物理モデルでもない</em>。</p>
-<p>補助曲線は<em>データ生成にのみ</em>用いる。曲線そのものはネットワークへ入力されず，損失にも逆伝播にも登場しない。訓練に使うのは質量・直径の組とクラスラベルだけである。曲線の式とずれを付録 <a href="#appendix-synthetic-data">A</a> に示し，図 <a href="#fig:faixas_sinteticas">7</a>
+<p>補助曲線は<em>データ生成にのみ</em>用いる。曲線そのものはネットワークへ入力されず，損失にも逆伝播にも登場しない。訓練に使うのは質量・直径の組とクラスラベルだけである。曲線の式とずれを付録 <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a> に示し，図 <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>
 のデータを厳密に再現できるようにする。</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="４つの帯に配置した合成データ \(64\) 点。リンゴの２帯は補助曲線の上，オレンジの２帯は下にあり，破線は学習には用いない。" decoding="async" loading="lazy" src="../assets/img/ja/Fig07.webp" style="width:92.0%"/>
 <figcaption>7. ４つの帯に配置した合成データ <span class="math inline">\(64\)</span>
 点。リンゴの２帯は補助曲線の上，オレンジの２帯は下にあり，破線は学習には用いない。</figcaption>
 </figure>
-<p>図 <a href="#fig:faixas_sinteticas">7</a> は
+<p>図 <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> は
 <code>construct_data()</code>
 から実際に得られる点を示す。破線は合成データ生成の補助曲線であり，学習された境界ではない。追加の８点は最後の図でのみ使用し，標準化の統計量の計算には含めない。</p>
 <h3 id="標準化と学習設定">標準化と学習設定</h3>
@@ -465,7 +465,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 で微分不可能なので，<code>relu_derivative()</code>
 はこの点の計算上の値を零とする。これは単独で収束を保証しない。</p>
 <p><span class="math inline">\(\eta=0.05\)</span>
-は最適値ではなく慎重な選択である。乱数種とデータを固定した感度の確認として，<span class="math inline">\(1000\)</span> エポック後の結果を表 <a href="#tab:eta">2</a>
+は最適値ではなく慎重な選択である。乱数種とデータを固定した感度の確認として，<span class="math inline">\(1000\)</span> エポック後の結果を表 <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a>
 に示す。このデータでは試した最大の学習率がより速く収束するが，一般的な優位性を意味しない。<span class="math inline">\(0.05\)</span>
 を選ぶのは学習が安定し，損失の履歴を追いやすいためである。</p>
 <div id="tab:eta">
@@ -499,7 +499,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 </table>
 </div>
 <h3 id="python-による完全な実装">Python による完全な実装</h3>
-<p>完全なプログラムをコード <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>
+<p>完全なプログラムをコード <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>
 に実行順で示す。関数ごとに分けた連続する 10 ブロックが，補足ファイル
 <code>neural_network.py</code> を構成する。</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — 実行環境の準備</p><pre class="nm-python-code" dir="ltr"><code>"""Pedagogical example: fruit classification using a 2-12-1 network.
@@ -708,16 +708,16 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p><code>construct_data()</code>（コード <a href="#cod:dados">6</a>）は付録 <a href="#appendix-synthetic-data">A</a>
-の合成データ構成だけを実装し，補助曲線は最適化には参加しない。<code>train()</code>（コード <a href="#cod:treinamento">8</a>）は順伝播，<span class="math inline">\(\delta^{(2)}\)</span> と <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>
-の計算，勾配と四組のパラメータ更新を，式 <a href="#eq:forward">forward</a>，<a href="#eq:delta_saida">delta_saida</a>，<a href="#eq:delta_oculta">delta_oculta</a>，<a href="#eq:descida">descida</a>
-に従って実装する。すべての勾配はパラメータの変更より先に計算する。<code>plot_results()</code>（コード <a href="#cod:visualizacao">9</a>）はデータ生成曲線ではなく学習した境界を描く。</p>
+<p><code>construct_data()</code>（コード <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>）は付録 <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>
+の合成データ構成だけを実装し，補助曲線は最適化には参加しない。<code>train()</code>（コード <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>）は順伝播，<span class="math inline">\(\delta^{(2)}\)</span> と <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>
+の計算，勾配と四組のパラメータ更新を，式 <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>，<a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>，<a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>，<a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>
+に従って実装する。すべての勾配はパラメータの変更より先に計算する。<code>plot_results()</code>（コード <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>）はデータ生成曲線ではなく学習した境界を描く。</p>
 <p>独立して実行できる Python
 ファイルとノートブックも再現・改変のために提供する。</p>
 <p>乱数種 <span class="math inline">\(42\)</span>，学習率 <span class="math inline">\(\eta=0.05\)</span>，<span class="math inline">\(6000\)</span> エポックで実行すると，最終平均損失は
 <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>
 となり，訓練 <span class="math inline">\(64\)</span>
-点と追加の図示用８点をすべて正しく分類する。これは合成データ上での計算結果の確認であり，<em>汎化性能の統計的推定ではない</em>。図 <a href="#fig:saida_python">8</a> は学習された境界 <span class="math inline">\(\widehat y=0.5\)</span>
+点と追加の図示用８点をすべて正しく分類する。これは合成データ上での計算結果の確認であり，<em>汎化性能の統計的推定ではない</em>。図 <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> は学習された境界 <span class="math inline">\(\widehat y=0.5\)</span>
 を示す。丸と四角は訓練，三角と×印は図示用テスト点である。</p>
 <figure id="fig:saida_python">
 <img alt="\(2\) – \(12\) – \(1\) ネットワークが学習した決定境界 \(\widehat
@@ -726,10 +726,10 @@ y=0.5\) 。訓練点と図示用テスト点を示す。" decoding="async" loadi
 ネットワークが学習した決定境界 <span class="math inline">\(\widehat
 y=0.5\)</span>。訓練点と図示用テスト点を示す。</figcaption>
 </figure>
-<p>初めは二つの単純な点集合を直線で分離した。最後には，パラメータの自動調整から曲がった境界が生まれる例を得た。実装で行っていることは，線形結合，活性化関数，導関数，行列積，勾配降下による更新を数多く高速に反復することであり，これまでの数学的考え方に新たな不可解な要素を付け加えてはいない <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>。</p>
+<p>初めは二つの単純な点集合を直線で分離した。最後には，パラメータの自動調整から曲がった境界が生まれる例を得た。実装で行っていることは，線形結合，活性化関数，導関数，行列積，勾配降下による更新を数多く高速に反復することであり，これまでの数学的考え方に新たな不可解な要素を付け加えてはいない <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>。</p>
 <p>Python
 プログラムと実行ノートブックは補足ファイルに同梱されている。関連する教材は
-<a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>
+<a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>
 で公開している。</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>合成データ集合の構成</h2>
 <p>以下の式は計算演習用のデータを生成するための<em>便宜的な（ad
@@ -762,8 +762,8 @@ d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
 <code>construct_data()</code>
 はこれらの式を厳密に実装し，図示用８点もコード中で直接指定する。</p>
 <p><code>reference_curve()</code> と
-<code>construct_data()</code>（コード <a href="#cod:curva">5</a>
-および <a href="#cod:dados">6</a>）は式 <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>
+<code>construct_data()</code>（コード <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+および <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>）は式 <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>
 を実装するが，補助曲線を学習情報として与えない。完全なコードは節 8
 の連続ブロックと補足ファイルから直接実行できる。</p>
 </section></div>

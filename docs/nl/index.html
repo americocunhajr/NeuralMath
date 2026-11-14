@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Inhoud" class="toc"><h2>Inhoud</h2><ol><li><a href="#wanneer-kan-een-computer-leren" target="_blank" rel="noopener noreferrer">Wanneer kan een computer leren?</a></li><li><a href="#het-probleem-wiskundig-representeren" target="_blank" rel="noopener noreferrer">Het probleem wiskundig representeren</a></li><li><a href="#een-rechte-lijn-als-classifier" target="_blank" rel="noopener noreferrer">Een rechte lijn als classifier</a></li><li><a href="#het-kunstmatige-neuron" target="_blank" rel="noopener noreferrer">Het kunstmatige neuron</a></li><li><a href="#waarom-hebben-we-een-activatiefunctie-nodig" target="_blank" rel="noopener noreferrer">Waarom hebben we een activatiefunctie nodig?</a></li><li><a href="#een-klein-neuraal-netwerk-bouwen" target="_blank" rel="noopener noreferrer">Een klein neuraal netwerk bouwen</a></li><li><a href="#hoe-leert-een-neuraal-netwerk" target="_blank" rel="noopener noreferrer">Hoe leert een neuraal netwerk?</a></li><li><a href="#van-wiskunde-naar-python" target="_blank" rel="noopener noreferrer">Van wiskunde naar Python</a></li><li><a href="#appendix-synthetic-data">Constructie van de synthetische gegevens</a></li></ol></nav>
+<nav aria-label="Inhoud" class="toc"><h2>Inhoud</h2><ol><li><a href="#wanneer-kan-een-computer-leren" target="_blank" rel="noopener noreferrer">Wanneer kan een computer leren?</a></li><li><a href="#het-probleem-wiskundig-representeren" target="_blank" rel="noopener noreferrer">Het probleem wiskundig representeren</a></li><li><a href="#een-rechte-lijn-als-classifier" target="_blank" rel="noopener noreferrer">Een rechte lijn als classifier</a></li><li><a href="#het-kunstmatige-neuron" target="_blank" rel="noopener noreferrer">Het kunstmatige neuron</a></li><li><a href="#waarom-hebben-we-een-activatiefunctie-nodig" target="_blank" rel="noopener noreferrer">Waarom hebben we een activatiefunctie nodig?</a></li><li><a href="#een-klein-neuraal-netwerk-bouwen" target="_blank" rel="noopener noreferrer">Een klein neuraal netwerk bouwen</a></li><li><a href="#hoe-leert-een-neuraal-netwerk" target="_blank" rel="noopener noreferrer">Hoe leert een neuraal netwerk?</a></li><li><a href="#van-wiskunde-naar-python" target="_blank" rel="noopener noreferrer">Van wiskunde naar Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Constructie van de synthetische gegevens</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="wanneer-kan-een-computer-leren"><span class="section-no">01</span><h2>Wanneer kan een computer leren?</h2>
 <p>In het dagelijks leven nemen we bijna ongemerkt classificatiebeslissingen. Door naar een vrucht te kijken, herkennen we snel of het een appel of een sinaasappel is; wanneer er een bericht op een telefoon binnenkomt, onderscheiden we een legitiem gesprek van ongewenste reclame; bij medische analyses kunnen verschillende metingen worden gecombineerd om een beslissing te ondersteunen; en in financiële instellingen worden meerdere gegevens beoordeeld voordat krediet wordt verleend. In al deze voorbeelden worden verschillende kenmerken gezamenlijk beschouwd om tot een antwoord te komen.</p>
 <p>In veel traditionele computerprogramma’s worden de regels die dit antwoord opleveren expliciet door de programmeur geschreven. Deze aanpak werkt goed wanneer de regels bekend zijn en duidelijk kunnen worden geformuleerd. Ze wordt minder doeltreffend wanneer de gegevens sterk variëren of wanneer het moeilijk is vooraf alle voorwaarden voor een goede beslissing te formuleren. Dit leidt tot een natuurlijke vraag:</p>
@@ -224,7 +224,7 @@ v_1&amp;v_2&amp;v_3
 <p>Gewichten en biases zijn niet vooraf bekend: ze worden aangepast met
 behulp van voorbeelden waarvan de klasselabels bekend zijn. Het
 leerproces herhaalt de voorwaartse propagatie, de berekening van het
-verlies, de bepaling van de gradiënten en de parameterupdate (Figuur <a href="#fig:ciclo_treinamento">6</a>). De kettingregel maakt
+verlies, de bepaling van de gradiënten en de parameterupdate (Figuur <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>). De kettingregel maakt
 zichtbaar hoe ieder gewicht en iedere bias het verlies lokaal
 beïnvloedt.</p>
 <p>Voordat we parameters kunnen aanpassen, is een numerieke maat nodig
@@ -257,9 +257,9 @@ de grootheid die we door parameterupdates willen verlagen. Het
 minimaliseren van <span class="math inline">\(J\)</span> garandeert op
 zichzelf geen goede voorspellingen voor nieuwe gegevens; hierop komen we
 terug bij generalisatie. We kiezen het kwadratische verlies uit
-vergelijking <a href="#eq:perda">perda</a> vanwege de eenvoudige algebra
+vergelijking <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a> vanwege de eenvoudige algebra
 en vergelijken later de gradiënt ervan met die van binaire
-kruisentropie, zonder het numerieke experiment te wijzigen <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+kruisentropie, zonder het numerieke experiment te wijzigen <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Stappen van de training: voorwaartse propagatie, berekening
 van het verlies, terugpropagatie van gradiënten en aanpassing van
@@ -279,12 +279,12 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 stapgrootte. Bij te kleine waarden kan convergentie langzaam verlopen;
 te grote waarden kunnen schommelingen of divergentie veroorzaken. Worden
 de parameters na elke waarneming bijgewerkt, zoals in de code in
-Sectie <a href="#van-wiskunde-naar-python">8</a>, dan wordt <span class="math inline">\(\partial J/\partial\theta\)</span> vervangen door
+Sectie <a href="#van-wiskunde-naar-python" target="_blank" rel="noopener noreferrer">8</a>, dan wordt <span class="math inline">\(\partial J/\partial\theta\)</span> vervangen door
 <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Dit is
 de hier gebruikte vorm van stochastische gradiëntafdaling (SGD).</p>
 <h3 id="de-kettingregel-in-het-netwerk-231">De kettingregel in het
 netwerk 2–3–1</h3>
-<p>We gebruiken het netwerk van Figuur <a href="#fig:small_network">[fig:pequena_rede]</a>, met drie
+<p>We gebruiken het netwerk van Figuur <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a>, met drie
 verborgen ReLU-neuronen en een sigmoïde uitvoer. De invoer bestaat uit
 massa (in gram) en diameter (in centimeter), met verschillende numerieke
 schalen. Om nadelige effecten op de conditionering te beperken,
@@ -346,7 +346,7 @@ dan als dimensieloze invoer</p>
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
 <p>Deze referentiewaarden dienen alleen voor deze demonstratie; in
-Sectie <a href="#van-wiskunde-naar-python">8</a> worden gemiddelde en
+Sectie <a href="#van-wiskunde-naar-python" target="_blank" rel="noopener noreferrer">8</a> worden gemiddelde en
 standaardafwijking rechtstreeks op de trainingsgegevens berekend.</p>
 <p>We kiezen de dertien beginparameters</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -356,7 +356,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Vergelijking <a href="#eq:forward">forward</a> levert achtereenvolgens</p>
+<p>Vergelijking <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> levert achtereenvolgens</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -365,7 +365,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
 <p>De aanvankelijke voorspelling behoort tot de verkeerde klasse. Uit
-vergelijkingen <a href="#eq:delta_saida">delta_saida</a> en <a href="#eq:delta_oculta">delta_oculta</a> volgt</p>
+vergelijkingen <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> en <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> volgt</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -377,7 +377,7 @@ vergelijkingen <a href="#eq:delta_saida">delta_saida</a> en <a href="#eq:delta
 \end{gathered}\]</span></p>
 <p>Het derde verborgen neuron is inactief (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), zodat de gradiënten van
 zijn invoergewichten en bias in deze stap nul zijn. Met <span class="math inline">\(\eta=0.05\)</span> passen we <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span> gelijktijdig op alle parameters toe. Tabel <a href="#tab:passo_sgd">1</a> toont enkele van de dertien
+E/\partial\theta\)</span> gelijktijdig op alle parameters toe. Tabel <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> toont enkele van de dertien
 updates; de overige worden op dezelfde manier berekend.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -502,11 +502,11 @@ goede voorspellingen op ongeziene gegevens. Dat vermogen heet
 trainingsvoorbeelden nieuwe voorspellingen verslechtert, spreken we van
 <em>overfitting</em>. In uitgebreidere studies maken afzonderlijke
 trainings-, validatie- en testverzamelingen het mogelijk hyperparameters
-te kiezen en de prestaties met minder vertekening te beoordelen <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+te kiezen en de prestaties met minder vertekening te beoordelen <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="van-wiskunde-naar-python"><span class="section-no">08</span><h2>Van wiskunde naar Python</h2>
 <p>We implementeren nu de voorwaartse propagatie, de kettingregel en de
 hierboven afgeleide stochastische updates met uitsluitend
-<code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Om een niet-lineaire grens te
+<code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Om een niet-lineaire grens te
 tonen, breiden we de verborgen laag uit van drie naar twaalf
 ReLU-neuronen. Het resulterende <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>-netwerk heeft <span class="math inline">\(12(2+1)+(12+1)=49\)</span> parameters en gebruikt
 dezelfde vergelijkingen.</p>
@@ -525,8 +525,8 @@ fysisch model van fruit</em>.</p>
 genereren</em>. Het netwerk krijgt haar niet als invoer, ze staat niet
 in de verliesfunctie en speelt geen rol bij de terugpropagatie. De
 training gebruikt alleen massa–diameterparen en hun labels. De formule
-en de verschuivingen zijn beschreven in Bijlage <a href="#appendix-synthetic-data">A</a>, zodat de
-punten in Figuur <a href="#fig:faixas_sinteticas">7</a>
+en de verschuivingen zijn beschreven in Bijlage <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>, zodat de
+punten in Figuur <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>
 exact zijn te reproduceren.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Verdeling van \(64\) synthetische voorbeelden over vier stroken: twee boven (appels) en twee
@@ -538,7 +538,7 @@ onder (sinaasappels) een hulpkromme waarmee de punten worden
 gegenereerd. De gestreepte kromme wordt niet gebruikt tijdens de
 training.</figcaption>
 </figure>
-<p>Figuur <a href="#fig:faixas_sinteticas">7</a> laat de punten uit
+<p>Figuur <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> laat de punten uit
 <code>construct_data()</code> zien. De gestreepte kromme hoort
 uitsluitend bij de synthetische constructie en is geen geleerde
 beslissingsgrens. De acht extra voorbeelden dienen alleen voor de
@@ -571,7 +571,7 @@ garandeert.</p>
 <p>We gebruiken <span class="math inline">\(\eta=0.05\)</span> als
 voorzichtige keuze, niet als optimale leersnelheid. Een eenvoudige
 gevoeligheidsanalyse met dezelfde gegevens en hetzelfde toevalszaad
-geeft Tabel <a href="#tab:eta">2</a> na <span class="math inline">\(1000\)</span> tijdperken. De grootste onderzochte
+geeft Tabel <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> na <span class="math inline">\(1000\)</span> tijdperken. De grootste onderzochte
 leersnelheid convergeert in deze verzameling sneller, maar daaruit volgt
 geen algemene geschiktheid. We behouden <span class="math inline">\(0.05\)</span> vanwege de stabiele training en het
 overzichtelijke verloop van het verlies.</p>
@@ -607,7 +607,7 @@ correcte trainingsclassificaties na <span class="math inline">\(1000\)</span> ti
 </div>
 <h3 id="volledige-implementatie-in-python">Volledige implementatie in
 Python</h3>
-<p>Het volledige programma staat in Code <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, geordend naar
+<p>Het volledige programma staat in Code <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, geordend naar
 functie en uitvoervolgorde. Deze tien opeenvolgende blokken vormen samen
 <code>neural_network.py</code>, dat ook als aanvullend bestand
 beschikbaar is.</p>
@@ -817,13 +817,13 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>De functie <code>construct_data()</code> (Code <a href="#cod:dados">6</a>)
-bouwt uitsluitend de synthetische gegevens uit Bijlage <a href="#appendix-synthetic-data">A</a>; de hulpkromme speelt geen rol bij de
-optimalisatie. De functie <code>train()</code> (Code <a href="#cod:treinamento">8</a>) voert de
+<p>De functie <code>construct_data()</code> (Code <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+bouwt uitsluitend de synthetische gegevens uit Bijlage <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; de hulpkromme speelt geen rol bij de
+optimalisatie. De functie <code>train()</code> (Code <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) voert de
 voorwaartse propagatie, de berekening van <span class="math inline">\(\delta^{(2)}\)</span> en <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, de gradiënten
-en de vier parameterupdates volgens vergelijkingen <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> en <a href="#eq:descida">descida</a> uit. Alle gradiënten worden
+en de vier parameterupdates volgens vergelijkingen <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> en <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a> uit. Alle gradiënten worden
 berekend vóórdat er een parameter verandert. De functie
-<code>plot_results()</code> (Code <a href="#cod:visualizacao">9</a>) tekent de
+<code>plot_results()</code> (Code <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) tekent de
 geleerde grens en niet de kromme waarmee de gegevens zijn
 gegenereerd.</p>
 <p>Het programma is daarnaast beschikbaar als zelfstandig Python-bestand
@@ -834,7 +834,7 @@ toevalszaad <span class="math inline">\(42\)</span> en <span class="math inline"
 gemiddeld eindverlies van <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span> op, met <span class="math inline">\(64\)</span> correcte classificaties op de
 trainingsgegevens en acht op de aanvullende voorbeelden. Dit controleert
 de computationele werking voor een synthetisch voorbeeld, maar is geen
-statistische schatting van de generalisatie. Figuur <a href="#fig:saida_python">8</a> toont de geleerde grens <span class="math inline">\(\widehat y=0.5\)</span>; cirkels en vierkanten
+statistische schatting van de generalisatie. Figuur <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> toont de geleerde grens <span class="math inline">\(\widehat y=0.5\)</span>; cirkels en vierkanten
 geven de trainingspunten aan, driehoeken en kruisen de illustratieve
 testpunten.</p>
 <figure id="fig:saida_python">
@@ -852,9 +852,9 @@ waarin een kronkelende grens uit de automatische aanpassing van
 parameters ontstaat. De implementatie voegt niets mysterieus toe aan de
 besproken wiskunde: ze herhaalt op grotere schaal lineaire combinaties,
 activatiefuncties, afgeleiden, matrixproducten en stappen van
-gradiëntafdaling <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+gradiëntafdaling <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>.</p>
 <p>Het Python-programma en het uitvoerbare notebook worden met de
-aanvullende bestanden van deze editie verspreid. Op <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>
+aanvullende bestanden van deze editie verspreid. Op <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>
 staan andere didactische bronnen.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Constructie van de synthetische gegevens</h2>
 <p>De uitdrukkingen in deze bijlage documenteren uitsluitend een
@@ -894,9 +894,9 @@ generatief model. De aanvullende functie <code>construct_data()</code>
 implementeert precies deze uitdrukkingen. De acht extra paren voor de
 illustratieve test staan rechtstreeks in de code.</p>
 <p>De functies <code>reference_curve()</code> en
-<code>construct_data()</code> (Code <a href="#cod:curva">5</a>
-en <a href="#cod:dados">6</a>) implementeren
-vergelijkingen <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> exact, zonder de hulpkromme
+<code>construct_data()</code> (Code <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+en <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) implementeren
+vergelijkingen <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a> exact, zonder de hulpkromme
 als trainingsinformatie te gebruiken. Het volledige programma staat in
 Sectie 8 in opeenvolgende blokken en is ook beschikbaar als aanvullend
 bestand.</p>
