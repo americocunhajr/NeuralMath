@@ -419,7 +419,7 @@ label and provides derivatives that guide training.</p>
 and diameter <span class="math inline">\(7.0\)</span> cm, identified as
 an orange (<span class="math inline">\(y=0\)</span>). Denoting the
 network output by <span class="math inline">\(\widehat
-y\in(0,1)\)</span>, we use the squared loss for a single example: <span class="math display">\[\label{eq:perda}
+y\in(0,1)\)</span>, we use the squared loss for a single example: <span id="eq:perda" class="nm-eq-anchor"></span><span class="math display">\[\tag{8}
 E=\frac12(\widehat y-y)^2.\]</span> Here <span class="math inline">\(y\)</span> denotes the true class and <span class="math inline">\(\widehat y\)</span> the prediction. The loss is
 nonnegative and approaches zero as <span class="math inline">\(\widehat
 y\)</span> approaches the label <span class="math inline">\(y\)</span>;
@@ -431,12 +431,12 @@ prediction that is closer to the expected value. The factor <span class="math in
 simplifies the derivative.</p>
 <p>Because the network must learn from many examples rather than a
 single fruit, we combine the individual losses. For <span class="math inline">\(N\)</span> observations, define the mean loss
-<span class="math display">\[\label{eq:perda_media}
+<span id="eq:perda_media" class="nm-eq-anchor"></span><span class="math display">\[\tag{9}
 J=\frac1N\sum_{i=1}^{N}E_i.\]</span> This average summarizes performance
 on the training set and is the quantity we seek to reduce by adjusting
 the network parameters. Minimizing <span class="math inline">\(J\)</span> does not, by itself, guarantee good
 predictions on new data; we return to this issue when discussing
-generalization. We retain <a data-reference="eq:perda" data-reference-type="eqref" href="#eq:perda" target="_blank" rel="noopener noreferrer">[eq:perda]</a> for
+generalization. We retain <a data-reference="eq:perda" data-reference-type="eqref" href="#eq:perda" target="_blank" rel="noopener noreferrer">(8)</a> for
 the main derivation because of its algebraic simplicity. Later, we
 compare its gradient with that of binary cross-entropy without changing
 the computational experiment <span class="nm-inline-citation" data-cites="faceli2021 goodfellow2016">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
@@ -448,7 +448,7 @@ backpropagation of gradients, and parameter updates." decoding="async" loading="
 <p>If <span class="math inline">\(\theta\)</span> denotes a weight or
 bias, the derivative <span class="math inline">\(\partial
 J/\partial\theta\)</span> measures the local sensitivity of the mean
-loss to that parameter. A gradient descent step is <span class="math display">\[\label{eq:descida}
+loss to that parameter. A gradient descent step is <span id="eq:descida" class="nm-eq-anchor"></span><span class="math display">\[\tag{10}
 \theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
 J}{\partial\theta},\qquad \eta&gt;0.\]</span> The learning rate <span class="math inline">\(\eta\)</span> controls the step size: excessively
 small values may slow convergence, whereas excessively large values can
@@ -471,14 +471,14 @@ computational training, these statistics are obtained from the training
 set alone, preventing leakage from the test data. In the numerical
 example below, we use fixed centers and scales solely to simplify the
 arithmetic. For standardized inputs <span class="math inline">\(\mathbf{x}^{\ast}=(x_1^{\ast},x_2^{\ast})^{\mathsf
-T}\)</span>, the forward pass is <span class="math display">\[\label{eq:forward}
+T}\)</span>, the forward pass is <span id="eq:forward" class="nm-eq-anchor"></span><span class="math display">\[\tag{11}
 \begin{aligned}
 \mathbf{z}^{(1)}&amp;=W^{(1)}\mathbf{x}^{\ast}+\mathbf{b}^{(1)},
 &amp;\mathbf{h}&amp;=\operatorname{ReLU}(\mathbf{z}^{(1)}),\\
 z^{(2)}&amp;=W^{(2)}\mathbf{h}+c,
 &amp;\widehat y&amp;=\sigma(z^{(2)}).
 \end{aligned}\]</span> Here <span class="math inline">\(c=b^{(2)}\)</span> is the output bias and <span class="math inline">\(W^{(2)}=(v_1,v_2,v_3)\)</span>. Backpropagation
-begins at the output neuron, repeatedly applying the chain rule: <span class="math display">\[\label{eq:delta_saida}
+begins at the output neuron, repeatedly applying the chain rule: <span id="eq:delta_saida" class="nm-eq-anchor"></span><span class="math display">\[\tag{12}
 \begin{aligned}
 \delta^{(2)}:=\frac{\partial E}{\partial z^{(2)}}
 &amp;=\underbrace{\frac{\partial E}{\partial\widehat y}}_{\widehat y-y}
@@ -488,7 +488,7 @@ y(1-\widehat y)}
 \frac{\partial E}{\partial v_j}&amp;=\delta^{(2)}h_j,
 \qquad \frac{\partial E}{\partial c}=\delta^{(2)}.
 \end{aligned}\]</span> Because each activation <span class="math inline">\(h_j\)</span> also depends on its weights and bias,
-we compute the sensitivities of the hidden neurons: <span class="math display">\[\label{eq:delta_oculta}
+we compute the sensitivities of the hidden neurons: <span id="eq:delta_oculta" class="nm-eq-anchor"></span><span class="math display">\[\tag{13}
 \begin{aligned}
 \delta_j^{(1)}:=\frac{\partial E}{\partial z_j^{(1)}}
 &amp;=\delta^{(2)}v_j\,\operatorname{ReLU}'(z_j^{(1)}),\\
@@ -506,25 +506,25 @@ parameter update</h3>
 <p>For clarity, <em>only in this example</em>, we choose reference
 centers and scales of <span class="math inline">\(160\)</span> g and
 <span class="math inline">\(20\)</span> g for mass, and <span class="math inline">\(7.5\)</span> cm and <span class="math inline">\(0.5\)</span> cm for diameter. The fruit <span class="math inline">\((140\,\mathrm{g},7.0\,\mathrm{cm})\)</span>
-therefore corresponds to the dimensionless input <span class="math display">\[\label{eq:exemplo_entrada}
+therefore corresponds to the dimensionless input <span id="eq:exemplo_entrada" class="nm-eq-anchor"></span><span class="math display">\[\tag{14}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span> These reference values are
 fixed for this demonstration; in Section <a data-reference="sec:python" data-reference-type="ref" href="#sec:python" target="_blank" rel="noopener noreferrer">8</a>, the mean
 and standard deviation are computed directly from the training data.</p>
-<p>Choose the thirteen initial parameters <span class="math display">\[\label{eq:param_iniciais}
+<p>Choose the thirteen initial parameters <span id="eq:param_iniciais" class="nm-eq-anchor"></span><span class="math display">\[\tag{15}
 W^{(1)}=\begin{bmatrix}
 0.2&amp;0.1\\-0.3&amp;0.2\\0.1&amp;-0.4
 \end{bmatrix},\quad
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
-c=1.\]</span> Equation <a data-reference="eq:forward" data-reference-type="eqref" href="#eq:forward" target="_blank" rel="noopener noreferrer">[eq:forward]</a> successively gives <span class="math display">\[\label{eq:exemplo_forward}
+c=1.\]</span> Equation <a data-reference="eq:forward" data-reference-type="eqref" href="#eq:forward" target="_blank" rel="noopener noreferrer">(11)</a> successively gives <span id="eq:exemplo_forward" class="nm-eq-anchor"></span><span class="math display">\[\tag{16}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
 \mathbf{h}=(0.2,\;0.3,\;0)^{\mathsf T},\\
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span> The initial prediction gives the wrong class.
-From Equations <a data-reference="eq:delta_saida" data-reference-type="eqref" href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">[eq:delta_saida]</a> and <a data-reference="eq:delta_oculta" data-reference-type="eqref" href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">[eq:delta_oculta]</a>, <span class="math display">\[\label{eq:exemplo_gradientes}
+From Equations <a data-reference="eq:delta_saida" data-reference-type="eqref" href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">(12)</a> and <a data-reference="eq:delta_oculta" data-reference-type="eqref" href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">(13)</a>, <span id="eq:exemplo_gradientes" class="nm-eq-anchor"></span><span class="math display">\[\tag{17}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
 \boldsymbol{\delta}^{(1)}\simeq(0.072137,\;-0.057710,\;0)^{\mathsf T},\\
@@ -537,7 +537,7 @@ and bias have zero gradient in this step. With <span class="math inline">\(\eta=
 E/\partial\theta\)</span> simultaneously to all parameters. Table <a data-reference="tab:passo_sgd" data-reference-type="ref" href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> lists a selection of the thirteen
 updates; the others follow the same formulas.</p>
 <div id="tab:passo_sgd">
-<table>
+<table id="tab:passo_sgd">
 <caption>Selected parameters before and after an SGD step with <span class="math inline">\(\eta=0.05\)</span>.</caption>
 <thead>
 <tr class="header">
@@ -605,7 +605,7 @@ cross-entropy</h3>
 binary classification with sigmoid output also commonly uses <em>binary
 cross-entropy</em>. For <span class="math inline">\(y\in\{0,1\}\)</span>
 and <span class="math inline">\(\widehat y=\sigma(z)\)</span>, the loss
-for an observation is <span class="math display">\[\label{eq:entropia_cruzada}
+for an observation is <span id="eq:entropia_cruzada" class="nm-eq-anchor"></span><span class="math display">\[\tag{18}
 E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span> Whereas
 squared loss penalizes the numerical discrepancy between prediction and
 label, cross-entropy penalizes predictions assigning low probability to
@@ -614,7 +614,7 @@ y\)</span> as the probability of class <span class="math inline">\(1\)</span>. T
 training appears when differentiating with respect to the output
 neuron’s score <span class="math inline">\(z\)</span>. Applying the
 chain rule and using <span class="math inline">\(\sigma'(z)=\widehat
-y(1-\widehat y)\)</span> gives <span class="math display">\[\label{eq:derivada_entropia_cruzada}
+y(1-\widehat y)\)</span> gives <span id="eq:derivada_entropia_cruzada" class="nm-eq-anchor"></span><span class="math display">\[\tag{19}
 \begin{aligned}
 \frac{\partial E_{\mathrm{CE}}}{\partial z}
 &amp;=\left(-\frac{y}{\widehat y}+\frac{1-y}{1-\widehat y}\right)
@@ -676,7 +676,7 @@ fruit</em>.</p>
 not given to the network, does not appear in the loss, and plays no part
 in backpropagation. Training uses only mass–diameter pairs and their
 class labels. The generating formula and displacements are documented in
-Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#ap:gerador" target="_blank" rel="noopener noreferrer">9</a>, enabling exact reproduction of the
+Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#ap:gerador" target="_blank" rel="noopener noreferrer">A</a>, enabling exact reproduction of the
 data in Figure <a data-reference="fig:faixas_sinteticas" data-reference-type="ref" href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Fig07: Distribution of \(64\) synthetic examples in four bands, two above (apples) and two below
@@ -695,7 +695,7 @@ enter the computation of standardization statistics.</p>
 <h3 id="standardization-and-training-choices">Standardization and
 training choices</h3>
 <p>Because mass and diameter have different units and scales, each input
-is converted to a dimensionless variable: <span class="math display">\[\label{eq:padronizacao}
+is converted to a dimensionless variable: <span id="eq:padronizacao" class="nm-eq-anchor"></span><span class="math display">\[\tag{20}
 x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 \mu_j=\frac1N\sum_{i=1}^N x_{ij},\quad
 \sigma_j=\sqrt{\frac1N\sum_{i=1}^N(x_{ij}-\mu_j)^2}.\]</span> The mean
@@ -720,7 +720,7 @@ converged more rapidly on this data set, but this observation does not
 establish its general suitability. We retain <span class="math inline">\(0.05\)</span> because it provides stable training
 and an easily inspected loss history.</p>
 <div id="tab:eta">
-<table>
+<table id="tab:eta">
 <caption>Learning-rate sensitivity: mean loss and correct training
 predictions after <span class="math inline">\(1000\)</span> epochs (seed
 <span class="math inline">\(42\)</span>).</caption>
@@ -751,12 +751,11 @@ predictions after <span class="math inline">\(1000\)</span> epochs (seed
 </table>
 </div>
 <h3 id="full-python-implementation">Full Python implementation</h3>
-<p>The complete program is presented in Codes <a data-reference="cod:ambiente" data-reference-type="ref" href="#cod:ambiente" target="_blank" rel="noopener noreferrer">[cod:ambiente]</a>–<a data-reference="cod:principal" data-reference-type="ref" href="#cod:principal" target="_blank" rel="noopener noreferrer">[cod:principal]</a>, organized by
+<p>The complete program is presented in Codes <a data-reference="cod:ambiente" data-reference-type="ref" href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a data-reference="cod:principal" data-reference-type="ref" href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, organized by
 function and in execution order. These ten consecutive blocks make up
 the file <code>neural_network.py</code>, also supplied as supplementary
 material.</p>
-<p><span id="cod:ambiente" label="cod:ambiente"></span>
-<span><strong>Code –Environment setup</strong></span></p>
+<span id="cod:ambiente" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 1 — Imports and dependencies</p><pre class="nm-python-code"><code>"""Pedagogical example: fruit classification using a 2-12-1 network.
 Dependencies: numpy and matplotlib. Run: python neural_network.py.
@@ -766,16 +765,14 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 </code></pre></section>
 </div>
-<p><span id="cod:relu" label="cod:relu"></span> <span><strong>Code –ReLU
-activation</strong></span></p>
+<span id="cod:relu" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 2 — ReLU activation</p><pre class="nm-python-code"><code>def relu(s):
     """Hidden-layer activation: ReLU(s) = max(0,s)."""
     return np.maximum(0, s)
 </code></pre></section>
 </div>
-<p><span id="cod:relu_derivada" label="cod:relu_derivada"></span>
-<span><strong>Code –Computational ReLU derivative</strong></span></p>
+<span id="cod:relu_derivada" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 3 — ReLU derivative</p><pre class="nm-python-code"><code>def relu_derivative(s):
     # ReLU is not differentiable at s=0; its computational derivative is set to 0.
@@ -783,16 +780,14 @@ activation</strong></span></p>
     return (s &gt; 0).astype(float)
 </code></pre></section>
 </div>
-<p><span id="cod:sigmoid" label="cod:sigmoid"></span> <span><strong>Code
-–Sigmoid activation</strong></span></p>
+<span id="cod:sigmoid" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 4 — Sigmoid activation</p><pre class="nm-python-code"><code>def sigmoid(s):
     """Output activation, with values between 0 and 1."""
     return 1 / (1 + np.exp(-s))
 </code></pre></section>
 </div>
-<p><span id="cod:curva" label="cod:curva"></span> <span><strong>Code
-–Auxiliary curve for data generation</strong></span></p>
+<span id="cod:curva" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 5 — Auxiliary reference curve</p><pre class="nm-python-code"><code>def reference_curve(m):
     # Artificial curve (cm): offset + Gaussian bump + logistic rise.
@@ -802,9 +797,7 @@ activation</strong></span></p>
             + 1.50/(1 + np.exp(-(m-202)/5)))
 </code></pre></section>
 </div>
-<p><span id="cod:dados" label="cod:dados"></span> <span><strong>Code
-–Synthetic training and illustrative test
-observations</strong></span></p>
+<span id="cod:dados" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 6 — Synthetic training and test data</p><pre class="nm-python-code"><code>def construct_data():
     # 16 masses in each of four bands: a1, a2, l1, l2.
@@ -850,9 +843,7 @@ observations</strong></span></p>
     return X_train, y_train, X_test, y_test
 </code></pre></section>
 </div>
-<p><span id="cod:previsao" label="cod:previsao"></span>
-<span><strong>Code –Predictions from the forward
-pass</strong></span></p>
+<span id="cod:previsao" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 7 — Prediction and standardization</p><pre class="nm-python-code"><code>def predict(X, mean, std, W1, b1, W2, b2):
     # x_j^* = (x_j - mu_j)/sigma_j, using training-set statistics.
@@ -862,9 +853,7 @@ pass</strong></span></p>
     return sigmoid(h @ W2 + b2)
 </code></pre></section>
 </div>
-<p><span id="cod:treinamento" label="cod:treinamento"></span>
-<span><strong>Code –Training by backpropagation and gradient
-descent</strong></span></p>
+<span id="cod:treinamento" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 8 — Training with explicit backpropagation</p><pre class="nm-python-code"><code>def train(Xn, y_train, eta=0.05, n_epochs=6000, seed=42):
     rng = np.random.default_rng(seed)
@@ -910,9 +899,7 @@ descent</strong></span></p>
     return W1, b1, W2, b2, np.array(history)
 </code></pre></section>
 </div>
-<p><span id="cod:visualizacao" label="cod:visualizacao"></span>
-<span><strong>Code –Plotting the learned decision
-boundary</strong></span></p>
+<span id="cod:visualizacao" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 9 — Prediction visualization</p><pre class="nm-python-code"><code>def plot_results(X_train, y_train, X_test, y_test,
                   mean, std, W1, b1, W2, b2, save_path=None):
@@ -968,8 +955,7 @@ boundary</strong></span></p>
     return fig, ax
 </code></pre></section>
 </div>
-<p><span id="cod:principal" label="cod:principal"></span>
-<span><strong>Code –Running the experiment</strong></span></p>
+<span id="cod:principal" class="nm-code-anchor"></span>
 <div class="tcolorbox">
 <section class="nm-code-block"><p class="nm-code-heading">Code 10 — Full program execution</p><pre class="nm-python-code"><code>if __name__ == '__main__':
     X_train, y_train, X_test, y_test = construct_data()
@@ -986,13 +972,13 @@ boundary</strong></span></p>
                  mean, std, W1, b1, W2, b2)
     plt.show()</code></pre></section>
 </div>
-<p>The function <code>construct_data()</code> (Code <a data-reference="cod:dados" data-reference-type="ref" href="#cod:dados" target="_blank" rel="noopener noreferrer">[cod:dados]</a>)
-implements only the synthetic construction documented in Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#ap:gerador" target="_blank" rel="noopener noreferrer">9</a>; the auxiliary curve does not take
-part in optimization. The function <code>train()</code> (Code <a data-reference="cod:treinamento" data-reference-type="ref" href="#cod:treinamento" target="_blank" rel="noopener noreferrer">[cod:treinamento]</a>) implements the
+<p>The function <code>construct_data()</code> (Code <a data-reference="cod:dados" data-reference-type="ref" href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+implements only the synthetic construction documented in Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#ap:gerador" target="_blank" rel="noopener noreferrer">A</a>; the auxiliary curve does not take
+part in optimization. The function <code>train()</code> (Code <a data-reference="cod:treinamento" data-reference-type="ref" href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) implements the
 forward pass, the calculation of <span class="math inline">\(\delta^{(2)}\)</span> and <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradients, and
-four parameter updates corresponding to Equations <a data-reference="eq:forward" data-reference-type="eqref" href="#eq:forward" target="_blank" rel="noopener noreferrer">[eq:forward]</a>, <a data-reference="eq:delta_saida" data-reference-type="eqref" href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">[eq:delta_saida]</a>, <a data-reference="eq:delta_oculta" data-reference-type="eqref" href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">[eq:delta_oculta]</a>, and <a data-reference="eq:descida" data-reference-type="eqref" href="#eq:descida" target="_blank" rel="noopener noreferrer">[eq:descida]</a>. All gradients are computed
+four parameter updates corresponding to Equations <a data-reference="eq:forward" data-reference-type="eqref" href="#eq:forward" target="_blank" rel="noopener noreferrer">(11)</a>, <a data-reference="eq:delta_saida" data-reference-type="eqref" href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">(12)</a>, <a data-reference="eq:delta_oculta" data-reference-type="eqref" href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">(13)</a>, and <a data-reference="eq:descida" data-reference-type="eqref" href="#eq:descida" target="_blank" rel="noopener noreferrer">(10)</a>. All gradients are computed
 before modifying any parameter. The function <code>plot_results()</code>
-(Code <a data-reference="cod:visualizacao" data-reference-type="ref" href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">[cod:visualizacao]</a>) plots the
+(Code <a data-reference="cod:visualizacao" data-reference-type="ref" href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) plots the
 learned result, not the curve used to construct the data.</p>
 <p>The program is also provided as an independent Python file and an
 executable notebook to facilitate reproduction and adaptation.</p>
@@ -1032,7 +1018,7 @@ the network architecture, loss function, or training algorithm. No
 information about the auxiliary curve is used to update weights or
 biases.</p>
 <p>For mass <span class="math inline">\(m\)</span> entered numerically
-in grams, define an auxiliary diameter curve, in centimeters, by <span class="math display">\[\label{eq:fronteira_base}
+in grams, define an auxiliary diameter curve, in centimeters, by <span id="eq:fronteira_base" class="nm-eq-anchor"></span><span class="math display">\[\tag{21}
 d_0(m)=6.68+0.74\exp\!\left[-\left(\frac{m-155}{20}\right)^2\right]
 +\frac{1.50}{1+\exp[-(m-202)/5]}.\]</span> The first term shifts the
 curve vertically; the second creates a rise near <span class="math inline">\(155\)</span> g; and the third yields a smooth
@@ -1042,10 +1028,10 @@ observations.</p>
 <p>For <span class="math inline">\(k=0,\ldots,15\)</span>, let <span class="math inline">\(m_k=118+(212-118)k/15\)</span>, in grams. A second
 set of masses is given by <span class="math inline">\(\widetilde
 m_k=m_k+\varepsilon_k\)</span>, where the perturbations, in grams, are
-<span class="math display">\[\label{eq:deslocamentos}
+<span id="eq:deslocamentos" class="nm-eq-anchor"></span><span class="math display">\[\tag{22}
 (1.2,-1.1,0.8,-1.3,1.0,-0.8,1.1,-1.0,
 1.3,-0.9,0.9,-1.2,1.0,-1.0,0.8,-0.7).\]</span> The diameters of the four
-bands are <span class="math display">\[\label{eq:faixas}
+bands are <span id="eq:faixas" class="nm-eq-anchor"></span><span class="math display">\[\tag{23}
 \begin{aligned}
 d_{a1,k}&amp;=d_0(m_k)+0.22+0.05\sin(0.8k),\\
 d_{a2,k}&amp;=d_0(\widetilde m_k)+0.58+0.06\cos(0.45k),\\
@@ -1059,12 +1045,15 @@ function <code>construct_data()</code> implements exactly these
 expressions. The eight additional pairs for illustrative testing are
 explicitly specified in that code.</p>
 <p>The functions <code>reference_curve()</code> and
-<code>construct_data()</code> (Codes <a data-reference="cod:curva" data-reference-type="ref" href="#cod:curva" target="_blank" rel="noopener noreferrer">[cod:curva]</a>
-and <a data-reference="cod:dados" data-reference-type="ref" href="#cod:dados" target="_blank" rel="noopener noreferrer">[cod:dados]</a>) implement Equations <a data-reference="eq:fronteira_base" data-reference-type="eqref" href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">[eq:fronteira_base]</a>–<a data-reference="eq:faixas" data-reference-type="eqref" href="#eq:faixas" target="_blank" rel="noopener noreferrer">[eq:faixas]</a> exactly, without supplying
+<code>construct_data()</code> (Codes <a data-reference="cod:curva" data-reference-type="ref" href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+and <a data-reference="cod:dados" data-reference-type="ref" href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) implement Equations <a data-reference="eq:fronteira_base" data-reference-type="eqref" href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">(21)</a>–<a data-reference="eq:faixas" data-reference-type="eqref" href="#eq:faixas" target="_blank" rel="noopener noreferrer">(23)</a> exactly, without supplying
 the auxiliary curve as training information. The full program is
 reproduced in Section 8 as consecutive blocks and is provided among the
 supplementary files for direct execution.</p>
-<div class="thebibliography">
+
+</section>
+</div>
+<section class="article-section references"><span class="section-no">References</span><h2>References</h2><div class="thebibliography">
 <p id="bib:batista2022">[1] M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”. <em>Professor de Matemática Online</em>, 10(4), 454–481, 2022. doi: 10.21711/2319023x2022/pmo1032.</p>
 <p id="bib:faceli2021">[2] K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida and A. C. P. L. F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de Aprendizado de Máquina</em>, 2nd ed. Rio de Janeiro: LTC, 2021.</p>
 <p id="bib:goodfellow2016">[3] I. Goodfellow, Y. Bengio and A. Courville. <em>Deep Learning</em>. Cambridge, MA: MIT Press, 2016. <a href="https://www.deeplearningbook.org/" target="_blank" rel="noopener noreferrer">Online edition</a>.</p>
@@ -1074,30 +1063,6 @@ supplementary files for direct execution.</p>
 <p id="bib:lecun2015">[7] Y. LeCun, Y. Bengio and G. Hinton. “Deep learning”. <em>Nature</em>, 521, 436–444, 2015. doi: 10.1038/nature14539.</p>
 <p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. <a href="https://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener noreferrer">Online edition</a>.</p>
 <p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, 323, 533–536, 1986. doi: 10.1038/323533a0.</p>
-</div>
-</section>
-</div>
-<section class="article-section references"><span class="section-no">References</span><h2>References</h2><div class="thebibliography">
-<p>M. Batista and A. O. Martins. “Redes Neurais no Ensino Básico”.
-<em>Professor de Matemática Online</em>, v. 10, n. 4, p. 454–481, 2022.
-doi: 10.21711/2319023x2022/pmo1032</p>
-<p>K. Faceli, A. C. Lorena, J. Gama, T. A. de Almeida, and A. C. P. L.
-F. de Carvalho. <em>Inteligência Artificial: Uma Abordagem de
-Aprendizado de Máquina</em>. 2nd ed. Rio de Janeiro: LTC, 2021.</p>
-<p>I. Goodfellow, Y. Bengio, and A. Courville. <em>Deep Learning</em>.
-Cambridge, MA: MIT Press, 2016. Available at: <a class="uri" href="http://www.deeplearningbook.org" target="_blank" rel="noopener noreferrer">http://www.deeplearningbook.org</a></p>
-<p>C. R. Harris, K. J. Millman, S. J. van der Walt et al. “Array
-programming with NumPy”. <em>Nature</em>, v. 585, p. 357–362, 2020. doi:
-10.1038/s41586-020-2649-2</p>
-<p>S. Haykin. <em>Redes Neurais: Princípios e Prática</em>. Translation
-by Paulo Martins Engel. 2nd ed. Porto Alegre: Bookman, 2000.</p>
-<p>Y. LeCun, Y. Bengio, and G. Hinton. “Deep learning”. <em>Nature</em>,
-v. 521, p. 436–444, 2015. doi: 10.1038/nature14539</p>
-<p>M. A. Nielsen. <em>Neural Networks and Deep Learning</em>.
-Determination Press, 2015. Available at: <a class="uri" href="https://neuralnetworksanddeeplearning.com" target="_blank" rel="noopener noreferrer">https://neuralnetworksanddeeplearning.com</a></p>
-<p>D. E. Rumelhart, G. E. Hinton, and R. J. Williams. “Learning
-representations by back-propagating errors”. <em>Nature</em>, v. 323, p.
-533–536, 1986. doi: 10.1038/323533a0</p>
 </div></section>
 <section class="resource-section" id="resources"><span class="section-no">Web edition</span><h2>Resources</h2><p>Use the translated PDF for the complete typeset article, the repository for source files and code, and the executable notebook to reproduce the computational example.</p><div class="resource-grid">
 <a class="resource-card" href="pdf/NeuralMath_EN.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>The Mathematical Anatomy of a Neural Network</span></a>
