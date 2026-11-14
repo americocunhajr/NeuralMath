@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="목차" class="toc"><h2>목차</h2><ol><li><a href="#컴퓨터는-언제-학습할-수-있는가" target="_blank" rel="noopener noreferrer">컴퓨터는 언제 학습할 수 있는가?</a></li><li><a href="#문제를-수학적으로-표현하기" target="_blank" rel="noopener noreferrer">문제를 수학적으로 표현하기</a></li><li><a href="#분류기로서의-직선" target="_blank" rel="noopener noreferrer">분류기로서의 직선</a></li><li><a href="#인공-뉴런" target="_blank" rel="noopener noreferrer">인공 뉴런</a></li><li><a href="#왜-활성화-함수가-필요한가" target="_blank" rel="noopener noreferrer">왜 활성화 함수가 필요한가?</a></li><li><a href="#작은-신경망-구성하기" target="_blank" rel="noopener noreferrer">작은 신경망 구성하기</a></li><li><a href="#신경망은-어떻게-학습하는가" target="_blank" rel="noopener noreferrer">신경망은 어떻게 학습하는가?</a></li><li><a href="#수학에서-python으로" target="_blank" rel="noopener noreferrer">수학에서 Python으로</a></li><li><a href="#appendix-synthetic-data">합성 데이터 집합의 구성</a></li></ol></nav>
+<nav aria-label="목차" class="toc"><h2>목차</h2><ol><li><a href="#컴퓨터는-언제-학습할-수-있는가" target="_blank" rel="noopener noreferrer">컴퓨터는 언제 학습할 수 있는가?</a></li><li><a href="#문제를-수학적으로-표현하기" target="_blank" rel="noopener noreferrer">문제를 수학적으로 표현하기</a></li><li><a href="#분류기로서의-직선" target="_blank" rel="noopener noreferrer">분류기로서의 직선</a></li><li><a href="#인공-뉴런" target="_blank" rel="noopener noreferrer">인공 뉴런</a></li><li><a href="#왜-활성화-함수가-필요한가" target="_blank" rel="noopener noreferrer">왜 활성화 함수가 필요한가?</a></li><li><a href="#작은-신경망-구성하기" target="_blank" rel="noopener noreferrer">작은 신경망 구성하기</a></li><li><a href="#신경망은-어떻게-학습하는가" target="_blank" rel="noopener noreferrer">신경망은 어떻게 학습하는가?</a></li><li><a href="#수학에서-python으로" target="_blank" rel="noopener noreferrer">수학에서 Python으로</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">합성 데이터 집합의 구성</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="컴퓨터는-언제-학습할-수-있는가"><span class="section-no">01</span><h2>컴퓨터는 언제 학습할 수 있는가?</h2>
 <p>일상에서 우리는 거의 의식하지 않은 채 분류 판단을 내린다. 과일을 보면 사과인지 오렌지인지 빠르게 구별하고, 휴대전화에 메시지가 도착하면 정상적인 대화와 원치 않는 광고를 구분한다. 의료 분석에서는 여러 측정값을 결합하여 판단을 지원할 수 있고, 금융기관에서는 신용을 제공하기 전에 여러 정보를 평가한다. 이 모든 예에서는 여러 특성을 함께 고려하여 하나의 답을 만든다.</p>
 <p>많은 전통적인 컴퓨터 프로그램에서는 이 답을 만들어 내는 규칙을 프로그래머가 명시적으로 작성한다. 규칙이 알려져 있고 명확히 표현할 수 있을 때는 잘 작동한다. 그러나 데이터의 변동성이 크거나 좋은 판단에 필요한 모든 조건을 미리 기술하기 어려울 때는 효과가 떨어진다. 따라서 다음과 같은 자연스러운 질문이 생긴다.</p>
@@ -223,7 +223,7 @@ v_1&amp;v_2&amp;v_3
 </section><section class="article-section" id="신경망은-어떻게-학습하는가"><span class="section-no">07</span><h2>신경망은 어떻게 학습하는가?</h2>
 <p>신경망의 가중치와 편향은 미리 주어지지 않으며, 정답 레이블이 있는
 사례로부터 조정된다. 학습은 순전파, 손실 계산, 기울기 계산, 매개변수
-갱신을 반복하는 과정이다(그림 <a href="#fig:ciclo_treinamento">6</a>).
+갱신을 반복하는 과정이다(그림 <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>).
 핵심은 연쇄법칙으로 각 가중치와 편향의 미소 변화가 손실에 미치는 영향을
 계산할 수 있다는 점이다.</p>
 <p>매개변수를 조정하려면 예측과 실제 정답의 차이를 수치로 측정해야 한다.
@@ -248,8 +248,8 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <p>평균 손실은 훈련 집합에서의 성능을 요약하며 매개변수를 조정하여
 줄이려는 양이다. 그러나 <span class="math inline">\(J\)</span>의
 최소화가 새로운 데이터에서 좋은 예측을 보장하는 것은 아니다. 대수적으로
-간단한 식 <a href="#eq:perda">perda</a>를 유도에 사용한 뒤 이진 교차
-엔트로피의 기울기와 비교한다. 계산 실험 자체는 변경하지 않는다 <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+간단한 식 <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a>를 유도에 사용한 뒤 이진 교차
+엔트로피의 기울기와 비교한다. 계산 실험 자체는 변경하지 않는다 <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="학습 단계: 순전파, 손실 계산, 민감도의 역전파 및 매개변수
 갱신." decoding="async" loading="lazy" src="../assets/img/ko/Fig06.webp" style="width:88.0%"/>
@@ -268,7 +268,7 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 발산할 수 있다. 다음 절의 코드처럼 관측 하나마다 갱신하면 <span class="math inline">\(\partial J/\partial\theta\)</span> 대신 <span class="math inline">\(\partial E_i/\partial\theta\)</span>를 사용한다.
 여기서는 이러한 확률적 경사하강법(SGD)을 사용한다.</p>
 <h3 id="신경망에서의-연쇄법칙">2–3–1 신경망에서의 연쇄법칙</h3>
-<p>그림 <a href="#fig:small_network">5</a>의 신경망을
+<p>그림 <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a>의 신경망을
 사용한다. 세 은닉 뉴런에는 ReLU, 출력에는 시그모이드가 적용된다.
 질량(g)과 지름(cm)은 단위와 수치 척도가 다르므로 각 특성을 <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span>로
 표준화한다. 여기서 <span class="math inline">\(\mu_j\)</span>는 기준
@@ -320,7 +320,7 @@ y(1-\widehat y)}
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>에 대응한다. 이 기준값은 설명용으로만 고정한 것이며, 절 <a href="#수학에서-python으로">8</a>의 프로그램에서는 훈련 데이터에서
+<p>에 대응한다. 이 기준값은 설명용으로만 고정한 것이며, 절 <a href="#수학에서-python으로" target="_blank" rel="noopener noreferrer">8</a>의 프로그램에서는 훈련 데이터에서
 평균과 표준편차를 직접 계산한다.</p>
 <p>13개의 초기 매개변수를 다음과 같이 정한다.</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -330,7 +330,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>식 <a href="#eq:forward">forward</a>를 순차적으로 적용하면
+<p>식 <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>를 순차적으로 적용하면
 다음을 얻는다.</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
@@ -339,7 +339,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>초기 예측은 잘못된 클래스에 해당한다. 식 <a href="#eq:delta_saida">delta_saida</a>와 <a href="#eq:delta_oculta">delta_oculta</a>에서</p>
+<p>초기 예측은 잘못된 클래스에 해당한다. 식 <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>와 <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>에서</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -352,7 +352,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>세 번째 은닉 뉴런은 비활성 상태(<span class="math inline">\(z_3^{(1)}&lt;0\)</span>)이므로 이번 단계에서 입력
 가중치와 편향의 기울기가 영이다. <span class="math inline">\(\eta=0.05\)</span>를 선택하고 모든 매개변수에
 <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span>를 동시에 적용한다. 표 <a href="#tab:passo_sgd">1</a>에 13개
+E/\partial\theta\)</span>를 동시에 적용한다. 표 <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a>에 13개
 갱신 중 대표적인 항목을 보였다.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -457,10 +457,10 @@ y(1-\widehat y)\)</span>를 사용하면</p>
 능력을 <em>일반화</em>라고 하고, 훈련 사례에 지나치게 맞추어 새
 데이터에서 성능이 악화되는 현상을 <em>과적합</em>이라 한다. 더 큰
 연구에서는 훈련·검증·테스트 집합을 분리해 하이퍼파라미터를 선택하고
-편향을 줄인 평가를 수행한다 <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+편향을 줄인 평가를 수행한다 <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="수학에서-python으로"><span class="section-no">08</span><h2>수학에서 Python으로</h2>
-<p>절 <a href="#신경망은-어떻게-학습하는가">7</a>의 순전파, 연쇄법칙, 확률적
-매개변수 갱신을 NumPy만으로 구현한다 <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. 비선형 결정 경계를 나타내도록
+<p>절 <a href="#신경망은-어떻게-학습하는가" target="_blank" rel="noopener noreferrer">7</a>의 순전파, 연쇄법칙, 확률적
+매개변수 갱신을 NumPy만으로 구현한다 <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. 비선형 결정 경계를 나타내도록
 은닉층의 ReLU 뉴런을 3개에서 12개로 늘린다. 결과적인 <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 신경망에는 <span class="math inline">\(12(2+1)+(12+1)=49\)</span>개
 매개변수가 있지만 수학적 공식은 동일하다.</p>
@@ -473,8 +473,8 @@ y(1-\widehat y)\)</span>를 사용하면</p>
 아니다</em>.</p>
 <p>기준 곡선은 <em>예시 생성에만</em> 쓰인다. 신경망에 제공하지 않으며
 손실이나 역전파에도 들어가지 않는다. 훈련에는 질량과 지름의 쌍 및
-레이블만 사용한다. 생성 식과 변위는 부록 <a href="#appendix-synthetic-data">A</a>에
-기록했으므로 그림 <a href="#fig:faixas_sinteticas">7</a>의
+레이블만 사용한다. 생성 식과 변위는 부록 <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>에
+기록했으므로 그림 <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>의
 데이터를 정확히 재현할 수 있다.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="보조 곡선 주위 네 구간에 놓인 합성 자료 \(64\) 개. 사과는 곡선 위, 오렌지는 아래에
@@ -482,7 +482,7 @@ y(1-\widehat y)\)</span>를 사용하면</p>
 <figcaption>7. 보조 곡선 주위 네 구간에 놓인 합성 자료 <span class="math inline">\(64\)</span>개. 사과는 곡선 위, 오렌지는 아래에
 있으며 점선 곡선은 훈련에 사용하지 않는다.</figcaption>
 </figure>
-<p>그림 <a href="#fig:faixas_sinteticas">7</a>는
+<p>그림 <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>는
 <code>construct_data()</code>가 만든 점들을 보여 준다. 점선은 합성
 데이터 생성을 위한 보조 곡선이지 학습된 결정 경계가 아니다. 추가 8개
 사례는 최종 그림에만 쓰고 표준화 통계량 계산에 포함하지 않는다.</p>
@@ -506,7 +506,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 <code>relu_derivative()</code>는 계산상의 관례로 이 지점에서 0을
 반환한다. 이 규약 자체가 수렴을 보장하지는 않는다.</p>
 <p>학습률 <span class="math inline">\(\eta=0.05\)</span>는 최적값이
-아니라 안정성을 고려한 선택이다. 동일한 시드와 데이터로 <span class="math inline">\(1000\)</span>에포크를 실행한 민감도 검사를 표 <a href="#tab:eta">2</a>에 보였다. 이 데이터에서는 가장 큰
+아니라 안정성을 고려한 선택이다. 동일한 시드와 데이터로 <span class="math inline">\(1000\)</span>에포크를 실행한 민감도 검사를 표 <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a>에 보였다. 이 데이터에서는 가장 큰
 학습률이 빨리 수렴하지만, 일반적인 우월성을 뜻하지는 않는다. <span class="math inline">\(0.05\)</span>는 안정된 학습과 쉽게 확인할 수 있는
 손실 기록을 제공하므로 유지한다.</p>
 <div id="tab:eta">
@@ -540,7 +540,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 </table>
 </div>
 <h3 id="python-전체-구현">Python 전체 구현</h3>
-<p>완전한 프로그램은 코드 <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>에 함수별 실행
+<p>완전한 프로그램은 코드 <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>에 함수별 실행
 순서대로 제시한다. 연속된 열 개 블록은 별도로 제공되는
 <code>neural_network.py</code> 파일을 구성한다.</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — 실행 환경 설정</p><pre class="nm-python-code" dir="ltr"><code>"""Pedagogical example: fruit classification using a 2-12-1 network.
@@ -749,19 +749,19 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p><code>construct_data()</code>(코드 <a href="#cod:dados">6</a>)는
-부록 <a href="#appendix-synthetic-data">A</a>에 기록된 합성 데이터 생성만 구현하며
-보조 곡선은 최적화에 참여하지 않는다. <code>train()</code>(코드 <a href="#cod:treinamento">8</a>)는 순전파, <span class="math inline">\(\delta^{(2)}\)</span>와 <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, 기울기, 네
-가지 매개변수 갱신을 식 <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a>, <a href="#eq:descida">descida</a>에 따라 구현한다. 모든
+<p><code>construct_data()</code>(코드 <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)는
+부록 <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>에 기록된 합성 데이터 생성만 구현하며
+보조 곡선은 최적화에 참여하지 않는다. <code>train()</code>(코드 <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>)는 순전파, <span class="math inline">\(\delta^{(2)}\)</span>와 <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, 기울기, 네
+가지 매개변수 갱신을 식 <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>, <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>에 따라 구현한다. 모든
 기울기를 먼저 계산하고 나서 매개변수를 수정한다.
-<code>plot_results()</code>(코드 <a href="#cod:visualizacao">9</a>)는 합성 데이터
+<code>plot_results()</code>(코드 <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>)는 합성 데이터
 생성 곡선이 아니라 학습된 경계를 그린다.</p>
 <p>재현 및 수정을 위해 독립적인 Python 파일과 실행 가능한 노트북도
 제공한다.</p>
 <p>시드 <span class="math inline">\(42\)</span>, <span class="math inline">\(\eta=0.05\)</span>, <span class="math inline">\(6000\)</span>에포크 후 평균 손실은 <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>이고, 훈련 자료
 <span class="math inline">\(64\)</span>개와 추가 예시 <span class="math inline">\(8\)</span>개를 모두 올바르게 분류한다. 이는 합성
 자료에서 계산 과정이 작동함을 확인할 뿐, <em>일반화 능력의 통계적 추정은
-아니다</em>. 그림 <a href="#fig:saida_python">8</a>의 학습된 결정 경계는 <span class="math inline">\(\widehat y=0.5\)</span>인 등위선이다. 원과
+아니다</em>. 그림 <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a>의 학습된 결정 경계는 <span class="math inline">\(\widehat y=0.5\)</span>인 등위선이다. 원과
 사각형은 훈련, 삼각형과 십자 표시는 예시 테스트 점이다.</p>
 <figure id="fig:saida_python">
 <img alt="\(2\) – \(12\) – \(1\) 신경망이 학습한 결정 경계 \(\widehat
@@ -774,9 +774,9 @@ y=0.5\)</span>와 훈련 및 예시 테스트 자료.</figcaption>
 자동으로 조정하여 굽은 결정 경계를 학습하는 풍부한 계산 예제에 이르렀다.
 구현은 지금까지의 수학적 개념에 신비로운 요소를 추가하지 않는다. 선형
 결합, 활성화 함수, 도함수, 행렬 곱, 경사하강 갱신을 큰 규모에서 빠르게
-반복할 뿐이다 <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+반복할 뿐이다 <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>.</p>
 <p>Python 프로그램과 실행 노트북은 이 판본의 보충 자료에 포함되어
-있으며, 관련 교육 자료는 <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>에서 볼 수 있다.</p>
+있으며, 관련 교육 자료는 <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>에서 볼 수 있다.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>합성 데이터 집합의 구성</h2>
 <p>다음 식은 계산 연습을 위한 데이터를 생성하기 위해 <em>임의로(ad
 hoc)</em> 선택한 방법을 기록할 뿐이다. 신경망 구조, 손실 함수, 학습
@@ -811,7 +811,7 @@ d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
 뜻하지 않는다</em>. <code>construct_data()</code>는 이 식을 정확하게
 구현하며 추가 시험용 8개 쌍은 코드에 명시되어 있다.</p>
 <p><code>reference_curve()</code>와
-<code>construct_data()</code>(코드 <a href="#cod:curva">5</a>, <a href="#cod:dados">6</a>)는 식 <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>를 그대로 구현하되 보조 곡선을
+<code>construct_data()</code>(코드 <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>, <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)는 식 <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>를 그대로 구현하되 보조 곡선을
 훈련 정보로 제공하지 않는다. 전체 프로그램은 제8절의 연속 코드 블록과
 보충 파일에 포함되어 직접 실행할 수 있다.</p>
 </section></div>

@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Περιεχόμενα" class="toc"><h2>Περιεχόμενα</h2><ol><li><a href="#πότε-μπορεί-να-μάθει-ένας-υπολογιστής" target="_blank" rel="noopener noreferrer">Πότε μπορεί να μάθει ένας υπολογιστής;</a></li><li><a href="#μαθηματική-αναπαράσταση-του-προβλήματος" target="_blank" rel="noopener noreferrer">Μαθηματική αναπαράσταση του προβλήματος</a></li><li><a href="#μια-ευθεία-ως-ταξινομητής" target="_blank" rel="noopener noreferrer">Μια ευθεία ως ταξινομητής</a></li><li><a href="#ο-τεχνητός-νευρώνας" target="_blank" rel="noopener noreferrer">Ο τεχνητός νευρώνας</a></li><li><a href="#γιατί-χρειαζόμαστε-μια-συνάρτηση-ενεργοποίησης" target="_blank" rel="noopener noreferrer">Γιατί χρειαζόμαστε μια συνάρτηση ενεργοποίησης;</a></li><li><a href="#κατασκευή-ενός-μικρού-νευρωνικού-δικτύου" target="_blank" rel="noopener noreferrer">Κατασκευή ενός μικρού νευρωνικού δικτύου</a></li><li><a href="#πώς-μαθαίνει-ένα-νευρωνικό-δίκτυο" target="_blank" rel="noopener noreferrer">Πώς μαθαίνει ένα νευρωνικό δίκτυο;</a></li><li><a href="#από-τα-μαθηματικά-στην-python" target="_blank" rel="noopener noreferrer">Από τα μαθηματικά στην Python</a></li><li><a href="#appendix-synthetic-data">Κατασκευή του συνθετικού συνόλου δεδομένων</a></li></ol></nav>
+<nav aria-label="Περιεχόμενα" class="toc"><h2>Περιεχόμενα</h2><ol><li><a href="#πότε-μπορεί-να-μάθει-ένας-υπολογιστής" target="_blank" rel="noopener noreferrer">Πότε μπορεί να μάθει ένας υπολογιστής;</a></li><li><a href="#μαθηματική-αναπαράσταση-του-προβλήματος" target="_blank" rel="noopener noreferrer">Μαθηματική αναπαράσταση του προβλήματος</a></li><li><a href="#μια-ευθεία-ως-ταξινομητής" target="_blank" rel="noopener noreferrer">Μια ευθεία ως ταξινομητής</a></li><li><a href="#ο-τεχνητός-νευρώνας" target="_blank" rel="noopener noreferrer">Ο τεχνητός νευρώνας</a></li><li><a href="#γιατί-χρειαζόμαστε-μια-συνάρτηση-ενεργοποίησης" target="_blank" rel="noopener noreferrer">Γιατί χρειαζόμαστε μια συνάρτηση ενεργοποίησης;</a></li><li><a href="#κατασκευή-ενός-μικρού-νευρωνικού-δικτύου" target="_blank" rel="noopener noreferrer">Κατασκευή ενός μικρού νευρωνικού δικτύου</a></li><li><a href="#πώς-μαθαίνει-ένα-νευρωνικό-δίκτυο" target="_blank" rel="noopener noreferrer">Πώς μαθαίνει ένα νευρωνικό δίκτυο;</a></li><li><a href="#από-τα-μαθηματικά-στην-python" target="_blank" rel="noopener noreferrer">Από τα μαθηματικά στην Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Κατασκευή του συνθετικού συνόλου δεδομένων</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="πότε-μπορεί-να-μάθει-ένας-υπολογιστής"><span class="section-no">01</span><h2>Πότε μπορεί να μάθει ένας υπολογιστής;</h2>
 <p>Στην καθημερινή ζωή παίρνουμε αποφάσεις ταξινόμησης σχεδόν χωρίς να το αντιλαμβανόμαστε. Κοιτάζοντας ένα φρούτο, αναγνωρίζουμε γρήγορα αν είναι μήλο ή πορτοκάλι· όταν φτάνει ένα μήνυμα στο τηλέφωνο, διακρίνουμε μια κανονική συνομιλία από ανεπιθύμητη διαφήμιση· στις ιατρικές αναλύσεις, διαφορετικές μετρήσεις μπορούν να συνδυαστούν για να υποστηρίξουν μια απόφαση· και στα χρηματοπιστωτικά ιδρύματα αξιολογούνται πολλά δεδομένα πριν από τη χορήγηση πίστωσης. Σε όλα αυτά τα παραδείγματα, πολλά χαρακτηριστικά εξετάζονται από κοινού ώστε να παραχθεί μια απάντηση.</p>
 <p>Σε πολλά παραδοσιακά προγράμματα υπολογιστών, οι κανόνες που παράγουν αυτή την απάντηση γράφονται ρητά από τον προγραμματιστή. Η προσέγγιση αυτή λειτουργεί καλά όταν οι κανόνες είναι γνωστοί και μπορούν να διατυπωθούν καθαρά. Γίνεται λιγότερο αποτελεσματική όταν τα δεδομένα παρουσιάζουν μεγάλη μεταβλητότητα ή όταν είναι δύσκολο να διατυπωθούν εκ των προτέρων όλες οι συνθήκες που απαιτούνται για μια καλή απόφαση. Αυτό οδηγεί σε ένα φυσικό ερώτημα:</p>
@@ -225,7 +225,7 @@ v_1&amp;v_2&amp;v_3
 προσαρμόζονται από παραδείγματα με γνωστές ετικέτες κλάσεων. Η
 εκπαίδευση επαναλαμβάνει την εμπρόσθια διάδοση, τον υπολογισμό της
 απώλειας, τον προσδιορισμό των κλίσεων και την ενημέρωση των παραμέτρων
-(Σχήμα <a href="#fig:ciclo_treinamento">6</a>). Ο κανόνας αλυσίδας
+(Σχήμα <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>). Ο κανόνας αλυσίδας
 περιγράφει την τοπική επίδραση κάθε βάρους και πόλωσης στην απώλεια.
 Χρειαζόμαστε πρώτα αριθμητικό μέτρο της διαφοράς ανάμεσα στην πρόβλεψη
 και τη σωστή απάντηση. Η <em>συνάρτηση απώλειας</em> αντιστοιχίζει ποινή
@@ -252,7 +252,7 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 μόνη της σωστές προβλέψεις σε νέα δεδομένα. Επιλέγουμε την τετραγωνική
 απώλεια για την απλή άλγεβρά της και αργότερα συγκρίνουμε την κλίση της
 με τη δυαδική διασταυρούμενη εντροπία χωρίς αλλαγή στο αριθμητικό
-πείραμα <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+πείραμα <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Στάδια εκπαίδευσης: εμπρόσθια διάδοση, υπολογισμός απώλειας,
 οπισθοδιάδοση ευαισθησιών και ενημέρωση παραμέτρων." decoding="async" loading="lazy" src="../assets/img/el/Fig06.webp" style="width:88.0%"/>
@@ -269,12 +269,12 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>Ο ρυθμός μάθησης <span class="math inline">\(\eta\)</span> ελέγχει το
 μέγεθος του βήματος: πολύ μικρή τιμή ενδέχεται να επιβραδύνει τη
 σύγκλιση, ενώ πολύ μεγάλη να προκαλέσει ταλαντώσεις ή απόκλιση. Αν οι
-παράμετροι ενημερώνονται μετά από κάθε δείγμα (Ενότητα <a href="#από-τα-μαθηματικά-στην-python">8</a>), το <span class="math inline">\(\partial J/\partial\theta\)</span> αντικαθίσταται
+παράμετροι ενημερώνονται μετά από κάθε δείγμα (Ενότητα <a href="#από-τα-μαθηματικά-στην-python" target="_blank" rel="noopener noreferrer">8</a>), το <span class="math inline">\(\partial J/\partial\theta\)</span> αντικαθίσταται
 από το <span class="math inline">\(\partial E_i/\partial\theta\)</span>.
 Πρόκειται για στοχαστική κάθοδο κλίσης (SGD).</p>
 <h3 id="ο-κανόνας-αλυσίδας-στο-δίκτυο-231">Ο κανόνας αλυσίδας στο δίκτυο
 2–3–1</h3>
-<p>Θεωρούμε το δίκτυο του Σχήματος <a href="#fig:small_network">[fig:pequena_rede]</a> με τρεις
+<p>Θεωρούμε το δίκτυο του Σχήματος <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a> με τρεις
 κρυφούς νευρώνες ReLU και σιγμοειδή έξοδο. Η μάζα (γραμμάρια) και η
 διάμετρος (εκατοστά) έχουν διαφορετικές αριθμητικές κλίμακες, γεγονός
 που ενδέχεται να επιδεινώσει την κατάσταση του προβλήματος προσαρμογής.
@@ -330,7 +330,7 @@ y(1-\widehat y)}
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>Αυτές οι τιμές χρησιμοποιούνται μόνο στην επίδειξη· στην Ενότητα <a href="#από-τα-μαθηματικά-στην-python">8</a> η μέση τιμή και η τυπική απόκλιση
+<p>Αυτές οι τιμές χρησιμοποιούνται μόνο στην επίδειξη· στην Ενότητα <a href="#από-τα-μαθηματικά-στην-python" target="_blank" rel="noopener noreferrer">8</a> η μέση τιμή και η τυπική απόκλιση
 υπολογίζονται από τα δεδομένα εκπαίδευσης. Επιλέγουμε τις δεκατρείς
 αρχικές παραμέτρους:</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -340,7 +340,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Η εξίσωση <a href="#eq:forward">forward</a> δίνει διαδοχικά</p>
+<p>Η εξίσωση <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> δίνει διαδοχικά</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -349,7 +349,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
 <p>Η αρχική πρόβλεψη αντιστοιχεί σε λανθασμένη κλάση. Από τις
-εξισώσεις <a href="#eq:delta_saida">delta_saida</a> και <a href="#eq:delta_oculta">delta_oculta</a> παίρνουμε</p>
+εξισώσεις <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> και <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> παίρνουμε</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -363,7 +363,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 τα εισερχόμενα βάρη του και την πόλωση είναι μηδενικές σε αυτό το βήμα.
 Με <span class="math inline">\(\eta=0.05\)</span> ενημερώνουμε
 ταυτόχρονα όλες τις παραμέτρους μέσω <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span>. Ο Πίνακας <a href="#tab:passo_sgd">1</a> εμφανίζει
+E/\partial\theta\)</span>. Ο Πίνακας <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> εμφανίζει
 ορισμένες από τις δεκατρείς ενημερώσεις· οι υπόλοιπες ακολουθούν τους
 ίδιους τύπους.</p>
 <div id="tab:passo_sgd">
@@ -481,11 +481,11 @@ c=\partial E/\partial z\)</span>) θα ήταν <span class="math inline">\(\Del
 υπερβολική προσαρμογή που επιδεινώνει τις νέες προβλέψεις είναι
 <em>υπερπροσαρμογή</em>. Χωριστά σύνολα εκπαίδευσης, επικύρωσης και
 δοκιμής επιτρέπουν καλύτερη επιλογή υπερπαραμέτρων και λιγότερο
-μεροληπτική αξιολόγηση <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+μεροληπτική αξιολόγηση <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="από-τα-μαθηματικά-στην-python"><span class="section-no">08</span><h2>Από τα μαθηματικά στην Python</h2>
 <p>Υλοποιούμε την εμπρόσθια διάδοση, τον κανόνα αλυσίδας και τα
-στοχαστικά βήματα της Ενότητας <a href="#πώς-μαθαίνει-ένα-νευρωνικό-δίκτυο">7</a> μόνο με
-<code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Για μη γραμμικό όριο απόφασης
+στοχαστικά βήματα της Ενότητας <a href="#πώς-μαθαίνει-ένα-νευρωνικό-δίκτυο" target="_blank" rel="noopener noreferrer">7</a> μόνο με
+<code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Για μη γραμμικό όριο απόφασης
 αυξάνουμε τους κρυφούς νευρώνες ReLU από τρεις σε δώδεκα. Το δίκτυο
 <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 έχει <span class="math inline">\(12(2+1)+(12+1)=49\)</span> παραμέτρους
@@ -503,7 +503,7 @@ c=\partial E/\partial z\)</span>) θα ήταν <span class="math inline">\(\Del
 την κατασκευή των δεδομένων</em>: δεν δίνεται στο δίκτυο, δεν
 εμφανίζεται στη συνάρτηση απώλειας και δεν εισέρχεται στην
 οπισθοδιάδοση. Η εκπαίδευση χρησιμοποιεί μόνο ζεύγη μάζας–διαμέτρου και
-ετικέτες. Οι τύποι και οι μετατοπίσεις δίνονται στο Παράρτημα <a href="#appendix-synthetic-data">A</a> για ακριβή αναπαραγωγή του Σχήματος <a href="#fig:faixas_sinteticas">7</a>.</p>
+ετικέτες. Οι τύποι και οι μετατοπίσεις δίνονται στο Παράρτημα <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a> για ακριβή αναπαραγωγή του Σχήματος <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Κατανομή \(64\) συνθετικών
 παραδειγμάτων σε τέσσερις ζώνες: δύο για μήλα πάνω και δύο για
@@ -514,7 +514,7 @@ c=\partial E/\partial z\)</span>) θα ήταν <span class="math inline">\(\Del
 πορτοκάλια κάτω από τη βοηθητική καμπύλη. Η διακεκομμένη καμπύλη δεν
 χρησιμοποιείται στην εκπαίδευση.</figcaption>
 </figure>
-<p>Το Σχήμα <a href="#fig:faixas_sinteticas">7</a> δείχνει τα σημεία της
+<p>Το Σχήμα <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> δείχνει τα σημεία της
 <code>construct_data()</code>. Η διακεκομμένη βοηθητική καμπύλη δεν
 είναι μαθημένο όριο απόφασης. Τα οκτώ πρόσθετα σημεία χρησιμοποιούνται
 μόνο στην τελική απεικόνιση, χωρίς να επηρεάζουν τη στατιστική
@@ -542,7 +542,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 επιστρέφει μηδέν συμβατικά, χωρίς αλλαγή του μαθηματικού ορισμού ή
 εγγύηση σύγκλισης. Επιλέγουμε <span class="math inline">\(\eta=0.05\)</span> ως συντηρητικό και όχι
 αποδεδειγμένα βέλτιστο ρυθμό. Με σταθερά δεδομένα και σπόρο, ο
-Πίνακας <a href="#tab:eta">2</a> δίνει την ανάλυση ευαισθησίας μετά από
+Πίνακας <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> δίνει την ανάλυση ευαισθησίας μετά από
 <span class="math inline">\(1000\)</span> εποχές. Ο μεγαλύτερος
 δοκιμασμένος ρυθμός συγκλίνει ταχύτερα εδώ, όχι απαραίτητα γενικά.
 Διατηρούμε <span class="math inline">\(0.05\)</span> για σταθερή και
@@ -578,7 +578,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 </table>
 </div>
 <h3 id="πλήρης-υλοποίηση-στην-python">Πλήρης υλοποίηση στην Python</h3>
-<p>Ο συνολικός κώδικας παρουσιάζεται διαδοχικά στα τμήματα <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, με σειρά λειτουργίας
+<p>Ο συνολικός κώδικας παρουσιάζεται διαδοχικά στα τμήματα <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, με σειρά λειτουργίας
 και εκτέλεσης. Τα δέκα τμήματα συγκροτούν το αρχείο
 <code>neural_network.py</code>, που διατίθεται και ξεχωριστά.</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Προετοιμασία περιβάλλοντος</p><pre class="nm-python-code" dir="ltr"><code>"""Διδακτικό παράδειγμα: ταξινόμηση φρούτων με δίκτυο 2-12-1.
@@ -787,19 +787,19 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Η <code>construct_data()</code> (Κώδικας <a href="#cod:dados">6</a>)
-δημιουργεί μόνο τα συνθετικά δεδομένα του Παραρτήματος <a href="#appendix-synthetic-data">A</a>, χωρίς συμμετοχή της βοηθητικής
-καμπύλης στη βελτιστοποίηση. Η <code>train()</code> (Κώδικας <a href="#cod:treinamento">8</a>) υλοποιεί την
+<p>Η <code>construct_data()</code> (Κώδικας <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+δημιουργεί μόνο τα συνθετικά δεδομένα του Παραρτήματος <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>, χωρίς συμμετοχή της βοηθητικής
+καμπύλης στη βελτιστοποίηση. Η <code>train()</code> (Κώδικας <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) υλοποιεί την
 εμπρόσθια διάδοση, τις ευαισθησίες <span class="math inline">\(\delta^{(2)}\)</span> και <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, τις κλίσεις
-και τέσσερις ομάδες ενημερώσεων σύμφωνα με τις εξισώσεις <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> και <a href="#eq:descida">descida</a>. Όλες οι κλίσεις
+και τέσσερις ομάδες ενημερώσεων σύμφωνα με τις εξισώσεις <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> και <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Όλες οι κλίσεις
 υπολογίζονται πριν μεταβληθεί οποιαδήποτε παράμετρος. Η
-<code>plot_results()</code> (Κώδικας <a href="#cod:visualizacao">9</a>) σχεδιάζει το
+<code>plot_results()</code> (Κώδικας <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) σχεδιάζει το
 μαθημένο όριο και όχι την καμπύλη παραγωγής. Παρέχονται αυτόνομο
 πρόγραμμα Python και εκτελέσιμο notebook. Ύστερα από <span class="math inline">\(6000\)</span> εποχές με σπόρο <span class="math inline">\(42\)</span> και <span class="math inline">\(\eta=0.05\)</span>, η τελική μέση απώλεια είναι
 <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>, με <span class="math inline">\(64/64\)</span> σωστές προβλέψεις εκπαίδευσης και
 <span class="math inline">\(8/8\)</span> ενδεικτικών δοκιμών. Αυτό
 ελέγχει το συνθετικό αριθμητικό παράδειγμα και <em>δεν αποτελεί
-στατιστική εκτίμηση της γενίκευσης</em>. Το Σχήμα <a href="#fig:saida_python">8</a> δείχνει το μαθημένο όριο <span class="math inline">\(\widehat y=0.5\)</span>: κύκλοι και τετράγωνα για
+στατιστική εκτίμηση της γενίκευσης</em>. Το Σχήμα <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> δείχνει το μαθημένο όριο <span class="math inline">\(\widehat y=0.5\)</span>: κύκλοι και τετράγωνα για
 εκπαίδευση, τρίγωνα και σταυροί για τις ενδεικτικές δοκιμές.</p>
 <figure id="fig:saida_python">
 <img alt="Όριο απόφασης \(\widehat
@@ -813,8 +813,8 @@ y=0.5\)</span> που έμαθε το δίκτυο <span class="math inline">\(2
 με πιο σύνθετο όριο που προκύπτει από την προσαρμογή των παραμέτρων. Ο
 κώδικας επαναλαμβάνει μόνο γραμμικούς συνδυασμούς, ενεργοποιήσεις,
 παραγώγους, γινόμενα μητρώων και βήματα καθόδου κλίσης που ήδη
-εξηγήθηκαν <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>. Ο κώδικας Python και το
-notebook συνοδεύουν την εργασία· επιπλέον υλικό: <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+εξηγήθηκαν <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>. Ο κώδικας Python και το
+notebook συνοδεύουν την εργασία· επιπλέον υλικό: <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Κατασκευή του συνθετικού συνόλου δεδομένων</h2>
 <p>Οι τύποι στο Παράρτημα τεκμηριώνουν μόνο μια <em>ad hoc</em> μέθοδο
 δημιουργίας δεδομένων για το διδακτικό παράδειγμα. Δεν αποτελούν μέρος
@@ -848,8 +848,8 @@ d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
 παραγωγικό μοντέλο. Η <code>construct_data()</code> υλοποιεί ακριβώς
 τους τύπους, ενώ τα οκτώ πρόσθετα ενδεικτικά ζεύγη ορίζονται άμεσα στον
 κώδικα. Οι <code>reference_curve()</code> και
-<code>construct_data()</code> (Κώδικες <a href="#cod:curva">5</a>
-και <a href="#cod:dados">6</a>) υλοποιούν τις εξισώσεις <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> χωρίς να δίνουν τη βοηθητική
+<code>construct_data()</code> (Κώδικες <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+και <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) υλοποιούν τις εξισώσεις <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a> χωρίς να δίνουν τη βοηθητική
 καμπύλη ως πληροφορία εκπαίδευσης. Ο πλήρης κώδικας παρατίθεται στην
 Ενότητα 8 και στα συμπληρωματικά αρχεία.</p>
 </section></div>

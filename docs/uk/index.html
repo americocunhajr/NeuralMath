@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Зміст" class="toc"><h2>Зміст</h2><ol><li><a href="#коли-компютер-може-навчатися" target="_blank" rel="noopener noreferrer">Коли комп’ютер може навчатися?</a></li><li><a href="#математичне-подання-задачі" target="_blank" rel="noopener noreferrer">Математичне подання задачі</a></li><li><a href="#пряма-як-класифікатор" target="_blank" rel="noopener noreferrer">Пряма як класифікатор</a></li><li><a href="#штучний-нейрон" target="_blank" rel="noopener noreferrer">Штучний нейрон</a></li><li><a href="#навіщо-потрібна-функція-активації" target="_blank" rel="noopener noreferrer">Навіщо потрібна функція активації?</a></li><li><a href="#побудова-невеликої-нейронної-мережі" target="_blank" rel="noopener noreferrer">Побудова невеликої нейронної мережі</a></li><li><a href="#як-нейронна-мережа-навчається" target="_blank" rel="noopener noreferrer">Як нейронна мережа навчається?</a></li><li><a href="#від-математики-до-python" target="_blank" rel="noopener noreferrer">Від математики до Python</a></li><li><a href="#appendix-synthetic-data">Побудова синтетичного набору даних</a></li></ol></nav>
+<nav aria-label="Зміст" class="toc"><h2>Зміст</h2><ol><li><a href="#коли-компютер-може-навчатися" target="_blank" rel="noopener noreferrer">Коли комп’ютер може навчатися?</a></li><li><a href="#математичне-подання-задачі" target="_blank" rel="noopener noreferrer">Математичне подання задачі</a></li><li><a href="#пряма-як-класифікатор" target="_blank" rel="noopener noreferrer">Пряма як класифікатор</a></li><li><a href="#штучний-нейрон" target="_blank" rel="noopener noreferrer">Штучний нейрон</a></li><li><a href="#навіщо-потрібна-функція-активації" target="_blank" rel="noopener noreferrer">Навіщо потрібна функція активації?</a></li><li><a href="#побудова-невеликої-нейронної-мережі" target="_blank" rel="noopener noreferrer">Побудова невеликої нейронної мережі</a></li><li><a href="#як-нейронна-мережа-навчається" target="_blank" rel="noopener noreferrer">Як нейронна мережа навчається?</a></li><li><a href="#від-математики-до-python" target="_blank" rel="noopener noreferrer">Від математики до Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Побудова синтетичного набору даних</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="коли-компютер-може-навчатися"><span class="section-no">01</span><h2>Коли комп’ютер може навчатися?</h2>
 <p>У повсякденному житті ми майже непомітно для себе постійно розв’язуємо задачі класифікації. Поглянувши на фрукт, швидко визначаємо, яблуко це чи апельсин; отримавши повідомлення на телефон, відрізняємо звичайне спілкування від небажаної реклами; у медичному аналізі кілька вимірювань можуть поєднуватися для підтримки рішення; а у фінансових установах перед наданням кредиту оцінюють багато різних відомостей. У всіх цих прикладах кілька характеристик розглядаються разом, щоб отримати відповідь.</p>
 <p>У багатьох традиційних комп’ютерних програмах правила, що визначають цю відповідь, явно задає програміст. Такий підхід добре працює, коли правила відомі й їх можна чітко сформулювати. Він стає менш ефективним, коли дані дуже мінливі або коли важко наперед описати всі умови, потрібні для доброго рішення. Це природно приводить до запитання:</p>
@@ -224,7 +224,7 @@ v_1&amp;v_2&amp;v_3
 <p>Ваги та зміщення мережі наперед невідомі: їх налаштовують за
 прикладами з відомими мітками класів. Навчання багаторазово повторює
 прямий прохід, обчислення втрат, визначення градієнтів та оновлення
-параметрів (рисунок <a href="#fig:ciclo_treinamento">6</a>).
+параметрів (рисунок <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>).
 Ланцюгове правило дає змогу визначити, як кожен параметр локально
 впливає на втрату. Для цього потрібна числова міра розбіжності
 передбачення з правильною відповіддю. <em>Функція втрат</em> надає
@@ -248,7 +248,7 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <span class="math inline">\(J\)</span> саме по собі не гарантує якості
 на нових даних. Квадратична втрата зручна для виведення похідних; далі
 її градієнт порівняємо з бінарною перехресною ентропією, не змінюючи
-основного числового експерименту <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+основного числового експерименту <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Етапи навчання: пряме поширення, обчислення втрат, зворотне
 поширення чутливостей і оновлення параметрів." decoding="async" loading="lazy" src="../assets/img/uk/Fig06.webp" style="width:88.0%"/>
@@ -265,14 +265,14 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>Швидкість навчання <span class="math inline">\(\eta\)</span> визначає
 довжину кроку: надто мале значення сповільнює збіжність, надто велике
 може спричиняти коливання або розбіжність. Якщо параметри оновлюються
-після кожного спостереження (розділ <a href="#від-математики-до-python">8</a>), замість
+після кожного спостереження (розділ <a href="#від-математики-до-python" target="_blank" rel="noopener noreferrer">8</a>), замість
 <span class="math inline">\(\partial J/\partial\theta\)</span>
 використовують <span class="math inline">\(\partial
 E_i/\partial\theta\)</span>. Це стохастичний градієнтний спуск
 (SGD).</p>
 <h3 id="ланцюгове-правило-в-мережі-231">Ланцюгове правило в мережі
 2–3–1</h3>
-<p>Використаємо мережу з рисунка <a href="#fig:small_network">[fig:pequena_rede]</a> з трьома
+<p>Використаємо мережу з рисунка <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a> з трьома
 прихованими ReLU-нейронами й сигмоїдою на виході. Маса в грамах і
 діаметр у сантиметрах мають різні масштаби, що може погіршувати
 обумовленість задачі. Перетворимо кожну ознаку: <span class="math inline">\(x_j^\ast=(x_j-\mu_j)/\sigma_j\)</span>, де <span class="math inline">\(\mu_j\)</span> і <span class="math inline">\(\sigma_j&gt;0\)</span> — опорне середнє та
@@ -326,7 +326,7 @@ y(1-\widehat y)}
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>Ці опорні значення взято для демонстрації; у розділі <a href="#від-математики-до-python">8</a> середнє і стандартне відхилення
+<p>Ці опорні значення взято для демонстрації; у розділі <a href="#від-математики-до-python" target="_blank" rel="noopener noreferrer">8</a> середнє і стандартне відхилення
 обчислюються за навчальними даними. Виберемо тринадцять початкових
 параметрів:</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -336,7 +336,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Рівняння <a href="#eq:forward">forward</a> послідовно дає</p>
+<p>Рівняння <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> послідовно дає</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -344,7 +344,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>Початкове передбачення вказує неправильний клас. Із рівнянь <a href="#eq:delta_saida">delta_saida</a> та <a href="#eq:delta_oculta">delta_oculta</a> дістаємо</p>
+<p>Початкове передбачення вказує неправильний клас. Із рівнянь <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> та <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> дістаємо</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -357,7 +357,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>Третій прихований нейрон неактивний (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), тому градієнти його
 вхідних ваг і зміщення на цьому кроці нульові. За <span class="math inline">\(\eta=0.05\)</span> одночасно оновлюємо всі
 параметри за правилом <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span>. У таблиці <a href="#tab:passo_sgd">1</a> показано
+E/\partial\theta\)</span>. У таблиці <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> показано
 деякі з тринадцяти оновлень; решта обчислюється так само.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -474,11 +474,11 @@ y(1-\widehat y)\)</span> не входить до чутливості <em>ви�
 надмірне пристосування до навчальних даних, яке погіршує нові
 передбачення, — <em>перенавчанням</em>. У ширших дослідженнях окремі
 навчальна, валідаційна та тестова вибірки допомагають обирати
-гіперпараметри й оцінювати модель із меншим зміщенням <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+гіперпараметри й оцінювати модель із меншим зміщенням <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="від-математики-до-python"><span class="section-no">08</span><h2>Від математики до Python</h2>
 <p>Реалізуємо пряме поширення, ланцюгове правило й стохастичні оновлення
-з розділу <a href="#як-нейронна-мережа-навчається">7</a> лише за допомогою
-<code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Щоб побудувати нелінійну межу
+з розділу <a href="#як-нейронна-мережа-навчається" target="_blank" rel="noopener noreferrer">7</a> лише за допомогою
+<code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Щоб побудувати нелінійну межу
 рішень, збільшимо кількість прихованих ReLU-нейронів із трьох до
 дванадцяти. Мережа <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 має <span class="math inline">\(12(2+1)+(12+1)=49\)</span> параметрів і
@@ -496,7 +496,7 @@ y(1-\widehat y)\)</span> не входить до чутливості <em>ви�
 використовують <em>лише для створення прикладів</em>: мережа не отримує
 її, а функція втрат і зворотне поширення її не застосовують. Навчання
 використовує тільки пари маса–діаметр і мітки. Формули та зсуви подано в
-додатку <a href="#appendix-synthetic-data">A</a> для точного відтворення рисунка <a href="#fig:faixas_sinteticas">7</a>.</p>
+додатку <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a> для точного відтворення рисунка <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Розподіл \(64\) синтетичних
 прикладів у чотирьох смугах: дві для яблук над допоміжною кривою, дві
@@ -507,7 +507,7 @@ y(1-\widehat y)\)</span> не входить до чутливості <em>ви�
 для апельсинів під нею. Пунктирна крива не використовується під час
 навчання.</figcaption>
 </figure>
-<p>Рисунок <a href="#fig:faixas_sinteticas">7</a> показує точки, отримані
+<p>Рисунок <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> показує точки, отримані
 функцією <code>construct_data()</code>; пунктирна крива є лише
 допоміжною для синтетичних даних, а не вивченою межею. Вісім додаткових
 прикладів потрібні тільки для фінальної ілюстрації та не входять до
@@ -535,7 +535,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 змінюючи математичного визначення і не гарантуючи збіжності. Обираємо
 <span class="math inline">\(\eta=0.05\)</span> як обережне, але не
 доведено оптимальне значення. Для фіксованих даних і генератора
-таблиця <a href="#tab:eta">2</a> містить аналіз чутливості після <span class="math inline">\(1000\)</span> епох. Більша досліджена швидкість
+таблиця <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> містить аналіз чутливості після <span class="math inline">\(1000\)</span> епох. Більша досліджена швидкість
 тут збігається швидше, що не доводить її загальної переваги. <span class="math inline">\(0.05\)</span> залишаємо для стійкого й наочного
 навчання.</p>
 <div id="tab:eta">
@@ -570,7 +570,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 </table>
 </div>
 <h3 id="повна-реалізація-у-python">Повна реалізація у Python</h3>
-<p>Повний код наведено послідовно в блоках <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, упорядкованих за
+<p>Повний код наведено послідовно в блоках <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, упорядкованих за
 функціями та виконанням. Десять блоків утворюють файл
 <code>neural_network.py</code>, який додається окремо.</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Підготовка середовища</p><pre class="nm-python-code" dir="ltr"><code>"""Навчальний приклад: класифікація фруктів мережею 2-12-1.
@@ -779,13 +779,13 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Функція <code>construct_data()</code> (код <a href="#cod:dados">6</a>)
-реалізує лише генерацію з додатка <a href="#appendix-synthetic-data">A</a>; допоміжна
-крива не бере участі в оптимізації. Функція <code>train()</code> (код <a href="#cod:treinamento">8</a>) реалізує пряме
+<p>Функція <code>construct_data()</code> (код <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+реалізує лише генерацію з додатка <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; допоміжна
+крива не бере участі в оптимізації. Функція <code>train()</code> (код <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) реалізує пряме
 поширення, чутливості <span class="math inline">\(\delta^{(2)}\)</span>
 і <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>,
-градієнти та чотири групи оновлень параметрів за рівняннями <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> і <a href="#eq:descida">descida</a>. Усі градієнти обчислюються
-до зміни будь-якого параметра. <code>plot_results()</code> (код <a href="#cod:visualizacao">9</a>) зображує
+градієнти та чотири групи оновлень параметрів за рівняннями <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> і <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Усі градієнти обчислюються
+до зміни будь-якого параметра. <code>plot_results()</code> (код <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) зображує
 вивчену межу, а не криву генерації. Для відтворення доступні окремий
 Python-файл і ноутбук. Після <span class="math inline">\(6000\)</span>
 епох із зерном <span class="math inline">\(42\)</span> та <span class="math inline">\(\eta=0.05\)</span> маємо кінцеві середні втрати
@@ -793,7 +793,7 @@ Python-файл і ноутбук. Після <span class="math inline">\(6000\)
 правильну класифікацію всіх <span class="math inline">\(64\)</span>
 навчальних прикладів і восьми ілюстративних тестових точок. Це перевірка
 синтетичного числового прикладу, <em>не статистична оцінка якості
-узагальнення</em>. Рисунок <a href="#fig:saida_python">8</a>
+узагальнення</em>. Рисунок <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a>
 показує вивчену межу <span class="math inline">\(\widehat y=0.5\)</span>
 разом із навчальними точками (кола, квадрати) та ілюстративними
 тестовими (трикутники, хрестики).</p>
@@ -808,8 +808,8 @@ y=0.5\)</span>, вивчена мережею <span class="math inline">\(2\)</s
 <p>Ми почали з прямої, яка розділяє два набори точок, і завершуємо
 складнішою межею, отриманою налаштуванням параметрів. Програма
 застосовує лише вже розглянуті лінійні комбінації, активації, похідні,
-матричні добутки та градієнтні кроки <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>. Окрема Python-програма
-та ноутбук додаються; інші навчальні матеріали: <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+матричні добутки та градієнтні кроки <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>. Окрема Python-програма
+та ноутбук додаються; інші навчальні матеріали: <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Побудова синтетичного набору даних</h2>
 <p>Формули додатка документують тільки <em>ad hoc</em> спосіб створення
 даних для обчислювального прикладу. Вони не є частиною архітектури
@@ -843,8 +843,8 @@ d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
 генеративної моделі. Функція <code>construct_data()</code> точно
 реалізує наведені формули; вісім додаткових тестових пар прямо задано у
 програмі. Функції <code>reference_curve()</code> та
-<code>construct_data()</code> (коди <a href="#cod:curva">5</a>
-і <a href="#cod:dados">6</a>) відтворюють рівняння <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>, не надаючи мережі допоміжної
+<code>construct_data()</code> (коди <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+і <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) відтворюють рівняння <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>, не надаючи мережі допоміжної
 кривої для навчання. Повний код міститься в розділі 8 і серед додаткових
 файлів.</p>
 </section></div>

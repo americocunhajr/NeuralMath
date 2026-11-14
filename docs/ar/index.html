@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="المحتويات" class="toc"><h2>المحتويات</h2><ol><li><a href="#متى-يستطيع-الحاسوب-أن-يتعلم" target="_blank" rel="noopener noreferrer">متى يستطيع الحاسوب أن يتعلم؟</a></li><li><a href="#تمثيل-المشكلة-رياضيا" target="_blank" rel="noopener noreferrer">تمثيل المشكلة رياضيًا</a></li><li><a href="#خط-مستقيم-كمصنف" target="_blank" rel="noopener noreferrer">خط مستقيم كمُصنِّف</a></li><li><a href="#العصبون-الاصطناعي" target="_blank" rel="noopener noreferrer">العصبون الاصطناعي</a></li><li><a href="#لماذا-نحتاج-إلى-دالة-تنشيط" target="_blank" rel="noopener noreferrer">لماذا نحتاج إلى دالة تنشيط؟</a></li><li><a href="#بناء-شبكة-عصبية-صغيرة" target="_blank" rel="noopener noreferrer">بناء شبكة عصبية صغيرة</a></li><li><a href="#كيف-تتعلم-الشبكة-العصبية" target="_blank" rel="noopener noreferrer">كيف تتعلم الشبكة العصبية؟</a></li><li><a href="#من-الرياضيات-إلى-بايثون" target="_blank" rel="noopener noreferrer">من الرياضيات إلى بايثون</a></li><li><a href="#appendix-synthetic-data">إنشاء مجموعة البيانات الاصطناعية</a></li></ol></nav>
+<nav aria-label="المحتويات" class="toc"><h2>المحتويات</h2><ol><li><a href="#متى-يستطيع-الحاسوب-أن-يتعلم" target="_blank" rel="noopener noreferrer">متى يستطيع الحاسوب أن يتعلم؟</a></li><li><a href="#تمثيل-المشكلة-رياضيا" target="_blank" rel="noopener noreferrer">تمثيل المشكلة رياضيًا</a></li><li><a href="#خط-مستقيم-كمصنف" target="_blank" rel="noopener noreferrer">خط مستقيم كمُصنِّف</a></li><li><a href="#العصبون-الاصطناعي" target="_blank" rel="noopener noreferrer">العصبون الاصطناعي</a></li><li><a href="#لماذا-نحتاج-إلى-دالة-تنشيط" target="_blank" rel="noopener noreferrer">لماذا نحتاج إلى دالة تنشيط؟</a></li><li><a href="#بناء-شبكة-عصبية-صغيرة" target="_blank" rel="noopener noreferrer">بناء شبكة عصبية صغيرة</a></li><li><a href="#كيف-تتعلم-الشبكة-العصبية" target="_blank" rel="noopener noreferrer">كيف تتعلم الشبكة العصبية؟</a></li><li><a href="#من-الرياضيات-إلى-بايثون" target="_blank" rel="noopener noreferrer">من الرياضيات إلى بايثون</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">إنشاء مجموعة البيانات الاصطناعية</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="متى-يستطيع-الحاسوب-أن-يتعلم"><span class="section-no">01</span><h2>متى يستطيع الحاسوب أن يتعلم؟</h2>
 <p>في حياتنا اليومية نتخذ قرارات تصنيفية من دون أن نشعر بذلك تقريبًا. فعندما ننظر إلى ثمرة نتعرف سريعًا إلى كونها تفاحة أو برتقالة؛ وعندما تصل رسالة إلى الهاتف نميز بين محادثة حقيقية وإعلان غير مرغوب فيه؛ وفي التحليل الطبي يمكن دمج عدة قياسات لدعم قرار؛ وفي المؤسسات المالية تُقيَّم معلومات متعددة قبل منح الائتمان. وفي جميع هذه الأمثلة تُؤخذ عدة خصائص معًا لإنتاج إجابة.</p>
 <p>في كثير من برامج الحاسوب التقليدية يكتب المبرمج صراحةً القواعد التي تنتج هذه الإجابة. وينجح هذا الأسلوب عندما تكون القواعد معروفة ويمكن التعبير عنها بوضوح، لكنه يصبح أقل فاعلية عندما تكون البيانات شديدة التباين أو عندما يصعب صياغة كل الشروط اللازمة لاتخاذ قرار جيد مسبقًا. وهذا يقود إلى سؤال طبيعي:</p>
@@ -223,7 +223,7 @@ v_1&amp;v_2&amp;v_3
 </section><section class="article-section" id="كيف-تتعلم-الشبكة-العصبية"><span class="section-no">07</span><h2>كيف تتعلم الشبكة العصبية؟</h2>
 <p>لا تُعرف أوزان الشبكة وانحيازاتها مسبقاً؛ بل تُضبط باستخدام أمثلة ذات
 تسميات صحيحة. يتكرر أثناء التعلم المرور الأمامي وحساب الخسارة والمشتقات
-وتحديث المعاملات (الشكل <a href="#fig:ciclo_treinamento">6</a>).
+وتحديث المعاملات (الشكل <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>).
 تسمح قاعدة السلسلة بقياس أثر تغيير صغير في كل وزن أو انحياز على
 الخسارة.</p>
 <p>لضبط المعاملات نحتاج إلى مقياس عددي للفارق بين التنبؤ والإجابة
@@ -251,7 +251,7 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 بتعديل المعاملات. لكن تقليل <span class="math inline">\(J\)</span> وحده
 لا يضمن تنبؤات جيدة على بيانات جديدة. سنحتفظ بالخسارة المربعة من أجل
 بساطة الاشتقاق، ثم نقارن مشتقتها بالإنتروبيا المتقاطعة الثنائية دون
-تغيير التجربة الحاسوبية الأساسية <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+تغيير التجربة الحاسوبية الأساسية <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="خطوات التدريب: المرور الأمامي وحساب الخسارة والانتشار العكسي
 للحساسيات وتحديث المعاملات." decoding="async" loading="lazy" src="../assets/img/ar/Fig06.webp" style="width:88.0%"/>
@@ -273,7 +273,7 @@ E_i/\partial\theta\)</span> بدلاً من <span class="math inline">\(\partial
 J/\partial\theta\)</span>. هذه هي صيغة انحدار التدرج العشوائي (SGD)
 المعتمدة هنا.</p>
 <h3 id="قاعدة-السلسلة-في-شبكة-231">قاعدة السلسلة في شبكة <span lang="en"><span class="math inline">\(2\)</span>–<span class="math inline">\(3\)</span>–<span class="math inline">\(1\)</span></span></h3>
-<p>نستعمل الشبكة في الشكل <a href="#fig:small_network">5</a>، بثلاث
+<p>نستعمل الشبكة في الشكل <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a>، بثلاث
 عصبونات مخفية تستخدم ReLU وخَرْج يستخدم سيغمويد. للمدخلين، الكتلة بالغرام
 والقطر بالسنتيمتر، مقياسان عدديان مختلفان. ولتحسين تكييف المسألة العددية
 نحول كل ميزة إلى <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span> حيث <span class="math inline">\(\mu_j\)</span> متوسط مرجعي و<span class="math inline">\(\sigma_j&gt;0\)</span> انحراف معياري مرجعي. تصبح
@@ -324,7 +324,7 @@ y(1-\widehat y)}
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>هذه القيم ثابتة للتوضيح فقط؛ أما في القسم <a href="#من-الرياضيات-إلى-بايثون">8</a> فتحسب
+<p>هذه القيم ثابتة للتوضيح فقط؛ أما في القسم <a href="#من-الرياضيات-إلى-بايثون" target="_blank" rel="noopener noreferrer">8</a> فتحسب
 المتوسطات والانحرافات المعيارية من بيانات التدريب مباشرة.</p>
 <p>نختار المعاملات الابتدائية الثلاثة عشر التالية:</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -334,7 +334,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>تعطي المعادلة <a href="#eq:forward">forward</a> تباعاً:</p>
+<p>تعطي المعادلة <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> تباعاً:</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -342,7 +342,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>يشير التنبؤ الأول إلى الفئة الخاطئة. وباستخدام المعادلتين <a href="#eq:delta_saida">delta_saida</a> و <a href="#eq:delta_oculta">delta_oculta</a> نحصل على:</p>
+<p>يشير التنبؤ الأول إلى الفئة الخاطئة. وباستخدام المعادلتين <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> و <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> نحصل على:</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -355,7 +355,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>العصبون المخفي الثالث غير نشط (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>)، لذلك تكون مشتقات أوزانه
 الداخلة وانحيازه صفراً في هذه الخطوة. نأخذ <span class="math inline">\(\eta=0.05\)</span> ونطبق <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
 E/\partial\theta\)</span> في الوقت نفسه على جميع المعاملات. يعرض
-الجدول <a href="#tab:passo_sgd">1</a> بعض التحديثات الثلاثة عشر؛ وتتبع
+الجدول <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> بعض التحديثات الثلاثة عشر؛ وتتبع
 البقية القواعد نفسها.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -463,10 +463,10 @@ E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
 القدرة <em>التعميم</em>، وقد يؤدي التكيف المفرط مع أمثلة التدريب إلى
 <em>فرط التخصيص</em>. في الدراسات الأوسع تتيح مجموعات منفصلة للتدريب
 والتحقق والاختبار اختيار المعاملات الفائقة وتقييم النموذج بانحياز
-أقل <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+أقل <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="من-الرياضيات-إلى-بايثون"><span class="section-no">08</span><h2>من الرياضيات إلى بايثون</h2>
 <p>سننفذ الآن باستخدام NumPy فقط المرور الأمامي وقاعدة السلسلة
-والتحديثات العشوائية المشتقة في القسم <a href="#كيف-تتعلم-الشبكة-العصبية">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. ولإظهار حد قرار
+والتحديثات العشوائية المشتقة في القسم <a href="#كيف-تتعلم-الشبكة-العصبية" target="_blank" rel="noopener noreferrer">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. ولإظهار حد قرار
 غير خطي نوسع الطبقة المخفية من ثلاثة إلى اثني عشر عصبون ReLU. تحتوي
 الشبكة <span lang="en"><span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span></span> على <span class="math inline">\(12(2+1)+(12+1)=49\)</span> معاملاً، لكن المعادلات
 الرياضية هي نفسها.</p>
@@ -479,8 +479,8 @@ E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
 قياسات تجريبية ولا نموذجاً فيزيائياً للفاكهة</em>.</p>
 <p>يستعمل المنحنى المرجعي <em>لتوليد الأمثلة فقط</em>. لا يدخل الشبكة
 ولا يظهر في الخسارة ولا يشارك في الانتشار العكسي. يستخدم التدريب أزواج
-الكتلة والقطر وتسمياتها فحسب. يوثق الملحق <a href="#appendix-synthetic-data">A</a> الصيغة
-والإزاحات التي تعيد إنشاء الشكل <a href="#fig:faixas_sinteticas">7</a>
+الكتلة والقطر وتسمياتها فحسب. يوثق الملحق <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a> الصيغة
+والإزاحات التي تعيد إنشاء الشكل <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>
 بدقة.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="أمثلة التدريب الاصطناعية البالغ عددها \(64\) في أربعة أشرطة؛ التفاح أعلى منحنى
@@ -490,7 +490,7 @@ E_{\mathrm{CE}}=-y\ln\widehat y-(1-y)\ln(1-\widehat y).\]</span></p>
 مساعد والبرتقال أسفله. لا يستخدم المنحنى المتقطع أثناء
 التدريب.</figcaption>
 </figure>
-<p>يبين الشكل <a href="#fig:faixas_sinteticas">7</a> النقاط التي تنتجها الدالة
+<p>يبين الشكل <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> النقاط التي تنتجها الدالة
 <code>construct_data()</code> فعلياً. المنحنى المتقطع أداة لتوليد
 البيانات، وليس حد القرار المتعلم. تُستخدم نقاط الاختبار الثماني في الشكل
 النهائي فقط ولا تدخل في إحصاءات التقييس.</p>
@@ -510,7 +510,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 <code>relu_derivative()</code> الاصطلاح <span class="math inline">\(\operatorname{ReLU}'(0)=0\)</span>؛ ولا يضمن
 هذا بحد ذاته التقارب.</p>
 <p>اخترنا <span class="math inline">\(\eta=0.05\)</span> اختياراً محافظاً
-لا بوصفه القيمة المثلى. يعرض الجدول <a href="#tab:eta">2</a> اختبار الحساسية
+لا بوصفه القيمة المثلى. يعرض الجدول <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> اختبار الحساسية
 بعد <span class="math inline">\(1000\)</span> عصر تدريب، مع البيانات
 والبذرة نفسيهما. تقارب أكبر معدل مجرب بسرعة أكبر على هذه البيانات، لكنه
 ليس الأفضل بالضرورة في مسائل أخرى. أبقينا <span class="math inline">\(0.05\)</span> لضمان سلوك مستقر وسجل خسارة سهل
@@ -545,7 +545,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 </table>
 </div>
 <h3 id="التنفيذ-الكامل-بلغة-بايثون">التنفيذ الكامل بلغة بايثون</h3>
-<p>يُعرض البرنامج الكامل في المقاطع <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a> بحسب وظيفة كل مقطع
+<p>يُعرض البرنامج الكامل في المقاطع <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a> بحسب وظيفة كل مقطع
 وترتيب تنفيذه.</p>
 <p>تشكل المقاطع العشرة المتتابعة الملف المتاح أيضاً ضمن المواد
 التكميلية.</p>
@@ -755,13 +755,13 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>تنفذ <code>construct_data()</code> (المقطع <a href="#cod:dados">6</a>)
-فقط إنشاء البيانات الموصوف في الملحق <a href="#appendix-synthetic-data">A</a>؛ ولا يستخدم
-المنحنى المساعد في التحسين. تنفذ <code>train()</code> (المقطع <a href="#cod:treinamento">8</a>) المرور الأمامي
+<p>تنفذ <code>construct_data()</code> (المقطع <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+فقط إنشاء البيانات الموصوف في الملحق <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>؛ ولا يستخدم
+المنحنى المساعد في التحسين. تنفذ <code>train()</code> (المقطع <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) المرور الأمامي
 والحساسيتين <span class="math inline">\(\delta^{(2)}\)</span> و<span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span> وحساب التدرجات
-وتحديث مجموعات المعاملات الأربع وفق المعادلات <a href="#eq:forward">forward</a>
-و <a href="#eq:delta_saida">delta_saida</a> و <a href="#eq:delta_oculta">delta_oculta</a> و <a href="#eq:descida">descida</a>. تحسب كل التدرجات قبل تغيير
-أي معامل. ترسم <code>plot_results()</code> (المقطع <a href="#cod:visualizacao">9</a>) حد القرار
+وتحديث مجموعات المعاملات الأربع وفق المعادلات <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>
+و <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> و <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> و <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. تحسب كل التدرجات قبل تغيير
+أي معامل. ترسم <code>plot_results()</code> (المقطع <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) حد القرار
 المتعلم، لا المنحنى المستخدم لصنع البيانات.</p>
 <p>يتوافر البرنامج أيضاً ملفاً مستقلاً ودفتر تنفيذ لتيسير إعادة الإنتاج
 والتعديل.</p>
@@ -770,7 +770,7 @@ from matplotlib.lines import Line2D
 الشبكة جميع نقاط التدريب <span class="math inline">\(64\)</span> ونقاط
 الاختبار التوضيحي الثماني تصنيفاً صحيحاً. يثبت ذلك سلوك الحساب في هذه
 التجربة الاصطناعية، <em>لا يعطي تقديراً إحصائياً لأداء التعميم</em>. يمثل
-الشكل <a href="#fig:saida_python">8</a> حد القرار المتعلم <span class="math inline">\(\widehat y=0.5\)</span>؛ الدوائر والمربعات للتدريب
+الشكل <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> حد القرار المتعلم <span class="math inline">\(\widehat y=0.5\)</span>؛ الدوائر والمربعات للتدريب
 والمثلثات والصلبان للاختبار التوضيحي.</p>
 <figure id="fig:saida_python">
 <img alt="حد القرار \(\widehat
@@ -784,9 +784,9 @@ y=0.5\)</span> الذي تعلمته الشبكة <span lang="en"><span class="m
 حسابي أغنى ينشأ فيه حد قرار متعرج من ضبط المعاملات تلقائياً. لا يضيف
 التنفيذ أي عنصر غامض إلى الرياضيات: بل يكرر سريعاً وعلى نطاق واسع
 التركيبات الخطية ودوال التفعيل والمشتقات والعمليات المصفوفية وتحديثات
-التدرج <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+التدرج <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>.</p>
 <p>يرافق هذا الإصدار برنامج بايثون والدفتر القابل للتنفيذ. وتوجد موارد
-تعليمية مرتبطة على <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+تعليمية مرتبطة على <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>إنشاء مجموعة البيانات الاصطناعية</h2>
 <p>توثق الصيغ الآتية خياراً <em>اعتباطياً (ad hoc)</em> لتوليد بيانات
 التمرين الحاسوبي. وهي ليست جزءاً من بنية الشبكة أو دالة الخسارة أو
@@ -819,8 +819,8 @@ d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
 متعلماً</em>. تنفذ <code>construct_data()</code> هذه الصيغ بالضبط، وتحدد
 نقاط الاختبار الثماني مباشرة في الكود.</p>
 <p>تنفذ الدالتان <code>reference_curve()</code>
-و<code>construct_data()</code> (المقطعان <a href="#cod:curva">5</a>
-و <a href="#cod:dados">6</a>) المعادلات <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> بدقة، دون تقديم المنحنى
+و<code>construct_data()</code> (المقطعان <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+و <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) المعادلات <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a> بدقة، دون تقديم المنحنى
 المساعد كمعلومة تدريب. يرد البرنامج كاملاً في القسم الثامن في مقاطع
 متتالية، كما يتوافر للتنفيذ مباشرة في الملفات التكميلية.</p>
 </section></div>

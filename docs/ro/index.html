@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Cuprins" class="toc"><h2>Cuprins</h2><ol><li><a href="#când-poate-învăța-un-calculator" target="_blank" rel="noopener noreferrer">Când poate învăța un calculator?</a></li><li><a href="#reprezentarea-matematică-a-problemei" target="_blank" rel="noopener noreferrer">Reprezentarea matematică a problemei</a></li><li><a href="#o-dreaptă-ca-clasificator" target="_blank" rel="noopener noreferrer">O dreaptă ca clasificator</a></li><li><a href="#neuronul-artificial" target="_blank" rel="noopener noreferrer">Neuronul artificial</a></li><li><a href="#de-ce-avem-nevoie-de-o-funcție-de-activare" target="_blank" rel="noopener noreferrer">De ce avem nevoie de o funcție de activare?</a></li><li><a href="#construirea-unei-rețele-neuronale-mici" target="_blank" rel="noopener noreferrer">Construirea unei rețele neuronale mici</a></li><li><a href="#cum-învață-o-rețea-neuronală" target="_blank" rel="noopener noreferrer">Cum învață o rețea neuronală?</a></li><li><a href="#de-la-matematică-la-python" target="_blank" rel="noopener noreferrer">De la matematică la Python</a></li><li><a href="#appendix-synthetic-data">Construcția setului de date sintetice</a></li></ol></nav>
+<nav aria-label="Cuprins" class="toc"><h2>Cuprins</h2><ol><li><a href="#când-poate-învăța-un-calculator" target="_blank" rel="noopener noreferrer">Când poate învăța un calculator?</a></li><li><a href="#reprezentarea-matematică-a-problemei" target="_blank" rel="noopener noreferrer">Reprezentarea matematică a problemei</a></li><li><a href="#o-dreaptă-ca-clasificator" target="_blank" rel="noopener noreferrer">O dreaptă ca clasificator</a></li><li><a href="#neuronul-artificial" target="_blank" rel="noopener noreferrer">Neuronul artificial</a></li><li><a href="#de-ce-avem-nevoie-de-o-funcție-de-activare" target="_blank" rel="noopener noreferrer">De ce avem nevoie de o funcție de activare?</a></li><li><a href="#construirea-unei-rețele-neuronale-mici" target="_blank" rel="noopener noreferrer">Construirea unei rețele neuronale mici</a></li><li><a href="#cum-învață-o-rețea-neuronală" target="_blank" rel="noopener noreferrer">Cum învață o rețea neuronală?</a></li><li><a href="#de-la-matematică-la-python" target="_blank" rel="noopener noreferrer">De la matematică la Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Construcția setului de date sintetice</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="când-poate-învăța-un-calculator"><span class="section-no">01</span><h2>Când poate învăța un calculator?</h2>
 <p>În viața de zi cu zi luăm decizii de clasificare aproape fără să ne dăm seama. Privind un fruct, îl recunoaștem rapid ca fiind un măr sau o portocală; când primim un mesaj pe telefon, distingem o conversație legitimă de publicitatea nedorită; într-o analiză medicală, mai multe măsurători pot fi combinate pentru a sprijini o decizie; iar în instituțiile financiare sunt evaluate mai multe informații înainte de acordarea unui credit. În toate aceste exemple, mai multe caracteristici sunt analizate împreună pentru a produce un răspuns.</p>
 <p>În multe programe de calculator tradiționale, regulile care produc acest răspuns sunt scrise explicit de programator. Această abordare funcționează bine atunci când regulile sunt cunoscute și pot fi formulate clar. Ea devine mai puțin eficientă atunci când datele sunt foarte variabile sau când este dificil să formulăm în prealabil toate condițiile necesare pentru o decizie bună. De aici apare o întrebare firească:</p>
@@ -225,7 +225,7 @@ v_1&amp;v_2&amp;v_3
 ei se ajustează pe baza exemplelor cu etichete de clasă cunoscute.
 Învățarea presupune repetarea propagării directe, a calculului
 pierderii, a determinării gradienților și a actualizării parametrilor
-(Figura <a href="#fig:ciclo_treinamento">6</a>). Regula lanțului arată
+(Figura <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>). Regula lanțului arată
 sensibilitatea pierderii în raport cu fiecare pondere și bias.</p>
 <p>Pentru ajustarea parametrilor avem nevoie mai întâi de o măsură
 numerică a diferenței dintre predicție și răspunsul așteptat. O
@@ -259,10 +259,10 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 mărimea pe care încercăm să o reducem modificând parametrii. Minimizarea
 lui <span class="math inline">\(J\)</span> nu garantează, în sine,
 predicții bune pentru date noi; vom reveni la generalizare. Păstrăm
-pierderea pătratică din ecuația <a href="#eq:perda">perda</a>
+pierderea pătratică din ecuația <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a>
 pentru simplitatea sa algebrică și ulterior comparăm gradientul ei cu
 cel al entropiei încrucișate binare fără a modifica experimentul numeric
-<span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+<span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Etapele antrenării: propagare directă, evaluarea pierderii,
 retropropagarea gradienților și actualizarea parametrilor." decoding="async" loading="lazy" src="../assets/img/ro/Fig06.webp" style="width:88.0%"/>
@@ -280,12 +280,12 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 controlează dimensiunea pasului: valori prea mici pot încetini
 convergența, iar valori prea mari pot produce oscilații sau divergență.
 Când parametrii sunt actualizați după fiecare observație, ca în codul
-din Secțiunea <a href="#de-la-matematică-la-python">8</a>, <span class="math inline">\(\partial
+din Secțiunea <a href="#de-la-matematică-la-python" target="_blank" rel="noopener noreferrer">8</a>, <span class="math inline">\(\partial
 J/\partial\theta\)</span> este înlocuit cu <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Aceasta este
 forma de coborâre stochastică a gradientului (SGD) folosită aici.</p>
 <h3 id="regula-lanțului-în-rețeaua-231">Regula lanțului în rețeaua
 2–3–1</h3>
-<p>Folosim rețeaua din Figura <a href="#fig:small_network">[fig:pequena_rede]</a>, cu trei
+<p>Folosim rețeaua din Figura <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a>, cu trei
 neuroni ascunși ReLU și o ieșire sigmoidă. Intrările reprezintă masa
 (grame) și diametrul (centimetri), având scări numerice diferite. Pentru
 a evita afectarea condiționării ajustării, transformăm fiecare
@@ -348,7 +348,7 @@ corespunde intrării adimensionale</p>
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
 <p>Aceste valori de referință sunt fixate pentru demonstrație; în
-Secțiunea <a href="#de-la-matematică-la-python">8</a>, media și abaterea standard vor fi
+Secțiunea <a href="#de-la-matematică-la-python" target="_blank" rel="noopener noreferrer">8</a>, media și abaterea standard vor fi
 calculate direct din datele de antrenare.</p>
 <p>Alegem cei treisprezece parametri inițiali</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -358,7 +358,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Ecuația <a href="#eq:forward">forward</a> furnizează, succesiv,</p>
+<p>Ecuația <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> furnizează, succesiv,</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -366,7 +366,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>Predicția inițială corespunde clasei greșite. Din ecuațiile <a href="#eq:delta_saida">delta_saida</a> și <a href="#eq:delta_oculta">delta_oculta</a> obținem</p>
+<p>Predicția inițială corespunde clasei greșite. Din ecuațiile <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> și <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> obținem</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -379,7 +379,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>Al treilea neuron ascuns este inactiv (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>); prin urmare, gradienții
 ponderilor sale de intrare și ai biasului sunt nuli la acest pas. Pentru
 <span class="math inline">\(\eta=0.05\)</span>, aplicăm <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span> simultan tuturor parametrilor. Tabelul <a href="#tab:passo_sgd">1</a> prezintă câteva dintre cele
+E/\partial\theta\)</span> simultan tuturor parametrilor. Tabelul <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> prezintă câteva dintre cele
 treisprezece actualizări; celelalte urmează aceleași formule.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -497,11 +497,11 @@ pentru date noi. Această capacitate se numește <em>generalizare</em>;
 dacă adaptarea excesivă la exemplele de antrenare afectează predicțiile
 pe date noi, apare <em>supraînvățarea</em>. În studii mai ample,
 seturile separate de antrenare, validare și testare permit alegerea
-hiperparametrilor și evaluarea cu mai puțină părtinire <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+hiperparametrilor și evaluarea cu mai puțină părtinire <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="de-la-matematică-la-python"><span class="section-no">08</span><h2>De la matematică la Python</h2>
 <p>Implementăm acum, folosind numai <code>NumPy</code>, propagarea
 directă, regula lanțului și actualizarea stocastică derivată în
-Secțiunea <a href="#cum-învață-o-rețea-neuronală">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Pentru a obține o frontieră
+Secțiunea <a href="#cum-învață-o-rețea-neuronală" target="_blank" rel="noopener noreferrer">7</a> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Pentru a obține o frontieră
 neliniară mărim stratul ascuns de la trei la doisprezece neuroni ReLU.
 Rețeaua <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 rezultată are <span class="math inline">\(12(2+1)+(12+1)=49\)</span> de
@@ -520,8 +520,8 @@ nu constituie un model fizic al fructelor</em>.</p>
 exemplelor</em>. Ea nu este furnizată rețelei, nu intră în funcția de
 pierdere și nu participă la retropropagare. Antrenarea folosește doar
 perechile masă–diametru și etichetele lor. Formula generatoare și
-deplasările sunt documentate în Anexa <a href="#appendix-synthetic-data">A</a>, astfel
-încât datele din Figura <a href="#fig:faixas_sinteticas">7</a>
+deplasările sunt documentate în Anexa <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>, astfel
+încât datele din Figura <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>
 pot fi reproduse exact.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Distribuția a \(64\) de
@@ -533,7 +533,7 @@ exemple sintetice în patru benzi, două deasupra (mere) și două
 dedesubtul (portocale) unei curbe auxiliare alese pentru generarea
 punctelor. Curba întreruptă nu este utilizată la antrenare.</figcaption>
 </figure>
-<p>Figura <a href="#fig:faixas_sinteticas">7</a> prezintă punctele produse
+<p>Figura <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> prezintă punctele produse
 de <code>construct_data()</code>; curba întreruptă aparține numai
 construcției sintetice și nu este o frontieră învățată. Cele opt exemple
 suplimentare apar numai în ilustrația finală și nu influențează
@@ -565,7 +565,7 @@ punct, fără a modifica definiția matematică sau a garanta
 convergența.</p>
 <p>Folosim <span class="math inline">\(\eta=0.05\)</span> ca alegere
 prudentă, nu ca rată optimă. Un studiu simplu de sensibilitate cu date
-și sămânță fixate produce Tabelul <a href="#tab:eta">2</a> după <span class="math inline">\(1000\)</span> de epoci. Cea mai mare rată testată
+și sămânță fixate produce Tabelul <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> după <span class="math inline">\(1000\)</span> de epoci. Cea mai mare rată testată
 converge mai rapid pe acest set, dar nu rezultă de aici că este
 potrivită în general. Păstrăm <span class="math inline">\(0.05\)</span>
 pentru o antrenare stabilă și o evoluție a pierderii ușor de
@@ -602,7 +602,7 @@ clasificările corecte la antrenare după <span class="math inline">\(1000\)</sp
 </div>
 <h3 id="implementare-integrală-în-python">Implementare integrală în
 Python</h3>
-<p>Programul complet este prezentat în Codurile <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, ordonate după
+<p>Programul complet este prezentat în Codurile <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, ordonate după
 funcție și în ordinea execuției. Cele zece blocuri consecutive
 alcătuiesc fișierul <code>neural_network.py</code>, inclus și în
 materialele suplimentare.</p>
@@ -812,13 +812,13 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Funcția <code>construct_data()</code> (Codul <a href="#cod:dados">6</a>)
-implementează numai construcția sintetică din Anexa <a href="#appendix-synthetic-data">A</a>; curba auxiliară nu intră în
-optimizare. Funcția <code>train()</code> (Codul <a href="#cod:treinamento">8</a>) realizează
+<p>Funcția <code>construct_data()</code> (Codul <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+implementează numai construcția sintetică din Anexa <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; curba auxiliară nu intră în
+optimizare. Funcția <code>train()</code> (Codul <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) realizează
 propagarea directă, calculul lui <span class="math inline">\(\delta^{(2)}\)</span> și <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradienții și
-cele patru actualizări de parametri din ecuațiile <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> și <a href="#eq:descida">descida</a>. Toți gradienții se
+cele patru actualizări de parametri din ecuațiile <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> și <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Toți gradienții se
 calculează înainte de modificarea vreunui parametru. Funcția
-<code>plot_results()</code> (Codul <a href="#cod:visualizacao">9</a>) reprezintă
+<code>plot_results()</code> (Codul <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) reprezintă
 frontiera învățată, nu curba de generare a datelor.</p>
 <p>Programul este disponibil și ca fișier Python independent, precum și
 sub forma unui notebook executabil pentru reproducere și adaptare.</p>
@@ -828,7 +828,7 @@ medie finală <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>, cu
 <span class="math inline">\(64\)</span> de observații de antrenare și
 cele opt exemple suplimentare clasificate corect. Aceasta verifică
 comportamentul numeric pe un exemplu sintetic, nu reprezintă o estimare
-statistică a generalizării. Figura <a href="#fig:saida_python">8</a>
+statistică a generalizării. Figura <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a>
 prezintă frontiera învățată <span class="math inline">\(\widehat
 y=0.5\)</span>; cercurile și pătratele marchează antrenarea, iar
 triunghiurile și crucile exemplele ilustrative de test.</p>
@@ -846,9 +846,9 @@ automată a parametrilor produce o frontieră curbată. Implementarea nu
 adaugă nimic misterios matematicii discutate: doar organizează și
 repetă, la scară și viteză mari, combinații liniare, funcții de
 activare, derivate, produse matriciale și pași de coborâre a
-gradientului <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>.</p>
+gradientului <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>.</p>
 <p>Programul Python și notebookul executabil însoțesc fișierele
-suplimentare ale acestei ediții. Portalul <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>
+suplimentare ale acestei ediții. Portalul <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>
 oferă alte resurse didactice.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Construcția setului de date sintetice</h2>
 <p>Expresiile din această anexă documentează doar o alegere <em>ad
@@ -887,9 +887,9 @@ generativ învățat. Funcția suplimentară <code>construct_data()</code>
 implementează exact aceste expresii. Cele opt perechi suplimentare
 pentru testarea ilustrativă sunt specificate direct în cod.</p>
 <p>Funcțiile <code>reference_curve()</code> și
-<code>construct_data()</code> (Codurile <a href="#cod:curva">5</a>
-și <a href="#cod:dados">6</a>) implementează exact
-ecuațiile <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>, fără a furniza curba
+<code>construct_data()</code> (Codurile <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+și <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) implementează exact
+ecuațiile <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>, fără a furniza curba
 auxiliară ca informație pentru antrenare. Programul complet este
 reprodus în Secțiunea 8 în blocuri consecutive și furnizat și ca
 material suplimentar pentru executare.</p>
