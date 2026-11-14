@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Mục lục" class="toc"><h2>Mục lục</h2><ol><li><a href="#khi-nào-máy-tính-có-thể-học" target="_blank" rel="noopener noreferrer">Khi nào máy tính có thể học?</a></li><li><a href="#biểu-diễn-bài-toán-bằng-toán-học" target="_blank" rel="noopener noreferrer">Biểu diễn bài toán bằng toán học</a></li><li><a href="#đường-thẳng-như-một-bộ-phân-loại" target="_blank" rel="noopener noreferrer">Đường thẳng như một bộ phân loại</a></li><li><a href="#nơ-ron-nhân-tạo" target="_blank" rel="noopener noreferrer">Nơ-ron nhân tạo</a></li><li><a href="#tại-sao-cần-hàm-kích-hoạt" target="_blank" rel="noopener noreferrer">Tại sao cần hàm kích hoạt?</a></li><li><a href="#xây-dựng-một-mạng-nơ-ron-nhỏ" target="_blank" rel="noopener noreferrer">Xây dựng một mạng nơ-ron nhỏ</a></li><li><a href="#mạng-nơ-ron-học-như-thế-nào" target="_blank" rel="noopener noreferrer">Mạng nơ-ron học như thế nào?</a></li><li><a href="#từ-toán-học-đến-python" target="_blank" rel="noopener noreferrer">Từ toán học đến Python</a></li><li><a href="#appendix-synthetic-data">Xây dựng tập dữ liệu tổng hợp</a></li></ol></nav>
+<nav aria-label="Mục lục" class="toc"><h2>Mục lục</h2><ol><li><a href="#khi-nào-máy-tính-có-thể-học" target="_blank" rel="noopener noreferrer">Khi nào máy tính có thể học?</a></li><li><a href="#biểu-diễn-bài-toán-bằng-toán-học" target="_blank" rel="noopener noreferrer">Biểu diễn bài toán bằng toán học</a></li><li><a href="#đường-thẳng-như-một-bộ-phân-loại" target="_blank" rel="noopener noreferrer">Đường thẳng như một bộ phân loại</a></li><li><a href="#nơ-ron-nhân-tạo" target="_blank" rel="noopener noreferrer">Nơ-ron nhân tạo</a></li><li><a href="#tại-sao-cần-hàm-kích-hoạt" target="_blank" rel="noopener noreferrer">Tại sao cần hàm kích hoạt?</a></li><li><a href="#xây-dựng-một-mạng-nơ-ron-nhỏ" target="_blank" rel="noopener noreferrer">Xây dựng một mạng nơ-ron nhỏ</a></li><li><a href="#mạng-nơ-ron-học-như-thế-nào" target="_blank" rel="noopener noreferrer">Mạng nơ-ron học như thế nào?</a></li><li><a href="#từ-toán-học-đến-python" target="_blank" rel="noopener noreferrer">Từ toán học đến Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Xây dựng tập dữ liệu tổng hợp</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="khi-nào-máy-tính-có-thể-học"><span class="section-no">01</span><h2>Khi nào máy tính có thể học?</h2>
 <p>Trong đời sống hằng ngày, chúng ta đưa ra các quyết định phân loại gần như không nhận ra. Nhìn một quả, ta nhanh chóng nhận biết đó là táo hay cam; khi một tin nhắn đến điện thoại, ta phân biệt cuộc trao đổi hợp lệ với quảng cáo không mong muốn; trong phân tích y khoa, nhiều phép đo có thể được kết hợp để hỗ trợ một quyết định; và tại các tổ chức tài chính, nhiều thông tin được đánh giá trước khi cấp tín dụng. Trong mọi ví dụ này, nhiều đặc trưng được xem xét đồng thời để tạo ra một câu trả lời.</p>
 <p>Trong nhiều chương trình máy tính truyền thống, các quy tắc tạo ra câu trả lời được lập trình viên viết một cách tường minh. Cách tiếp cận này hoạt động tốt khi các quy tắc đã biết và có thể diễn đạt rõ ràng. Nó trở nên kém hiệu quả hơn khi dữ liệu biến thiên mạnh hoặc khi khó xác định trước mọi điều kiện cần thiết để đưa ra một quyết định tốt. Từ đây nảy sinh một câu hỏi tự nhiên:</p>
@@ -224,7 +224,7 @@ v_1&amp;v_2&amp;v_3
 <p>Trọng số và độ lệch (bias) của mạng không được biết trước: chúng được
 điều chỉnh từ các ví dụ có nhãn lớp đã biết. Huấn luyện lặp lại lan
 truyền xuôi, tính hàm mất mát, xác định gradient và cập nhật tham số
-(Hình <a href="#fig:ciclo_treinamento">6</a>). Quy tắc dây chuyền cho
+(Hình <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>). Quy tắc dây chuyền cho
 biết ảnh hưởng cục bộ của từng trọng số và bias lên mất mát. Để điều
 chỉnh tham số, trước hết cần một thước đo bằng số cho độ chênh lệch giữa
 dự đoán và đáp án. <em>Hàm mất mát</em> gán mức phạt cho mỗi dự đoán,
@@ -246,7 +246,7 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <span class="math inline">\(J\)</span> không tự bảo đảm độ chính xác
 trên dữ liệu mới. Chúng ta dùng mất mát bình phương vì phép biến đổi đại
 số đơn giản và so sánh gradient của nó với entropy chéo nhị phân mà
-không thay đổi thí nghiệm số <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+không thay đổi thí nghiệm số <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Các bước huấn luyện: lan truyền xuôi, tính mất mát, lan
 truyền ngược độ nhạy và cập nhật tham số." decoding="async" loading="lazy" src="../assets/img/vi/Fig06.webp" style="width:88.0%"/>
@@ -262,11 +262,11 @@ tham số đó. Một bước hạ gradient được viết là</p>
 J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>Tốc độ học <span class="math inline">\(\eta\)</span> quyết định độ
 lớn bước: quá nhỏ có thể làm hội tụ chậm, quá lớn có thể gây dao động
-hoặc phân kỳ. Nếu cập nhật sau mỗi mẫu (Mục <a href="#từ-toán-học-đến-python">8</a>), thay <span class="math inline">\(\partial J/\partial\theta\)</span> bằng <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Đây là hạ
+hoặc phân kỳ. Nếu cập nhật sau mỗi mẫu (Mục <a href="#từ-toán-học-đến-python" target="_blank" rel="noopener noreferrer">8</a>), thay <span class="math inline">\(\partial J/\partial\theta\)</span> bằng <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Đây là hạ
 gradient ngẫu nhiên (SGD) được dùng ở đây.</p>
 <h3 id="quy-tắc-dây-chuyền-trong-mạng-231">Quy tắc dây chuyền trong mạng
 2–3–1</h3>
-<p>Xét mạng ở Hình <a href="#fig:small_network">[fig:pequena_rede]</a> với ba nơ-ron
+<p>Xét mạng ở Hình <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a> với ba nơ-ron
 ẩn dùng ReLU và nơ-ron đầu ra dùng sigmoid. Khối lượng (g) và đường kính
 (cm) có các thang số khác nhau, có thể làm xấu điều kiện của bài toán
 tối ưu. Ta chuẩn hóa từng đặc trưng theo <span class="math inline">\(x_j^\ast=(x_j-\mu_j)/\sigma_j\)</span>, trong đó
@@ -320,7 +320,7 @@ với đầu vào không thứ nguyên</p>
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>Các giá trị tham chiếu này chỉ dùng để minh họa; trong Mục <a href="#từ-toán-học-đến-python">8</a>, trung bình và độ lệch chuẩn được tính
+<p>Các giá trị tham chiếu này chỉ dùng để minh họa; trong Mục <a href="#từ-toán-học-đến-python" target="_blank" rel="noopener noreferrer">8</a>, trung bình và độ lệch chuẩn được tính
 trực tiếp từ tập huấn luyện. Chọn mười ba tham số ban đầu:</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
 W^{(1)}=\begin{bmatrix}
@@ -329,7 +329,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Từ phương trình <a href="#eq:forward">forward</a>, lần lượt có</p>
+<p>Từ phương trình <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, lần lượt có</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -337,7 +337,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>Dự đoán ban đầu thuộc lớp sai. Từ các phương trình <a href="#eq:delta_saida">delta_saida</a> và <a href="#eq:delta_oculta">delta_oculta</a>, ta nhận được</p>
+<p>Dự đoán ban đầu thuộc lớp sai. Từ các phương trình <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> và <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>, ta nhận được</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -350,7 +350,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>Nơ-ron ẩn thứ ba không hoạt động (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), nên gradient đối với các
 trọng số vào và bias của nó bằng không ở bước này. Với <span class="math inline">\(\eta=0.05\)</span>, ta cập nhật đồng thời mọi tham
 số theo <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span>. Bảng <a href="#tab:passo_sgd">1</a> trình bày
+E/\partial\theta\)</span>. Bảng <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> trình bày
 một số trong mười ba cập nhật; các cập nhật còn lại dùng cùng công
 thức.</p>
 <div id="tab:passo_sgd">
@@ -465,10 +465,10 @@ Mất mát huấn luyện nhỏ không bảo đảm dự đoán tốt trên quan
 năng ấy gọi là <em>khái quát hóa</em>; điều chỉnh quá mức theo tập huấn
 luyện làm hại dữ liệu mới gọi là <em>quá khớp</em>. Trong nghiên cứu đầy
 đủ, các tập huấn luyện, xác thực và kiểm tra tách biệt giúp chọn siêu
-tham số và đánh giá ít thiên lệch hơn <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+tham số và đánh giá ít thiên lệch hơn <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="từ-toán-học-đến-python"><span class="section-no">08</span><h2>Từ toán học đến Python</h2>
 <p>Ta hiện thực lan truyền xuôi, quy tắc dây chuyền và cập nhật ngẫu
-nhiên của Mục <a href="#mạng-nơ-ron-học-như-thế-nào">7</a> chỉ bằng <code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Để có ranh giới
+nhiên của Mục <a href="#mạng-nơ-ron-học-như-thế-nào" target="_blank" rel="noopener noreferrer">7</a> chỉ bằng <code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Để có ranh giới
 quyết định phi tuyến, mở rộng lớp ẩn từ ba lên mười hai nơ-ron ReLU.
 Mạng <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 có <span class="math inline">\(12(2+1)+(12+1)=49\)</span> tham số nhưng
@@ -484,8 +484,8 @@ nghiệm hay mô hình vật lý của trái cây</em>. Đường cong tham chi�
 dùng <em>chỉ để sinh mẫu</em>. Mạng không nhận phương trình này, hàm mất
 mát không chứa nó, và lan truyền ngược không dùng nó. Huấn luyện chỉ sử
 dụng các cặp khối lượng–đường kính và nhãn. Công thức phát sinh và các
-dịch chuyển được ghi ở Phụ lục <a href="#appendix-synthetic-data">A</a> để tái tạo
-đúng Hình <a href="#fig:faixas_sinteticas">7</a>.</p>
+dịch chuyển được ghi ở Phụ lục <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a> để tái tạo
+đúng Hình <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Phân bố \(64\) ví dụ tổng
 hợp trong bốn dải: hai dải táo phía trên và hai dải cam phía dưới đường
@@ -494,7 +494,7 @@ cong phụ trợ. Đường nét đứt không được dùng để huấn luy�
 hợp trong bốn dải: hai dải táo phía trên và hai dải cam phía dưới đường
 cong phụ trợ. Đường nét đứt không được dùng để huấn luyện.</figcaption>
 </figure>
-<p>Hình <a href="#fig:faixas_sinteticas">7</a> biểu diễn các điểm do
+<p>Hình <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> biểu diễn các điểm do
 <code>construct_data()</code> tạo ra. Đường nét đứt chỉ là công cụ sinh
 dữ liệu, không phải ranh giới mạng đã học. Tám mẫu bổ sung dùng để minh
 họa cuối cùng và không tham gia tính thống kê chuẩn hóa.</p>
@@ -518,7 +518,7 @@ trúc và kích hoạt. Bias ban đầu bằng không. ReLU không khả vi tạ
 đạo hàm bằng không theo quy ước, không thay đổi định nghĩa toán học và
 không tự bảo đảm hội tụ. Chọn <span class="math inline">\(\eta=0.05\)</span> như một tốc độ học thận trọng,
 không coi là tối ưu. Phân tích độ nhạy với dữ liệu và hạt giống cố định
-ở Bảng <a href="#tab:eta">2</a> sau <span class="math inline">\(1000\)</span> epoch cho thấy tốc độ cao hơn trong
+ở Bảng <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> sau <span class="math inline">\(1000\)</span> epoch cho thấy tốc độ cao hơn trong
 các giá trị khảo sát hội tụ nhanh hơn trên tập này, nhưng không chứng tỏ
 tốt hơn nói chung. Giữ <span class="math inline">\(0.05\)</span> vì quá
 trình học ổn định và dễ quan sát.</p>
@@ -554,7 +554,7 @@ giống <span class="math inline">\(42\)</span>).</caption>
 </table>
 </div>
 <h3 id="hiện-thực-đầy-đủ-bằng-python">Hiện thực đầy đủ bằng Python</h3>
-<p>Mã hoàn chỉnh nằm trong các khối <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, sắp theo chức năng
+<p>Mã hoàn chỉnh nằm trong các khối <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, sắp theo chức năng
 và thứ tự chạy. Mười khối liên tiếp tạo nên tập tin
 <code>neural_network.py</code>, được cung cấp kèm theo.</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Chuẩn bị môi trường</p><pre class="nm-python-code" dir="ltr"><code>"""Ví dụ giảng dạy: phân loại trái cây với mạng 2-12-1.
@@ -763,17 +763,17 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Hàm <code>construct_data()</code> (Mã <a href="#cod:dados">6</a>)
-chỉ dựng dữ liệu tổng hợp theo Phụ lục <a href="#appendix-synthetic-data">A</a>; đường cong
-phụ trợ không tham gia tối ưu. Hàm <code>train()</code> (Mã <a href="#cod:treinamento">8</a>) thực hiện lan
+<p>Hàm <code>construct_data()</code> (Mã <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+chỉ dựng dữ liệu tổng hợp theo Phụ lục <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; đường cong
+phụ trợ không tham gia tối ưu. Hàm <code>train()</code> (Mã <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) thực hiện lan
 truyền xuôi, tính các độ nhạy <span class="math inline">\(\delta^{(2)}\)</span> và <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradient và
-bốn nhóm cập nhật tham số theo các phương trình <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a>, <a href="#eq:descida">descida</a>. Mọi gradient được tính
-trước khi sửa tham số. <code>plot_results()</code> (Mã <a href="#cod:visualizacao">9</a>) vẽ ranh giới
+bốn nhóm cập nhật tham số theo các phương trình <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>, <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Mọi gradient được tính
+trước khi sửa tham số. <code>plot_results()</code> (Mã <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>) vẽ ranh giới
 đã học chứ không phải đường cong sinh dữ liệu. Một chương trình Python
 độc lập và notebook có thể chạy được cung cấp để tái lập. Sau <span class="math inline">\(6000\)</span> epoch với hạt giống <span class="math inline">\(42\)</span> và <span class="math inline">\(\eta=0.05\)</span>, mất mát trung bình cuối <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>, có <span class="math inline">\(64/64\)</span> dự đoán đúng trong huấn luyện và
 <span class="math inline">\(8/8\)</span> trong tập kiểm tra minh họa.
 Đây là kiểm chứng hành vi của một thí nghiệm tổng hợp, <em>không phải
-ước lượng thống kê của khả năng khái quát hóa</em>. Hình <a href="#fig:saida_python">8</a> biểu diễn ranh giới đã học <span class="math inline">\(\widehat y=0.5\)</span>, với hình tròn và hình
+ước lượng thống kê của khả năng khái quát hóa</em>. Hình <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> biểu diễn ranh giới đã học <span class="math inline">\(\widehat y=0.5\)</span>, với hình tròn và hình
 vuông cho dữ liệu huấn luyện, tam giác và dấu nhân cho dữ liệu minh
 họa.</p>
 <figure id="fig:saida_python">
@@ -787,8 +787,8 @@ minh họa.</figcaption>
 <p>Bắt đầu từ đường thẳng phân chia hai tập điểm, ta kết thúc với ranh
 giới cong thu được nhờ tự động điều chỉnh tham số. Chương trình chỉ lặp
 lại tổ hợp tuyến tính, hàm kích hoạt, đạo hàm, phép nhân ma trận và các
-bước hạ gradient đã trình bày <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>. Tập tin Python và
-notebook kèm theo bài viết; tài liệu bổ sung: <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+bước hạ gradient đã trình bày <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>. Tập tin Python và
+notebook kèm theo bài viết; tài liệu bổ sung: <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Xây dựng tập dữ liệu tổng hợp</h2>
 <p>Các biểu thức sau chỉ mô tả một cách tạo dữ liệu <em>ad hoc</em> cho
 ví dụ tính toán. Chúng không phải thành phần của kiến trúc, hàm mất mát
@@ -820,8 +820,8 @@ ngăn những dải quá đều, <em>không</em> mô tả tính tuần hoàn v�
 nhiễu ngẫu nhiên hay mô hình sinh đã học. <code>construct_data()</code>
 hiện thực chính xác các biểu thức này; tám cặp kiểm tra bổ sung được
 khai báo trực tiếp trong mã. Hai hàm <code>reference_curve()</code> và
-<code>construct_data()</code> (Mã <a href="#cod:curva">5</a>, <a href="#cod:dados">6</a>) hiện thực các phương
-trình <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> mà không cung cấp đường cong
+<code>construct_data()</code> (Mã <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>, <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) hiện thực các phương
+trình <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a> mà không cung cấp đường cong
 phụ trợ làm thông tin huấn luyện. Chương trình đầy đủ có trong Mục 8 và
 các tập tin kèm theo.</p>
 </section></div>

@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="目录" class="toc"><h2>目录</h2><ol><li><a href="#计算机何时能够学习" target="_blank" rel="noopener noreferrer">计算机何时能够学习？</a></li><li><a href="#问题的数学表示" target="_blank" rel="noopener noreferrer">问题的数学表示</a></li><li><a href="#用一条直线进行分类" target="_blank" rel="noopener noreferrer">用一条直线进行分类</a></li><li><a href="#人工神经元" target="_blank" rel="noopener noreferrer">人工神经元</a></li><li><a href="#为什么需要激活函数" target="_blank" rel="noopener noreferrer">为什么需要激活函数？</a></li><li><a href="#构建一个小型神经网络" target="_blank" rel="noopener noreferrer">构建一个小型神经网络</a></li><li><a href="#神经网络如何学习" target="_blank" rel="noopener noreferrer">神经网络如何学习？</a></li><li><a href="#从数学到-python" target="_blank" rel="noopener noreferrer">从数学到 Python</a></li><li><a href="#appendix-synthetic-data">合成数据集的构造</a></li></ol></nav>
+<nav aria-label="目录" class="toc"><h2>目录</h2><ol><li><a href="#计算机何时能够学习" target="_blank" rel="noopener noreferrer">计算机何时能够学习？</a></li><li><a href="#问题的数学表示" target="_blank" rel="noopener noreferrer">问题的数学表示</a></li><li><a href="#用一条直线进行分类" target="_blank" rel="noopener noreferrer">用一条直线进行分类</a></li><li><a href="#人工神经元" target="_blank" rel="noopener noreferrer">人工神经元</a></li><li><a href="#为什么需要激活函数" target="_blank" rel="noopener noreferrer">为什么需要激活函数？</a></li><li><a href="#构建一个小型神经网络" target="_blank" rel="noopener noreferrer">构建一个小型神经网络</a></li><li><a href="#神经网络如何学习" target="_blank" rel="noopener noreferrer">神经网络如何学习？</a></li><li><a href="#从数学到-python" target="_blank" rel="noopener noreferrer">从数学到 Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">合成数据集的构造</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="计算机何时能够学习"><span class="section-no">01</span><h2>计算机何时能够学习？</h2>
 <p>在日常生活中，我们几乎在不知不觉中不断作出分类判断。看到一个水果时，我们很快就能判断它是苹果还是橙子；手机收到一条消息时，我们会区分正常对话和不受欢迎的广告；在医学分析中，可以把多项测量结果结合起来辅助决策；在金融机构中，发放信贷之前也会综合评估多种信息。在这些例子里，都是把若干特征放在一起考虑，以得到一个回答。</p>
 <p>在许多传统计算机程序中，产生这个回答的规则由程序员明确写出。当规则已知并且能够清楚表述时，这种方法非常有效。然而，当数据变化很大，或者难以事先列出作出良好决策所需的每一个条件时，这种方法就会变得不那么有效。于是自然产生一个问题：</p>
@@ -222,7 +222,7 @@ v_1&amp;v_2&amp;v_3
 \end{bmatrix}.\]</span></p>
 <p>这种记号已经预示了后面 Python 程序中会出现的结构。当一个水果被送到输入端，我们依次计算各层激活值直到得到 <span class="math inline">\(\widehat{y}\)</span> 时，这个过程称为<em>前向传播</em>，也称为一次<em>前向计算（forward pass）</em>。现在剩下的核心问题是：如何自动确定这十三个参数，使预测与数据相匹配？</p>
 </section><section class="article-section" id="神经网络如何学习"><span class="section-no">07</span><h2>神经网络如何学习？</h2>
-<p>神经网络的权重和偏置并非预先给定，而是根据具有正确类别标签的样本进行调整。学习是反复执行前向传播、损失计算、梯度计算与参数更新的过程（图 <a href="#fig:ciclo_treinamento">6</a>）。其关键在于：借助链式法则，可以计算每一个权重或偏置的微小变化如何影响损失。</p>
+<p>神经网络的权重和偏置并非预先给定，而是根据具有正确类别标签的样本进行调整。学习是反复执行前向传播、损失计算、梯度计算与参数更新的过程（图 <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>）。其关键在于：借助链式法则，可以计算每一个权重或偏置的微小变化如何影响损失。</p>
 <p>为了调整参数，首先需要用数值衡量预测与正确答案之间的差异。这就是<em>损失函数</em>：它为每次预测赋予惩罚，并允许比较不同的权重和偏置。与单纯统计分类错误次数不同，连续的损失函数能够区分更接近目标和更远离目标的预测，其导数为训练提供方向。</p>
 <p>考虑一个质量为 <span class="math inline">\(140\)</span> g、直径为
 <span class="math inline">\(7.0\)</span> cm 的橙子（<span class="math inline">\(y=0\)</span>）。令网络输出为 <span class="math inline">\(\widehat
@@ -239,8 +239,8 @@ E=\frac12(\widehat y-y)^2.\]</span></p>
 J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 <p>平均损失概括了模型在训练集上的表现，也是调整参数时希望减小的量。但是，最小化
 <span class="math inline">\(J\)</span>
-本身并不能保证在新样本上的预测质量。我们采用代数形式简单的式 <a href="#eq:perda">perda</a>
-进行主要推导，随后比较它与二元交叉熵的梯度，而不改变计算实验 <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>。</p>
+本身并不能保证在新样本上的预测质量。我们采用代数形式简单的式 <a href="#eq:perda" target="_blank" rel="noopener noreferrer">perda</a>
+进行主要推导，随后比较它与二元交叉熵的梯度，而不改变计算实验 <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>。</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="训练的各个阶段：前向传播、损失计算、敏感度反向传播和参数更新。" decoding="async" loading="lazy" src="../assets/img/zh/Fig06.webp" style="width:88.0%"/>
 <figcaption>6. 训练的各个阶段：前向传播、损失计算、敏感度反向传播和参数更新。</figcaption>
@@ -252,11 +252,11 @@ J=\frac1N\sum_{i=1}^{N}E_i.\]</span></p>
 \theta_{\mathrm{new}}=\theta_{\mathrm{old}}-\eta\frac{\partial
 J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>学习率 <span class="math inline">\(\eta\)</span>
-控制更新步长：过小会使收敛缓慢，过大可能导致振荡或发散。如果像第 <a href="#从数学到-python">8</a>
+控制更新步长：过小会使收敛缓慢，过大可能导致振荡或发散。如果像第 <a href="#从数学到-python" target="_blank" rel="noopener noreferrer">8</a>
 节的程序那样在每个样本之后更新参数，就用 <span class="math inline">\(\partial E_i/\partial\theta\)</span> 代替 <span class="math inline">\(\partial
 J/\partial\theta\)</span>。本文采用的便是这种随机梯度下降法（SGD）。</p>
 <h3 id="网络中的链式法则">2–3–1 网络中的链式法则</h3>
-<p>考虑图 <a href="#fig:small_network">5</a>
+<p>考虑图 <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a>
 的网络：三个隐藏神经元采用 ReLU，输出神经元采用
 sigmoid。由于输入分别是质量（g）和直径（cm），数值尺度并不相同。为了改善参数拟合的数值条件，将每个特征转化为
 <span class="math inline">\(x_j^{\ast}=(x_j-\mu_j)/\sigma_j\)</span>，其中
@@ -301,7 +301,7 @@ y(1-\widehat y)}
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>这些参考值只为演示而固定。第 <a href="#从数学到-python">8</a>
+<p>这些参考值只为演示而固定。第 <a href="#从数学到-python" target="_blank" rel="noopener noreferrer">8</a>
 节的程序将直接从训练数据计算均值和标准差。</p>
 <p>选择以下 13 个初始参数：</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -311,7 +311,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>由式 <a href="#eq:forward">forward</a> 依次得到</p>
+<p>由式 <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> 依次得到</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -319,7 +319,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>初始预测对应错误的类别。根据式 <a href="#eq:delta_saida">delta_saida</a> 和 <a href="#eq:delta_oculta">delta_oculta</a>，</p>
+<p>初始预测对应错误的类别。根据式 <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> 和 <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>，</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -331,7 +331,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \end{gathered}\]</span></p>
 <p>第三个隐藏神经元处于非激活状态（<span class="math inline">\(z_3^{(1)}&lt;0\)</span>），因此这一步中与它相连的输入权重及偏置的梯度为零。取
 <span class="math inline">\(\eta=0.05\)</span>，对所有参数同时执行 <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span>。表 <a href="#tab:passo_sgd">1</a> 列出 13
+E/\partial\theta\)</span>。表 <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> 列出 13
 项更新中的若干代表值，其余遵循同样的公式。</p>
 <div id="tab:passo_sgd">
 <table>
@@ -423,10 +423,10 @@ c=-0.0400\)</span>。这一独立示例并不替换前述完整计算的数值�
 y(1-\widehat y)\)</span>，因而在预测严重错误且 sigmoid
 饱和时，避免了<em>输出层</em>额外的梯度衰减。这既不能消除其他层的微小梯度，也不能保证在所有情况下训练更快。两种损失的尺度不同，不能直接比较其数值作为预测质量的衡量。主程序保留平方误差，以保持数值更新示例完全可复现。</p>
 <h3 id="训练轮次与泛化">训练轮次与泛化</h3>
-<p>完整处理一遍训练样本称为一个<em>轮次（epoch）</em>。下一节的程序每轮打乱样本，并在处理每个水果后更新参数。网络结构不变，但权重、偏置和决策边界会变化。训练损失下降并不保证对新数据预测得好。这种能力称为<em>泛化</em>；如果对训练数据拟合过度，损害新样本的表现，则称为<em>过拟合</em>。在更广泛的研究中，应使用独立的训练、验证和测试集来选择超参数并进行较少偏差的评估 <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>。</p>
+<p>完整处理一遍训练样本称为一个<em>轮次（epoch）</em>。下一节的程序每轮打乱样本，并在处理每个水果后更新参数。网络结构不变，但权重、偏置和决策边界会变化。训练损失下降并不保证对新数据预测得好。这种能力称为<em>泛化</em>；如果对训练数据拟合过度，损害新样本的表现，则称为<em>过拟合</em>。在更广泛的研究中，应使用独立的训练、验证和测试集来选择超参数并进行较少偏差的评估 <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>。</p>
 </section><section class="article-section" id="从数学到-python"><span class="section-no">08</span><h2>从数学到 Python</h2>
-<p>现在只使用 NumPy 实现第 <a href="#神经网络如何学习">7</a>
-节推导的前向传播、链式法则和随机更新 <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>。为了得到非线性决策边界，将隐藏层从
+<p>现在只使用 NumPy 实现第 <a href="#神经网络如何学习" target="_blank" rel="noopener noreferrer">7</a>
+节推导的前向传播、链式法则和随机更新 <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>。为了得到非线性决策边界，将隐藏层从
 3 个扩展至 12 个 ReLU 神经元。所得 <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 网络共有 <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
 个可训练参数，但使用的是同一组公式。</p>
@@ -434,13 +434,13 @@ y(1-\widehat y)\)</span>，因而在预测严重错误且 sigmoid
 <p>实验使用 <span class="math inline">\(64\)</span>
 个合成训练样本，在质量–直径平面上分为四条带，每条 <span class="math inline">\(16\)</span>
 点，另设八个仅供图示的测试样本。两条苹果带位于参考曲线上方，两条橙子带位于下方。小幅确定性偏移避免点列过于规则。这些数值只是为了展示视觉上合理的分布和非线性决策边界；<em>它们既不是实验测量，也不代表水果的物理模型</em>。</p>
-<p>参考曲线<em>仅用于生成样本</em>。它不会作为网络输入，不出现在损失中，也不参与反向传播。训练只使用质量–直径数据对及类别标签。为了准确复现图 <a href="#fig:faixas_sinteticas">7</a> 的数据，附录 <a href="#appendix-synthetic-data">A</a> 给出生成公式和位移。</p>
+<p>参考曲线<em>仅用于生成样本</em>。它不会作为网络输入，不出现在损失中，也不参与反向传播。训练只使用质量–直径数据对及类别标签。为了准确复现图 <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> 的数据，附录 <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a> 给出生成公式和位移。</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="四条带中的 \(64\) 个合成样本：苹果位于辅助曲线上方，橙子位于下方；虚线不用于训练。" decoding="async" loading="lazy" src="../assets/img/zh/Fig07.webp" style="width:92.0%"/>
 <figcaption>7. 四条带中的 <span class="math inline">\(64\)</span>
 个合成样本：苹果位于辅助曲线上方，橙子位于下方；虚线不用于训练。</figcaption>
 </figure>
-<p>图 <a href="#fig:faixas_sinteticas">7</a> 显示函数
+<p>图 <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> 显示函数
 <code>construct_data()</code>
 实际生成的点。虚线仅属于合成数据构造过程，并非学到的边界。额外八个点仅用于最后的图示，不参与标准化统计量的计算。</p>
 <h3 id="标准化与训练设置">标准化与训练设置</h3>
@@ -457,7 +457,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 <code>relu_derivative()</code>
 按计算约定将该点的值取为零；这一约定本身不能确保收敛。</p>
 <p>学习率 <span class="math inline">\(\eta=0.05\)</span>
-是保守而非最优的选择。固定种子和数据，在 <span class="math inline">\(1000\)</span> 个轮次后得到表 <a href="#tab:eta">2</a>
+是保守而非最优的选择。固定种子和数据，在 <span class="math inline">\(1000\)</span> 个轮次后得到表 <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a>
 的敏感性比较。在本数据集上，测试的最大学习率收敛更快，但并不能据此认为它普遍适用。保留
 <span class="math inline">\(0.05\)</span>
 是因为它使训练稳定，损失历史易于检查。</p>
@@ -492,7 +492,7 @@ x_j^{\ast}=\frac{x_j-\mu_j}{\sigma_j},\quad
 </table>
 </div>
 <h3 id="完整的-python-实现">完整的 Python 实现</h3>
-<p>完整程序按函数和执行顺序列于代码 <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>。连续的十个代码块构成补充提供的文件
+<p>完整程序按函数和执行顺序列于代码 <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>。连续的十个代码块构成补充提供的文件
 <code>neural_</code><code>network.py</code>。</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — 环境配置</p><pre class="nm-python-code" dir="ltr"><code>"""Pedagogical example: fruit classification using a 2-12-1 network.
 Dependencies: numpy and matplotlib. Run: python neural_network.py.
@@ -700,13 +700,13 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p><code>construct_data()</code>（代码 <a href="#cod:dados">6</a>）只实现附录 <a href="#appendix-synthetic-data">A</a>
-记录的合成数据构造，辅助曲线不参与优化。<code>train()</code>（代码 <a href="#cod:treinamento">8</a>）实现前向传播、<span class="math inline">\(\delta^{(2)}\)</span> 与 <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>
-的计算、梯度以及与式 <a href="#eq:forward">forward</a>、<a href="#eq:delta_saida">delta_saida</a>、<a href="#eq:delta_oculta">delta_oculta</a>、<a href="#eq:descida">descida</a>
-相对应的四组参数更新。修改任何参数之前，先计算所有梯度。<code>plot_results()</code>（代码 <a href="#cod:visualizacao">9</a>）绘制学习所得边界，而不是生成数据的辅助曲线。</p>
+<p><code>construct_data()</code>（代码 <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>）只实现附录 <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>
+记录的合成数据构造，辅助曲线不参与优化。<code>train()</code>（代码 <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>）实现前向传播、<span class="math inline">\(\delta^{(2)}\)</span> 与 <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>
+的计算、梯度以及与式 <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>、<a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>、<a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a>、<a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>
+相对应的四组参数更新。修改任何参数之前，先计算所有梯度。<code>plot_results()</code>（代码 <a href="#cod:visualizacao" target="_blank" rel="noopener noreferrer">9</a>）绘制学习所得边界，而不是生成数据的辅助曲线。</p>
 <p>同时提供独立的 Python 文件及可执行笔记本，便于复现与修改。</p>
 <p>使用种子 <span class="math inline">\(42\)</span>、<span class="math inline">\(\eta=0.05\)</span> 和 <span class="math inline">\(6000\)</span> 个轮次，最终平均损失约为 <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>，<span class="math inline">\(64\)</span>
-个训练点和八个附加的图示样本均被正确分类。这仅检验了合成数据上的计算行为，<em>并非泛化性能的统计估计</em>。图 <a href="#fig:saida_python">8</a> 显示学到的边界，即 <span class="math inline">\(\widehat y=0.5\)</span>
+个训练点和八个附加的图示样本均被正确分类。这仅检验了合成数据上的计算行为，<em>并非泛化性能的统计估计</em>。图 <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> 显示学到的边界，即 <span class="math inline">\(\widehat y=0.5\)</span>
 的等值线。圆形与方形表示训练点，三角形与叉号表示图示测试点。</p>
 <figure id="fig:saida_python">
 <img alt="\(2\) – \(12\) – \(1\) 网络学到的决策边界 \(\widehat
@@ -715,8 +715,8 @@ y=0.5\) ，以及训练和图示测试样本。" decoding="async" loading="lazy"
 网络学到的决策边界 <span class="math inline">\(\widehat
 y=0.5\)</span>，以及训练和图示测试样本。</figcaption>
 </figure>
-<p>本文从一条直线区分两个简单点集开始，最后得到一个通过自动调整参数形成弯曲边界的计算例子。实现并没有为所讨论的数学增加神秘内容，而只是大量重复线性组合、激活函数、求导、矩阵乘法与梯度下降更新 <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>。</p>
-<p>Python 程序与可执行笔记本随本版补充材料提供，相关教学资源见 <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>。</p>
+<p>本文从一条直线区分两个简单点集开始，最后得到一个通过自动调整参数形成弯曲边界的计算例子。实现并没有为所讨论的数学增加神秘内容，而只是大量重复线性组合、激活函数、求导、矩阵乘法与梯度下降更新 <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>。</p>
+<p>Python 程序与可执行笔记本随本版补充材料提供，相关教学资源见 <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>。</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>合成数据集的构造</h2>
 <p>下列公式仅记录为了计算演示而<em>临时（ad
 hoc）</em>选择的一种数据生成方式。它们不属于神经网络架构、损失函数或训练算法。辅助曲线的信息完全不用于权重和偏置更新。</p>
@@ -745,8 +745,8 @@ d_{l2,k}&amp;=d_0(\widetilde m_k)-\bigl[0.55+0.05\sin(0.5k)\bigr].
 <code>construct_data()</code>
 精确实现上述公式，另外八组图示样本则在代码中直接给定。</p>
 <p><code>reference_curve()</code> 与
-<code>construct_data()</code>（代码 <a href="#cod:curva">5</a>
-和 <a href="#cod:dados">6</a>）精确实现式 <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a>，但不会把辅助曲线提供给网络作为训练信息。完整程序在第
+<code>construct_data()</code>（代码 <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+和 <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>）精确实现式 <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a>，但不会把辅助曲线提供给网络作为训练信息。完整程序在第
 8 节按顺序列出，也作为补充文件供直接运行。</p>
 </section></div>
 <section class="article-section references"><span class="section-no">参考文献</span><h2>参考文献</h2><div class="thebibliography">

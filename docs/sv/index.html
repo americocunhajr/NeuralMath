@@ -43,7 +43,7 @@
   note   = {Manuscript submitted to Professor de Matemática Online (PMO)},
   year   = {2026}
 }</code></pre></div>
-<nav aria-label="Innehåll" class="toc"><h2>Innehåll</h2><ol><li><a href="#när-kan-en-dator-lära-sig" target="_blank" rel="noopener noreferrer">När kan en dator lära sig?</a></li><li><a href="#att-representera-problemet-matematiskt" target="_blank" rel="noopener noreferrer">Att representera problemet matematiskt</a></li><li><a href="#en-rät-linje-som-klassificerare" target="_blank" rel="noopener noreferrer">En rät linje som klassificerare</a></li><li><a href="#den-artificiella-neuronen" target="_blank" rel="noopener noreferrer">Den artificiella neuronen</a></li><li><a href="#varför-behöver-vi-en-aktiveringsfunktion" target="_blank" rel="noopener noreferrer">Varför behöver vi en aktiveringsfunktion?</a></li><li><a href="#att-bygga-ett-litet-neuralt-nätverk" target="_blank" rel="noopener noreferrer">Att bygga ett litet neuralt nätverk</a></li><li><a href="#hur-lär-sig-ett-neuralt-nätverk" target="_blank" rel="noopener noreferrer">Hur lär sig ett neuralt nätverk?</a></li><li><a href="#från-matematik-till-python" target="_blank" rel="noopener noreferrer">Från matematik till Python</a></li><li><a href="#appendix-synthetic-data">Konstruktion av den syntetiska datamängden</a></li></ol></nav>
+<nav aria-label="Innehåll" class="toc"><h2>Innehåll</h2><ol><li><a href="#när-kan-en-dator-lära-sig" target="_blank" rel="noopener noreferrer">När kan en dator lära sig?</a></li><li><a href="#att-representera-problemet-matematiskt" target="_blank" rel="noopener noreferrer">Att representera problemet matematiskt</a></li><li><a href="#en-rät-linje-som-klassificerare" target="_blank" rel="noopener noreferrer">En rät linje som klassificerare</a></li><li><a href="#den-artificiella-neuronen" target="_blank" rel="noopener noreferrer">Den artificiella neuronen</a></li><li><a href="#varför-behöver-vi-en-aktiveringsfunktion" target="_blank" rel="noopener noreferrer">Varför behöver vi en aktiveringsfunktion?</a></li><li><a href="#att-bygga-ett-litet-neuralt-nätverk" target="_blank" rel="noopener noreferrer">Att bygga ett litet neuralt nätverk</a></li><li><a href="#hur-lär-sig-ett-neuralt-nätverk" target="_blank" rel="noopener noreferrer">Hur lär sig ett neuralt nätverk?</a></li><li><a href="#från-matematik-till-python" target="_blank" rel="noopener noreferrer">Från matematik till Python</a></li><li><a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">Konstruktion av den syntetiska datamängden</a></li></ol></nav>
 <div class="article-body"><section class="article-section" id="när-kan-en-dator-lära-sig"><span class="section-no">01</span><h2>När kan en dator lära sig?</h2>
 <p>I vardagen fattar vi klassificeringsbeslut nästan utan att märka det. När vi ser en frukt identifierar vi den snabbt som ett äpple eller en apelsin; när ett meddelande kommer till telefonen skiljer vi ett legitimt samtal från oönskad reklam; i medicinska analyser kan flera mätningar kombineras för att stödja ett beslut; och i finansiella institutioner bedöms flera uppgifter innan kredit beviljas. I alla dessa exempel vägs flera egenskaper samman för att ge ett svar.</p>
 <p>I många traditionella datorprogram skrivs reglerna som ger detta svar uttryckligen av programmeraren. Detta fungerar bra när reglerna är kända och kan formuleras tydligt. Metoden blir mindre effektiv när data varierar mycket eller när det är svårt att i förväg formulera alla villkor som krävs för ett bra beslut. Det leder till en naturlig fråga:</p>
@@ -224,7 +224,7 @@ v_1&amp;v_2&amp;v_3
 <p>Nätverkets vikter och bias är inte givna i förväg. De anpassas med
 exempel vars klassetiketter är kända. Träningen upprepar
 framåtpropagering, beräkning av förlust, beräkning av gradienter och
-parameteruppdatering (Figur <a href="#fig:ciclo_treinamento">6</a>).
+parameteruppdatering (Figur <a href="#fig:ciclo_treinamento" target="_blank" rel="noopener noreferrer">6</a>).
 Kedjeregeln visar hur varje vikt och bias lokalt påverkar förlusten. Vi
 behöver därför ett numeriskt mått på skillnaden mellan prediktionen och
 det förväntade svaret. En <em>förlustfunktion</em> tilldelar varje
@@ -253,7 +253,7 @@ träningsmängden och minskas genom parameteruppdateringarna. Att minimera
 <span class="math inline">\(J\)</span> garanterar inte goda resultat på
 nya data. Vi använder den kvadratiska förlusten för dess enkla algebra
 och jämför senare dess gradient med binär korsentropi utan att ändra det
-numeriska experimentet <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+numeriska experimentet <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 <figure id="fig:ciclo_treinamento">
 <img alt="Träningens steg: framåtpropagering, beräkning av förlust,
 bakåtpropagering av känsligheter och uppdatering av
@@ -272,10 +272,10 @@ J}{\partial\theta},\qquad \eta&gt;0.\]</span></p>
 <p>Inlärningshastigheten <span class="math inline">\(\eta\)</span> styr
 steglängden. Alltför små värden kan ge långsam konvergens; alltför stora
 kan ge svängningar eller divergens. Vid uppdatering efter varje exempel
-(Avsnitt <a href="#från-matematik-till-python">8</a>) ersätts <span class="math inline">\(\partial J/\partial\theta\)</span> med <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Detta är
+(Avsnitt <a href="#från-matematik-till-python" target="_blank" rel="noopener noreferrer">8</a>) ersätts <span class="math inline">\(\partial J/\partial\theta\)</span> med <span class="math inline">\(\partial E_i/\partial\theta\)</span>. Detta är
 stokastisk gradientnedstigning (SGD).</p>
 <h3 id="kedjeregeln-i-nätverket-231">Kedjeregeln i nätverket 2–3–1</h3>
-<p>Vi använder nätverket i Figur <a href="#fig:small_network">[fig:pequena_rede]</a>, med tre dolda
+<p>Vi använder nätverket i Figur <a href="#fig:small_network" target="_blank" rel="noopener noreferrer">[fig:pequena_rede]</a>, med tre dolda
 ReLU-neuroner och sigmoid i utgången. Indata är massa (gram) och
 diameter (centimeter), med olika skalor. Vi standardiserar därför varje
 variabel enligt <span class="math inline">\(x_j^\ast=(x_j-\mu_j)/\sigma_j\)</span>, där <span class="math inline">\(\mu_j\)</span> och <span class="math inline">\(\sigma_j&gt;0\)</span> är referensmedelvärdet
@@ -331,7 +331,7 @@ den dimensionslösa indatan</p>
 <p id="eq:exemplo_entrada"><span class="math display">\[\label{eq:exemplo_entrada}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span></p>
-<p>Referensvärdena är fasta bara i denna demonstration; i Avsnitt <a href="#från-matematik-till-python">8</a> beräknas medelvärde och
+<p>Referensvärdena är fasta bara i denna demonstration; i Avsnitt <a href="#från-matematik-till-python" target="_blank" rel="noopener noreferrer">8</a> beräknas medelvärde och
 standardavvikelse från träningsdata. Vi väljer följande tretton
 startparametrar:</p>
 <p id="eq:param_iniciais"><span class="math display">\[\label{eq:param_iniciais}
@@ -341,7 +341,7 @@ W^{(1)}=\begin{bmatrix}
 \mathbf{b}^{(1)}=\begin{bmatrix}\phantom{-}0.5\\\phantom{-}0.2\\-0.5\end{bmatrix},\quad
 W^{(2)}=\begin{bmatrix}\phantom{-}0.5&amp;-0.4&amp;\phantom{-}0.3\end{bmatrix},\quad
 c=1.\]</span></p>
-<p>Ekvation <a href="#eq:forward">forward</a> ger i tur och ordning</p>
+<p>Ekvation <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a> ger i tur och ordning</p>
 <p id="eq:exemplo_forward"><span class="math display">\[\label{eq:exemplo_forward}
 \begin{gathered}
 \mathbf{z}^{(1)}=(0.2,\;0.3,\;-0.2)^{\mathsf T},\qquad
@@ -349,7 +349,7 @@ c=1.\]</span></p>
 z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 \widehat y=\sigma(0.98)\simeq0.727108,\qquad E\simeq0.264343.
 \end{gathered}\]</span></p>
-<p>Den första prediktionen ger fel klass. Enligt ekvationerna <a href="#eq:delta_saida">delta_saida</a> och <a href="#eq:delta_oculta">delta_oculta</a> blir</p>
+<p>Den första prediktionen ger fel klass. Enligt ekvationerna <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a> och <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> blir</p>
 <p id="eq:exemplo_gradientes"><span class="math display">\[\label{eq:exemplo_gradientes}
 \begin{gathered}
 \delta^{(2)}\simeq0.144274,\qquad
@@ -362,7 +362,7 @@ z^{(2)}=0.5(0.2)-0.4(0.3)+1=0.98,\\
 <p>Den tredje dolda neuronen är inaktiv (<span class="math inline">\(z_3^{(1)}&lt;0\)</span>), så gradienterna för dess
 inkommande vikter och bias är noll i detta steg. Med <span class="math inline">\(\eta=0.05\)</span> uppdateras alla parametrar
 samtidigt med <span class="math inline">\(\theta_{\mathrm{new}}=\theta_{\mathrm{old}}-0.05\,\partial
-E/\partial\theta\)</span>. Tabell <a href="#tab:passo_sgd">1</a> visar ett
+E/\partial\theta\)</span>. Tabell <a href="#tab:passo_sgd" target="_blank" rel="noopener noreferrer">1</a> visar ett
 urval av de tretton uppdateringarna.</p>
 <div id="tab:passo_sgd">
 <table>
@@ -477,11 +477,11 @@ prediktioner på nya data, vilket kräver <em>generalisering</em>. Om
 alltför nära anpassning försämrar resultaten på osedda data talar vi om
 <em>överanpassning</em>. Separata tränings-, validerings- och
 testmängder ger en mindre snedvriden bedömning och möjlighet att välja
-hyperparametrar <span class="nm-inline-citation">[<a href="#bib:faceli2021">2</a>, <a href="#bib:goodfellow2016">3</a>]</span>.</p>
+hyperparametrar <span class="nm-inline-citation">[<a href="#bib:faceli2021" target="_blank" rel="noopener noreferrer">2</a>, <a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>]</span>.</p>
 </section><section class="article-section" id="från-matematik-till-python"><span class="section-no">08</span><h2>Från matematik till Python</h2>
 <p>Vi implementerar nu framåtpropageringen, kedjeregeln och stokastiska
-uppdateringar från Avsnitt <a href="#hur-lär-sig-ett-neuralt-nätverk">7</a>, enbart
-med <code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy">4</a>]</span>. Vi utökar det dolda lagret från
+uppdateringar från Avsnitt <a href="#hur-lär-sig-ett-neuralt-nätverk" target="_blank" rel="noopener noreferrer">7</a>, enbart
+med <code>NumPy</code> <span class="nm-inline-citation">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. Vi utökar det dolda lagret från
 tre till tolv ReLU-neuroner för att få en icke-linjär beslutsgräns.
 Nätverket <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 har <span class="math inline">\(12(2+1)+(12+1)=49\)</span> träningsbara
@@ -498,7 +498,7 @@ icke-linjär beslutsgräns: de är <em>inte experimentella mätningar eller
 en fysikalisk modell av frukt</em>. Referenskurvan används <em>endast
 för att generera data</em>. Nätverket får inte denna kurva, och den
 förekommer varken i förlustfunktionen eller i bakåtpropageringen.
-Formlerna och förskjutningarna står i Appendix <a href="#appendix-synthetic-data">A</a>.</p>
+Formlerna och förskjutningarna står i Appendix <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Fördelning av \(64\) syntetiska exempel i fyra band: två med äpplen ovanför och två med
 apelsiner nedanför en hjälpkurva. Den streckade kurvan används inte vid
@@ -508,7 +508,7 @@ syntetiska exempel i fyra band: två med äpplen ovanför och två med
 apelsiner nedanför en hjälpkurva. Den streckade kurvan används inte vid
 träningen.</figcaption>
 </figure>
-<p>Figur <a href="#fig:faixas_sinteticas">7</a> visar punkterna från
+<p>Figur <a href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a> visar punkterna från
 <code>construct_data()</code>. Den streckade kurvan hör bara till den
 syntetiska konstruktionen, inte till en inlärd beslutsgräns. De åtta
 extra exemplen används för slutillustrationen och påverkar inte
@@ -532,7 +532,7 @@ inte en universell regel: i större nätverk bör skalan bero på arkitektur
 och aktivering. Bias startar på noll. ReLU har ingen derivata vid <span class="math inline">\(0\)</span>; <code>relu_derivative()</code> sätter
 den beräkningsmässigt till noll utan att garantera konvergens. Vi
 använder <span class="math inline">\(\eta=0.05\)</span> som ett
-försiktigt, inte optimalt, val. Tabell <a href="#tab:eta">2</a> visar en enkel
+försiktigt, inte optimalt, val. Tabell <a href="#tab:eta" target="_blank" rel="noopener noreferrer">2</a> visar en enkel
 känslighetsstudie efter <span class="math inline">\(1000\)</span> epoker
 med fasta data och slumpfrö. Den högsta studerade hastigheten
 konvergerar snabbare här, men det säger inget om dess allmänna
@@ -570,7 +570,7 @@ korrekta träningsprediktioner efter <span class="math inline">\(1000\)</span> e
 </div>
 <h3 id="fullständig-python-implementering">Fullständig
 Python-implementering</h3>
-<p>Programmet återges i Koderna <a href="#cod:ambiente">1</a>–<a href="#cod:principal">10</a>, sorterade efter
+<p>Programmet återges i Koderna <a href="#cod:ambiente" target="_blank" rel="noopener noreferrer">1</a>–<a href="#cod:principal" target="_blank" rel="noopener noreferrer">10</a>, sorterade efter
 funktion och körordning. De tio på varandra följande blocken utgör filen
 <code>neural_network.py</code>, som också bifogas separat.</p>
 <section class="nm-code-block" id="cod:ambiente"><p class="nm-code-heading">01 — Förberedelse av miljön</p><pre class="nm-python-code" dir="ltr"><code>"""Didaktiskt exempel: fruktklassificering med nätverket 2-12-1.
@@ -779,17 +779,17 @@ from matplotlib.lines import Line2D
                  mean, std, W1, b1, W2, b2)
     plt.show()
 </code></pre></section>
-<p>Funktionen <code>construct_data()</code> (Kod <a href="#cod:dados">6</a>)
-bygger endast de syntetiska data som beskrivs i Appendix <a href="#appendix-synthetic-data">A</a>; hjälpkurvan används inte i
-optimeringen. Funktionen <code>train()</code> (Kod <a href="#cod:treinamento">8</a>) realiserar
+<p>Funktionen <code>construct_data()</code> (Kod <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
+bygger endast de syntetiska data som beskrivs i Appendix <a href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; hjälpkurvan används inte i
+optimeringen. Funktionen <code>train()</code> (Kod <a href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) realiserar
 framåtpropageringen, beräkningen av <span class="math inline">\(\delta^{(2)}\)</span> och <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradienterna
-och fyra parameteruppdateringar enligt ekvationerna <a href="#eq:forward">forward</a>, <a href="#eq:delta_saida">delta_saida</a>, <a href="#eq:delta_oculta">delta_oculta</a> och <a href="#eq:descida">descida</a>. Samtliga gradienter
+och fyra parameteruppdateringar enligt ekvationerna <a href="#eq:forward" target="_blank" rel="noopener noreferrer">forward</a>, <a href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">delta_saida</a>, <a href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">delta_oculta</a> och <a href="#eq:descida" target="_blank" rel="noopener noreferrer">descida</a>. Samtliga gradienter
 beräknas före parameterändringar. <code>plot_results()</code> visar den
 inlärda gränsen, inte datagenereringskurvan. En körbar Python-fil och
 notebook bifogas för reproducerbarhet. Efter <span class="math inline">\(6000\)</span> epoker med frö <span class="math inline">\(42\)</span> och <span class="math inline">\(\eta=0.05\)</span> fås slutlig medelförlust <span class="math inline">\(J\simeq1.786\times10^{-4}\)</span>, med <span class="math inline">\(64\)</span> av <span class="math inline">\(64\)</span> korrekta träningsprediktioner och åtta
 av åtta illustrativa testprediktioner. Detta är en numerisk kontroll på
 syntetiska data, inte en statistisk skattning av generaliseringsförmåga.
-Figur <a href="#fig:saida_python">8</a> visar den inlärda nivån <span class="math inline">\(\widehat y=0.5\)</span> med träningspunkter
+Figur <a href="#fig:saida_python" target="_blank" rel="noopener noreferrer">8</a> visar den inlärda nivån <span class="math inline">\(\widehat y=0.5\)</span> med träningspunkter
 (cirklar och kvadrater) och testpunkter (trianglar och kryss).</p>
 <figure id="fig:saida_python">
 <img alt="Beslutsgränsen \(\widehat
@@ -803,9 +803,9 @@ testexempel.</figcaption>
 med en mer komplex gräns som framkommer genom automatisk
 parameteranpassning. Beräkningen använder endast de tidigare härledda
 linjära kombinationerna, aktiveringsfunktionerna, derivatorna,
-matrisprodukterna och gradientstegen <span class="nm-inline-citation">[<a href="#bib:goodfellow2016">3</a>, <a href="#bib:nielsen2015">8</a>]</span>. Python-programmet och
+matrisprodukterna och gradientstegen <span class="nm-inline-citation">[<a href="#bib:goodfellow2016" target="_blank" rel="noopener noreferrer">3</a>, <a href="#bib:nielsen2015" target="_blank" rel="noopener noreferrer">8</a>]</span>. Python-programmet och
 notebooket finns som kompletterande material; ytterligare
-undervisningsresurser: <a class="uri" href="https://neuralmath.org">https://neuralmath.org</a>.</p>
+undervisningsresurser: <a class="uri" href="https://neuralmath.org" target="_blank" rel="noopener noreferrer">https://neuralmath.org</a>.</p>
 </section><section class="article-section" id="appendix-synthetic-data"><span class="section-no">A</span><h2>Konstruktion av den syntetiska datamängden</h2>
 <p>Följande uttryck dokumenterar enbart en <em>ad hoc</em>-konstruktion
 av data för det numeriska exemplet. De är inte del av nätverkets
@@ -840,8 +840,8 @@ funktionerna förhindrar alltför regelbunden placering; de är
 generativ modell. Funktionen <code>construct_data()</code> implementerar
 uttrycken exakt. De åtta illustrativa testparen definieras direkt i
 programkoden. Funktionerna <code>reference_curve()</code> och
-<code>construct_data()</code> (Koder <a href="#cod:curva">5</a>
-och <a href="#cod:dados">6</a>) realiserar ekvationerna <a href="#eq:fronteira_base">fronteira_base</a>–<a href="#eq:faixas">faixas</a> utan att ge nätverket
+<code>construct_data()</code> (Koder <a href="#cod:curva" target="_blank" rel="noopener noreferrer">5</a>
+och <a href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>) realiserar ekvationerna <a href="#eq:fronteira_base" target="_blank" rel="noopener noreferrer">fronteira_base</a>–<a href="#eq:faixas" target="_blank" rel="noopener noreferrer">faixas</a> utan att ge nätverket
 hjälpkurvan som träningsinformation. Hela programmet finns i Avsnitt 8
 och som fristående fil.</p>
 </section></div>
