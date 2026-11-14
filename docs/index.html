@@ -453,12 +453,12 @@ loss to that parameter. A gradient descent step is <span id="eq:descida" class="
 J}{\partial\theta},\qquad \eta&gt;0.\]</span> The learning rate <span class="math inline">\(\eta\)</span> controls the step size: excessively
 small values may slow convergence, whereas excessively large values can
 lead to oscillation or divergence. When parameters are updated after
-each observation, as in the code of Section <a data-reference="sec:python" data-reference-type="ref" href="#sec:python" target="_blank" rel="noopener noreferrer">8</a>, <span class="math inline">\(\partial J/\partial\theta\)</span> is replaced by
+each observation, as in the code of Section <a data-reference="sec:python" data-reference-type="ref" href="#from-mathematics-to-python" target="_blank" rel="noopener noreferrer">8</a>, <span class="math inline">\(\partial J/\partial\theta\)</span> is replaced by
 <span class="math inline">\(\partial E_i/\partial\theta\)</span>. This
 is the form of stochastic gradient descent (SGD) adopted here.</p>
 <h3 id="the-chain-rule-in-the-231-network">The chain rule in the 2–3–1
 network</h3>
-<p>We use the network of Figure <a data-reference="fig:pequena_rede" data-reference-type="ref" href="#fig:pequena_rede" target="_blank" rel="noopener noreferrer">5</a>, with
+<p>We use the network of Figure <a data-reference="fig:pequena_rede" data-reference-type="ref" href="#fig:small_network" target="_blank" rel="noopener noreferrer">5</a>, with
 ReLU in its three hidden neurons and a sigmoid at the output. Because
 the inputs represent mass (in grams) and diameter (in centimeters),
 their numerical scales differ. To prevent this difference of units from
@@ -509,7 +509,7 @@ centers and scales of <span class="math inline">\(160\)</span> g and
 therefore corresponds to the dimensionless input <span id="eq:exemplo_entrada" class="nm-eq-anchor"></span><span class="math display">\[\tag{14}
 \mathbf{x}^{\ast}=\begin{bmatrix}(140-160)/20\\(7.0-7.5)/0.5\end{bmatrix}
 =\begin{bmatrix}-1\\-1\end{bmatrix}.\]</span> These reference values are
-fixed for this demonstration; in Section <a data-reference="sec:python" data-reference-type="ref" href="#sec:python" target="_blank" rel="noopener noreferrer">8</a>, the mean
+fixed for this demonstration; in Section <a data-reference="sec:python" data-reference-type="ref" href="#from-mathematics-to-python" target="_blank" rel="noopener noreferrer">8</a>, the mean
 and standard deviation are computed directly from the training data.</p>
 <p>Choose the thirteen initial parameters <span id="eq:param_iniciais" class="nm-eq-anchor"></span><span class="math display">\[\tag{15}
 W^{(1)}=\begin{bmatrix}
@@ -656,7 +656,7 @@ select hyperparameters and evaluate the model with less bias <span class="nm-inl
 </section>
 <section class="article-section" id="from-mathematics-to-python"><span class="section-no">08</span><h2>From mathematics to Python</h2>
 <p>We now implement, using only <code>NumPy</code>, the forward pass,
-chain rule, and stochastic updates derived in Section <a data-reference="sec:treinamento" data-reference-type="ref" href="#sec:treinamento" target="_blank" rel="noopener noreferrer">7</a> <span class="nm-inline-citation" data-cites="harris2020numpy">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. To obtain a nonlinear decision
+chain rule, and stochastic updates derived in Section <a data-reference="sec:treinamento" data-reference-type="ref" href="#how-does-a-neural-network-learn" target="_blank" rel="noopener noreferrer">7</a> <span class="nm-inline-citation" data-cites="harris2020numpy">[<a href="#bib:harris2020numpy" target="_blank" rel="noopener noreferrer">4</a>]</span>. To obtain a nonlinear decision
 boundary, we enlarge the hidden layer from three to twelve ReLU neurons.
 The resulting <span class="math inline">\(2\)</span>–<span class="math inline">\(12\)</span>–<span class="math inline">\(1\)</span>
 network contains <span class="math inline">\(12(2+1)+(12+1)=49\)</span>
@@ -676,7 +676,7 @@ fruit</em>.</p>
 not given to the network, does not appear in the loss, and plays no part
 in backpropagation. Training uses only mass–diameter pairs and their
 class labels. The generating formula and displacements are documented in
-Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#ap:gerador" target="_blank" rel="noopener noreferrer">A</a>, enabling exact reproduction of the
+Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>, enabling exact reproduction of the
 data in Figure <a data-reference="fig:faixas_sinteticas" data-reference-type="ref" href="#fig:faixas_sinteticas" target="_blank" rel="noopener noreferrer">7</a>.</p>
 <figure id="fig:faixas_sinteticas">
 <img alt="Fig07: Distribution of \(64\) synthetic examples in four bands, two above (apples) and two below
@@ -973,7 +973,7 @@ from matplotlib.lines import Line2D
     plt.show()</code></pre></section>
 </div>
 <p>The function <code>construct_data()</code> (Code <a data-reference="cod:dados" data-reference-type="ref" href="#cod:dados" target="_blank" rel="noopener noreferrer">6</a>)
-implements only the synthetic construction documented in Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#ap:gerador" target="_blank" rel="noopener noreferrer">A</a>; the auxiliary curve does not take
+implements only the synthetic construction documented in Appendix <a data-reference="ap:gerador" data-reference-type="ref" href="#appendix-synthetic-data" target="_blank" rel="noopener noreferrer">A</a>; the auxiliary curve does not take
 part in optimization. The function <code>train()</code> (Code <a data-reference="cod:treinamento" data-reference-type="ref" href="#cod:treinamento" target="_blank" rel="noopener noreferrer">8</a>) implements the
 forward pass, the calculation of <span class="math inline">\(\delta^{(2)}\)</span> and <span class="math inline">\(\boldsymbol{\delta}^{(1)}\)</span>, gradients, and
 four parameter updates corresponding to Equations <a data-reference="eq:forward" data-reference-type="eqref" href="#eq:forward" target="_blank" rel="noopener noreferrer">(11)</a>, <a data-reference="eq:delta_saida" data-reference-type="eqref" href="#eq:delta_saida" target="_blank" rel="noopener noreferrer">(12)</a>, <a data-reference="eq:delta_oculta" data-reference-type="eqref" href="#eq:delta_oculta" target="_blank" rel="noopener noreferrer">(13)</a>, and <a data-reference="eq:descida" data-reference-type="eqref" href="#eq:descida" target="_blank" rel="noopener noreferrer">(10)</a>. All gradients are computed
@@ -1064,7 +1064,7 @@ supplementary files for direct execution.</p>
 <p id="bib:nielsen2015">[8] M. A. Nielsen. <em>Neural Networks and Deep Learning</em>. Determination Press, 2015. <a href="https://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener noreferrer">Online edition</a>.</p>
 <p id="bib:rumelhart1986">[9] D. E. Rumelhart, G. E. Hinton and R. J. Williams. “Learning representations by back-propagating errors”. <em>Nature</em>, 323, 533–536, 1986. doi: 10.1038/323533a0.</p>
 </div></section>
-<section class="resource-section" id="resources"><span class="section-no">Web edition</span><h2>Resources</h2><p>Use the translated PDF for the complete typeset article, the repository for source files and code, and the executable notebook to reproduce the computational example.</p><div class="resource-grid">
+<section class="resource-section" id="resources"><span class="section-no">Web edition</span><h2>Resources</h2><p>The linked PDF is an earlier edition. The web exposition and executable Python code reflect the reviewed manuscript; the PDF will be updated separately.</p><div class="resource-grid">
 <a class="resource-card" href="pdf/NeuralMath_EN.pdf" target="_blank" rel="noopener noreferrer"><strong>PDF</strong><span>The Mathematical Anatomy of a Neural Network</span></a>
 <a class="resource-card" href="https://github.com/americocunhajr/NeuralMath" target="_blank" rel="noopener noreferrer"><strong>GitHub</strong><span>americocunhajr/NeuralMath</span></a>
 <a class="resource-card" href="https://colab.research.google.com/github/americocunhajr/NeuralMath/blob/main/ColabCodes/NeuralMath_Colab_EN.ipynb" target="_blank" rel="noopener noreferrer"><strong>Google Colab</strong><span>Notebook · English</span></a>
